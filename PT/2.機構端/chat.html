@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個案關懷通訊 - 機構端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+                    
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+                    
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>個案列表</span>
+                        </a>
+                        <a href="member-bindind.html" class="menu-item">
+                            <span>綁定設定</span>
+                        </a>
+                        <a href="member-review.html" class="menu-item">
+                            <span>綁定審核</span>
+                        </a>
+                    </div>
+                    
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單查詢</span>
+                    </a>
+                    
+                    <a href="revenue.html" class="menu-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>分潤報表</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">機構功能</div>
+                    
+                    <a href="organization.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>機構資訊管理</span>
+                    </a>
+                    
+                    <a href="admins.html" class="menu-item">
+                        <i class="fas fa-user-shield"></i>
+                        <span>管理者權限管理</span>
+                    </a>
+                    
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>機構公告管理</span>
+                    </a>
+                    
+                    <a href="chat.html" class="menu-item active">
+                        <i class="fas fa-comments"></i>
+                        <span>個案關懷通訊</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>個案關懷通訊</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">個案關懷通訊</h1>
+                        <p class="page-subtitle">與個案及其家屬進行即時溝通</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> 群發訊息
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 聊天室容器 -->
+                <div class="chat-container">
+                    <!-- 聊天列表側邊欄 -->
+                    <div class="chat-sidebar">
+                        <div class="chat-search">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="搜尋個案...">
+                            </div>
+                        </div>
+                        <div class="chat-list">
+                            <!-- 聊天項目 1 - 有未讀 -->
+                            <div class="chat-item active">
+                                <div class="chat-item-avatar">王</div>
+                                <div class="chat-item-info">
+                                    <div class="chat-item-name">王小明</div>
+                                    <div class="chat-item-preview">好的，謝謝您的回覆！</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div class="chat-item-time">10:30</div>
+                                    <div class="chat-item-unread">2</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 聊天項目 2 -->
+                            <div class="chat-item">
+                                <div class="chat-item-avatar" style="background-color: #e74c3c;">李</div>
+                                <div class="chat-item-info">
+                                    <div class="chat-item-name">李小華</div>
+                                    <div class="chat-item-preview">請問明天的服務時間是？</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div class="chat-item-time">09:45</div>
+                                    <div class="chat-item-unread">1</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 聊天項目 3 -->
+                            <div class="chat-item">
+                                <div class="chat-item-avatar" style="background-color: #9b59b6;">張</div>
+                                <div class="chat-item-info">
+                                    <div class="chat-item-name">張大偉</div>
+                                    <div class="chat-item-preview">收到，我會準時的。</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div class="chat-item-time">昨天</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 聊天項目 4 -->
+                            <div class="chat-item">
+                                <div class="chat-item-avatar" style="background-color: #f39c12;">陳</div>
+                                <div class="chat-item-info">
+                                    <div class="chat-item-name">陳美玲</div>
+                                    <div class="chat-item-preview">感謝您們的照顧！</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div class="chat-item-time">01/26</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 聊天項目 5 -->
+                            <div class="chat-item">
+                                <div class="chat-item-avatar" style="background-color: #1abc9c;">林</div>
+                                <div class="chat-item-info">
+                                    <div class="chat-item-name">林志明</div>
+                                    <div class="chat-item-preview">我想詢問營養餐的內容</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div class="chat-item-time">01/25</div>
+                                    <div class="chat-item-unread">2</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 聊天主區域 -->
+                    <div class="chat-main">
+                        <div class="chat-header">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div class="chat-item-avatar">王</div>
+                                <div>
+                                    <div style="font-weight: bold;">王小明</div>
+                                    <div style="font-size: 12px; color: #999;">PT2024001234 • 在線</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 15px;">
+                                <i class="fas fa-phone" style="cursor: pointer; color: #666;"></i>
+                                <i class="fas fa-video" style="cursor: pointer; color: #666;"></i>
+                                <i class="fas fa-ellipsis-v" style="cursor: pointer; color: #666;"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-messages">
+                            <!-- 日期分隔 -->
+                            <div style="text-align: center; margin: 20px 0;">
+                                <span style="background: #e0e0e0; padding: 5px 15px; border-radius: 15px; font-size: 12px; color: #666;">2025年1月28日</span>
+                            </div>
+                            
+                            <!-- 收到的訊息 -->
+                            <div class="message received">
+                                <div class="message-avatar">王</div>
+                                <div>
+                                    <div class="message-bubble">
+                                        您好，我想請問一下明天預約的居家照護服務，大概幾點會到呢？
+                                    </div>
+                                    <div class="message-time">09:15</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 發送的訊息 -->
+                            <div class="message sent">
+                                <div class="message-avatar" style="background-color: #27ae60;">機</div>
+                                <div>
+                                    <div class="message-bubble">
+                                        王先生您好！明天的服務預計在上午10:00抵達，照服員會提前10分鐘致電確認。
+                                    </div>
+                                    <div class="message-time">09:20 ✓✓</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 收到的訊息 -->
+                            <div class="message received">
+                                <div class="message-avatar">王</div>
+                                <div>
+                                    <div class="message-bubble">
+                                        好的，那請問這次的照服員是上次那位嗎？
+                                    </div>
+                                    <div class="message-time">09:25</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 發送的訊息 -->
+                            <div class="message sent">
+                                <div class="message-avatar" style="background-color: #27ae60;">機</div>
+                                <div>
+                                    <div class="message-bubble">
+                                        是的，這次還是由陳照服員為您服務，她對您的情況很熟悉，請放心。😊
+                                    </div>
+                                    <div class="message-time">09:28 ✓✓</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 收到的訊息 -->
+                            <div class="message received">
+                                <div class="message-avatar">王</div>
+                                <div>
+                                    <div class="message-bubble">
+                                        太好了！謝謝您的回覆！
+                                    </div>
+                                    <div class="message-time">10:30</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 快捷回覆 -->
+                        <div style="padding: 10px 20px; border-top: 1px solid #e0e0e0; display: flex; gap: 10px; overflow-x: auto;">
+                            <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap;">收到，感謝您的訊息</span>
+                            <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap;">好的，我們會盡快處理</span>
+                            <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap;">如有問題請隨時聯繫</span>
+                        </div>
+                        
+                        <div class="chat-input">
+                            <i class="fas fa-plus-circle" style="font-size: 24px; color: #666; cursor: pointer;"></i>
+                            <i class="fas fa-image" style="font-size: 20px; color: #666; cursor: pointer;"></i>
+                            <input type="text" placeholder="輸入訊息...">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/admin.js"></script>
+    <script>
+        // 聊天項目切換
+        document.querySelectorAll('.chat-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.chat-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

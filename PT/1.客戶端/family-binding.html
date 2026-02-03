@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 家人綁定</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <div class="header-back" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="header-title">家人綁定</div>
+            <div class="header-icons">
+                <i class="fas fa-question-circle" onclick="showHelp()"></i>
+            </div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <!-- 說明區塊 -->
+            <section class="info-banner" style="background: linear-gradient(135deg, #6B46C1 0%, #4C2889 100%);">
+                <div class="info-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="info-content">
+                    <h3>家人綁定功能</h3>
+                    <p>透過家人綁定，您的家人可以協助管理您的帳號、查看訂單及接收健康通知，讓關懷無距離。</p>
+                </div>
+            </section>
+
+            <!-- 已綁定的家人列表 -->
+            <section class="binding-section">
+                <div class="section-title">
+                    <span>已綁定的家人</span>
+                    <span class="count-badge">2</span>
+                </div>
+
+                <div class="family-list">
+                    <!-- 家人卡片 1 -->
+                    <div class="family-card">
+                        <div class="family-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="family-info">
+                            <div class="family-name">王小美</div>
+                            <div class="family-relation">
+                                <i class="fas fa-heart"></i>
+                                <span>女兒</span>
+                            </div>
+                            <div class="family-phone">
+                                <i class="fas fa-phone"></i>
+                                <span>0912-***-678</span>
+                            </div>
+                        </div>
+                        <div class="family-permissions">
+                            <span class="permission-tag">
+                                <i class="fas fa-eye"></i> 查看訂單
+                            </span>
+                            <span class="permission-tag">
+                                <i class="fas fa-bell"></i> 接收通知
+                            </span>
+                            <span class="permission-tag">
+                                <i class="fas fa-credit-card"></i> 代付款
+                            </span>
+                        </div>
+                        <div class="family-actions">
+                            <button class="btn btn-sm btn-outline" onclick="editFamily('FAM001')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="confirmRemoveFamily('FAM001')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="family-status active">
+                            <i class="fas fa-check-circle"></i> 已啟用
+                        </div>
+                    </div>
+
+                    <!-- 家人卡片 2 -->
+                    <div class="family-card">
+                        <div class="family-avatar" style="background: linear-gradient(145deg, #2B6CB0, #1A4A7C);">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="family-info">
+                            <div class="family-name">王大明</div>
+                            <div class="family-relation">
+                                <i class="fas fa-heart"></i>
+                                <span>兒子</span>
+                            </div>
+                            <div class="family-phone">
+                                <i class="fas fa-phone"></i>
+                                <span>0923-***-456</span>
+                            </div>
+                        </div>
+                        <div class="family-permissions">
+                            <span class="permission-tag">
+                                <i class="fas fa-eye"></i> 查看訂單
+                            </span>
+                            <span class="permission-tag">
+                                <i class="fas fa-bell"></i> 接收通知
+                            </span>
+                        </div>
+                        <div class="family-actions">
+                            <button class="btn btn-sm btn-outline" onclick="editFamily('FAM002')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="confirmRemoveFamily('FAM002')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="family-status active">
+                            <i class="fas fa-check-circle"></i> 已啟用
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 待接受的邀請 -->
+                <div class="pending-section">
+                    <div class="section-subtitle">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>已發送的邀請</span>
+                    </div>
+                    <div class="pending-invite-card">
+                        <div class="family-avatar" style="background: #ccc;">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="family-info">
+                            <div class="family-name">0934-567-890</div>
+                            <div class="family-relation">
+                                <i class="fas fa-heart"></i>
+                                <span>配偶</span>
+                            </div>
+                            <div class="invite-status">
+                                <i class="fas fa-clock"></i>
+                                <span>等待對方接受邀請</span>
+                            </div>
+                        </div>
+                        <div class="family-actions">
+                            <button class="btn btn-sm btn-outline" onclick="resendInvite('INV001')">
+                                <i class="fas fa-redo"></i> 重新發送
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="cancelInvite('INV001')">
+                                <i class="fas fa-times"></i> 取消
+                            </button>
+                        </div>
+                        <div class="invite-time">
+                            邀請時間：2024/01/26
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 新增家人綁定 -->
+            <section class="add-binding-section">
+                <div class="section-title">
+                    <span>新增家人綁定</span>
+                </div>
+
+                <div class="binding-methods">
+                    <!-- 方法一：傳送邀請連結 -->
+                    <div class="binding-method-card" onclick="openInviteLinkModal()">
+                        <div class="method-icon" style="background: linear-gradient(145deg, #6B46C1, #4C2889);">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div class="method-info">
+                            <div class="method-title">傳送邀請連結</div>
+                            <div class="method-desc">產生專屬邀請連結，透過 LINE 或簡訊分享給家人</div>
+                        </div>
+                        <div class="method-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- 方法二：輸入手機號碼 -->
+                    <div class="binding-method-card" onclick="openPhoneInviteModal()">
+                        <div class="method-icon" style="background: linear-gradient(145deg, #2D6A4F, #1B4332);">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="method-info">
+                            <div class="method-title">輸入手機號碼</div>
+                            <div class="method-desc">直接輸入家人的手機號碼發送邀請簡訊</div>
+                        </div>
+                        <div class="method-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- 方法三：顯示我的 QR Code -->
+                    <div class="binding-method-card" onclick="showMyQRCode()">
+                        <div class="method-icon" style="background: linear-gradient(145deg, #D4A574, #B8956C);">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="method-info">
+                            <div class="method-title">顯示我的 QR Code</div>
+                            <div class="method-desc">讓家人掃描您的專屬 QR Code 進行綁定</div>
+                        </div>
+                        <div class="method-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 權限說明 -->
+            <section class="permission-info-section">
+                <div class="section-title">
+                    <span>家人權限說明</span>
+                </div>
+                <div class="permission-list">
+                    <div class="permission-item">
+                        <div class="permission-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="permission-content">
+                            <div class="permission-title">查看訂單</div>
+                            <div class="permission-desc">家人可查看您的服務訂單及使用紀錄</div>
+                        </div>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: linear-gradient(145deg, #f39c12, #e67e22);">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="permission-content">
+                            <div class="permission-title">接收通知</div>
+                            <div class="permission-desc">家人會同步收到重要通知及健康提醒</div>
+                        </div>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: linear-gradient(145deg, #e74c3c, #c0392b);">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="permission-content">
+                            <div class="permission-title">代付款</div>
+                            <div class="permission-desc">家人可代為支付服務費用</div>
+                        </div>
+                    </div>
+                    <div class="permission-item">
+                        <div class="permission-icon" style="background: linear-gradient(145deg, #27ae60, #1e8449);">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="permission-content">
+                            <div class="permission-title">代訂購</div>
+                            <div class="permission-desc">家人可代為訂購照護服務</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部導覽列 -->
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item active" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- 輸入手機號碼 Modal -->
+    <div id="phoneInviteModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>邀請家人</h3>
+                <i class="fas fa-times" onclick="closeModal('phoneInviteModal')"></i>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>家人手機號碼</label>
+                    <input type="tel" class="form-control" placeholder="請輸入手機號碼" id="familyPhone">
+                </div>
+                <div class="form-group">
+                    <label>稱謂 / 關係</label>
+                    <select class="form-control" id="familyRelation">
+                        <option value="">請選擇</option>
+                        <option value="spouse">配偶</option>
+                        <option value="son">兒子</option>
+                        <option value="daughter">女兒</option>
+                        <option value="son-in-law">女婿</option>
+                        <option value="daughter-in-law">媳婦</option>
+                        <option value="sibling">兄弟姊妹</option>
+                        <option value="grandchild">孫子女</option>
+                        <option value="other">其他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>家人姓名（選填）</label>
+                    <input type="text" class="form-control" placeholder="請輸入家人姓名" id="familyName">
+                </div>
+                <div class="form-group">
+                    <label>授予權限</label>
+                    <div class="permission-checkboxes">
+                        <label class="checkbox-item">
+                            <input type="checkbox" checked> 查看訂單
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" checked> 接收通知
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox"> 代付款
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox"> 代訂購
+                        </label>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="sendInvite()">
+                    <i class="fas fa-paper-plane"></i> 發送邀請
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 邀請連結 Modal -->
+    <div id="inviteLinkModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>邀請連結</h3>
+                <i class="fas fa-times" onclick="closeModal('inviteLinkModal')"></i>
+            </div>
+            <div class="modal-body">
+                <div class="invite-link-box">
+                    <div class="link-display">
+                        <input type="text" readonly value="https://care.example.com/invite/ABC123XYZ" id="inviteLink">
+                        <button class="btn btn-sm btn-primary" onclick="copyInviteLink()">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="link-expire">
+                        <i class="fas fa-clock"></i>
+                        <span>此連結將於 7 天後失效</span>
+                    </div>
+                </div>
+                <div class="share-options">
+                    <p>分享至：</p>
+                    <div class="share-buttons">
+                        <button class="share-btn line" onclick="shareToLine()">
+                            <i class="fab fa-line"></i>
+                            <span>LINE</span>
+                        </button>
+                        <button class="share-btn sms" onclick="shareToSMS()">
+                            <i class="fas fa-sms"></i>
+                            <span>簡訊</span>
+                        </button>
+                        <button class="share-btn email" onclick="shareToEmail()">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 我的 QR Code Modal -->
+    <div id="myQRCodeModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>我的綁定 QR Code</h3>
+                <i class="fas fa-times" onclick="closeModal('myQRCodeModal')"></i>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <div class="qr-code-display">
+                    <div class="qr-placeholder">
+                        <i class="fas fa-qrcode"></i>
+                        <div>QR Code</div>
+                    </div>
+                </div>
+                <p class="qr-instruction">請讓家人使用智慧照護 APP 掃描此 QR Code</p>
+                <div class="qr-expire">
+                    <i class="fas fa-clock"></i>
+                    <span>QR Code 有效時間：5 分鐘</span>
+                </div>
+                <button class="btn btn-outline" onclick="refreshQRCode()">
+                    <i class="fas fa-redo"></i> 重新產生
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        function openPhoneInviteModal() {
+            document.getElementById('phoneInviteModal').style.display = 'flex';
+        }
+
+        function openInviteLinkModal() {
+            document.getElementById('inviteLinkModal').style.display = 'flex';
+        }
+
+        function showMyQRCode() {
+            document.getElementById('myQRCodeModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function sendInvite() {
+            const phone = document.getElementById('familyPhone').value;
+            const relation = document.getElementById('familyRelation').value;
+            if (!phone) {
+                alert('請輸入手機號碼');
+                return;
+            }
+            if (!relation) {
+                alert('請選擇稱謂/關係');
+                return;
+            }
+            alert('邀請已發送！等待對方接受邀請。');
+            closeModal('phoneInviteModal');
+        }
+
+        function copyInviteLink() {
+            const link = document.getElementById('inviteLink');
+            link.select();
+            document.execCommand('copy');
+            alert('連結已複製！');
+        }
+
+        function shareToLine() {
+            alert('開啟 LINE 分享（模擬功能）');
+        }
+
+        function shareToSMS() {
+            alert('開啟簡訊分享（模擬功能）');
+        }
+
+        function shareToEmail() {
+            alert('開啟 Email 分享（模擬功能）');
+        }
+
+        function refreshQRCode() {
+            alert('QR Code 已重新產生');
+        }
+
+        function editFamily(familyId) {
+            alert('編輯家人資料：' + familyId);
+        }
+
+        function confirmRemoveFamily(familyId) {
+            if (confirm('確定要移除此家人的綁定嗎？')) {
+                alert('已移除家人綁定');
+            }
+        }
+
+        function resendInvite(inviteId) {
+            alert('已重新發送邀請');
+        }
+
+        function cancelInvite(inviteId) {
+            if (confirm('確定要取消此邀請嗎？')) {
+                alert('已取消邀請');
+            }
+        }
+    </script>
+</body>
+</html>

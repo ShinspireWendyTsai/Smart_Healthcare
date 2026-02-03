@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 個人資訊</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <div class="header-title">個人中心</div>
+            <div class="header-icons">
+                <i class="fas fa-cog" onclick="navigateTo('settings.html')"></i>
+            </div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <!-- 個人資訊頭部 -->
+            <section class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-name">王小明</div>
+                <div class="profile-id">個案編號：PT2024001234</div>
+            </section>
+
+            <!-- 快速功能區 -->
+            <section class="quick-stats">
+                <div class="quick-stat-item" onclick="navigateTo('orders.html?status=pending')">
+                    <div class="quick-stat-number" style="color: #C4873B;">2</div>
+                    <div class="quick-stat-label">待付款</div>
+                </div>
+                <div class="quick-stat-item" onclick="navigateTo('orders.html?status=processing')">
+                    <div class="quick-stat-number" style="color: #2D6A4F;">3</div>
+                    <div class="quick-stat-label">處理中</div>
+                </div>
+                <div class="quick-stat-item" onclick="navigateTo('orders.html?status=completed')">
+                    <div class="quick-stat-number" style="color: #D4A574;">15</div>
+                    <div class="quick-stat-label">已完成</div>
+                </div>
+                <div class="quick-stat-item" onclick="navigateTo('favorites.html')">
+                    <div class="quick-stat-number" style="color: #6B46C1;">8</div>
+                    <div class="quick-stat-label">收藏</div>
+                </div>
+            </section>
+
+            <!-- 功能選單 -->
+            <section class="profile-menu">
+                <!-- 切換帳號 -->
+                <div class="menu-item" onclick="navigateTo('switch-account.html')">
+                    <div class="menu-icon green">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="menu-text">切換帳號</div>
+                    <div class="menu-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- 資料修改 -->
+                <div class="menu-item" onclick="navigateTo('edit-profile.html')">
+                    <div class="menu-icon blue">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <div class="menu-text">資料修改</div>
+                    <div class="menu-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- 個案關懷者綁定 -->
+                <div class="menu-item" onclick="navigateTo('caregiver-binding.html')">
+                    <div class="menu-icon orange">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="menu-text">個案關懷者綁定</div>
+                    <div class="menu-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- 付款綁定 -->
+                <div class="menu-item" onclick="navigateTo('payment-methods.html')">
+                    <div class="menu-icon red">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="menu-text">付款綁定</div>
+                    <div class="menu-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- 家人綁定 -->
+                <div class="menu-item" onclick="navigateTo('family-binding.html')">
+                    <div class="menu-icon purple">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="menu-text">家人綁定</div>
+                    <div class="menu-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 其他功能選單 -->
+            <section class="profile-menu">
+                <!-- 聯絡我們 -->
+                <div class="menu-item" onclick="navigateTo('contact.html')">
+                    <div class="menu-icon" style="background-color: #3498db;">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="menu-text">聯絡我們</div>
+                    <div class="menu-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- 常見問題 -->
+                <div class="menu-item" onclick="navigateTo('faq.html')">
+                    <div class="menu-icon" style="background-color: #9b59b6;">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="menu-text">常見問題</div>
+                    <div class="menu-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+
+                <!-- 關於我們 -->
+                <div class="menu-item" onclick="navigateTo('about.html')">
+                    <div class="menu-icon" style="background-color: #1abc9c;">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="menu-text">關於我們</div>
+                    <div class="menu-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 版本資訊 -->
+            <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
+<!-- 版本資訊 -->
+            <div style="text-align: center; padding: 24px; color: #666; font-size: 16px;">
+                版本 1.0.0
+            </div>
+        </main>
+
+        <!-- 底部導覽列 -->
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item active" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

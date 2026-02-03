@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機構管理 - 平台端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/platform.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">平台端管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <!-- 主選單 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+                    
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+                    
+                    <div class="menu-item expanded" data-submenu="org-submenu">
+                        <i class="fas fa-building"></i>
+                        <span>機構管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu show" id="org-submenu">
+                        <a href="organizations.html" class="menu-item active">
+                            <span>機構列表</span>
+                        </a>
+                        <a href="org-review.html" class="menu-item">
+                            <span>機構審核</span>
+                        </a>
+                    </div>
+                    
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>會員列表</span>
+                        </a>
+                        <a href="member-status.html" class="menu-item">
+                            <span>會員狀態管理</span>
+                        </a>
+                    </div>
+                    
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單管理</span>
+                    </a>
+                </div>
+                
+                <!-- 服務設定 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">服務設定</div>
+                    
+                    <a href="categories.html" class="menu-item">
+                        <i class="fas fa-folder-tree"></i>
+                        <span>服務類別管理</span>
+                    </a>
+                    
+                    <a href="services.html" class="menu-item">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>服務管理</span>
+                    </a>
+                </div>
+                
+                <!-- 平台功能 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">平台功能</div>
+                    
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>平台公告管理</span>
+                    </a>
+                    
+                    <a href="tickets.html" class="menu-item">
+                        <i class="fas fa-headset"></i>
+                        <span>平台客服單管理</span>
+                    </a>
+                </div>
+                
+                <!-- 系統管理 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="system-submenu">
+                        <a href="admins.html" class="menu-item">
+                            <span>使用者管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item">
+                            <span>操作紀錄查詢</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>機構管理</span>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>機構列表</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="dropdown">
+                        <div class="user-dropdown dropdown-toggle">
+                            <div class="user-avatar admin">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">系統管理員</div>
+                                <div class="user-role">超級管理員</div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="profile.html" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                <span>個人資料</span>
+                            </a>
+                            <a href="settings.html" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                <span>系統設定</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="logout.html" class="dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>登出系統</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">機構管理</h1>
+                        <p class="page-subtitle">管理平台合作機構資訊與審核狀態</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-outline" id="exportBtn">
+                            <i class="fas fa-download"></i>
+                            匯出 Excel
+                        </button>
+                        <button class="btn btn-primary" id="addOrgBtn">
+                            <i class="fas fa-plus"></i>
+                            新增機構
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 篩選區域 -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="filter-section">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label class="filter-label">關鍵字搜尋</label>
+                                    <div class="search-input">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" class="form-control" placeholder="搜尋機構名稱、統編、聯絡人...">
+                                    </div>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label class="filter-label">狀態篩選</label>
+                                    <select class="form-select">
+                                        <option value="">全部狀態</option>
+                                        <option value="pending">待審核</option>
+                                        <option value="active">已啟用</option>
+                                        <option value="inactive">已停用</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label class="filter-label">區域篩選</label>
+                                    <select class="form-select">
+                                        <option value="">全部區域</option>
+                                        <option value="north">北部</option>
+                                        <option value="central">中部</option>
+                                        <option value="south">南部</option>
+                                        <option value="east">東部</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label class="filter-label">排序方式</label>
+                                    <select class="form-select">
+                                        <option value="created_desc">建立時間（新到舊）</option>
+                                        <option value="created_asc">建立時間（舊到新）</option>
+                                        <option value="name_asc">名稱（A-Z）</option>
+                                        <option value="name_desc">名稱（Z-A）</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-actions">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-search"></i>
+                                        搜尋
+                                    </button>
+                                    <button class="btn btn-outline">
+                                        <i class="fas fa-redo"></i>
+                                        重置
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 機構列表 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">機構列表</h3>
+                        <div class="card-actions">
+                            <span class="text-muted">共 48 筆資料</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" class="form-check-input" id="selectAll">
+                                        </th>
+                                        <th>機構資訊</th>
+                                        <th>統一編號</th>
+                                        <th>聯絡人</th>
+                                        <th>服務區域</th>
+                                        <th>分潤比例</th>
+                                        <th>狀態</th>
+                                        <th>建立時間</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input row-check">
+                                        </td>
+                                        <td>
+                                            <div class="org-info">
+                                                <div class="org-logo">
+                                                    <i class="fas fa-hospital"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="org-name">陽光照護中心</div>
+                                                    <div class="org-email">contact@suncare.com.tw</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>12345678</td>
+                                        <td>
+                                            <div>王大明</div>
+                                            <div class="text-muted small">0912-345-678</div>
+                                        </td>
+                                        <td>台北市、新北市</td>
+                                        <td>15%</td>
+                                        <td><span class="status-badge status-active">已啟用</span></td>
+                                        <td>2025/10/15</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="檢視詳情" onclick="viewOrg(1)">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon" title="編輯" onclick="editOrg(1)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn-icon text-warning" title="停用" onclick="toggleOrgStatus(1)">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input row-check">
+                                        </td>
+                                        <td>
+                                            <div class="org-info">
+                                                <div class="org-logo">
+                                                    <i class="fas fa-hand-holding-heart"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="org-name">愛心長照服務</div>
+                                                    <div class="org-email">info@lovecare.com.tw</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>23456789</td>
+                                        <td>
+                                            <div>李小華</div>
+                                            <div class="text-muted small">0923-456-789</div>
+                                        </td>
+                                        <td>桃園市、新竹縣</td>
+                                        <td>12%</td>
+                                        <td><span class="status-badge status-active">已啟用</span></td>
+                                        <td>2025/09/20</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="檢視詳情">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon" title="編輯">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn-icon text-warning" title="停用">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input row-check">
+                                        </td>
+                                        <td>
+                                            <div class="org-info">
+                                                <div class="org-logo pending">
+                                                    <i class="fas fa-building"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="org-name">安心居家照護</div>
+                                                    <div class="org-email">service@safecare.com.tw</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>34567890</td>
+                                        <td>
+                                            <div>陳美玲</div>
+                                            <div class="text-muted small">0934-567-890</div>
+                                        </td>
+                                        <td>台中市</td>
+                                        <td>--</td>
+                                        <td><span class="status-badge status-pending">待審核</span></td>
+                                        <td>2026/01/25</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="檢視詳情">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon text-success" title="審核通過">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                                <button class="btn-icon text-danger" title="駁回">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input row-check">
+                                        </td>
+                                        <td>
+                                            <div class="org-info">
+                                                <div class="org-logo inactive">
+                                                    <i class="fas fa-user-nurse"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="org-name">健康家護理站</div>
+                                                    <div class="org-email">health@homecare.com.tw</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>45678901</td>
+                                        <td>
+                                            <div>黃志偉</div>
+                                            <div class="text-muted small">0945-678-901</div>
+                                        </td>
+                                        <td>高雄市</td>
+                                        <td>10%</td>
+                                        <td><span class="status-badge status-inactive">已停用</span></td>
+                                        <td>2025/06/10</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="檢視詳情">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon" title="編輯">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn-icon text-success" title="啟用">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input row-check">
+                                        </td>
+                                        <td>
+                                            <div class="org-info">
+                                                <div class="org-logo">
+                                                    <i class="fas fa-heartbeat"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="org-name">恩典長照中心</div>
+                                                    <div class="org-email">grace@longcare.com.tw</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>56789012</td>
+                                        <td>
+                                            <div>林佳蓉</div>
+                                            <div class="text-muted small">0956-789-012</div>
+                                        </td>
+                                        <td>台南市、嘉義縣</td>
+                                        <td>18%</td>
+                                        <td><span class="status-badge status-active">已啟用</span></td>
+                                        <td>2025/08/05</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="檢視詳情">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon" title="編輯">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn-icon text-warning" title="停用">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- 分頁 -->
+                        <div class="pagination-wrapper">
+                            <div class="pagination-info">
+                                顯示第 1 - 5 筆，共 48 筆資料
+                            </div>
+                            <div class="pagination">
+                                <button class="page-btn" disabled>
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="page-btn active">1</button>
+                                <button class="page-btn">2</button>
+                                <button class="page-btn">3</button>
+                                <button class="page-btn">4</button>
+                                <button class="page-btn">5</button>
+                                <span class="page-ellipsis">...</span>
+                                <button class="page-btn">10</button>
+                                <button class="page-btn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增/編輯機構 Modal -->
+    <div class="modal" id="orgModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">新增機構</h4>
+                    <button class="modal-close" onclick="closeModal('orgModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="orgForm">
+                        <div class="form-section">
+                            <h5 class="form-section-title">基本資訊</h5>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label required">機構名稱</label>
+                                    <input type="text" class="form-control" placeholder="請輸入機構名稱">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label required">統一編號</label>
+                                    <input type="text" class="form-control" placeholder="請輸入統一編號">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label required">負責人姓名</label>
+                                    <input type="text" class="form-control" placeholder="請輸入負責人姓名">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label required">聯絡電話</label>
+                                    <input type="tel" class="form-control" placeholder="請輸入聯絡電話">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label required">電子郵件</label>
+                                    <input type="email" class="form-control" placeholder="請輸入電子郵件">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">服務區域</label>
+                                    <select class="form-select" multiple>
+                                        <option>台北市</option>
+                                        <option>新北市</option>
+                                        <option>桃園市</option>
+                                        <option>台中市</option>
+                                        <option>台南市</option>
+                                        <option>高雄市</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">機構地址</label>
+                                <input type="text" class="form-control" placeholder="請輸入完整地址">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">機構簡介</label>
+                                <textarea class="form-control" rows="3" placeholder="請輸入機構簡介"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h5 class="form-section-title">合約設定</h5>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">分潤比例 (%)</label>
+                                    <input type="number" class="form-control" min="0" max="100" placeholder="請輸入分潤比例">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">合約期限</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h5 class="form-section-title">機構 Logo</h5>
+                            <div class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>拖曳圖片至此處，或<span class="text-primary">點擊上傳</span></p>
+                                <p class="text-muted small">建議尺寸：200x200px，支援 JPG、PNG 格式</p>
+                                <input type="file" accept="image/*" hidden>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('orgModal')">取消</button>
+                    <button class="btn btn-primary">儲存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 檢視機構詳情 Modal -->
+    <div class="modal" id="viewOrgModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">機構詳情</h4>
+                    <button class="modal-close" onclick="closeModal('viewOrgModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="org-detail">
+                        <div class="org-detail-header">
+                            <div class="org-detail-logo">
+                                <i class="fas fa-hospital"></i>
+                            </div>
+                            <div class="org-detail-info">
+                                <h3>陽光照護中心</h3>
+                                <p class="text-muted">統編：12345678</p>
+                                <span class="status-badge status-active">已啟用</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h5 class="detail-section-title">
+                                <i class="fas fa-info-circle"></i>
+                                基本資訊
+                            </h5>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>負責人</label>
+                                    <span>王大明</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>聯絡電話</label>
+                                    <span>0912-345-678</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>電子郵件</label>
+                                    <span>contact@suncare.com.tw</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>服務區域</label>
+                                    <span>台北市、新北市</span>
+                                </div>
+                                <div class="detail-item full-width">
+                                    <label>機構地址</label>
+                                    <span>台北市大安區忠孝東路四段100號5樓</span>
+                                </div>
+                                <div class="detail-item full-width">
+                                    <label>機構簡介</label>
+                                    <span>陽光照護中心提供專業的居家照護服務，擁有20年以上的照護經驗，服務團隊包含專業護理師、照服員、營養師等專業人員。</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h5 class="detail-section-title">
+                                <i class="fas fa-file-contract"></i>
+                                合約資訊
+                            </h5>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>分潤比例</label>
+                                    <span>15%</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>合約到期日</label>
+                                    <span>2027/12/31</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>加入日期</label>
+                                    <span>2025/10/15</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>累計訂單</label>
+                                    <span>356 筆</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('viewOrgModal')">關閉</button>
+                    <button class="btn btn-primary" onclick="editOrg(1)">編輯資料</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/platform.js"></script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平台操作紀錄 - 平台端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/platform.css">
+    <style>
+        .log-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--info-color);
+        }
+
+        .log-tag.warning {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--warning-color);
+        }
+
+        .log-tag.danger {
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--danger-color);
+        }
+
+        .log-note {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">平台端管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <!-- 主選單 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+                    
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+                    
+                    <div class="menu-item" data-submenu="org-submenu">
+                        <i class="fas fa-building"></i>
+                        <span>機構管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="org-submenu">
+                        <a href="organizations.html" class="menu-item">
+                            <span>機構列表</span>
+                        </a>
+                        <a href="org-review.html" class="menu-item">
+                            <span>機構審核</span>
+                        </a>
+                    </div>
+                    
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>會員列表</span>
+                        </a>
+                        <a href="member-status.html" class="menu-item">
+                            <span>會員狀態管理</span>
+                        </a>
+                    </div>
+                    
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單管理</span>
+                    </a>
+                </div>
+                
+                <!-- 服務設定 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">服務設定</div>
+                    
+                    <a href="categories.html" class="menu-item">
+                        <i class="fas fa-tags"></i>
+                        <span>服務類別管理</span>
+                    </a>
+                    
+                    <a href="services.html" class="menu-item">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>服務管理</span>
+                    </a>
+                </div>
+                
+                <!-- 平台功能 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">平台功能</div>
+                    
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>平台公告管理</span>
+                    </a>
+                    
+                    <a href="tickets.html" class="menu-item">
+                        <i class="fas fa-headset"></i>
+                        <span>平台客服單管理</span>
+                    </a>
+                </div>
+                
+                <!-- 系統管理 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item expanded" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu show" id="system-submenu">
+                        <a href="admins.html" class="menu-item">
+                            <span>使用者管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item active">
+                            <span>操作紀錄查詢</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>平台操作紀錄</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">平台管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">平台操作紀錄</h1>
+                        <p class="page-subtitle">追蹤平台管理者操作與系統事件。</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">操作紀錄</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="filter-section" style="margin-bottom: 16px;">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label class="filter-label">日期區間</label>
+                                    <div class="date-range">
+                                        <input type="date" class="form-control" value="2026-02-03">
+                                        <span class="date-separator">至</span>
+                                        <input type="date" class="form-control" value="2026-02-03">
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">操作功能</label>
+                                    <select class="form-select">
+                                        <option>全部</option>
+                                        <option>登入</option>
+                                        <option>權限異動</option>
+                                        <option>機構審核</option>
+                                        <option>公告發布</option>
+                                    </select>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="btn btn-outline">
+                                        <i class="fas fa-redo"></i> 重置
+                                    </button>
+                                    <button class="btn btn-outline">
+                                        <i class="fas fa-search"></i> 查詢
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>時間</th>
+                                        <th>管理者</th>
+                                        <th>事件</th>
+                                        <th>內容</th>
+                                        <th>IP</th>
+                                        <th>風險</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2026/02/03 10:20</td>
+                                        <td>陳小華</td>
+                                        <td><span class="log-tag"><i class="fas fa-sign-in-alt"></i> 登入</span></td>
+                                        <td>平台管理員登入系統</td>
+                                        <td>203.64.12.80</td>
+                                        <td><span class="status-badge status-active">一般</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2026/02/03 09:45</td>
+                                        <td>林小美</td>
+                                        <td><span class="log-tag warning"><i class="fas fa-user-shield"></i> 權限異動</span></td>
+                                        <td>調整「營運主管」角色權限</td>
+                                        <td>203.64.12.81</td>
+                                        <td><span class="status-badge status-pending">警示</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2026/02/02 18:30</td>
+                                        <td>王大明</td>
+                                        <td><span class="log-tag"><i class="fas fa-check"></i> 機構審核</span></td>
+                                        <td>通過「陽光照護中心」審核</td>
+                                        <td>203.64.12.66</td>
+                                        <td><span class="status-badge status-active">一般</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2026/02/02 14:10</td>
+                                        <td>陳小華</td>
+                                        <td><span class="log-tag danger"><i class="fas fa-exclamation-triangle"></i> 公告發布</span></td>
+                                        <td>發布「系統維護公告」</td>
+                                        <td>203.64.12.80</td>
+                                        <td><span class="status-badge status-inactive">高風險</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="log-note">* 高風險事件會自動通知系統管理者。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/platform.js"></script>
+</body>
+</html>

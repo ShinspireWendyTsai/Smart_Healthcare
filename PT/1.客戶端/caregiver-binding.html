@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 個案關懷者綁定</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <div class="header-back" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="header-title">個案關懷者綁定</div>
+            <div class="header-icons">
+                <i class="fas fa-question-circle" onclick="showHelp()"></i>
+            </div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <!-- 說明區塊 -->
+            <section class="info-banner">
+                <div class="info-icon">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <div class="info-content">
+                    <h3>什麼是個案關懷者？</h3>
+                    <p>個案關懷者是由照護機構指派的專人，負責追蹤您的健康狀況、提供諮詢服務，並協助處理您的照護需求。</p>
+                </div>
+            </section>
+
+            <!-- 綁定機構選項 -->
+            <section class="binding-section">
+                <div class="section-title">
+                    <span>綁定照護機構</span>
+                </div>
+
+                <!-- 已綁定的機構 -->
+                <div class="bound-institution-list">
+                    <div class="bound-card">
+                        <div class="bound-status active">
+                            <i class="fas fa-check-circle"></i>
+                            <span>已綁定</span>
+                        </div>
+                        <div class="bound-info">
+                            <div class="institution-avatar">
+                                <i class="fas fa-hospital"></i>
+                            </div>
+                            <div class="institution-details">
+                                <div class="institution-name">陽光長照中心</div>
+                                <div class="institution-id">機構編號：ORG2024001</div>
+                                <div class="caregiver-info">
+                                    <i class="fas fa-user-nurse"></i>
+                                    <span>關懷者：陳小華</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bound-actions">
+                            <button class="btn btn-sm btn-outline" onclick="viewInstitutionDetail('ORG2024001')">
+                                <i class="fas fa-eye"></i> 查看
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="confirmUnbind('ORG2024001')">
+                                <i class="fas fa-unlink"></i> 解除
+                            </button>
+                        </div>
+                        <div class="bound-time">
+                            綁定時間：2024/01/15
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 待審核的綁定申請 -->
+                <div class="pending-section">
+                    <div class="section-subtitle">
+                        <i class="fas fa-clock"></i>
+                        <span>待審核申請</span>
+                    </div>
+                    <div class="pending-card">
+                        <div class="bound-status pending">
+                            <i class="fas fa-hourglass-half"></i>
+                            <span>審核中</span>
+                        </div>
+                        <div class="bound-info">
+                            <div class="institution-avatar" style="background: linear-gradient(145deg, #f39c12, #e67e22);">
+                                <i class="fas fa-hospital-alt"></i>
+                            </div>
+                            <div class="institution-details">
+                                <div class="institution-name">幸福居家照護</div>
+                                <div class="institution-id">機構編號：ORG2024025</div>
+                                <div class="pending-note">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>機構審核中，請耐心等候</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bound-actions">
+                            <button class="btn btn-sm btn-outline" onclick="cancelBindingRequest('ORG2024025')">
+                                <i class="fas fa-times"></i> 取消申請
+                            </button>
+                        </div>
+                        <div class="bound-time">
+                            申請時間：2024/01/25
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 新增綁定區塊 -->
+            <section class="add-binding-section">
+                <div class="section-title">
+                    <span>新增機構綁定</span>
+                </div>
+
+                <!-- 綁定方式選擇 -->
+                <div class="binding-methods">
+                    <!-- 方法一：掃描 QR Code -->
+                    <div class="binding-method-card" onclick="openQRScanner()">
+                        <div class="method-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="method-info">
+                            <div class="method-title">掃描機構 QR Code</div>
+                            <div class="method-desc">掃描機構提供的專屬 QR Code 進行快速綁定</div>
+                        </div>
+                        <div class="method-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- 方法二：輸入綁定碼 -->
+                    <div class="binding-method-card" onclick="openBindingCodeModal()">
+                        <div class="method-icon" style="background: linear-gradient(145deg, #6B46C1, #4C2889);">
+                            <i class="fas fa-keyboard"></i>
+                        </div>
+                        <div class="method-info">
+                            <div class="method-title">輸入綁定碼</div>
+                            <div class="method-desc">手動輸入機構提供的 6 位數綁定碼</div>
+                        </div>
+                        <div class="method-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- 方法三：搜尋機構 -->
+                    <div class="binding-method-card" onclick="openInstitutionSearch()">
+                        <div class="method-icon" style="background: linear-gradient(145deg, #2B6CB0, #1A4A7C);">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="method-info">
+                            <div class="method-title">搜尋照護機構</div>
+                            <div class="method-desc">依機構名稱或地區搜尋並提出綁定申請</div>
+                        </div>
+                        <div class="method-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 綁定流程說明 -->
+            <section class="process-section">
+                <div class="section-title">
+                    <span>綁定流程說明</span>
+                </div>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-title">選擇綁定方式</div>
+                            <div class="step-desc">掃描 QR Code、輸入綁定碼或搜尋機構</div>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-title">確認機構資訊</div>
+                            <div class="step-desc">核對機構名稱及相關資訊是否正確</div>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-title">提交綁定申請</div>
+                            <div class="step-desc">填寫必要資訊並送出申請</div>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-title">等待機構審核</div>
+                            <div class="step-desc">機構審核通過後即完成綁定</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部導覽列 -->
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item active" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- 輸入綁定碼 Modal -->
+    <div id="bindingCodeModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>輸入綁定碼</h3>
+                <i class="fas fa-times" onclick="closeModal('bindingCodeModal')"></i>
+            </div>
+            <div class="modal-body">
+                <div class="binding-code-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>請向照護機構索取 6 位數的專屬綁定碼</span>
+                </div>
+                <div class="binding-code-input">
+                    <input type="text" maxlength="1" class="code-digit" autofocus>
+                    <input type="text" maxlength="1" class="code-digit">
+                    <input type="text" maxlength="1" class="code-digit">
+                    <input type="text" maxlength="1" class="code-digit">
+                    <input type="text" maxlength="1" class="code-digit">
+                    <input type="text" maxlength="1" class="code-digit">
+                </div>
+                <button class="btn btn-primary btn-block" onclick="verifyBindingCode()">
+                    <i class="fas fa-check"></i> 驗證綁定碼
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 搜尋機構 Modal -->
+    <div id="searchInstitutionModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container modal-full">
+            <div class="modal-header">
+                <h3>搜尋照護機構</h3>
+                <i class="fas fa-times" onclick="closeModal('searchInstitutionModal')"></i>
+            </div>
+            <div class="modal-body">
+                <div class="search-box-large">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="輸入機構名稱、地址或關鍵字..." id="institutionSearchInput">
+                </div>
+                <div class="search-filters">
+                    <select class="form-control">
+                        <option value="">全部地區</option>
+                        <option value="taipei">台北市</option>
+                        <option value="newtaipei">新北市</option>
+                        <option value="taoyuan">桃園市</option>
+                        <option value="taichung">台中市</option>
+                        <option value="kaohsiung">高雄市</option>
+                    </select>
+                    <select class="form-control">
+                        <option value="">服務類型</option>
+                        <option value="homecare">居家照護</option>
+                        <option value="daycare">日間照護</option>
+                        <option value="longterm">長期照護</option>
+                    </select>
+                </div>
+                <div class="search-results">
+                    <!-- 搜尋結果項目 -->
+                    <div class="institution-result-card" onclick="selectInstitution('ORG2024030')">
+                        <div class="institution-avatar">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="institution-info">
+                            <div class="institution-name">愛心長照服務中心</div>
+                            <div class="institution-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                台北市中山區民生東路三段 125 號
+                            </div>
+                            <div class="institution-tags">
+                                <span class="tag">居家照護</span>
+                                <span class="tag">日間照護</span>
+                            </div>
+                        </div>
+                        <div class="institution-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="institution-result-card" onclick="selectInstitution('ORG2024031')">
+                        <div class="institution-avatar" style="background: linear-gradient(145deg, #6B46C1, #4C2889);">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <div class="institution-info">
+                            <div class="institution-name">溫馨居家護理所</div>
+                            <div class="institution-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                台北市大安區復興南路二段 88 號
+                            </div>
+                            <div class="institution-tags">
+                                <span class="tag">居家照護</span>
+                                <span class="tag">護理服務</span>
+                            </div>
+                        </div>
+                        <div class="institution-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="institution-result-card" onclick="selectInstitution('ORG2024032')">
+                        <div class="institution-avatar" style="background: linear-gradient(145deg, #D4A574, #B8956C);">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="institution-info">
+                            <div class="institution-name">幸福銀髮照護機構</div>
+                            <div class="institution-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                新北市板橋區文化路一段 200 號
+                            </div>
+                            <div class="institution-tags">
+                                <span class="tag">長期照護</span>
+                                <span class="tag">復健服務</span>
+                            </div>
+                        </div>
+                        <div class="institution-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 確認綁定 Modal -->
+    <div id="confirmBindingModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>確認綁定申請</h3>
+                <i class="fas fa-times" onclick="closeModal('confirmBindingModal')"></i>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-institution-info">
+                    <div class="institution-avatar large">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="institution-name">愛心長照服務中心</div>
+                    <div class="institution-id">機構編號：ORG2024030</div>
+                </div>
+                <div class="confirm-form">
+                    <div class="form-group">
+                        <label>備註說明（選填）</label>
+                        <textarea class="form-control" rows="3" placeholder="請輸入備註或特殊需求說明..."></textarea>
+                    </div>
+                    <div class="agreement-check">
+                        <input type="checkbox" id="agreeTerms">
+                        <label for="agreeTerms">我已閱讀並同意<a href="#">服務條款</a>及<a href="#">隱私政策</a></label>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeModal('confirmBindingModal')">取消</button>
+                    <button class="btn btn-primary" onclick="submitBindingRequest()">
+                        <i class="fas fa-paper-plane"></i> 送出申請
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // 綁定碼輸入自動跳轉
+        document.querySelectorAll('.code-digit').forEach((input, index, inputs) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        function openBindingCodeModal() {
+            document.getElementById('bindingCodeModal').style.display = 'flex';
+        }
+
+        function openInstitutionSearch() {
+            document.getElementById('searchInstitutionModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function verifyBindingCode() {
+            const codes = document.querySelectorAll('.code-digit');
+            let code = '';
+            codes.forEach(input => code += input.value);
+            if (code.length === 6) {
+                alert('驗證中，請稍候...');
+                // 模擬驗證成功
+                setTimeout(() => {
+                    closeModal('bindingCodeModal');
+                    document.getElementById('confirmBindingModal').style.display = 'flex';
+                }, 1000);
+            } else {
+                alert('請輸入完整的 6 位數綁定碼');
+            }
+        }
+
+        function selectInstitution(orgId) {
+            closeModal('searchInstitutionModal');
+            document.getElementById('confirmBindingModal').style.display = 'flex';
+        }
+
+        function submitBindingRequest() {
+            if (!document.getElementById('agreeTerms').checked) {
+                alert('請先同意服務條款及隱私政策');
+                return;
+            }
+            alert('綁定申請已送出！請等待機構審核。');
+            closeModal('confirmBindingModal');
+        }
+
+        function confirmUnbind(orgId) {
+            if (confirm('確定要解除與此機構的綁定嗎？解除後將無法使用該機構的專屬服務。')) {
+                alert('已解除綁定');
+            }
+        }
+
+        function openQRScanner() {
+            alert('開啟相機掃描 QR Code（此為模擬功能）');
+        }
+    </script>
+</body>
+</html>
