@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智慧照護平台入口</title>
+  <!-- Font Awesome：依指引使用 CDN 引入 -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-5K7RrQ0bGm3C1G3rEwC7wGk6F4rI6RrM9+G6FJc1xH7rUQW6K1N3lX6y5p0QvQhE0b6WcE0t3Y9w1yQwZ1l4Q=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="css/landing.css" />
+</head>
+<body>
+  <header class="hero" aria-labelledby="page-title">
+    <div class="hero__content">
+      <p class="hero__date" aria-label="今天日期">2026年2月3日</p>
+      <h1 id="page-title" class="hero__title">智慧照護平台入口</h1>
+      <p class="hero__subtitle">快速切換三種角色介面，支援預覽與新分頁開啟</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="switcher" aria-label="角色切換">
+      <div class="switcher__tabs" role="tablist" aria-label="三種介面">
+        <button
+          class="tab is-active"
+          role="tab"
+          aria-selected="true"
+          aria-controls="preview"
+          data-target="1.客戶端/index.html"
+        >
+          <i class="fa-solid fa-user"></i>
+          <span>1. 客戶端</span>
+        </button>
+        <button
+          class="tab"
+          role="tab"
+          aria-selected="false"
+          aria-controls="preview"
+          data-target="2.機構端/index.html"
+        >
+          <i class="fa-solid fa-hospital"></i>
+          <span>2. 機構端</span>
+        </button>
+        <button
+          class="tab"
+          role="tab"
+          aria-selected="false"
+          aria-controls="preview"
+          data-target="3.平台端/index.html"
+        >
+          <i class="fa-solid fa-layer-group"></i>
+          <span>3. 平台端</span>
+        </button>
+      </div>
+
+      <div class="switcher__actions">
+        <button class="action" id="open-new" type="button">
+          <i class="fa-solid fa-up-right-from-square"></i>
+          <span>新分頁開啟</span>
+        </button>
+        <button class="action" id="reload" type="button">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>重新載入預覽</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="preview" aria-label="介面預覽">
+      <!-- 使用 iframe 預覽不同入口頁面 -->
+      <iframe
+        id="preview"
+        title="介面預覽"
+        src="1.客戶端/index.html"
+        loading="lazy"
+      ></iframe>
+      <div class="preview__hint" aria-live="polite">
+        提示：若預覽空白，請確認對應資料夾的 index.html 是否存在。
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 智慧照護平台｜快速切換入口頁</p>
+  </footer>
+
+  <script src="js/landing.js"></script>
+</body>
+</html>
