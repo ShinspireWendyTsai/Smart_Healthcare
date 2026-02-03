@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 服務</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 分頁樣式 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 20px 0;
+            margin-top: 16px;
+        }
+        
+        .page-btn {
+            min-width: 44px;
+            height: 44px;
+            border: 2px solid var(--border-color);
+            background: var(--card-background);
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .page-btn:hover:not(.disabled) {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .page-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        .page-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        /* 類別標籤樣式 */
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            padding: 12px 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            background: var(--card-background);
+            border-bottom: 1px solid var(--divider-color);
+            flex-wrap: nowrap;
+        }
+        
+        .category-tabs::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .category-tabs::-webkit-scrollbar-track {
+            background: var(--background-color);
+            border-radius: 3px;
+        }
+        
+        .category-tabs::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+        
+        .category-tabs::-webkit-scrollbar-thumb:hover {
+            background: var(--text-light);
+        }
+        
+        .category-tab {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: var(--background-color);
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            min-height: 44px;
+        }
+        
+        .category-tab i {
+            font-size: 14px;
+        }
+        
+        .category-tab:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .category-tab.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <div class="header-title">服務項目</div>
+            <div class="header-icons">
+                <!-- 搜尋圖示 -->
+                <i class="fas fa-search" onclick="navigateTo('search.html')"></i>
+            </div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <!-- 服務類別標籤 -->
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all" onclick="filterByCategory('all', this)">
+                    <i class="fas fa-th-large"></i>
+                    <span>全部</span>
+                </div>
+                <div class="category-tab" data-category="居家照護" onclick="filterByCategory('居家照護', this)">
+                    <i class="fas fa-user-nurse"></i>
+                    <span>居家照護</span>
+                </div>
+                <div class="category-tab" data-category="健康檢測" onclick="filterByCategory('健康檢測', this)">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>健康檢測</span>
+                </div>
+                <div class="category-tab" data-category="用藥提醒" onclick="filterByCategory('用藥提醒', this)">
+                    <i class="fas fa-pills"></i>
+                    <span>用藥提醒</span>
+                </div>
+                <div class="category-tab" data-category="營養餐食" onclick="filterByCategory('營養餐食', this)">
+                    <i class="fas fa-utensils"></i>
+                    <span>營養餐食</span>
+                </div>
+                <div class="category-tab" data-category="交通接送" onclick="filterByCategory('交通接送', this)">
+                    <i class="fas fa-car"></i>
+                    <span>交通接送</span>
+                </div>
+                <div class="category-tab" data-category="陪伴服務" onclick="filterByCategory('陪伴服務', this)">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <span>陪伴服務</span>
+                </div>
+                <div class="category-tab" data-category="居家清潔" onclick="filterByCategory('居家清潔', this)">
+                    <i class="fas fa-broom"></i>
+                    <span>居家清潔</span>
+                </div>
+                <div class="category-tab" data-category="輔具租借" onclick="filterByCategory('輔具租借', this)">
+                    <i class="fas fa-wheelchair"></i>
+                    <span>輔具租借</span>
+                </div>
+            </div>
+
+            <!-- 全部服務區域 -->
+            <section class="service-section">
+                <div class="section-title">
+                    <span id="serviceSectionTitle">全部服務</span>
+                    <span id="serviceCount" style="font-size: 14px; color: var(--text-light);"></span>
+                </div>
+                <div class="service-list" id="serviceList">
+                    <!-- 服務卡片由 JavaScript 動態生成 -->
+                </div>
+                
+                <!-- 分頁按鈕 -->
+                <div class="pagination" id="pagination">
+                    <!-- 分頁按鈕由 JavaScript 動態生成 -->
+                </div>
+            </section>
+        </main>
+
+        <!-- 機構綁定彈出視窗 -->
+        <div id="bindingModal" class="modal-overlay" style="display: none;">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h3>請先綁定機構才可操作</h3>
+                    <i class="fas fa-times" onclick="hideBindingModal()"></i>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">機構綁定碼</label>
+                        <input type="text" id="bindingCodeInput" class="form-control" placeholder="請輸入機構綁定碼" style="font-size: 20px; padding: 18px 20px;">
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="hideBindingModal()">取消</button>
+                        <button class="btn btn-primary" onclick="confirmBinding()">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部導覽列 -->
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item active" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // 所有服務資料
+        const allServices = [
+            // 居家照護類別
+            { id: 1, name: '專業居家照護服務', desc: '由專業照服員提供貼心的居家照護', price: 'NT$ 1,200/時', originalPrice: 'NT$ 1,500', category: '居家照護', icon: 'fa-user-nurse', color: '#2D6A4F', colorDark: '#1B4332', needBinding: false },
+            { id: 2, name: '夜間居家照護', desc: '夜間專人陪伴照護服務', price: 'NT$ 1,800/晚', originalPrice: '', category: '居家照護', icon: 'fa-moon', color: '#2D6A4F', colorDark: '#1B4332', needBinding: false },
+            { id: 3, name: '臨時居家照護', desc: '短期臨時照護需求', price: 'NT$ 800/時', originalPrice: '', category: '居家照護', icon: 'fa-clock', color: '#2D6A4F', colorDark: '#1B4332', needBinding: false },
+            
+            // 健康檢測類別
+            { id: 4, name: '健康檢測套餐', desc: '血壓、血糖、心電圖完整檢測', price: 'NT$ 2,500/次', originalPrice: '', category: '健康檢測', icon: 'fa-heartbeat', color: '#2B6CB0', colorDark: '#1A4A7C', needBinding: false },
+            { id: 5, name: '血壓監測服務', desc: '定期血壓追蹤與記錄', price: 'NT$ 300/次', originalPrice: '', category: '健康檢測', icon: 'fa-stethoscope', color: '#2B6CB0', colorDark: '#1A4A7C', needBinding: false },
+            { id: 6, name: '血糖檢測服務', desc: '血糖數值監測與分析', price: 'NT$ 350/次', originalPrice: '', category: '健康檢測', icon: 'fa-tint', color: '#2B6CB0', colorDark: '#1A4A7C', needBinding: false },
+            
+            // 用藥提醒類別
+            { id: 7, name: '用藥提醒服務', desc: '每日用藥時間提醒與記錄', price: 'NT$ 200/月', originalPrice: '', category: '用藥提醒', icon: 'fa-pills', color: '#C53030', colorDark: '#9B2C2C', needBinding: false },
+            { id: 8, name: '藥物管理服務', desc: '藥物分裝與管理服務', price: 'NT$ 500/月', originalPrice: '', category: '用藥提醒', icon: 'fa-prescription-bottle', color: '#C53030', colorDark: '#9B2C2C', needBinding: false },
+            
+            // 營養餐食類別
+            { id: 9, name: '營養餐食配送', desc: '專業營養師調配，每日新鮮配送', price: 'NT$ 180/餐', originalPrice: '', category: '營養餐食', icon: 'fa-utensils', color: '#D4A574', colorDark: '#B8956C', needBinding: false },
+            { id: 10, name: '糖尿病專用餐', desc: '低糖低鈉營養均衡餐點', price: 'NT$ 220/餐', originalPrice: '', category: '營養餐食', icon: 'fa-leaf', color: '#D4A574', colorDark: '#B8956C', needBinding: false },
+            { id: 11, name: '軟質餐食配送', desc: '易咀嚼易消化的軟質餐點', price: 'NT$ 200/餐', originalPrice: '', category: '營養餐食', icon: 'fa-bowl-food', color: '#D4A574', colorDark: '#B8956C', needBinding: false },
+            
+            // 交通接送類別
+            { id: 12, name: '就醫交通接送', desc: '專人專車，安全舒適的接送服務', price: 'NT$ 500/趟', originalPrice: 'NT$ 650', category: '交通接送', icon: 'fa-car', color: '#6B46C1', colorDark: '#4C2889', needBinding: true },
+            { id: 13, name: '復健接送服務', desc: '定期復健療程接送', price: 'NT$ 450/趟', originalPrice: '', category: '交通接送', icon: 'fa-hospital', color: '#6B46C1', colorDark: '#4C2889', needBinding: true },
+            { id: 14, name: '長照專車接送', desc: '日照中心往返接送', price: 'NT$ 400/趟', originalPrice: '', category: '交通接送', icon: 'fa-van-shuttle', color: '#6B46C1', colorDark: '#4C2889', needBinding: true },
+            
+            // 陪伴服務類別
+            { id: 15, name: '長者陪伴服務', desc: '聊天、散步、休閒活動陪伴', price: 'NT$ 400/時', originalPrice: '', category: '陪伴服務', icon: 'fa-hand-holding-heart', color: '#C4873B', colorDark: '#A66B2E', needBinding: false },
+            { id: 16, name: '就醫陪伴服務', desc: '陪同就醫看診、領藥', price: 'NT$ 500/次', originalPrice: '', category: '陪伴服務', icon: 'fa-user-doctor', color: '#C4873B', colorDark: '#A66B2E', needBinding: false },
+            { id: 17, name: '外出活動陪伴', desc: '陪同購物、運動、社交活動', price: 'NT$ 450/時', originalPrice: '', category: '陪伴服務', icon: 'fa-walking', color: '#C4873B', colorDark: '#A66B2E', needBinding: false },
+            
+            // 居家清潔類別
+            { id: 18, name: '居家環境清潔', desc: '專業清潔人員到府服務', price: 'NT$ 1,500/次', originalPrice: '', category: '居家清潔', icon: 'fa-broom', color: '#319795', colorDark: '#256D6D', needBinding: false },
+            { id: 19, name: '深度清潔服務', desc: '廚房、浴室深度清潔', price: 'NT$ 2,500/次', originalPrice: '', category: '居家清潔', icon: 'fa-spray-can-sparkles', color: '#319795', colorDark: '#256D6D', needBinding: false },
+            { id: 20, name: '定期清潔方案', desc: '每週固定清潔服務', price: 'NT$ 5,000/月', originalPrice: 'NT$ 6,000', category: '居家清潔', icon: 'fa-calendar-check', color: '#319795', colorDark: '#256D6D', needBinding: false },
+            
+            // 輔具租借類別
+            { id: 21, name: '輪椅租借', desc: '各式輪椅短期租借服務', price: 'NT$ 500/週', originalPrice: '', category: '輔具租借', icon: 'fa-wheelchair', color: '#DD6B20', colorDark: '#C05621', needBinding: false },
+            { id: 22, name: '電動床租借', desc: '居家照護電動床租借', price: 'NT$ 2,000/月', originalPrice: '', category: '輔具租借', icon: 'fa-bed', color: '#DD6B20', colorDark: '#C05621', needBinding: false },
+            { id: 23, name: '助行器租借', desc: '各式助行器材租借', price: 'NT$ 300/週', originalPrice: '', category: '輔具租借', icon: 'fa-crutch', color: '#DD6B20', colorDark: '#C05621', needBinding: false },
+            { id: 24, name: '氧氣機租借', desc: '居家氧氣設備租借', price: 'NT$ 3,000/月', originalPrice: '', category: '輔具租借', icon: 'fa-lungs', color: '#DD6B20', colorDark: '#C05621', needBinding: false },
+        ];
+
+        // 分頁設定
+        const itemsPerPage = 10;
+        let currentPage = 1;
+        let currentCategory = 'all';
+        let filteredServices = [...allServices];
+
+        // 頁面載入時初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 檢查 URL 參數是否有指定類別
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            
+            if (categoryParam) {
+                // 找到對應的類別標籤並觸發篩選
+                const targetTab = document.querySelector(`.category-tab[data-category="${categoryParam}"]`);
+                if (targetTab) {
+                    filterByCategory(categoryParam, targetTab);
+                } else {
+                    renderServices();
+                }
+            } else {
+                renderServices();
+            }
+        });
+
+        /**
+         * 根據類別篩選服務
+         */
+        function filterByCategory(category, element) {
+            // 更新選中狀態
+            document.querySelectorAll('.category-tab').forEach(item => {
+                item.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // 篩選服務
+            currentCategory = category;
+            currentPage = 1;
+            
+            if (category === 'all') {
+                filteredServices = [...allServices];
+                document.getElementById('serviceSectionTitle').textContent = '全部服務';
+            } else {
+                filteredServices = allServices.filter(service => service.category === category);
+                document.getElementById('serviceSectionTitle').textContent = category + '服務';
+            }
+
+            renderServices();
+        }
+
+        /**
+         * 渲染服務列表
+         */
+        function renderServices() {
+            const serviceList = document.getElementById('serviceList');
+            const totalItems = filteredServices.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            // 計算當前頁的服務
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+            const currentServices = filteredServices.slice(startIndex, endIndex);
+
+            // 更新服務數量顯示
+            document.getElementById('serviceCount').textContent = `(共 ${totalItems} 項)`;
+
+            // 生成服務卡片 HTML
+            let html = '';
+            currentServices.forEach(service => {
+                const onclickHandler = service.needBinding 
+                    ? `onclick="event.stopPropagation(); showBindingModal();"` 
+                    : `onclick="navigateTo('service-detail.html?id=${service.id}')"`;
+                
+                html += `
+                    <div class="service-card" data-service-id="${service.id}" data-category="${service.category}" ${onclickHandler}>
+                        <div class="service-image" style="background: linear-gradient(145deg, ${service.color}, ${service.colorDark});">
+                            <i class="fas ${service.icon}"></i>
+                        </div>
+                        <div class="service-info">
+                            <div>
+                                <div class="service-name">${service.name}</div>
+                                <div class="service-desc">${service.desc}</div>
+                            </div>
+                            <div class="service-price">
+                                ${service.price}
+                                ${service.originalPrice ? `<span class="original">${service.originalPrice}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            serviceList.innerHTML = html;
+
+            // 渲染分頁按鈕
+            renderPagination(totalPages);
+        }
+
+        /**
+         * 渲染分頁按鈕
+         */
+        function renderPagination(totalPages) {
+            const pagination = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            
+            // 上一頁按鈕
+            html += `<button class="page-btn ${currentPage === 1 ? 'disabled' : ''}" 
+                     onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                     <i class="fas fa-chevron-left"></i>
+                     </button>`;
+
+            // 頁碼按鈕
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="page-btn ${currentPage === i ? 'active' : ''}" 
+                         onclick="goToPage(${i})">${i}</button>`;
+            }
+
+            // 下一頁按鈕
+            html += `<button class="page-btn ${currentPage === totalPages ? 'disabled' : ''}" 
+                     onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                     <i class="fas fa-chevron-right"></i>
+                     </button>`;
+
+            pagination.innerHTML = html;
+        }
+
+        /**
+         * 跳轉到指定頁面
+         */
+        function goToPage(page) {
+            const totalPages = Math.ceil(filteredServices.length / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            renderServices();
+            
+            // 滾動到服務列表頂部
+            document.querySelector('.service-section').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

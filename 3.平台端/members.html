@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員列表 - 平台端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/platform.css">
+    <style>
+        .member-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--info-color);
+        }
+
+        .member-badge.family {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success-color);
+        }
+
+        .member-badge.caregiver {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--warning-color);
+        }
+
+        .member-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .member-note {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .detail-item {
+            padding: 12px 14px;
+            background: var(--background-color);
+            border-radius: 10px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">平台端管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <!-- 主選單 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+                    
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+                    
+                    <div class="menu-item" data-submenu="org-submenu">
+                        <i class="fas fa-building"></i>
+                        <span>機構管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="org-submenu">
+                        <a href="organizations.html" class="menu-item">
+                            <span>機構列表</span>
+                        </a>
+                        <a href="org-review.html" class="menu-item">
+                            <span>機構審核</span>
+                        </a>
+                    </div>
+                    
+                    <div class="menu-item expanded" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu show" id="member-submenu">
+                        <a href="members.html" class="menu-item active">
+                            <span>會員列表</span>
+                        </a>
+                        <a href="member-status.html" class="menu-item">
+                            <span>會員狀態管理</span>
+                        </a>
+                    </div>
+                    
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單管理</span>
+                    </a>
+                </div>
+                
+                <!-- 服務設定 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">服務設定</div>
+                    
+                    <a href="categories.html" class="menu-item">
+                        <i class="fas fa-tags"></i>
+                        <span>服務類別管理</span>
+                    </a>
+                    
+                    <a href="services.html" class="menu-item">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>服務管理</span>
+                    </a>
+                </div>
+                
+                <!-- 平台功能 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">平台功能</div>
+                    
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>平台公告管理</span>
+                    </a>
+                    
+                    <a href="tickets.html" class="menu-item">
+                        <i class="fas fa-headset"></i>
+                        <span>平台客服單管理</span>
+                    </a>
+                </div>
+                
+                <!-- 系統管理 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="system-submenu">
+                        <a href="admins.html" class="menu-item">
+                            <span>使用者管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item">
+                            <span>操作紀錄查詢</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>會員列表</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">平台管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">會員列表</h1>
+                        <p class="page-subtitle">檢視個案會員資訊、綁定狀態與服務使用狀況。</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">會員清單</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="filter-section" style="margin-bottom: 16px;">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label class="filter-label">關鍵字搜尋</label>
+                                    <div class="search-input">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" class="form-control" placeholder="搜尋姓名、手機或個案編號">
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">狀態篩選</label>
+                                    <select class="form-select">
+                                        <option>全部狀態</option>
+                                        <option>已綁定</option>
+                                        <option>待綁定</option>
+                                        <option>停用</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">角色篩選</label>
+                                    <select class="form-select">
+                                        <option>全部角色</option>
+                                        <option>個案</option>
+                                        <option>家屬</option>
+                                        <option>關懷者</option>
+                                    </select>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="btn btn-outline">
+                                        <i class="fas fa-redo"></i> 重置
+                                    </button>
+                                    <button class="btn btn-outline">
+                                        <i class="fas fa-search"></i> 查詢
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>會員資訊</th>
+                                        <th>個案編號</th>
+                                        <th>角色</th>
+                                        <th>綁定機構</th>
+                                        <th>狀態</th>
+                                        <th>最後登入</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="org-info">
+                                                <div class="org-logo">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="org-name">王小明</div>
+                                                    <div class="org-email">0912-345-678</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>PT2024001234</td>
+                                        <td><span class="member-badge"><i class="fas fa-user"></i> 個案</span></td>
+                                        <td>陽光照護中心</td>
+                                        <td><span class="status-badge status-active">已綁定</span></td>
+                                        <td>2026/02/03 09:10</td>
+                                        <td>
+                                            <div class="member-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openMemberModal()"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-ban"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="org-info">
+                                                <div class="org-logo">
+                                                    <i class="fas fa-user-friends"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="org-name">王小美</div>
+                                                    <div class="org-email">0912-***-678</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>FAM2024012201</td>
+                                        <td><span class="member-badge family"><i class="fas fa-heart"></i> 家屬</span></td>
+                                        <td>陽光照護中心</td>
+                                        <td><span class="status-badge status-active">已綁定</span></td>
+                                        <td>2026/02/02 20:18</td>
+                                        <td>
+                                            <div class="member-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openMemberModal()"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-ban"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="org-info">
+                                                <div class="org-logo">
+                                                    <i class="fas fa-user-nurse"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="org-name">李小華</div>
+                                                    <div class="org-email">caregiver@sunnycare.com</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>CARE2023120903</td>
+                                        <td><span class="member-badge caregiver"><i class="fas fa-stethoscope"></i> 關懷者</span></td>
+                                        <td>安心居服協會</td>
+                                        <td><span class="status-badge status-pending">待綁定</span></td>
+                                        <td>尚未登入</td>
+                                        <td>
+                                            <div class="member-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openMemberModal()"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-ban"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="memberModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">會員詳情</div>
+                    <button class="modal-close" onclick="closeMemberModal()"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">會員姓名</div>
+                            <div class="detail-value">王小明</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">角色</div>
+                            <div class="detail-value">個案</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">手機</div>
+                            <div class="detail-value">0912-345-678</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">個案編號</div>
+                            <div class="detail-value">PT2024001234</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">綁定機構</div>
+                            <div class="detail-value">陽光照護中心</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">綁定狀態</div>
+                            <div class="detail-value">已綁定</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <div class="detail-label">備註</div>
+                        <div class="member-note">個案由家屬代操作，需協助預約。</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeMemberModal()">關閉</button>
+                    <button class="btn btn-primary" onclick="closeMemberModal()">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/platform.js"></script>
+    <script>
+        function openMemberModal() {
+            document.getElementById('memberModal').classList.add('show');
+        }
+
+        function closeMemberModal() {
+            document.getElementById('memberModal').classList.remove('show');
+        }
+    </script>
+</body>
+</html>

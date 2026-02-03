@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>綁定設定 - 機構端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+                    
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+                    
+                    <div class="menu-item expanded" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu show" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>個案列表</span>
+                        </a>
+                        <a href="member-binding.html" class="menu-item active">
+                            <span>綁定設定</span>
+                        </a>
+                        <a href="member-review.html" class="menu-item">
+                            <span>綁定審核</span>
+                        </a>
+                    </div>
+                    
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單查詢</span>
+                    </a>
+                    
+                    <a href="revenue.html" class="menu-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>分潤報表</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">機構功能</div>
+                    
+                    <a href="organization.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>機構資訊管理</span>
+                    </a>
+                    
+                    <a href="admins.html" class="menu-item">
+                        <i class="fas fa-user-shield"></i>
+                        <span>管理者權限管理</span>
+                    </a>
+                    
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>機構公告管理</span>
+                    </a>
+                    
+                    <a href="chat.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>個案關懷通訊</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>綁定設定</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">綁定設定</h1>
+                        <p class="page-subtitle">管理機構的綁定碼與 QR Code，讓個案輕鬆綁定您的機構</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                    <!-- 機構 QR Code -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-qrcode"></i> 機構綁定 QR Code
+                            </h3>
+                            <button class="btn btn-sm btn-outline" onclick="refreshQRCode()">
+                                <i class="fas fa-redo"></i> 重新產生
+                            </button>
+                        </div>
+                        <div class="card-body" style="text-align: center;">
+                            <div class="qr-code-container">
+                                <div class="qr-code-placeholder">
+                                    <i class="fas fa-qrcode" style="font-size: 150px; color: #333;"></i>
+                                </div>
+                            </div>
+                            <div class="qr-info">
+                                <p><strong>機構名稱：</strong>陽光長照中心</p>
+                                <p><strong>機構編號：</strong>ORG2024001</p>
+                            </div>
+                            <div class="qr-actions">
+                                <button class="btn btn-primary" onclick="downloadQRCode()">
+                                    <i class="fas fa-download"></i> 下載 QR Code
+                                </button>
+                                <button class="btn btn-outline" onclick="printQRCode()">
+                                    <i class="fas fa-print"></i> 列印
+                                </button>
+                            </div>
+                            <div class="qr-tips">
+                                <i class="fas fa-info-circle"></i>
+                                <span>可列印 QR Code 張貼於機構明顯處，方便個案掃碼綁定</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 綁定碼設定 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-keyboard"></i> 綁定碼設定
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- 目前綁定碼 -->
+                            <div class="binding-code-display">
+                                <label>目前機構綁定碼</label>
+                                <div class="code-box">
+                                    <span class="code-digit">A</span>
+                                    <span class="code-digit">B</span>
+                                    <span class="code-digit">C</span>
+                                    <span class="code-digit">1</span>
+                                    <span class="code-digit">2</span>
+                                    <span class="code-digit">3</span>
+                                </div>
+                                <div class="code-status active">
+                                    <i class="fas fa-check-circle"></i> 啟用中
+                                </div>
+                            </div>
+
+                            <div class="code-actions">
+                                <button class="btn btn-primary" onclick="regenerateCode()">
+                                    <i class="fas fa-sync"></i> 重新產生綁定碼
+                                </button>
+                                <button class="btn btn-outline" onclick="copyCode()">
+                                    <i class="fas fa-copy"></i> 複製綁定碼
+                                </button>
+                            </div>
+
+                            <hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;">
+
+                            <!-- 一次性綁定碼 -->
+                            <div class="onetime-code-section">
+                                <h4><i class="fas fa-key"></i> 產生一次性綁定碼</h4>
+                                <p class="section-desc">為特定個案產生專屬的一次性綁定碼，使用後即失效</p>
+                                
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 1;">
+                                        <label>個案姓名</label>
+                                        <input type="text" class="form-control" placeholder="請輸入個案姓名">
+                                    </div>
+                                    <div class="form-group" style="flex: 1;">
+                                        <label>有效期限</label>
+                                        <select class="form-control">
+                                            <option value="1">1 天</option>
+                                            <option value="3">3 天</option>
+                                            <option value="7" selected>7 天</option>
+                                            <option value="30">30 天</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-accent" onclick="generateOneTimeCode()">
+                                    <i class="fas fa-plus"></i> 產生一次性綁定碼
+                                </button>
+                            </div>
+
+                            <!-- 已產生的一次性綁定碼列表 -->
+                            <div class="onetime-code-list">
+                                <h4>已產生的一次性綁定碼</h4>
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>綁定碼</th>
+                                            <th>指定個案</th>
+                                            <th>產生時間</th>
+                                            <th>有效期限</th>
+                                            <th>狀態</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>XY7890</code></td>
+                                            <td>王小明</td>
+                                            <td>2024/01/27</td>
+                                            <td>2024/02/03</td>
+                                            <td><span class="status-badge active">可使用</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline" onclick="copyOneTimeCode('XY7890')">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteOneTimeCode('XY7890')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>PQ4567</code></td>
+                                            <td>李小華</td>
+                                            <td>2024/01/25</td>
+                                            <td>2024/02/01</td>
+                                            <td><span class="status-badge used">已使用</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline" disabled>
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteOneTimeCode('PQ4567')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>MN1234</code></td>
+                                            <td>張大偉</td>
+                                            <td>2024/01/20</td>
+                                            <td>2024/01/27</td>
+                                            <td><span class="status-badge expired">已過期</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline" disabled>
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteOneTimeCode('MN1234')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 綁定設定 -->
+                <div class="card" style="margin-top: 25px;">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-cog"></i> 綁定流程設定
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="settings-grid">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">需要審核新綁定申請</div>
+                                    <div class="setting-desc">開啟後，所有新的綁定申請都需要管理員手動審核後才會生效</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <div class="setting-title">發送綁定通知</div>
+                                    <div class="setting-desc">當有新綁定申請或綁定狀態變更時，發送通知給管理員</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr style="margin: 25px 0; border: none; border-top: 1px solid #e0e0e0;">
+
+                        <div class="form-row">
+                            <div class="form-group" style="flex: 1;">
+                                <label>預設關懷者</label>
+                                <select class="form-control">
+                                    <option value="">請選擇預設關懷者</option>
+                                    <option value="1">陳小華</option>
+                                    <option value="2">林小美</option>
+                                    <option value="3">王大明</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="text-align: right; margin-top: 20px;">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-save"></i> 儲存設定
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/admin.js"></script>
+    <script>
+        function refreshQRCode() {
+            if (confirm('確定要重新產生 QR Code 嗎？原有的 QR Code 將會失效。')) {
+                alert('QR Code 已重新產生');
+            }
+        }
+
+        function downloadQRCode() {
+            alert('QR Code 下載中...');
+        }
+
+        function printQRCode() {
+            window.print();
+        }
+
+        function regenerateCode() {
+            if (confirm('確定要重新產生綁定碼嗎？原有的綁定碼將會失效。')) {
+                alert('綁定碼已重新產生');
+            }
+        }
+
+        function copyCode() {
+            navigator.clipboard.writeText('ABC123');
+            alert('綁定碼已複製到剪貼簿');
+        }
+
+        function generateOneTimeCode() {
+            alert('一次性綁定碼已產生：ZZ9999');
+        }
+
+        function copyOneTimeCode(code) {
+            navigator.clipboard.writeText(code);
+            alert('綁定碼 ' + code + ' 已複製到剪貼簿');
+        }
+
+        function deleteOneTimeCode(code) {
+            if (confirm('確定要刪除此綁定碼嗎？')) {
+                alert('綁定碼 ' + code + ' 已刪除');
+            }
+        }
+    </script>
+</body>
+</html>

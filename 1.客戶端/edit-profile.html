@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 資料修改</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <div class="header-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="header-title">資料修改</div>
+            <div class="header-icons">
+                <i class="fas fa-shield-heart"></i>
+            </div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <!-- 頭部資訊 -->
+            <section class="profile-edit-header">
+                <div class="avatar-upload">
+                    <div class="profile-edit-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <div class="profile-edit-name">王小明</div>
+                        <div class="profile-edit-id">個案編號：PT2024001234</div>
+                        <button class="btn btn-outline btn-sm" type="button">更換照片</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 基本資料 -->
+            <section class="card">
+                <div class="card-header">基本資料</div>
+                <div class="form-group">
+                    <label for="fullName">姓名</label>
+                    <input id="fullName" class="form-control" type="text" value="王小明">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender">性別</label>
+                        <select id="gender" class="form-control">
+                            <option selected>男</option>
+                            <option>女</option>
+                            <option>其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthday">生日</label>
+                        <input id="birthday" class="form-control" type="date" value="1955-06-18">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="idNumber">身分證字號</label>
+                    <input id="idNumber" class="form-control" type="text" value="A123456789">
+                    <div class="form-hint">為保障安全，請確認資訊正確。</div>
+                </div>
+            </section>
+
+            <!-- 聯絡資訊 -->
+            <section class="card">
+                <div class="card-header">聯絡資訊</div>
+                <div class="form-group">
+                    <label for="phone">手機號碼</label>
+                    <input id="phone" class="form-control" type="tel" value="0912-345-678">
+                </div>
+                <div class="form-group">
+                    <label for="email">電子郵件</label>
+                    <input id="email" class="form-control" type="email" value="mwang@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="address">居住地址</label>
+                    <input id="address" class="form-control" type="text" value="台中市西區民生路一段 88 號 6F">
+                </div>
+            </section>
+
+            <!-- 緊急聯絡人 -->
+            <section class="card">
+                <div class="card-header">緊急聯絡人</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="emergencyName">聯絡人姓名</label>
+                        <input id="emergencyName" class="form-control" type="text" value="王小美">
+                    </div>
+                    <div class="form-group">
+                        <label for="emergencyRelation">關係</label>
+                        <input id="emergencyRelation" class="form-control" type="text" value="女兒">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="emergencyPhone">聯絡人電話</label>
+                    <input id="emergencyPhone" class="form-control" type="tel" value="0912-***-678">
+                </div>
+            </section>
+
+            <!-- 健康提醒 -->
+            <section class="card">
+                <div class="card-header">健康提醒</div>
+                <div class="form-group">
+                    <label for="allergy">過敏資訊</label>
+                    <textarea id="allergy" class="form-control" rows="3">青黴素過敏</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="medicalHistory">慢性病史</label>
+                    <textarea id="medicalHistory" class="form-control" rows="3">高血壓、糖尿病</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="notes">其他備註</label>
+                    <textarea id="notes" class="form-control" rows="3">需協助上下樓梯</textarea>
+                </div>
+            </section>
+
+            <!-- 操作區 -->
+            <section class="card">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <button class="btn btn-primary btn-block" type="button" id="saveProfile">確認更新</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('saveProfile').addEventListener('click', function() {
+            showToast('已更新個人資料', 'success');
+        });
+    </script>
+</body>
+</html>
