@@ -370,40 +370,71 @@
                     <button class="modal-close" onclick="closeMemberModal()"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <div class="detail-label">會員姓名</div>
-                            <div class="detail-value">王小明</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">角色</div>
-                            <div class="detail-value">個案</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">手機</div>
-                            <div class="detail-value">0912-345-678</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">個案編號</div>
-                            <div class="detail-value">PT2024001234</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">綁定機構</div>
-                            <div class="detail-value">陽光照護中心</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">綁定狀態</div>
-                            <div class="detail-value">已綁定</div>
+                    <div style="background: #f8f9fa; border-radius: 10px; padding: 16px;">
+                        <div style="font-weight: bold; margin-bottom: 12px;">個案基本資料</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px;">
+                            <div><span style="color:#888;">姓名：</span>王小明</div>
+                            <div><span style="color:#888;">性別：</span>男</div>
+                            <div><span style="color:#888;">生日：</span>1955/06/18</div>
+                            <div><span style="color:#888;">身分證字號：</span>A123456789</div>
+                            <div><span style="color:#888;">手機：</span>0912-345-678</div>
+                            <div><span style="color:#888;">Email：</span>mwang@example.com</div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">地址：</span>台中市西區民生路一段 88 號 6F</div>
+                            <div><span style="color:#888;">緊急聯絡人：</span>王小美</div>
+                            <div><span style="color:#888;">關係：</span>女兒</div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">緊急電話：</span>0912-***-678</div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">過敏：</span>青黴素過敏</div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">慢性病史：</span>高血壓、糖尿病</div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">其他備註：</span>需協助上下樓梯</div>
                         </div>
                     </div>
+
                     <div style="margin-top: 16px;">
-                        <div class="detail-label">備註</div>
-                        <div class="member-note">個案由家屬代操作，需協助預約。</div>
+                        <div style="background: #fff; border: 1px solid #e9ecef; border-radius: 10px; padding: 16px;">
+                            <div style="font-weight: bold; margin-bottom: 10px;">個案關懷者綁定</div>
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 8px; font-size: 14px;">
+                                <div><span style="color:#888;">機構：</span>陽光照護中心（ORG2024001）</div>
+                                <div><span style="color:#888;">關懷者：</span>陳小華</div>
+                                <div><span style="color:#888;">狀態：</span><span style="color:#27ae60; font-weight: 600;">已綁定</span></div>
+                                <div><span style="color:#888;">綁定時間：</span>2024/01/15</div>
+                            </div>
+                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0; font-size: 13px; color: #666;">
+                                待審核申請：幸福居家照護（ORG2024025）｜申請時間：2024/01/25
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 16px;">
+                        <div style="background: #fff; border: 1px solid #e9ecef; border-radius: 10px; padding: 16px;">
+                            <div style="font-weight: bold; margin-bottom: 10px;">家人綁定</div>
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 14px;">
+                                <div style="display: flex; justify-content: space-between; gap: 8px;">
+                                    <div>
+                                        <div style="font-weight: 600;">王小美（女兒）</div>
+                                        <div style="color:#666; font-size: 12px;">0912-***-678</div>
+                                    </div>
+                                    <div style="text-align: right; font-size: 12px; color:#666;">
+                                        查看訂單｜接收通知｜代付款
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; gap: 8px;">
+                                    <div>
+                                        <div style="font-weight: 600;">王大明（兒子）</div>
+                                        <div style="color:#666; font-size: 12px;">0923-***-456</div>
+                                    </div>
+                                    <div style="text-align: right; font-size: 12px; color:#666;">
+                                        查看訂單｜接收通知
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0; font-size: 13px; color: #666;">
+                                已發送邀請：0934-567-890（配偶）｜邀請時間：2024/01/26
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeMemberModal()">關閉</button>
-                    <button class="btn btn-primary" onclick="closeMemberModal()">確認</button>
+                    <button class="btn btn-primary" onclick="closeMemberModal()">關閉</button>
                 </div>
             </div>
         </div>
