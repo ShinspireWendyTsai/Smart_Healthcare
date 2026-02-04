@@ -766,21 +766,19 @@
                                     <div class="input-group">
                                         <span class="input-group-text">$</span>
                                         <input type="number" class="form-control" placeholder="0">
-                                        <select class="form-select" style="max-width: 100px;">
-                                            <option>/次</option>
-                                            <option>/小時</option>
-                                            <option>/天</option>
-                                            <option>/月</option>
-                                        </select>
+                                        <input type="text" class="form-control" placeholder="/次" style="max-width: 100px;">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label required">平台分潤</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" placeholder="10" value="10">
-                                        <span class="input-group-text">%</span>
+                                        <select class="form-select" style="max-width: 110px;">
+                                            <option value="percent">%</option>
+                                            <option value="amount">金額</option>
+                                        </select>
                                     </div>
-                                    <p class="form-hint">平台從每筆訂單收取的分潤比例</p>
+                                    <p class="form-hint">可輸入分潤比例（%）或固定金額</p>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">分潤金額預估</label>

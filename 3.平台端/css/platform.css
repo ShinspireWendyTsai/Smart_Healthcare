@@ -1010,10 +1010,17 @@ a {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: nowrap;
 }
 
 .date-separator {
     color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.date-range .form-control {
+    min-width: 0;
+    width: 140px;
 }
 
 /* 價格區間 */
@@ -1111,6 +1118,11 @@ a {
 .filter-group {
     flex: 1;
     min-width: 180px;
+}
+
+.date-range-group {
+    flex: 1.4;
+    min-width: 320px;
 }
 
 .filter-label {

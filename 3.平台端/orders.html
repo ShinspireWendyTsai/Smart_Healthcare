@@ -217,7 +217,7 @@
                                     <input type="text" class="form-control" placeholder="輸入訂單編號">
                                 </div>
                                 
-                                <div class="filter-group">
+                                <div class="filter-group date-range-group">
                                     <label class="filter-label">日期區間</label>
                                     <div class="date-range">
                                         <input type="date" class="form-control">
@@ -524,41 +524,57 @@
                 </div>
                 <div class="modal-body">
                     <div class="order-detail">
-                        <!-- 訂單狀態時間軸 -->
-                        <div class="order-timeline">
-                            <div class="timeline-item completed">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-check"></i>
+                        <div class="detail-section">
+                            <h5 class="detail-section-title">
+                                <i class="fas fa-tasks"></i>
+                                訂單狀態
+                            </h5>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end;">
+                                <div class="detail-item">
+                                    <label>目前狀態</label>
+                                    <span class="status-badge status-processing">處理中</span>
                                 </div>
-                                <div class="timeline-content">
-                                    <div class="timeline-title">訂單建立</div>
-                                    <div class="timeline-time">2026/01/28 10:30</div>
-                                </div>
-                            </div>
-                            <div class="timeline-item completed">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="timeline-title">付款完成</div>
-                                    <div class="timeline-time">2026/01/28 10:35</div>
-                                </div>
-                            </div>
-                            <div class="timeline-item active">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-sync-alt fa-spin"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="timeline-title">服務進行中</div>
-                                    <div class="timeline-time">預計完成：2026/02/28</div>
+                                <div class="detail-item">
+                                    <label>手動調整狀態</label>
+                                    <select class="form-select">
+                                        <option>待付款</option>
+                                        <option>已付款</option>
+                                        <option selected>處理中</option>
+                                        <option>已完成</option>
+                                        <option>已取消</option>
+                                        <option>退款申請</option>
+                                        <option>已退款</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="timeline-item">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-flag-checkered"></i>
+                            <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 12px;">
+                                <textarea class="form-control" rows="2" placeholder="請輸入狀態說明（例如：已聯繫機構確認時程）"></textarea>
+                                <button class="btn btn-sm btn-primary" style="align-self: end;">更新狀態</button>
+                            </div>
+                            <div style="margin-top: 16px;">
+                                <div style="font-size: 13px; color: #666; margin-bottom: 8px;">狀態歷程</div>
+                                <div class="order-notes">
+                                <div class="note-item">
+                                    <div class="note-header">
+                                        <span class="note-author">系統</span>
+                                        <span class="note-time">2026/01/28 10:30</span>
+                                    </div>
+                                    <div class="note-content">狀態：訂單建立</div>
                                 </div>
-                                <div class="timeline-content">
-                                    <div class="timeline-title">服務完成</div>
+                                <div class="note-item">
+                                    <div class="note-header">
+                                        <span class="note-author">系統</span>
+                                        <span class="note-time">2026/01/28 10:35</span>
+                                    </div>
+                                    <div class="note-content">狀態：已付款</div>
+                                </div>
+                                <div class="note-item">
+                                    <div class="note-header">
+                                        <span class="note-author">平台管理員</span>
+                                        <span class="note-time">2026/01/30 09:20</span>
+                                    </div>
+                                    <div class="note-content">狀態：處理中｜已與機構確認服務排程</div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -685,7 +701,6 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline" onclick="closeModal('orderDetailModal')">關閉</button>
-                    <button class="btn btn-warning">變更狀態</button>
                     <button class="btn btn-primary">列印訂單</button>
                 </div>
             </div>
