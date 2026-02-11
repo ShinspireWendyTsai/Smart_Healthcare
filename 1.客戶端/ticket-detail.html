@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 客服單詳情</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .ticket-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .ticket-subject {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+        }
+
+        .ticket-meta {
+            padding: var(--spacing-lg);
+            display: grid;
+            gap: 10px;
+        }
+
+        .timeline {
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-top: 8px;
+            background: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.12);
+            flex-shrink: 0;
+        }
+
+        .timeline-item.staff .timeline-dot {
+            background: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.18);
+        }
+
+        .timeline-card {
+            flex: 1;
+            background: var(--card-background);
+            border: 1px solid var(--divider-color);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .timeline-author {
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .timeline-content {
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">客服單詳情</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="card">
+                <div class="card-header ticket-summary">
+                    <div class="ticket-subject" id="ticketSubject">客服單</div>
+                    <span class="badge badge-accent" id="ticketStatus">已解決</span>
+                </div>
+                <div class="detail-list" id="ticketMeta">
+                    <div class="detail-row">
+                        <span class="detail-label">客服單號</span>
+                        <span class="detail-value" id="ticketNumber">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">問題類型</span>
+                        <span class="detail-value" id="ticketCategory">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">建立時間</span>
+                        <span class="detail-value" id="ticketCreated">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">最新更新</span>
+                        <span class="detail-value" id="ticketUpdated">-</span>
+                    </div>
+                    <div class="detail-row" id="ticketOrderRow">
+                        <span class="detail-label">關聯訂單</span>
+                        <span class="detail-value" id="ticketOrder">-</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <div>客服回覆紀錄</div>
+                </div>
+                <div class="timeline" id="ticketTimeline"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        const ticketData = {
+            1: {
+                subject: '訂單付款問題',
+                status: '已解決',
+                number: 'TKT202501250001',
+                category: '付款問題',
+                orderId: 'ORD202501250010',
+                createdAt: '2025/01/25 09:20',
+                updatedAt: '2025/01/26 15:40',
+                records: [
+                    {
+                        author: '您',
+                        role: 'user',
+                        time: '2025/01/25 09:20',
+                        content: '已完成付款但狀態仍顯示待付款，請協助確認。'
+                    },
+                    {
+                        author: '客服小芳',
+                        role: 'staff',
+                        time: '2025/01/25 10:05',
+                        content: '已收到您的問題，正在確認金流回報。'
+                    },
+                    {
+                        author: '客服小芳',
+                        role: 'staff',
+                        time: '2025/01/26 15:40',
+                        content: '付款已補登完成，訂單狀態已更新為已付款。'
+                    }
+                ]
+            },
+            2: {
+                subject: '服務時間諮詢',
+                status: '已解決',
+                number: 'TKT202501200004',
+                category: '服務安排',
+                orderId: 'ORD202501200003',
+                createdAt: '2025/01/20 11:10',
+                updatedAt: '2025/01/21 16:25',
+                records: [
+                    {
+                        author: '您',
+                        role: 'user',
+                        time: '2025/01/20 11:10',
+                        content: '想確認服務是否能安排在週末上午時段。'
+                    },
+                    {
+                        author: '客服怡婷',
+                        role: 'staff',
+                        time: '2025/01/20 13:45',
+                        content: '週末上午可安排，我們會再確認可用人員時段。'
+                    },
+                    {
+                        author: '客服怡婷',
+                        role: 'staff',
+                        time: '2025/01/21 16:25',
+                        content: '已協助安排週六 10:00-12:00，稍後會更新訂單內容。'
+                    }
+                ]
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const ticketId = params.get('id') || '1';
+        const ticket = ticketData[ticketId] || ticketData[1];
+
+        const ticketSubject = document.getElementById('ticketSubject');
+        const ticketStatus = document.getElementById('ticketStatus');
+        const ticketNumber = document.getElementById('ticketNumber');
+        const ticketCategory = document.getElementById('ticketCategory');
+        const ticketCreated = document.getElementById('ticketCreated');
+        const ticketUpdated = document.getElementById('ticketUpdated');
+        const ticketOrder = document.getElementById('ticketOrder');
+        const ticketOrderRow = document.getElementById('ticketOrderRow');
+        const ticketTimeline = document.getElementById('ticketTimeline');
+
+        if (ticketSubject) ticketSubject.textContent = ticket.subject;
+        if (ticketStatus) {
+            ticketStatus.textContent = ticket.status;
+            ticketStatus.classList.remove('badge-accent', 'badge-primary');
+            ticketStatus.classList.add(ticket.status === '已解決' ? 'badge-accent' : 'badge-primary');
+        }
+        if (ticketNumber) ticketNumber.textContent = ticket.number;
+        if (ticketCategory) ticketCategory.textContent = ticket.category;
+        if (ticketCreated) ticketCreated.textContent = ticket.createdAt;
+        if (ticketUpdated) ticketUpdated.textContent = ticket.updatedAt;
+        if (ticketOrder) ticketOrder.textContent = ticket.orderId || '無';
+        if (ticketOrderRow) {
+            ticketOrderRow.style.display = ticket.orderId ? 'grid' : 'none';
+        }
+
+        if (ticketTimeline) {
+            ticketTimeline.innerHTML = ticket.records.map((record) => {
+                const roleClass = record.role === 'staff' ? 'staff' : 'user';
+                return `
+                    <div class="timeline-item ${roleClass}">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-meta">
+                                <span class="timeline-author">${record.author}</span>
+                                <span>${record.time}</span>
+                            </div>
+                            <div class="timeline-content">${record.content}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        if (ticket && ticket.subject) {
+            document.title = `智慧照護平台 - ${ticket.subject}`;
+        }
+    </script>
+</body>
+</html>

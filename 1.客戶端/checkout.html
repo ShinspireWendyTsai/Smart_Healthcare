@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-    <title>智慧照護平台 - 購物車</title>
+    <title>智慧照護平台 - 下訂單</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
@@ -13,7 +13,7 @@
     <div class="mobile-container">
         <header class="header">
             <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
-            <div class="header-title">購物車</div>
+            <div class="header-title">下訂單</div>
             <div style="width: 20px;"></div>
         </header>
 
@@ -25,9 +25,6 @@
                 </div>
                 <div class="order-body">
                     <div class="order-item" data-price="2400">
-                        <label class="order-select">
-                            <input type="checkbox" checked>
-                        </label>
                         <div class="order-item-info">
                             <div class="order-item-name">專業居家照護服務</div>
                             <div class="order-item-spec">2 小時 / 次 · 到府服務</div>
@@ -35,22 +32,11 @@
                         </div>
                         <div class="order-item-price">NT$ 2,400</div>
                     </div>
-                    <div class="order-item" data-price="1260">
-                        <label class="order-select">
-                            <input type="checkbox" checked>
-                        </label>
-                        <div class="order-item-info">
-                            <div class="order-item-name">營養餐食配送</div>
-                            <div class="order-item-spec">每日配送 · 7 日方案</div>
-                            <div class="order-item-spec">配送起始：2026/02/16</div>
-                        </div>
-                        <div class="order-item-price">NT$ 1,260</div>
-                    </div>
                 </div>
                 <div class="order-footer">
                     <div class="order-total">
-                        已選 <span id="selectedCount" class="selected-count">2</span> 項，合計：
-                        <span id="selectedTotal" class="total-amount">NT$ 3,660</span>
+                        合計：
+                        <span class="total-amount">NT$ 2,400</span>
                     </div>
                 </div>
             </section>
@@ -74,10 +60,6 @@
                 </div>
 
                 <div class="promo-section">
-                    <div class="promo-title">
-                        <i class="fas fa-ticket-alt"></i>
-                        優惠折扣
-                    </div>
                     <div class="form-group" style="margin-bottom: 12px;">
                         <label>推薦機構</label>
                         <select class="form-control" id="promoOrgSelect">
@@ -86,6 +68,10 @@
                             <option value="陽光長照中心">陽光長照中心</option>
                             <option value="幸福居家照護">幸福居家照護</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label>備註</label>
+                        <textarea class="form-control" rows="3" placeholder="輸入備註" style="resize: none;"></textarea>
                     </div>
                     <div class="promo-applied hidden" id="promoApplied">
                         <i class="fas fa-check-circle"></i>
@@ -96,11 +82,11 @@
                 <div class="checkout-summary">
                     <div class="checkout-row">
                         <span>服務小計</span>
-                        <span id="checkoutSubtotal">NT$ 3,660</span>
+                        <span id="checkoutSubtotal">NT$ 2,400</span>
                     </div>
                     <div class="checkout-row total">
                         <span>應付金額</span>
-                        <span id="checkoutTotal">NT$ 3,460</span>
+                        <span id="checkoutTotal">NT$ 2,400</span>
                     </div>
                 </div>
 
@@ -113,33 +99,6 @@
 
     <script src="js/main.js"></script>
     <script>
-        function updateSelectionSummary() {
-            const items = document.querySelectorAll('.order-item');
-            let selectedCount = 0;
-            let subtotal = 0;
-
-            items.forEach((item) => {
-                const checkbox = item.querySelector('.order-select input');
-                if (checkbox && checkbox.checked) {
-                    selectedCount += 1;
-                    subtotal += Number(item.dataset.price || 0);
-                }
-            });
-
-            const total = Math.max(subtotal, 0);
-
-            document.getElementById('selectedCount').textContent = selectedCount;
-            document.getElementById('selectedTotal').textContent = `NT$ ${subtotal.toLocaleString()}`;
-            document.getElementById('checkoutSubtotal').textContent = `NT$ ${subtotal.toLocaleString()}`;
-            document.getElementById('checkoutTotal').textContent = `NT$ ${total.toLocaleString()}`;
-        }
-
-        document.querySelectorAll('.order-select input').forEach((input) => {
-            input.addEventListener('change', updateSelectionSummary);
-        });
-
-        updateSelectionSummary();
-
         const promoOrgSelect = document.getElementById('promoOrgSelect');
         const promoApplied = document.getElementById('promoApplied');
         const promoAppliedText = document.getElementById('promoAppliedText');

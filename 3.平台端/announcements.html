@@ -292,150 +292,10 @@
                             <i class="fas fa-download"></i>
                             匯出清單
                         </button>
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" type="button" onclick="openModal('carouselModal')">
                             <i class="fas fa-plus"></i>
                             新增輪播圖
                         </button>
-                    </div>
-                </div>
-
-                <div class="stats-grid stats-4">
-                    <div class="stat-card">
-                        <div class="stat-icon blue">
-                            <i class="fas fa-images"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">4</div>
-                            <div class="stat-label">上架中輪播</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon orange">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">2</div>
-                            <div class="stat-label">排程中</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon red">
-                            <i class="fas fa-eye-slash"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">1</div>
-                            <div class="stat-label">已下架</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon green">
-                               <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">12.4K</div>
-                            <div class="stat-label">本週點擊</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fas fa-images"></i>
-                            輪播圖設定
-                        </h3>
-                        <div class="card-actions">
-                            <span class="carousel-tag">
-                                  <i class="fas fa-house"></i>
-                                客戶端首頁輪播
-                            </span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-section">
-                            <div class="form-section-title">
-                                <i class="fas fa-sliders"></i>
-                                基本資訊
-                            </div>
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label class="form-label">輪播標題</label>
-                                    <input type="text" class="form-control" placeholder="例如：春季健康檢測優惠">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">顯示排序</label>
-                                    <input type="number" class="form-control" value="1">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">連結類型</label>
-                                    <select class="form-select">
-                                        <option>無連結</option>
-                                        <option>外部連結</option>
-                                        <option>服務頁</option>
-                                        <option>活動頁</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">連結位址</label>
-                                    <input type="text" class="form-control" placeholder="https://">
-                                </div>
-                                <div class="form-group full-width">
-                                    <label class="form-label">曝光期間</label>
-                                    <div class="date-range">
-                                        <input type="date" class="form-control">
-                                        <span class="date-separator">至</span>
-                                        <input type="date" class="form-control">
-                                        <span class="form-hint inline">未填寫則長期曝光</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">顯示狀態</label>
-                                    <div class="switch-group">
-                                        <label class="switch">
-                                            <input type="checkbox" checked>
-                                            <span class="slider"></span>
-                                        </label>
-                                        <span>立即上架</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">曝光設備</label>
-                                    <select class="form-select">
-                                        <option>全部設備</option>
-                                        <option>僅手機</option>
-                                        <option>僅平板</option>
-                                        <option>僅桌機</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <div class="form-section-title">
-                                <i class="fas fa-image"></i>
-                                圖片上傳
-                            </div>
-                            <div class="upload-box">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <div>拖曳圖片或點擊上傳</div>
-                                <div class="form-hint">建議尺寸 1200x480，格式 JPG/PNG，檔案大小小於 1MB</div>
-                                <div class="upload-list">
-                                    <div class="upload-thumb">輪播 1</div>
-                                    <div class="upload-thumb">輪播 2</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="page-actions">
-                            <button class="btn btn-outline">
-                                <i class="fas fa-file"></i>
-                                儲存草稿
-                            </button>
-                            <button class="btn btn-primary">
-                                <i class="fas fa-check"></i>
-                                儲存並上架
-                            </button>
-                        </div>
                     </div>
                 </div>
 
@@ -587,48 +447,114 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fas fa-desktop"></i>
-                            客戶端輪播預覽
-                        </h3>
-                        <div class="card-actions">
-                            <span class="carousel-tag">依排序顯示</span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="carousel-preview-grid">
-                            <div class="carousel-slide">
-                                <small>排序 1</small>
-                                <div>
-                                    <div style="font-weight: 600; font-size: 16px;">春季健康檢測優惠</div>
-                                    <div style="font-size: 12px; opacity: 0.85;">客戶端首頁</div>
-                                </div>
-                            </div>
-                            <div class="carousel-slide" style="background: linear-gradient(135deg, #60a5fa, #2563eb);">
-                                <small>排序 2</small>
-                                <div>
-                                    <div style="font-weight: 600; font-size: 16px;">新用戶註冊禮</div>
-                                    <div style="font-size: 12px; opacity: 0.85;">客戶端首頁</div>
-                                </div>
-                            </div>
-                            <div class="carousel-slide" style="background: linear-gradient(135deg, #34d399, #059669);">
-                                <small>排序 3</small>
-                                <div>
-                                    <div style="font-weight: 600; font-size: 16px;">居家照護服務介紹</div>
-                                    <div style="font-size: 12px; opacity: 0.85;">客戶端首頁</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
     <!-- JavaScript -->
+    <div class="modal" id="carouselModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <div class="modal-title">新增輪播圖</div>
+                        <span class="carousel-tag" style="margin-top: 6px;">
+                            <i class="fas fa-house"></i>
+                            客戶端首頁輪播
+                        </span>
+                    </div>
+                    <button class="modal-close" onclick="closeModal('carouselModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-section">
+                        <div class="form-section-title">
+                            <i class="fas fa-sliders"></i>
+                            基本資訊
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">輪播標題</label>
+                                <input type="text" class="form-control" placeholder="例如：春季健康檢測優惠">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">顯示排序</label>
+                                <input type="number" class="form-control" value="1">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">連結類型</label>
+                                <select class="form-select">
+                                    <option>無連結</option>
+                                    <option>外部連結</option>
+                                    <option>服務頁</option>
+                                    <option>活動頁</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">連結位址</label>
+                                <input type="text" class="form-control" placeholder="https://">
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">曝光期間</label>
+                                <div class="date-range">
+                                    <input type="date" class="form-control">
+                                    <span class="date-separator">至</span>
+                                    <input type="date" class="form-control">
+                                    <span class="form-hint inline">未填寫則長期曝光</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">顯示狀態</label>
+                                <div class="switch-group">
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span>立即上架</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">曝光設備</label>
+                                <select class="form-select">
+                                    <option>全部設備</option>
+                                    <option>僅手機</option>
+                                    <option>僅平板</option>
+                                    <option>僅桌機</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-title">
+                            <i class="fas fa-image"></i>
+                            圖片上傳
+                        </div>
+                        <div class="upload-box">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <div>拖曳圖片或點擊上傳</div>
+                            <div class="form-hint">建議尺寸 1200x480，格式 JPG/PNG，檔案大小小於 1MB</div>
+                            <div class="upload-list">
+                                <div class="upload-thumb">輪播</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-file"></i>
+                        儲存草稿
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-check"></i>
+                        儲存並上架
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/platform.js"></script>
 </body>
 </html>
