@@ -120,8 +120,35 @@
     <div class="mobile-container">
         <!-- 頂部導覽列 -->
         <header class="header">
-            <div class="header-title">服務項目</div>
+            <div class="header-left">
+                <div class="header-title">服務項目</div>
+                <div class="org-switcher-wrap">
+                    <button class="org-switcher has-alert" id="orgSwitcher" type="button" aria-expanded="false" aria-haspopup="listbox">
+                        <i class="fas fa-building org-switcher-icon"></i>
+                        <span class="org-switcher-name" id="orgSwitcherName">松山長照協會</span>
+                        <i class="fas fa-chevron-down org-switcher-arrow"></i>
+                        <span class="org-switcher-dot" aria-hidden="true"></span>
+                    </button>
+                    <div class="org-dropdown" id="orgDropdown" role="listbox">
+                        <button class="org-option active" type="button" data-org="松山長照協會">
+                            <span class="org-option-name">松山長照協會</span>
+                            <span class="org-option-tag">目前</span>
+                        </button>
+                        <button class="org-option has-unread" type="button" data-org="陽光長照中心">
+                            <span class="org-option-name">陽光長照中心</span>
+                            <span class="org-option-dot" aria-hidden="true"></span>
+                        </button>
+                        <button class="org-option" type="button" data-org="幸福居家照護">
+                            <span class="org-option-name">幸福居家照護</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div class="header-icons">
+                <div class="header-cart" onclick="navigateTo('checkout.html')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge">2</span>
+                </div>
                 <!-- 搜尋圖示 -->
                 <i class="fas fa-search" onclick="navigateTo('search.html')"></i>
             </div>
@@ -138,6 +165,10 @@
                 <div class="category-tab" data-category="居家照護" onclick="filterByCategory('居家照護', this)">
                     <i class="fas fa-user-nurse"></i>
                     <span>居家照護</span>
+                </div>
+                <div class="category-tab" data-category="保健食品" onclick="filterByCategory('保健食品', this)">
+                    <i class="fas fa-capsules"></i>
+                    <span>保健食品</span>
                 </div>
                 <div class="category-tab" data-category="健康檢測" onclick="filterByCategory('健康檢測', this)">
                     <i class="fas fa-stethoscope"></i>
@@ -240,6 +271,11 @@
             { id: 1, name: '專業居家照護服務', desc: '由專業照服員提供貼心的居家照護', price: 'NT$ 1,200/時', originalPrice: 'NT$ 1,500', category: '居家照護', icon: 'fa-user-nurse', color: '#2D6A4F', colorDark: '#1B4332', needBinding: false },
             { id: 2, name: '夜間居家照護', desc: '夜間專人陪伴照護服務', price: 'NT$ 1,800/晚', originalPrice: '', category: '居家照護', icon: 'fa-moon', color: '#2D6A4F', colorDark: '#1B4332', needBinding: false },
             { id: 3, name: '臨時居家照護', desc: '短期臨時照護需求', price: 'NT$ 800/時', originalPrice: '', category: '居家照護', icon: 'fa-clock', color: '#2D6A4F', colorDark: '#1B4332', needBinding: false },
+
+            // 保健食品類別（訂閱制）
+            { id: 25, name: '日常保健補給訂閱', desc: '維持活力的每日營養補給，月訂閱配送', price: 'NT$ 980/月', originalPrice: '', category: '保健食品', icon: 'fa-capsules', color: '#3F7C6A', colorDark: '#2E5E50', needBinding: false },
+            { id: 26, name: '關節靈活訂閱組合', desc: '關節保養配方，訂閱制每月到府', price: 'NT$ 1,280/月', originalPrice: 'NT$ 1,480', category: '保健食品', icon: 'fa-leaf', color: '#3F7C6A', colorDark: '#2E5E50', needBinding: false },
+            { id: 27, name: '心血管守護訂閱', desc: '日常心血管保健營養配方，月訂閱制', price: 'NT$ 1,500/月', originalPrice: '', category: '保健食品', icon: 'fa-heart-pulse', color: '#3F7C6A', colorDark: '#2E5E50', needBinding: false },
             
             // 健康檢測類別
             { id: 4, name: '健康檢測套餐', desc: '血壓、血糖、心電圖完整檢測', price: 'NT$ 2,500/次', originalPrice: '', category: '健康檢測', icon: 'fa-heartbeat', color: '#2B6CB0', colorDark: '#1A4A7C', needBinding: false },

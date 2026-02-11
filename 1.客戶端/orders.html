@@ -14,8 +14,31 @@
     <div class="mobile-container">
         <!-- 頂部導覽列 -->
         <header class="header">
-            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
-            <div class="header-title">訂購清單</div>
+            <div class="header-left">
+                <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+                <div class="header-title">訂購清單</div>
+                <div class="org-switcher-wrap">
+                    <button class="org-switcher has-alert" id="orgSwitcher" type="button" aria-expanded="false" aria-haspopup="listbox">
+                        <i class="fas fa-building org-switcher-icon"></i>
+                        <span class="org-switcher-name" id="orgSwitcherName">松山長照協會</span>
+                        <i class="fas fa-chevron-down org-switcher-arrow"></i>
+                        <span class="org-switcher-dot" aria-hidden="true"></span>
+                    </button>
+                    <div class="org-dropdown" id="orgDropdown" role="listbox">
+                        <button class="org-option active" type="button" data-org="松山長照協會">
+                            <span class="org-option-name">松山長照協會</span>
+                            <span class="org-option-tag">目前</span>
+                        </button>
+                        <button class="org-option has-unread" type="button" data-org="陽光長照中心">
+                            <span class="org-option-name">陽光長照中心</span>
+                            <span class="org-option-dot" aria-hidden="true"></span>
+                        </button>
+                        <button class="org-option" type="button" data-org="幸福居家照護">
+                            <span class="org-option-name">幸福居家照護</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div style="width: 20px;"></div>
         </header>
 
@@ -52,7 +75,7 @@
                         共 1 項，合計：<span>NT$ 2,400</span>
                     </div>
                     <div class="order-actions">
-                        <button class="btn btn-primary">查看詳情</button>
+                        <button class="btn btn-primary" onclick="navigateTo('order-detail.html?id=ORD202601280001')">查看詳情</button>
                     </div>
                 </div>
             </div>
@@ -90,8 +113,8 @@
                         共 2 項，合計：<span>NT$ 3,760</span>
                     </div>
                     <div class="order-actions">
-                        <button class="btn btn-secondary" style="background: #3498db; color: white;">聯繫客服</button>
-                        <button class="btn btn-primary">查看詳情</button>
+                        <button class="btn btn-secondary" style="background: #3498db; color: white;" onclick="navigateTo('contact.html?type=order&orderId=ORD202601270005')">聯繫客服</button>
+                        <button class="btn btn-primary" onclick="navigateTo('order-detail.html?id=ORD202601270005')">查看詳情</button>
                     </div>
                 </div>
             </div>
@@ -119,7 +142,7 @@
                         共 1 項，合計：<span>NT$ 1,000</span>
                     </div>
                     <div class="order-actions">
-                        <button class="btn btn-primary">查看詳情</button>
+                        <button class="btn btn-primary" onclick="navigateTo('order-detail.html?id=ORD202601200012')">查看詳情</button>
                     </div>
                 </div>
             </div>

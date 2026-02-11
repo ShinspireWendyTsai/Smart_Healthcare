@@ -126,9 +126,161 @@ a, button, [onclick], .clickable {
     letter-spacing: 1px;
 }
 
+.header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.org-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+    min-height: 34px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(6px);
+}
+
+.org-switcher-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.22);
+    font-size: 12px;
+}
+
+.org-switcher-name {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+
+.org-switcher-arrow {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.org-switcher-dot {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--danger-color);
+    border: 2px solid rgba(27, 67, 50, 0.85);
+    display: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+}
+
+.org-switcher.has-alert .org-switcher-dot {
+    display: block;
+}
+
+.org-switcher-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.org-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 220px;
+    background: white;
+    border-radius: 14px;
+    border: 1px solid var(--divider-color);
+    box-shadow: var(--shadow);
+    padding: 6px;
+    display: none;
+    z-index: 200;
+}
+
+.org-dropdown.show {
+    display: block;
+}
+
+.org-option {
+    width: 100%;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+.org-option:hover {
+    background: var(--background-color);
+}
+
+.org-option.active {
+    background: rgba(45, 106, 79, 0.12);
+    font-weight: bold;
+}
+
+.org-option-name {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.org-option-tag {
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: #F3F1ED;
+    border-radius: 8px;
+    padding: 2px 6px;
+}
+
+.org-option-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--danger-color);
+    display: none;
+}
+
+.org-option.has-unread .org-option-dot {
+    display: inline-block;
+}
+
 .header-icons {
     display: flex;
     gap: 20px;
+}
+
+.header-cart {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--min-touch-target);
+    min-height: var(--min-touch-target);
+    cursor: pointer;
 }
 
 .header-icons i {
@@ -634,6 +786,11 @@ a, button, [onclick], .clickable {
     color: white;
 }
 
+.order-status.pending {
+    background: linear-gradient(135deg, var(--warning-color), #D97706);
+    color: white;
+}
+
 .order-body {
     padding: var(--spacing-lg);
 }
@@ -642,6 +799,19 @@ a, button, [onclick], .clickable {
     display: flex;
     align-items: center;
     margin-bottom: var(--spacing-md);
+}
+
+.order-select {
+    display: flex;
+    align-items: center;
+    margin-right: var(--spacing-md);
+}
+
+.order-select input {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
 }
 
 .order-item-image {
@@ -694,9 +864,13 @@ a, button, [onclick], .clickable {
     font-size: var(--font-size-base);
 }
 
-.order-total span {
+.order-total .total-amount {
     color: var(--danger-color);
     font-size: var(--font-size-xl);
+    font-weight: bold;
+}
+
+.order-total .selected-count {
     font-weight: bold;
 }
 
@@ -709,6 +883,103 @@ a, button, [onclick], .clickable {
     padding: 12px 20px;
     font-size: var(--font-size-sm);
     min-height: 44px;
+}
+
+/* --- 訂單詳情 --- */
+.detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--divider-color);
+    font-size: var(--font-size-sm);
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    color: var(--text-primary);
+    font-weight: 600;
+    text-align: right;
+}
+
+.detail-value.detail-value-left {
+    text-align: left;
+    font-weight: 500;
+}
+
+/* --- 下訂單/付款 --- */
+.checkout-summary {
+    background: var(--background-color);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    border: 1px solid var(--divider-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.checkout-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: var(--font-size-base);
+}
+
+.checkout-row.total {
+    border-top: 1px dashed var(--divider-color);
+    margin-top: 6px;
+    padding-top: 12px;
+    font-weight: bold;
+}
+
+.promo-section {
+    padding: 0;
+    margin-bottom: var(--spacing-lg);
+}
+
+.promo-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    font-size: var(--font-size-base);
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.promo-title i {
+    color: var(--accent-dark);
+}
+
+.promo-applied {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(45, 106, 79, 0.08);
+    border: 1px solid rgba(45, 106, 79, 0.2);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.promo-applied.hidden {
+    display: none;
+}
+
+.promo-applied i {
+    color: var(--success-color);
 }
 
 /* --- 個人資訊頁面 --- */
