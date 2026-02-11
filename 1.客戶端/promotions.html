@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 推廣機制</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-chevron-left header-back" onclick="navigateTo('profile.html')"></i>
+                <div class="header-title">推廣機制</div>
+            </div>
+            <div class="header-icons">
+                <i class="fas fa-gift"></i>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="promo-hero">
+                <div class="promo-hero-title">營運與推廣階段 - 功能預留</div>
+                <div class="promo-hero-subtitle">本頁呈現未來將啟用的推廣機制，系統架構已預留擴充彈性。</div>
+                <div class="promo-hero-tags">
+                    <span class="badge badge-primary">架構預留</span>
+                    <span class="badge badge-accent">尚未啟用</span>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <div>註冊禮機制</div>
+                    <span class="badge badge-muted">未啟用</span>
+                </div>
+                <div class="promo-grid">
+                    <div class="promo-tile">
+                        <div class="promo-tile-icon" style="background: linear-gradient(145deg, #2B6CB0, #1A4A7C);">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="promo-tile-title">導入情境</div>
+                        <div class="promo-tile-text">新會員註冊後 7 天內可獲得註冊禮。</div>
+                    </div>
+                    <div class="promo-tile">
+                        <div class="promo-tile-icon" style="background: linear-gradient(145deg, #D4A574, #B8956C);">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <div class="promo-tile-title">禮包內容</div>
+                        <div class="promo-tile-text">折抵券、體驗服務、加值點數等組合預留。</div>
+                    </div>
+                    <div class="promo-tile">
+                        <div class="promo-tile-icon" style="background: linear-gradient(145deg, #2D6A4F, #1B4332);">
+                            <i class="fas fa-shield-check"></i>
+                        </div>
+                        <div class="promo-tile-title">發放條件</div>
+                        <div class="promo-tile-text">完成基本資料與身份驗證後啟動。</div>
+                    </div>
+                </div>
+
+                <div class="promo-steps">
+                    <div class="promo-step">
+                        <div class="promo-step-index">1</div>
+                        <div>
+                            <div class="promo-step-title">註冊完成</div>
+                            <div class="promo-step-desc">完成手機與身分驗證。</div>
+                        </div>
+                    </div>
+                    <div class="promo-step">
+                        <div class="promo-step-index">2</div>
+                        <div>
+                            <div class="promo-step-title">系統核對</div>
+                            <div class="promo-step-desc">確認未重複領取且符合條件。</div>
+                        </div>
+                    </div>
+                    <div class="promo-step">
+                        <div class="promo-step-index">3</div>
+                        <div>
+                            <div class="promo-step-title">發送禮包</div>
+                            <div class="promo-step-desc">推播通知並自動入帳。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="promo-note">
+                    <i class="fas fa-info-circle"></i>
+                    <span>註冊禮發放流程已預留，實際發放邏輯將於後續階段實作。</span>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <div>機構折扣碼機制</div>
+                    <span class="badge badge-primary">分潤歸屬</span>
+                </div>
+                <div class="promo-note promo-note-highlight">
+                    <i class="fas fa-building"></i>
+                    <span>購買流程需先選擇所屬機構，再輸入折扣碼以確保分潤歸屬清晰。</span>
+                </div>
+
+                <div class="form-group">
+                    <label>所屬機構</label>
+                    <select class="form-control">
+                        <option>選擇機構（必填）</option>
+                        <option>幸福銀髮照護機構</option>
+                        <option>溫馨居家護理所</option>
+                        <option>愛心長照服務中心</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>折扣碼</label>
+                    <input class="form-control" type="text" placeholder="輸入機構提供的折扣碼">
+                </div>
+                <button class="btn btn-accent btn-block" type="button">
+                    <i class="fas fa-ticket-alt"></i> 套用折扣
+                </button>
+
+                <div class="promo-summary">
+                    <div class="promo-summary-row">
+                        <span>服務價格</span>
+                        <span>NT$ 1,200</span>
+                    </div>
+                    <div class="promo-summary-row">
+                        <span>折扣碼優惠</span>
+                        <span class="text-accent">- NT$ 200</span>
+                    </div>
+                    <div class="promo-summary-row promo-summary-total">
+                        <span>應付金額</span>
+                        <span>NT$ 1,000</span>
+                    </div>
+                </div>
+
+                <div class="promo-steps compact">
+                    <div class="promo-step">
+                        <div class="promo-step-index">1</div>
+                        <div>
+                            <div class="promo-step-title">選擇機構</div>
+                            <div class="promo-step-desc">鎖定分潤歸屬。</div>
+                        </div>
+                    </div>
+                    <div class="promo-step">
+                        <div class="promo-step-index">2</div>
+                        <div>
+                            <div class="promo-step-title">輸入折扣碼</div>
+                            <div class="promo-step-desc">系統驗證折扣碼有效性。</div>
+                        </div>
+                    </div>
+                    <div class="promo-step">
+                        <div class="promo-step-index">3</div>
+                        <div>
+                            <div class="promo-step-title">完成付款</div>
+                            <div class="promo-step-desc">訂單依所屬機構分潤。</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item active" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

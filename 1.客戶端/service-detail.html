@@ -46,6 +46,39 @@
         .back-btn i {
             font-size: 14px !important;
         }
+
+        .detail-cart {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            min-height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .detail-cart i {
+            font-size: 14px;
+            padding: 0;
+            min-width: auto;
+            min-height: auto;
+        }
+
+        .detail-cart .cart-badge {
+            top: -6px;
+            right: -6px;
+            min-width: 18px;
+            height: 18px;
+            font-size: 10px;
+        }
         
         .service-detail-content {
             padding: 20px;
@@ -334,8 +367,8 @@
                 <!-- 服務內容 -->
                 <div class="info-section">
                     <div class="info-section-title">
-                        <i class="fas fa-list-check"></i>
-                        服務內容
+                        <i class="fas fa-list-check" id="serviceContentsIcon"></i>
+                        <span id="serviceContentsTitle">服務內容</span>
                     </div>
                     <ul class="info-list" id="serviceContents">
                         <li>
@@ -364,10 +397,10 @@
                 <!-- 服務說明 -->
                 <div class="info-section">
                     <div class="info-section-title">
-                        <i class="fas fa-info-circle"></i>
-                        服務說明
+                        <i class="fas fa-info-circle" id="serviceInfoIcon"></i>
+                        <span id="serviceInfoTitle">服務說明</span>
                     </div>
-                    <ul class="info-list">
+                    <ul class="info-list" id="serviceInfoList">
                         <li>
                             <i class="fas fa-clock"></i>
                             <span>服務時間：週一至週日 08:00-20:00</span>
@@ -403,10 +436,26 @@
     <script src="js/main.js"></script>
     <script>
         // 服務資料
+        let currentServiceId = '1';
+        const supplementContents = [
+            '每月固定到府配送一次',
+            '每期提供 30 天份營養補給',
+            '訂閱可隨時暫停或調整品項',
+            '到期前 7 日提醒下期配送'
+        ];
+        const supplementInfo = [
+            '配送範圍：全台本島宅配',
+            '付款方式：信用卡 / 行動支付',
+            '配送變更：配送前 3 日可調整',
+            '訂閱說明：每月自動續訂，可隨時取消'
+        ];
         const servicesData = {
             1: { name: '專業居家照護服務', desc: '由專業照服員提供貼心的居家照護，包含日常生活協助、身體清潔、餐食準備等服務。', price: 'NT$ 1,200/時', originalPrice: 'NT$ 1,500', category: '居家照護', icon: 'fa-user-nurse', color: '#2D6A4F', colorDark: '#1B4332' },
             2: { name: '夜間居家照護', desc: '夜間專人陪伴照護服務，確保長者夜間安全與照護需求。', price: 'NT$ 1,800/晚', originalPrice: '', category: '居家照護', icon: 'fa-moon', color: '#2D6A4F', colorDark: '#1B4332' },
             3: { name: '臨時居家照護', desc: '短期臨時照護需求，彈性預約時段。', price: 'NT$ 800/時', originalPrice: '', category: '居家照護', icon: 'fa-clock', color: '#2D6A4F', colorDark: '#1B4332' },
+            25: { name: '日常保健補給訂閱', desc: '維持活力的每日營養補給，月訂閱配送。', price: 'NT$ 980/月', originalPrice: '', category: '保健食品', icon: 'fa-capsules', color: '#3F7C6A', colorDark: '#2E5E50', contents: supplementContents, info: supplementInfo, contentsTitle: '訂閱內容', infoTitle: '訂閱說明', actionText: '立即訂閱', contentsIcon: 'fa-box-open', infoIcon: 'fa-clipboard-list' },
+            26: { name: '關節靈活訂閱組合', desc: '關節保養配方，訂閱制每月到府。', price: 'NT$ 1,280/月', originalPrice: 'NT$ 1,480', category: '保健食品', icon: 'fa-leaf', color: '#3F7C6A', colorDark: '#2E5E50', contents: supplementContents, info: supplementInfo, contentsTitle: '訂閱內容', infoTitle: '訂閱說明', actionText: '立即訂閱', contentsIcon: 'fa-box-open', infoIcon: 'fa-clipboard-list' },
+            27: { name: '心血管守護訂閱', desc: '日常心血管保健營養配方，月訂閱制。', price: 'NT$ 1,500/月', originalPrice: '', category: '保健食品', icon: 'fa-heart-pulse', color: '#3F7C6A', colorDark: '#2E5E50', contents: supplementContents, info: supplementInfo, contentsTitle: '訂閱內容', infoTitle: '訂閱說明', actionText: '立即訂閱', contentsIcon: 'fa-box-open', infoIcon: 'fa-clipboard-list' },
             4: { name: '健康檢測套餐', desc: '血壓、血糖、心電圖完整檢測，專業護理師到府服務。', price: 'NT$ 2,500/次', originalPrice: '', category: '健康檢測', icon: 'fa-heartbeat', color: '#2B6CB0', colorDark: '#1A4A7C' },
             5: { name: '血壓監測服務', desc: '定期血壓追蹤與記錄，建立個人健康檔案。', price: 'NT$ 300/次', originalPrice: '', category: '健康檢測', icon: 'fa-stethoscope', color: '#2B6CB0', colorDark: '#1A4A7C' },
             6: { name: '血糖檢測服務', desc: '血糖數值監測與分析，提供飲食建議。', price: 'NT$ 350/次', originalPrice: '', category: '健康檢測', icon: 'fa-tint', color: '#2B6CB0', colorDark: '#1A4A7C' },
@@ -438,15 +487,66 @@
         function loadServiceDetail() {
             const urlParams = new URLSearchParams(window.location.search);
             const serviceId = urlParams.get('id') || '1';
+            currentServiceId = serviceId;
             const service = servicesData[serviceId];
 
             if (service) {
+                const contentsTitle = document.getElementById('serviceContentsTitle');
+                const contentsIcon = document.getElementById('serviceContentsIcon');
+                const infoTitle = document.getElementById('serviceInfoTitle');
+                const infoIcon = document.getElementById('serviceInfoIcon');
+                const contentsList = document.getElementById('serviceContents');
+                const infoList = document.getElementById('serviceInfoList');
+                const bookBtn = document.querySelector('.btn-book');
+
                 document.getElementById('serviceHeader').style.background = `linear-gradient(145deg, ${service.color}, ${service.colorDark})`;
                 document.getElementById('serviceIcon').className = `fas ${service.icon}`;
                 document.getElementById('serviceName').textContent = service.name;
                 document.getElementById('serviceDesc').textContent = service.desc;
                 document.getElementById('serviceCategory').textContent = service.category;
                 document.getElementById('servicePrice').textContent = service.price;
+
+                if (contentsTitle) {
+                    contentsTitle.textContent = service.contentsTitle || '服務內容';
+                }
+
+                if (contentsIcon) {
+                    contentsIcon.className = `fas ${service.contentsIcon || 'fa-list-check'}`;
+                }
+
+                if (infoTitle) {
+                    infoTitle.textContent = service.infoTitle || '服務說明';
+                }
+
+                if (infoIcon) {
+                    infoIcon.className = `fas ${service.infoIcon || 'fa-info-circle'}`;
+                }
+
+                if (service.contents && contentsList) {
+                    contentsList.innerHTML = service.contents.map((item) => {
+                        return `
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>${item}</span>
+                            </li>
+                        `;
+                    }).join('');
+                }
+
+                if (service.info && infoList) {
+                    infoList.innerHTML = service.info.map((item) => {
+                        return `
+                            <li>
+                                <i class="fas fa-info-circle"></i>
+                                <span>${item}</span>
+                            </li>
+                        `;
+                    }).join('');
+                }
+
+                if (bookBtn) {
+                    bookBtn.textContent = service.actionText || '立即預約';
+                }
                 
                 if (service.originalPrice) {
                     document.getElementById('serviceOriginalPrice').textContent = service.originalPrice;
@@ -478,9 +578,8 @@
          * 預約服務
          */
         function bookService() {
-            showToast('即將為您轉接預約頁面', 'success');
-            // 可導向預約頁面
-            // setTimeout(() => navigateTo('booking.html?id=' + serviceId), 1000);
+            showToast('即將為您轉接下訂單頁面', 'success');
+            setTimeout(() => navigateTo('checkout.html?id=' + currentServiceId), 600);
         }
     </script>
 </body>

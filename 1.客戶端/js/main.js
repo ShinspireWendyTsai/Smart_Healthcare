@@ -17,6 +17,7 @@ function initApp() {
     initTabs();
     initNotifications();
     initServiceCards();
+    initOrgSwitcher();
 }
 
 /* --- 輪播圖功能 --- */
@@ -148,6 +149,64 @@ function initNotifications() {
             window.location.href = 'messages.html';
         });
     }
+}
+
+/* --- 機構切換功能 --- */
+
+function initOrgSwitcher() {
+    const switcher = document.getElementById('orgSwitcher');
+    const dropdown = document.getElementById('orgDropdown');
+    const nameLabel = document.getElementById('orgSwitcherName');
+
+    if (!switcher || !dropdown || !nameLabel) return;
+
+    const options = Array.from(dropdown.querySelectorAll('.org-option'));
+
+    const closeDropdown = () => {
+        dropdown.classList.remove('show');
+        switcher.setAttribute('aria-expanded', 'false');
+    };
+
+    const openDropdown = () => {
+        dropdown.classList.add('show');
+        switcher.setAttribute('aria-expanded', 'true');
+    };
+
+    const updateAlert = () => {
+        const hasUnread = options.some((option) => {
+            return option.classList.contains('has-unread') && !option.classList.contains('active');
+        });
+        switcher.classList.toggle('has-alert', hasUnread);
+    };
+
+    switcher.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (dropdown.classList.contains('show')) {
+            closeDropdown();
+        } else {
+            openDropdown();
+        }
+    });
+
+    options.forEach((option) => {
+        option.addEventListener('click', (event) => {
+            event.stopPropagation();
+            options.forEach((item) => item.classList.remove('active'));
+            option.classList.add('active');
+            option.classList.remove('has-unread');
+            nameLabel.textContent = option.dataset.org || option.textContent.trim();
+            closeDropdown();
+            updateAlert();
+        });
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!dropdown.contains(event.target) && event.target !== switcher) {
+            closeDropdown();
+        }
+    });
+
+    updateAlert();
 }
 
 /**

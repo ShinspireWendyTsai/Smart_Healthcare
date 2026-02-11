@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 下訂單</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">下訂單</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="card">
+                <div class="card-header">
+                    <div>待付款清單</div>
+                    <span class="order-status pending">待付款</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item" data-price="2400">
+                        <div class="order-item-info">
+                            <div class="order-item-name">專業居家照護服務</div>
+                            <div class="order-item-spec">2 小時 / 次 · 到府服務</div>
+                            <div class="order-item-spec">服務時間：2026/02/15 10:00</div>
+                        </div>
+                        <div class="order-item-price">NT$ 2,400</div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        合計：
+                        <span class="total-amount">NT$ 2,400</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <div>付款資訊</div>
+                    <span class="badge badge-accent">填寫資料</span>
+                </div>
+                <div class="form-group">
+                    <label>服務地址</label>
+                    <input class="form-control" type="text" placeholder="輸入完整地址">
+                </div>
+                <div class="form-group">
+                    <label>聯絡人姓名</label>
+                    <input class="form-control" type="text" placeholder="輸入聯絡人姓名">
+                </div>
+                <div class="form-group">
+                    <label>聯絡人電話</label>
+                    <input class="form-control" type="text" placeholder="輸入手機或市話">
+                </div>
+
+                <div class="promo-section">
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label>推薦機構</label>
+                        <select class="form-control" id="promoOrgSelect">
+                            <option value="">選擇推薦機構</option>
+                            <option value="松山長照協會">松山長照協會</option>
+                            <option value="陽光長照中心">陽光長照中心</option>
+                            <option value="幸福居家照護">幸福居家照護</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>備註</label>
+                        <textarea class="form-control" rows="3" placeholder="輸入備註" style="resize: none;"></textarea>
+                    </div>
+                    <div class="promo-applied hidden" id="promoApplied">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="promoAppliedText">已套用推薦機構</span>
+                    </div>
+                </div>
+
+                <div class="checkout-summary">
+                    <div class="checkout-row">
+                        <span>服務小計</span>
+                        <span id="checkoutSubtotal">NT$ 2,400</span>
+                    </div>
+                    <div class="checkout-row total">
+                        <span>應付金額</span>
+                        <span id="checkoutTotal">NT$ 2,400</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-accent btn-block" type="button">
+                    確認送出
+                </button>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        const promoOrgSelect = document.getElementById('promoOrgSelect');
+        const promoApplied = document.getElementById('promoApplied');
+        const promoAppliedText = document.getElementById('promoAppliedText');
+
+        if (promoOrgSelect && promoApplied && promoAppliedText) {
+            promoOrgSelect.addEventListener('change', () => {
+                const selectedOrg = promoOrgSelect.value.trim();
+                promoApplied.classList.toggle('hidden', !selectedOrg);
+                if (selectedOrg) {
+                    promoAppliedText.textContent = `已套用${selectedOrg}推薦機構`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

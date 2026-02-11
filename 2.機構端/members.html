@@ -44,9 +44,6 @@
                         <a href="member-binding.html" class="menu-item">
                             <span>綁定設定</span>
                         </a>
-                        <a href="member-review.html" class="menu-item">
-                            <span>綁定審核</span>
-                        </a>
                     </div>
                     
                     <a href="orders.html" class="menu-item">
@@ -176,8 +173,8 @@
                                             <div style="display: flex; align-items: center; gap: 10px;">
                                                 <div class="avatar">王</div>
                                                 <div>
-                                                    <div style="font-weight: bold;">王小明</div>
-                                                    <div style="font-size: 12px; color: #999;">男 / 65歲</div>
+                                                    <div class="member-name" style="font-weight: bold;">王小明</div>
+                                                    <div class="member-meta" style="font-size: 12px; color: #999;">男 / 65歲</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -186,20 +183,35 @@
                                         <td>wang@example.com</td>
                                         <td>2024/01/15</td>
                                         <td>王小美（女兒）</td>
-                                        <td><span class="status-badge active">啟用中</span></td>
+                                        <td>
+                                            <span class="status-badge active">啟用中</span>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" data-tooltip="查看詳情" onclick="openMemberViewModal()">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline" data-tooltip="編輯">
+                                                <button class="btn btn-sm btn-outline" data-tooltip="編輯" onclick="openMemberEditModal(this)"
+                                                    data-member-id="PT2024001234"
+                                                    data-name="王小明"
+                                                    data-gender="male"
+                                                    data-birth="1955-06-18"
+                                                    data-idno="A123456789"
+                                                    data-phone="0912-345-678"
+                                                    data-email="wang@example.com"
+                                                    data-address="台中市西區民生路一段 88 號 6F"
+                                                    data-emergency-name="王小美"
+                                                    data-emergency-relation="女兒"
+                                                    data-emergency-phone="0912-***-678"
+                                                    data-notes="需協助上下樓梯"
+                                                    data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-outline" data-tooltip="通訊">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger" data-tooltip="停用">
-                                                    <i class="fas fa-ban"></i>
+                                                <button class="btn btn-sm btn-warning" data-tooltip="解除綁定">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -210,8 +222,8 @@
                                             <div style="display: flex; align-items: center; gap: 10px;">
                                                 <div class="avatar" style="background-color: #e74c3c;">李</div>
                                                 <div>
-                                                    <div style="font-weight: bold;">李小華</div>
-                                                    <div style="font-size: 12px; color: #999;">女 / 72歲</div>
+                                                    <div class="member-name" style="font-weight: bold;">李小華</div>
+                                                    <div class="member-meta" style="font-size: 12px; color: #999;">女 / 72歲</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -220,20 +232,35 @@
                                         <td>lee@example.com</td>
                                         <td>2024/01/18</td>
                                         <td>李大明（兒子）</td>
-                                        <td><span class="status-badge active">啟用中</span></td>
+                                        <td>
+                                            <span class="status-badge active">啟用中</span>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberViewModal()">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" onclick="openMemberEditModal(this)"
+                                                    data-member-id="PT2024001235"
+                                                    data-name="李小華"
+                                                    data-gender="female"
+                                                    data-birth="1952-09-12"
+                                                    data-idno="B234567890"
+                                                    data-phone="0923-456-789"
+                                                    data-email="lee@example.com"
+                                                    data-address="台中市北區梅亭街 5 號"
+                                                    data-emergency-name="李大明"
+                                                    data-emergency-relation="兒子"
+                                                    data-emergency-phone="0923-***-456"
+                                                    data-notes="需定期回診"
+                                                    data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-outline">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="fas fa-ban"></i>
+                                                <button class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -244,8 +271,8 @@
                                             <div style="display: flex; align-items: center; gap: 10px;">
                                                 <div class="avatar" style="background-color: #9b59b6;">張</div>
                                                 <div>
-                                                    <div style="font-weight: bold;">張大偉</div>
-                                                    <div style="font-size: 12px; color: #999;">男 / 58歲</div>
+                                                    <div class="member-name" style="font-weight: bold;">張大偉</div>
+                                                    <div class="member-meta" style="font-size: 12px; color: #999;">男 / 58歲</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -254,20 +281,35 @@
                                         <td>chang@example.com</td>
                                         <td>2024/01/20</td>
                                         <td>張小玲（配偶）</td>
-                                        <td><span class="status-badge active">啟用中</span></td>
+                                        <td>
+                                            <span class="status-badge active">啟用中</span>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberViewModal()">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" onclick="openMemberEditModal(this)"
+                                                    data-member-id="PT2024001236"
+                                                    data-name="張大偉"
+                                                    data-gender="male"
+                                                    data-birth="1966-03-08"
+                                                    data-idno="C345678901"
+                                                    data-phone="0934-567-890"
+                                                    data-email="chang@example.com"
+                                                    data-address="台中市南區國光路 120 號"
+                                                    data-emergency-name="張小玲"
+                                                    data-emergency-relation="配偶"
+                                                    data-emergency-phone="0934-***-890"
+                                                    data-notes="需協助用藥提醒"
+                                                    data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-outline">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="fas fa-ban"></i>
+                                                <button class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -278,8 +320,8 @@
                                             <div style="display: flex; align-items: center; gap: 10px;">
                                                 <div class="avatar" style="background-color: #f39c12;">陳</div>
                                                 <div>
-                                                    <div style="font-weight: bold;">陳美玲</div>
-                                                    <div style="font-size: 12px; color: #999;">女 / 68歲</div>
+                                                    <div class="member-name" style="font-weight: bold;">陳美玲</div>
+                                                    <div class="member-meta" style="font-size: 12px; color: #999;">女 / 68歲</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -288,20 +330,35 @@
                                         <td>chen@example.com</td>
                                         <td>2024/01/22</td>
                                         <td>陳大明（兒子）</td>
-                                        <td><span class="status-badge inactive">已停用</span></td>
+                                        <td>
+                                            <span class="status-badge inactive">已停用</span>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberViewModal()">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" onclick="openMemberEditModal(this)"
+                                                    data-member-id="PT2024001237"
+                                                    data-name="陳美玲"
+                                                    data-gender="female"
+                                                    data-birth="1958-11-02"
+                                                    data-idno="D456789012"
+                                                    data-phone="0945-678-901"
+                                                    data-email="chen@example.com"
+                                                    data-address="台中市西屯區台灣大道三段 99 號"
+                                                    data-emergency-name="陳大明"
+                                                    data-emergency-relation="兒子"
+                                                    data-emergency-phone="0945-***-901"
+                                                    data-notes="需留意血糖變化"
+                                                    data-status="inactive">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-outline">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-success">
-                                                    <i class="fas fa-check"></i>
+                                                <button class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -312,8 +369,8 @@
                                             <div style="display: flex; align-items: center; gap: 10px;">
                                                 <div class="avatar" style="background-color: #1abc9c;">林</div>
                                                 <div>
-                                                    <div style="font-weight: bold;">林志明</div>
-                                                    <div style="font-size: 12px; color: #999;">男 / 75歲</div>
+                                                    <div class="member-name" style="font-weight: bold;">林志明</div>
+                                                    <div class="member-meta" style="font-size: 12px; color: #999;">男 / 75歲</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -322,20 +379,35 @@
                                         <td>lin@example.com</td>
                                         <td>2024/01/25</td>
                                         <td>林小美（女兒）</td>
-                                        <td><span class="status-badge active">啟用中</span></td>
+                                        <td>
+                                            <span class="status-badge active">啟用中</span>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberViewModal()">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" onclick="openMemberEditModal(this)"
+                                                    data-member-id="PT2024001238"
+                                                    data-name="林志明"
+                                                    data-gender="male"
+                                                    data-birth="1949-04-14"
+                                                    data-idno="E567890123"
+                                                    data-phone="0956-789-012"
+                                                    data-email="lin@example.com"
+                                                    data-address="台中市北屯區崇德路一段 168 號"
+                                                    data-emergency-name="林小美"
+                                                    data-emergency-relation="女兒"
+                                                    data-emergency-phone="0956-***-012"
+                                                    data-notes="行動需輔助"
+                                                    data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-outline">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="fas fa-ban"></i>
+                                                <button class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -420,17 +492,11 @@
                                     <div style="font-weight: 600;">王小美（女兒）</div>
                                     <div style="color:#666; font-size: 12px;">0912-***-678</div>
                                 </div>
-                                <div style="text-align: right; font-size: 12px; color:#666;">
-                                    查看訂單｜接收通知｜代付款
-                                </div>
                             </div>
                             <div style="display: flex; justify-content: space-between; gap: 8px;">
                                 <div>
                                     <div style="font-weight: 600;">王大明（兒子）</div>
                                     <div style="color:#666; font-size: 12px;">0923-***-456</div>
-                                </div>
-                                <div style="text-align: right; font-size: 12px; color:#666;">
-                                    查看訂單｜接收通知
                                 </div>
                             </div>
                         </div>
@@ -442,6 +508,95 @@
             </div>
             <div style="display: flex; justify-content: flex-end; gap: 10px; padding: 16px 24px; border-top: 1px solid #e0e0e0;">
                 <button class="btn btn-primary" onclick="closeMemberViewModal()">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 個案編輯 Modal -->
+    <div id="editMemberModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 12px; width: 680px; max-height: 90vh; overflow-y: auto;">
+            <div style="padding: 20px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">編輯個案資料</h3>
+                <i class="fas fa-times" style="cursor: pointer; font-size: 20px;" onclick="closeModal('editMemberModal')"></i>
+            </div>
+            <div style="padding: 20px;">
+                <form id="editMemberForm" onsubmit="event.preventDefault(); saveMemberEdit();">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>個案編號</label>
+                            <input type="text" class="form-control" id="editMemberId" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>帳號狀態</label>
+                            <select class="form-control" id="editMemberStatus">
+                                <option value="active">啟用中</option>
+                                <option value="inactive">已停用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>姓名 *</label>
+                            <input type="text" class="form-control" id="editMemberName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>性別 *</label>
+                            <select class="form-control" id="editMemberGender" required>
+                                <option value="">請選擇</option>
+                                <option value="male">男</option>
+                                <option value="female">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>出生日期</label>
+                            <input type="date" class="form-control" id="editMemberBirth">
+                        </div>
+                        <div class="form-group">
+                            <label>身分證字號</label>
+                            <input type="text" class="form-control" id="editMemberIdNo">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>手機</label>
+                            <input type="text" class="form-control" id="editMemberPhone">
+                        </div>
+                        <div class="form-group">
+                            <label>電子郵件</label>
+                            <input type="email" class="form-control" id="editMemberEmail">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>通訊地址</label>
+                        <input type="text" class="form-control" id="editMemberAddress">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>緊急聯絡人</label>
+                            <input type="text" class="form-control" id="editMemberEmergencyName">
+                        </div>
+                        <div class="form-group">
+                            <label>關係</label>
+                            <input type="text" class="form-control" id="editMemberEmergencyRelation">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>緊急電話</label>
+                            <input type="text" class="form-control" id="editMemberEmergencyPhone">
+                        </div>
+                        <div class="form-group">
+                            <label>健康狀況備註</label>
+                            <input type="text" class="form-control" id="editMemberNotes">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                        <button type="button" class="btn btn-outline" onclick="closeModal('editMemberModal')">取消</button>
+                        <button type="submit" class="btn btn-primary">儲存</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -516,9 +671,110 @@
             document.getElementById('memberViewModal').style.display = 'none';
         }
 
+        let editingRow = null;
+        let editingTrigger = null;
+
+        function openMemberEditModal(trigger) {
+            editingRow = trigger.closest('tr');
+            editingTrigger = trigger;
+            const data = trigger.dataset || {};
+
+            const setValue = (id, value) => {
+                const field = document.getElementById(id);
+                if (field) {
+                    field.value = value || '';
+                }
+            };
+
+            setValue('editMemberId', data.memberId);
+            setValue('editMemberName', data.name);
+            setValue('editMemberGender', data.gender);
+            setValue('editMemberBirth', data.birth);
+            setValue('editMemberIdNo', data.idno);
+            setValue('editMemberPhone', data.phone);
+            setValue('editMemberEmail', data.email);
+            setValue('editMemberAddress', data.address);
+            setValue('editMemberEmergencyName', data.emergencyName);
+            setValue('editMemberEmergencyRelation', data.emergencyRelation);
+            setValue('editMemberEmergencyPhone', data.emergencyPhone);
+            setValue('editMemberNotes', data.notes);
+            setValue('editMemberStatus', data.status || 'active');
+
+            openModal('editMemberModal');
+        }
+
+        function saveMemberEdit() {
+            if (!editingRow || !editingTrigger) {
+                closeModal('editMemberModal');
+                return;
+            }
+
+            const name = document.getElementById('editMemberName').value.trim();
+            const gender = document.getElementById('editMemberGender').value;
+            const birth = document.getElementById('editMemberBirth').value;
+            const idNo = document.getElementById('editMemberIdNo').value.trim();
+            const phone = document.getElementById('editMemberPhone').value.trim();
+            const email = document.getElementById('editMemberEmail').value.trim();
+            const address = document.getElementById('editMemberAddress').value.trim();
+            const emergencyName = document.getElementById('editMemberEmergencyName').value.trim();
+            const emergencyRelation = document.getElementById('editMemberEmergencyRelation').value.trim();
+            const emergencyPhone = document.getElementById('editMemberEmergencyPhone').value.trim();
+            const notes = document.getElementById('editMemberNotes').value.trim();
+            const status = document.getElementById('editMemberStatus').value;
+
+            const nameEl = editingRow.querySelector('.member-name');
+            const avatarEl = editingRow.querySelector('.avatar');
+            const phoneCell = editingRow.querySelector('td:nth-child(4)');
+            const emailCell = editingRow.querySelector('td:nth-child(5)');
+            const statusBadge = editingRow.querySelector('.status-badge');
+
+            if (nameEl && name) {
+                nameEl.textContent = name;
+            }
+            if (avatarEl && name) {
+                avatarEl.textContent = name.charAt(0);
+            }
+            if (phoneCell && phone) {
+                phoneCell.textContent = phone;
+            }
+            if (emailCell && email) {
+                emailCell.textContent = email;
+            }
+            if (statusBadge) {
+                const isActive = status === 'active';
+                statusBadge.textContent = isActive ? '啟用中' : '已停用';
+                statusBadge.classList.toggle('active', isActive);
+                statusBadge.classList.toggle('inactive', !isActive);
+            }
+
+            editingTrigger.dataset.name = name;
+            editingTrigger.dataset.gender = gender;
+            editingTrigger.dataset.birth = birth;
+            editingTrigger.dataset.idno = idNo;
+            editingTrigger.dataset.phone = phone;
+            editingTrigger.dataset.email = email;
+            editingTrigger.dataset.address = address;
+            editingTrigger.dataset.emergencyName = emergencyName;
+            editingTrigger.dataset.emergencyRelation = emergencyRelation;
+            editingTrigger.dataset.emergencyPhone = emergencyPhone;
+            editingTrigger.dataset.notes = notes;
+            editingTrigger.dataset.status = status;
+
+            if (typeof showToast === 'function') {
+                showToast('個案資料已更新', 'success');
+            }
+            closeModal('editMemberModal');
+        }
+
         document.getElementById('memberViewModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeMemberViewModal();
+            }
+        });
+
+        document.getElementById('editMemberModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal('editMemberModal');
             }
         });
     </script>

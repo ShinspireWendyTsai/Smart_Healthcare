@@ -14,7 +14,30 @@
     <div class="mobile-container">
         <!-- 頂部導覽列 -->
         <header class="header">
-            <div class="header-title">個人中心</div>
+            <div class="header-left">
+                <div class="header-title">個人中心</div>
+                <div class="org-switcher-wrap">
+                    <button class="org-switcher has-alert" id="orgSwitcher" type="button" aria-expanded="false" aria-haspopup="listbox">
+                        <i class="fas fa-building org-switcher-icon"></i>
+                        <span class="org-switcher-name" id="orgSwitcherName">松山長照協會</span>
+                        <i class="fas fa-chevron-down org-switcher-arrow"></i>
+                        <span class="org-switcher-dot" aria-hidden="true"></span>
+                    </button>
+                    <div class="org-dropdown" id="orgDropdown" role="listbox">
+                        <button class="org-option active" type="button" data-org="松山長照協會">
+                            <span class="org-option-name">松山長照協會</span>
+                            <span class="org-option-tag">目前</span>
+                        </button>
+                        <button class="org-option has-unread" type="button" data-org="陽光長照中心">
+                            <span class="org-option-name">陽光長照中心</span>
+                            <span class="org-option-dot" aria-hidden="true"></span>
+                        </button>
+                        <button class="org-option" type="button" data-org="幸福居家照護">
+                            <span class="org-option-name">幸福居家照護</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div class="header-icons">
                 <i class="fas fa-cog" onclick="navigateTo('settings.html')"></i>
             </div>
@@ -53,17 +76,6 @@
 
             <!-- 功能選單 -->
             <section class="profile-menu">
-                <!-- 切換帳號 -->
-                <div class="menu-item" onclick="navigateTo('switch-account.html')">
-                    <div class="menu-icon green">
-                        <i class="fas fa-exchange-alt"></i>
-                    </div>
-                    <div class="menu-text">切換帳號</div>
-                    <div class="menu-arrow">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                </div>
-
                 <!-- 資料修改 -->
                 <div class="menu-item" onclick="navigateTo('edit-profile.html')">
                     <div class="menu-icon blue">
