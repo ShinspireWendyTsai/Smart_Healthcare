@@ -493,6 +493,29 @@ a {
     color: var(--info-color);
 }
 
+.status-select {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--background-color);
+    color: var(--text-primary);
+    min-width: 88px;
+}
+
+.status-select.active {
+    background: rgba(39, 174, 96, 0.12);
+    border-color: rgba(39, 174, 96, 0.3);
+    color: var(--success-color);
+}
+
+.status-select.inactive {
+    background: rgba(231, 76, 60, 0.12);
+    border-color: rgba(231, 76, 60, 0.3);
+    color: var(--danger-color);
+}
+
 /* --- 按鈕 --- */
 .btn {
     display: inline-flex;
@@ -811,6 +834,29 @@ a {
     font-weight: bold;
     font-size: 14px;
     margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.chat-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-light);
+    margin-bottom: 4px;
+}
+
+.chat-role-badge {
+    background-color: rgba(52, 152, 219, 0.12);
+    color: var(--primary-dark);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 8px;
+    line-height: 1.4;
 }
 
 .chat-item-preview {

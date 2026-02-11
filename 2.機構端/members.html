@@ -44,9 +44,6 @@
                         <a href="member-binding.html" class="menu-item">
                             <span>綁定設定</span>
                         </a>
-                        <a href="member-review.html" class="menu-item">
-                            <span>綁定審核</span>
-                        </a>
                     </div>
                     
                     <a href="orders.html" class="menu-item">
@@ -186,7 +183,12 @@
                                         <td>wang@example.com</td>
                                         <td>2024/01/15</td>
                                         <td>王小美（女兒）</td>
-                                        <td><span class="status-badge active">啟用中</span></td>
+                                        <td>
+                                            <select class="status-select" data-status>
+                                                <option value="active" selected>啟用中</option>
+                                                <option value="inactive">已停用</option>
+                                            </select>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" data-tooltip="查看詳情" onclick="openMemberViewModal()">
@@ -197,6 +199,9 @@
                                                 </button>
                                                 <button class="btn btn-sm btn-outline" data-tooltip="通訊">
                                                     <i class="fas fa-comment"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-warning" data-tooltip="解除綁定">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger" data-tooltip="停用">
                                                     <i class="fas fa-ban"></i>
@@ -220,7 +225,12 @@
                                         <td>lee@example.com</td>
                                         <td>2024/01/18</td>
                                         <td>李大明（兒子）</td>
-                                        <td><span class="status-badge active">啟用中</span></td>
+                                        <td>
+                                            <select class="status-select" data-status>
+                                                <option value="active" selected>啟用中</option>
+                                                <option value="inactive">已停用</option>
+                                            </select>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberViewModal()">
@@ -231,6 +241,9 @@
                                                 </button>
                                                 <button class="btn btn-sm btn-outline">
                                                     <i class="fas fa-comment"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger">
                                                     <i class="fas fa-ban"></i>
@@ -254,7 +267,12 @@
                                         <td>chang@example.com</td>
                                         <td>2024/01/20</td>
                                         <td>張小玲（配偶）</td>
-                                        <td><span class="status-badge active">啟用中</span></td>
+                                        <td>
+                                            <select class="status-select" data-status>
+                                                <option value="active" selected>啟用中</option>
+                                                <option value="inactive">已停用</option>
+                                            </select>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberViewModal()">
@@ -265,6 +283,9 @@
                                                 </button>
                                                 <button class="btn btn-sm btn-outline">
                                                     <i class="fas fa-comment"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger">
                                                     <i class="fas fa-ban"></i>
@@ -288,7 +309,12 @@
                                         <td>chen@example.com</td>
                                         <td>2024/01/22</td>
                                         <td>陳大明（兒子）</td>
-                                        <td><span class="status-badge inactive">已停用</span></td>
+                                        <td>
+                                            <select class="status-select" data-status>
+                                                <option value="active">啟用中</option>
+                                                <option value="inactive" selected>已停用</option>
+                                            </select>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberViewModal()">
@@ -299,6 +325,9 @@
                                                 </button>
                                                 <button class="btn btn-sm btn-outline">
                                                     <i class="fas fa-comment"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-success">
                                                     <i class="fas fa-check"></i>
@@ -322,7 +351,12 @@
                                         <td>lin@example.com</td>
                                         <td>2024/01/25</td>
                                         <td>林小美（女兒）</td>
-                                        <td><span class="status-badge active">啟用中</span></td>
+                                        <td>
+                                            <select class="status-select" data-status>
+                                                <option value="active" selected>啟用中</option>
+                                                <option value="inactive">已停用</option>
+                                            </select>
+                                        </td>
                                         <td>
                                             <div class="table-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberViewModal()">
@@ -333,6 +367,9 @@
                                                 </button>
                                                 <button class="btn btn-sm btn-outline">
                                                     <i class="fas fa-comment"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-unlink"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger">
                                                     <i class="fas fa-ban"></i>
@@ -520,6 +557,16 @@
             if (e.target === this) {
                 closeMemberViewModal();
             }
+        });
+
+        function updateStatusSelectStyle(select) {
+            select.classList.toggle('active', select.value === 'active');
+            select.classList.toggle('inactive', select.value === 'inactive');
+        }
+
+        document.querySelectorAll('.status-select').forEach((select) => {
+            updateStatusSelectStyle(select);
+            select.addEventListener('change', () => updateStatusSelectStyle(select));
         });
     </script>
     <script src="js/admin.js"></script>

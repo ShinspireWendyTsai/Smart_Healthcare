@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平台公告管理 - 平台端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/platform.css">
+    <style>
+        .carousel-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-color);
+        }
+
+        .banner-preview {
+            width: 120px;
+            height: 64px;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, #c7d2fe, #6366f1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .banner-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .banner-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .banner-cell {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .upload-box {
+            border: 2px dashed var(--border-color);
+            background: var(--background-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .upload-box i {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .upload-list {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .upload-thumb {
+            width: 140px;
+            height: 78px;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, #a5b4fc, #6366f1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .form-hint.inline {
+            margin-top: 0;
+            margin-left: 8px;
+        }
+
+        .carousel-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .carousel-slide {
+            background: linear-gradient(135deg, #818cf8, #4338ca);
+            border-radius: var(--radius-lg);
+            color: white;
+            padding: 16px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .carousel-slide small {
+            opacity: 0.8;
+            font-size: 12px;
+        }
+
+        .order-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .carousel-preview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">平台端管理系統</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <!-- 主選單 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+
+                    <div class="menu-item" data-submenu="org-submenu">
+                        <i class="fas fa-building"></i>
+                        <span>機構管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="org-submenu">
+                        <a href="organizations.html" class="menu-item">
+                            <span>機構列表</span>
+                        </a>
+                        <a href="org-review.html" class="menu-item">
+                            <span>機構審核</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>會員列表</span>
+                        </a>
+                    </div>
+
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單管理</span>
+                    </a>
+                </div>
+
+                <!-- 服務設定 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">服務設定</div>
+
+                    <a href="categories.html" class="menu-item">
+                        <i class="fas fa-folder-tree"></i>
+                        <span>服務類別管理</span>
+                    </a>
+
+                    <a href="services.html" class="menu-item">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>服務管理</span>
+                    </a>
+                </div>
+
+                <!-- 平台功能 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">平台功能</div>
+
+                    <a href="announcements.html" class="menu-item active">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>平台公告管理</span>
+                    </a>
+
+                    <a href="tickets.html" class="menu-item">
+                        <i class="fas fa-headset"></i>
+                        <span>平台客服單管理</span>
+                    </a>
+                </div>
+
+                <!-- 系統管理 -->
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="system-submenu">
+                        <a href="admins.html" class="menu-item">
+                            <span>使用者管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item">
+                            <span>操作紀錄查詢</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>平台功能</span>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>平台公告管理</span>
+                    </div>
+                </div>
+
+                <div class="navbar-right">
+                    <div class="dropdown">
+                        <div class="user-dropdown dropdown-toggle">
+                            <div class="user-avatar admin">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">系統管理員</div>
+                                <div class="user-role">超級管理員</div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="profile.html" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                <span>個人資料</span>
+                            </a>
+                            <a href="settings.html" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                <span>系統設定</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="logout.html" class="dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>登出系統</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">平台公告管理</h1>
+                        <p class="page-subtitle">此設定對應客戶端首頁圖片輪播，管理圖片、連結與曝光時間。</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-download"></i>
+                            匯出清單
+                        </button>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            新增輪播圖
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-grid stats-4">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">上架中輪播</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">2</div>
+                            <div class="stat-label">排程中</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red">
+                            <i class="fas fa-eye-slash"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">1</div>
+                            <div class="stat-label">已下架</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                               <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">12.4K</div>
+                            <div class="stat-label">本週點擊</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-images"></i>
+                            輪播圖設定
+                        </h3>
+                        <div class="card-actions">
+                            <span class="carousel-tag">
+                                  <i class="fas fa-house"></i>
+                                客戶端首頁輪播
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-section">
+                            <div class="form-section-title">
+                                <i class="fas fa-sliders"></i>
+                                基本資訊
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">輪播標題</label>
+                                    <input type="text" class="form-control" placeholder="例如：春季健康檢測優惠">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">顯示排序</label>
+                                    <input type="number" class="form-control" value="1">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">連結類型</label>
+                                    <select class="form-select">
+                                        <option>無連結</option>
+                                        <option>外部連結</option>
+                                        <option>服務頁</option>
+                                        <option>活動頁</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">連結位址</label>
+                                    <input type="text" class="form-control" placeholder="https://">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label class="form-label">曝光期間</label>
+                                    <div class="date-range">
+                                        <input type="date" class="form-control">
+                                        <span class="date-separator">至</span>
+                                        <input type="date" class="form-control">
+                                        <span class="form-hint inline">未填寫則長期曝光</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">顯示狀態</label>
+                                    <div class="switch-group">
+                                        <label class="switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                        <span>立即上架</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">曝光設備</label>
+                                    <select class="form-select">
+                                        <option>全部設備</option>
+                                        <option>僅手機</option>
+                                        <option>僅平板</option>
+                                        <option>僅桌機</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <div class="form-section-title">
+                                <i class="fas fa-image"></i>
+                                圖片上傳
+                            </div>
+                            <div class="upload-box">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <div>拖曳圖片或點擊上傳</div>
+                                <div class="form-hint">建議尺寸 1200x480，格式 JPG/PNG，檔案大小小於 1MB</div>
+                                <div class="upload-list">
+                                    <div class="upload-thumb">輪播 1</div>
+                                    <div class="upload-thumb">輪播 2</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page-actions">
+                            <button class="btn btn-outline">
+                                <i class="fas fa-file"></i>
+                                儲存草稿
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-check"></i>
+                                儲存並上架
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-list"></i>
+                            輪播清單
+                        </h3>
+                        <div class="card-actions">
+                            <button class="btn btn-outline btn-sm">
+                                <i class="fas fa-sort"></i>
+                                重新排序
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="filter-section">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label class="filter-label">關鍵字</label>
+                                    <div class="search-input">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" class="form-control" placeholder="搜尋標題或連結">
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">狀態</label>
+                                    <select class="form-select">
+                                        <option>全部狀態</option>
+                                        <option>上架中</option>
+                                        <option>排程中</option>
+                                        <option>已下架</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">曝光設備</label>
+                                    <select class="form-select">
+                                        <option>全部設備</option>
+                                        <option>手機</option>
+                                        <option>平板</option>
+                                        <option>桌機</option>
+                                    </select>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="btn btn-outline btn-sm">
+                                        <i class="fas fa-filter"></i>
+                                        篩選
+                                    </button>
+                                    <button class="btn btn-outline btn-sm">
+                                        <i class="fas fa-rotate"></i>
+                                        重設
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>排序</th>
+                                        <th>預覽</th>
+                                        <th>標題 / 連結</th>
+                                        <th>曝光期間</th>
+                                        <th>狀態</th>
+                                        <th>更新時間</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="order-cell">
+                                                <i class="fas fa-grip-vertical drag-handle"></i>
+                                                1
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="banner-preview">1200x480</div>
+                                        </td>
+                                        <td>
+                                            <div class="banner-title">春季健康檢測優惠</div>
+                                            <div class="banner-meta">連結：/service-detail.html?id=12</div>
+                                        </td>
+                                        <td>2026/02/01 - 2026/03/31</td>
+                                        <td><span class="status-badge status-active">上架中</span></td>
+                                        <td>2026/02/05 09:10</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon"><i class="fas fa-pen"></i></button>
+                                                <button class="btn-icon"><i class="fas fa-copy"></i></button>
+                                                <button class="btn-icon"><i class="fas fa-trash-alt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="order-cell">
+                                                <i class="fas fa-grip-vertical drag-handle"></i>
+                                                2
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="banner-preview">1200x480</div>
+                                        </td>
+                                        <td>
+                                            <div class="banner-title">新用戶註冊禮</div>
+                                            <div class="banner-meta">連結：/1.客戶端/profile.html</div>
+                                        </td>
+                                        <td>2026/02/10 - 2026/04/15</td>
+                                        <td><span class="status-badge status-pending">排程中</span></td>
+                                        <td>2026/02/08 15:42</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon"><i class="fas fa-pen"></i></button>
+                                                <button class="btn-icon"><i class="fas fa-copy"></i></button>
+                                                <button class="btn-icon"><i class="fas fa-trash-alt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="order-cell">
+                                                <i class="fas fa-grip-vertical drag-handle"></i>
+                                                3
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="banner-preview">1200x480</div>
+                                        </td>
+                                        <td>
+                                            <div class="banner-title">居家照護服務介紹</div>
+                                            <div class="banner-meta">連結：/1.客戶端/categories.html</div>
+                                        </td>
+                                        <td>2025/12/01 - 2026/01/31</td>
+                                        <td><span class="status-badge status-inactive">已下架</span></td>
+                                        <td>2026/01/31 18:20</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon"><i class="fas fa-pen"></i></button>
+                                                <button class="btn-icon"><i class="fas fa-copy"></i></button>
+                                                <button class="btn-icon"><i class="fas fa-trash-alt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-desktop"></i>
+                            客戶端輪播預覽
+                        </h3>
+                        <div class="card-actions">
+                            <span class="carousel-tag">依排序顯示</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="carousel-preview-grid">
+                            <div class="carousel-slide">
+                                <small>排序 1</small>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 16px;">春季健康檢測優惠</div>
+                                    <div style="font-size: 12px; opacity: 0.85;">客戶端首頁</div>
+                                </div>
+                            </div>
+                            <div class="carousel-slide" style="background: linear-gradient(135deg, #60a5fa, #2563eb);">
+                                <small>排序 2</small>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 16px;">新用戶註冊禮</div>
+                                    <div style="font-size: 12px; opacity: 0.85;">客戶端首頁</div>
+                                </div>
+                            </div>
+                            <div class="carousel-slide" style="background: linear-gradient(135deg, #34d399, #059669);">
+                                <small>排序 3</small>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 16px;">居家照護服務介紹</div>
+                                    <div style="font-size: 12px; opacity: 0.85;">客戶端首頁</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/platform.js"></script>
+</body>
+</html>

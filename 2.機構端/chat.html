@@ -44,9 +44,6 @@
                         <a href="member-binding.html" class="menu-item">
                             <span>綁定設定</span>
                         </a>
-                        <a href="member-review.html" class="menu-item">
-                            <span>綁定審核</span>
-                        </a>
                     </div>
                     
                     <a href="orders.html" class="menu-item">
@@ -126,12 +123,12 @@
                         <div class="chat-search">
                             <div class="search-box">
                                 <i class="fas fa-search"></i>
-                                <input type="text" placeholder="搜尋個案...">
+                                <input type="text" placeholder="搜尋個案/家人...">
                             </div>
                         </div>
                         <div class="chat-list">
                             <!-- 聊天項目 1 - 有未讀 -->
-                            <div class="chat-item active">
+                            <div class="chat-item">
                                 <div class="chat-item-avatar">王</div>
                                 <div class="chat-item-info">
                                     <div class="chat-item-name">王小明</div>
@@ -181,10 +178,14 @@
                             </div>
                             
                             <!-- 聊天項目 5 -->
-                            <div class="chat-item">
+                            <div class="chat-item active">
                                 <div class="chat-item-avatar" style="background-color: #1abc9c;">林</div>
                                 <div class="chat-item-info">
-                                    <div class="chat-item-name">林志明</div>
+                                    <div class="chat-item-name">
+                                        林志明
+                                        <span class="chat-role-badge">家屬</span>
+                                    </div>
+                                    <div class="chat-item-meta">王小明・父親</div>
                                     <div class="chat-item-preview">我想詢問營養餐的內容</div>
                                 </div>
                                 <div style="text-align: right;">
@@ -199,16 +200,15 @@
                     <div class="chat-main">
                         <div class="chat-header">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <div class="chat-item-avatar">王</div>
+                                <div class="chat-item-avatar" style="background-color: #1abc9c;">林</div>
                                 <div>
-                                    <div style="font-weight: bold;">王小明</div>
+                                    <div style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                                        林志明
+                                        <span class="chat-role-badge">家屬</span>
+                                    </div>
+                                    <div class="chat-item-meta">王小明・父親</div>
                                     <div style="font-size: 12px; color: #999;">PT2024001234 • 在線</div>
                                 </div>
-                            </div>
-                            <div style="display: flex; gap: 15px;">
-                                <i class="fas fa-phone" style="cursor: pointer; color: #666;"></i>
-                                <i class="fas fa-video" style="cursor: pointer; color: #666;"></i>
-                                <i class="fas fa-ellipsis-v" style="cursor: pointer; color: #666;"></i>
                             </div>
                         </div>
                         
@@ -220,7 +220,7 @@
                             
                             <!-- 收到的訊息 -->
                             <div class="message received">
-                                <div class="message-avatar">王</div>
+                                <div class="message-avatar" style="background-color: #1abc9c;">林</div>
                                 <div>
                                     <div class="message-bubble">
                                         您好，我想請問一下明天預約的居家照護服務，大概幾點會到呢？
@@ -234,7 +234,7 @@
                                 <div class="message-avatar" style="background-color: #27ae60;">機</div>
                                 <div>
                                     <div class="message-bubble">
-                                        王先生您好！明天的服務預計在上午10:00抵達，照服員會提前10分鐘致電確認。
+                                        林先生您好！明天的服務預計在上午10:00抵達，照服員會提前10分鐘致電確認。
                                     </div>
                                     <div class="message-time">09:20 ✓✓</div>
                                 </div>
@@ -242,7 +242,7 @@
                             
                             <!-- 收到的訊息 -->
                             <div class="message received">
-                                <div class="message-avatar">王</div>
+                                <div class="message-avatar" style="background-color: #1abc9c;">林</div>
                                 <div>
                                     <div class="message-bubble">
                                         好的，那請問這次的照服員是上次那位嗎？
@@ -264,7 +264,7 @@
                             
                             <!-- 收到的訊息 -->
                             <div class="message received">
-                                <div class="message-avatar">王</div>
+                                <div class="message-avatar" style="background-color: #1abc9c;">林</div>
                                 <div>
                                     <div class="message-bubble">
                                         太好了！謝謝您的回覆！
