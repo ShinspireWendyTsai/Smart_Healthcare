@@ -17,7 +17,7 @@
 <body>
   <header class="hero" aria-labelledby="page-title">
     <div class="hero__content">
-      <p class="hero__date" aria-label="今天日期">2026年2月3日</p>
+      <p class="hero__date" aria-label="今天日期">2026年2月11日</p>
       <h1 id="page-title" class="hero__title">智慧照護平台入口</h1>
       <p class="hero__subtitle">快速切換三種角色介面，支援預覽與新分頁開啟</p>
     </div>
@@ -25,13 +25,22 @@
 
   <main class="container">
     <section class="switcher" aria-label="角色切換">
+      <div class="switcher__versions" aria-label="版本切換">
+        <label class="version-label" for="version-switch">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span>版本日期</span>
+        </label>
+        <select id="version-switch" class="version-select" aria-label="版本日期">
+          <option value="" selected>載入中...</option>
+        </select>
+      </div>
       <div class="switcher__tabs" role="tablist" aria-label="三種介面">
         <button
           class="tab is-active"
           role="tab"
           aria-selected="true"
           aria-controls="preview"
-          data-target="1.客戶端/index.html"
+          data-role="1.客戶端/index.html"
         >
           <i class="fa-solid fa-user"></i>
           <span>1. 客戶端</span>
@@ -41,7 +50,7 @@
           role="tab"
           aria-selected="false"
           aria-controls="preview"
-          data-target="2.機構端/index.html"
+          data-role="2.機構端/index.html"
         >
           <i class="fa-solid fa-hospital"></i>
           <span>2. 機構端</span>
@@ -51,7 +60,7 @@
           role="tab"
           aria-selected="false"
           aria-controls="preview"
-          data-target="3.平台端/index.html"
+          data-role="3.平台端/index.html"
         >
           <i class="fa-solid fa-layer-group"></i>
           <span>3. 平台端</span>
