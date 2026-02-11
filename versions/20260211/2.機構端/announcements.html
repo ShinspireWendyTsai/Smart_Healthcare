@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機構公告管理 - 機構端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/admin.css">
+    <style>
+        .announcement-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(52, 152, 219, 0.12);
+            color: var(--info-color);
+        }
+
+        .announcement-badge.urgent {
+            background: rgba(231, 76, 60, 0.12);
+            color: var(--danger-color);
+        }
+
+        .announcement-badge.event {
+            background: rgba(39, 174, 96, 0.12);
+            color: var(--success-color);
+        }
+
+        .announcement-summary {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .announcement-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .announcement-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .announcement-preview {
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .form-grid-two {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid-two {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+                    
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+                    
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>個案列表</span>
+                        </a>
+                        <a href="member-binding.html" class="menu-item">
+                            <span>綁定設定</span>
+                        </a>
+                        <a href="member-review.html" class="menu-item">
+                            <span>綁定審核</span>
+                        </a>
+                    </div>
+                    
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單查詢</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">機構功能</div>
+                    
+                    <a href="organization.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>機構資訊管理</span>
+                    </a>
+                    
+                    <a href="admins.html" class="menu-item">
+                        <i class="fas fa-user-shield"></i>
+                        <span>管理者權限管理</span>
+                    </a>
+                    
+                    <a href="announcements.html" class="menu-item active">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>機構公告管理</span>
+                    </a>
+                    
+                    <a href="chat.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>個案關懷通訊</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>機構公告管理</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">機構公告管理</h1>
+                        <p class="page-subtitle">管理公告發布、置頂與通知對象。</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" onclick="openAnnouncementModal()">
+                            <i class="fas fa-plus"></i> 新增公告
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-bullhorn"></i> 公告列表</h3>
+                        <div class="filter-left">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="搜尋公告標題">
+                            </div>
+                            <select class="form-control" style="width: 160px;">
+                                <option>全部類型</option>
+                                <option>重要公告</option>
+                                <option>活動公告</option>
+                                <option>系統通知</option>
+                            </select>
+                            <select class="form-control" style="width: 160px;">
+                                <option>全部狀態</option>
+                                <option>發布中</option>
+                                <option>草稿</option>
+                                <option>已結束</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>公告標題</th>
+                                        <th>類型</th>
+                                        <th>發布時間</th>
+                                        <th>狀態</th>
+                                        <th>受眾</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="announcement-title">【重要】春節服務安排通知</div>
+                                            <div class="announcement-summary">2026 春節期間服務時間調整，請個案留意。</div>
+                                        </td>
+                                        <td><span class="announcement-badge urgent"><i class="fas fa-exclamation-circle"></i> 重要公告</span></td>
+                                        <td>2026/01/25 10:00</td>
+                                        <td><span class="status-badge active">發布中</span></td>
+                                        <td>全部個案</td>
+                                        <td>
+                                            <div class="announcement-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openAnnouncementModal('edit')"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="announcement-title">健康講座報名開放</div>
+                                            <div class="announcement-summary">3/10 健康講座已開放報名，歡迎家屬參與。</div>
+                                        </td>
+                                        <td><span class="announcement-badge event"><i class="fas fa-calendar"></i> 活動公告</span></td>
+                                        <td>2026/01/20 14:30</td>
+                                        <td><span class="status-badge processing">草稿</span></td>
+                                        <td>已綁定家屬</td>
+                                        <td>
+                                            <div class="announcement-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openAnnouncementModal('edit')"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="announcement-title">系統維護公告</div>
+                                            <div class="announcement-summary">2/5 晚間系統維護，部分功能暫停。</div>
+                                        </td>
+                                        <td><span class="announcement-badge"><i class="fas fa-info-circle"></i> 系統通知</span></td>
+                                        <td>2026/01/12 09:00</td>
+                                        <td><span class="status-badge inactive">已結束</span></td>
+                                        <td>全部個案</td>
+                                        <td>
+                                            <div class="announcement-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openAnnouncementModal('edit')"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="announcementModal" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>公告設定</h3>
+                <i class="fas fa-times" onclick="closeAnnouncementModal()"></i>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>公告標題</label>
+                    <input type="text" class="form-control" placeholder="請輸入公告標題">
+                </div>
+                <div class="form-grid-two">
+                    <div class="form-group">
+                        <label>公告類型</label>
+                        <select class="form-control">
+                            <option>重要公告</option>
+                            <option>活動公告</option>
+                            <option>系統通知</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>發布狀態</label>
+                        <select class="form-control">
+                            <option>發布中</option>
+                            <option>草稿</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>發送對象</label>
+                    <select class="form-control">
+                        <option>全部個案</option>
+                        <option>已綁定家屬</option>
+                        <option>指定名單</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>公告內容</label>
+                    <textarea class="form-control" rows="5" placeholder="請輸入公告內容"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>公告預覽</label>
+                    <div class="announcement-preview">請輸入內容後，預覽會顯示於此。</div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeAnnouncementModal()">取消</button>
+                    <button class="btn btn-primary" onclick="closeAnnouncementModal()">儲存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+    <script>
+        function openAnnouncementModal() {
+            document.getElementById('announcementModal').style.display = 'flex';
+        }
+
+        function closeAnnouncementModal() {
+            document.getElementById('announcementModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

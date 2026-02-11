@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機構資訊管理 - 機構端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/admin.css">
+    <style>
+        /* 頁面專用樣式 */
+        .info-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: var(--primary-color);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .form-grid.single {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .form-group label .required {
+            color: var(--danger-color);
+            margin-left: 3px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-group .form-hint {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+        
+        .org-logo-upload {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .org-logo-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+        }
+        
+        .org-logo-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .business-hours-grid {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .business-hours-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .business-hours-row .day-label {
+            width: 60px;
+            font-weight: 600;
+        }
+        
+        .business-hours-row input[type="time"] {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .business-hours-row .separator {
+            color: var(--text-light);
+        }
+        
+        .business-hours-row .day-toggle {
+            margin-left: auto;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--success-color);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .org-logo-upload {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .business-hours-row {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+                    
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+                    
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>個案列表</span>
+                        </a>
+                        <a href="member-binding.html" class="menu-item">
+                            <span>綁定設定</span>
+                        </a>
+                        <a href="member-review.html" class="menu-item">
+                            <span>綁定審核</span>
+                        </a>
+                    </div>
+                    
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單查詢</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">機構功能</div>
+                    
+                    <a href="organization.html" class="menu-item active">
+                        <i class="fas fa-building"></i>
+                        <span>機構資訊管理</span>
+                    </a>
+                    
+                    <a href="admins.html" class="menu-item">
+                        <i class="fas fa-user-shield"></i>
+                        <span>管理者權限管理</span>
+                    </a>
+                    
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>機構公告管理</span>
+                    </a>
+                    
+                    <a href="chat.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>個案關懷通訊</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>機構資訊管理</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">機構資訊管理</h1>
+                        <p class="page-subtitle">管理您的機構基本資料、聯絡資訊與服務設定</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" onclick="saveOrganizationInfo()">
+                            <i class="fas fa-save"></i> 儲存變更
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 基本資訊 -->
+                <div class="card info-section">
+                    <div class="card-body">
+                        <h3 class="section-title">
+                            <i class="fas fa-building"></i>
+                            基本資訊
+                        </h3>
+                        
+                        <div class="org-logo-upload">
+                            <div class="org-logo-preview" id="logoPreview">
+                                仁
+                            </div>
+                            <div class="org-logo-actions">
+                                <button class="btn btn-outline" onclick="uploadLogo()">
+                                    <i class="fas fa-upload"></i> 上傳機構標誌
+                                </button>
+                                <button class="btn btn-outline" onclick="removeLogo()">
+                                    <i class="fas fa-trash"></i> 移除標誌
+                                </button>
+                                <p class="form-hint">建議尺寸：200x200 像素，支援 JPG、PNG 格式</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid" style="margin-top: 25px;">
+                            <div class="form-group">
+                                <label>機構名稱 <span class="required">*</span></label>
+                                <input type="text" id="orgName" value="仁愛長照服務中心" placeholder="請輸入機構名稱">
+                            </div>
+                            <div class="form-group">
+                                <label>機構代碼</label>
+                                <input type="text" id="orgCode" value="ORG20240001" readonly style="background: #f8f9fa;">
+                                <p class="form-hint">系統自動產生，不可修改</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>機構簡介</label>
+                            <textarea id="orgDescription" placeholder="請輸入機構簡介...">仁愛長照服務中心成立於2018年，致力於提供專業、溫馨的長期照護服務。我們擁有專業的照護團隊，包含護理師、社工師、物理治療師等，為每位長輩提供全方位的照護服務。
+
+我們的服務理念：以「人」為本，尊重每位長輩的獨特性，提供個人化的照護計畫，讓長輩在安全舒適的環境中，維持最佳的生活品質。</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 聯絡資訊 -->
+                <div class="card info-section">
+                    <div class="card-body">
+                        <h3 class="section-title">
+                            <i class="fas fa-phone-alt"></i>
+                            聯絡資訊
+                        </h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>聯絡電話 <span class="required">*</span></label>
+                                <input type="tel" id="phone" value="02-2345-6789" placeholder="請輸入聯絡電話">
+                            </div>
+                            <div class="form-group">
+                                <label>傳真號碼</label>
+                                <input type="tel" id="fax" value="02-2345-6780" placeholder="請輸入傳真號碼">
+                            </div>
+                            <div class="form-group">
+                                <label>電子信箱 <span class="required">*</span></label>
+                                <input type="email" id="email" value="service@renai-care.com.tw" placeholder="請輸入電子信箱">
+                            </div>
+                            <div class="form-group">
+                                <label>官方網站</label>
+                                <input type="url" id="website" value="https://www.renai-care.com.tw" placeholder="請輸入網站網址">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>機構地址 <span class="required">*</span></label>
+                            <div class="form-grid">
+                                <select id="city" style="margin-bottom: 10px;">
+                                    <option value="">請選擇縣市</option>
+                                    <option value="taipei" selected>台北市</option>
+                                    <option value="newtaipei">新北市</option>
+                                    <option value="taoyuan">桃園市</option>
+                                    <option value="taichung">台中市</option>
+                                    <option value="tainan">台南市</option>
+                                    <option value="kaohsiung">高雄市</option>
+                                </select>
+                                <select id="district" style="margin-bottom: 10px;">
+                                    <option value="">請選擇區域</option>
+                                    <option value="daan" selected>大安區</option>
+                                    <option value="xinyi">信義區</option>
+                                    <option value="zhongshan">中山區</option>
+                                    <option value="songshan">松山區</option>
+                                </select>
+                            </div>
+                            <input type="text" id="address" value="忠孝東路四段123號5樓" placeholder="請輸入詳細地址" style="margin-top: 10px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 營業時間 -->
+                <div class="card info-section">
+                    <div class="card-body">
+                        <h3 class="section-title">
+                            <i class="fas fa-clock"></i>
+                            營業時間
+                        </h3>
+                        
+                        <div class="business-hours-grid">
+                            <div class="business-hours-row">
+                                <span class="day-label">週一</span>
+                                <input type="time" value="08:00">
+                                <span class="separator">至</span>
+                                <input type="time" value="18:00">
+                                <div class="day-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="business-hours-row">
+                                <span class="day-label">週二</span>
+                                <input type="time" value="08:00">
+                                <span class="separator">至</span>
+                                <input type="time" value="18:00">
+                                <div class="day-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="business-hours-row">
+                                <span class="day-label">週三</span>
+                                <input type="time" value="08:00">
+                                <span class="separator">至</span>
+                                <input type="time" value="18:00">
+                                <div class="day-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="business-hours-row">
+                                <span class="day-label">週四</span>
+                                <input type="time" value="08:00">
+                                <span class="separator">至</span>
+                                <input type="time" value="18:00">
+                                <div class="day-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="business-hours-row">
+                                <span class="day-label">週五</span>
+                                <input type="time" value="08:00">
+                                <span class="separator">至</span>
+                                <input type="time" value="18:00">
+                                <div class="day-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="business-hours-row">
+                                <span class="day-label">週六</span>
+                                <input type="time" value="09:00">
+                                <span class="separator">至</span>
+                                <input type="time" value="17:00">
+                                <div class="day-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="business-hours-row">
+                                <span class="day-label">週日</span>
+                                <input type="time" value="09:00">
+                                <span class="separator">至</span>
+                                <input type="time" value="17:00">
+                                <div class="day-toggle">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label>特別公告</label>
+                            <textarea id="specialNotice" placeholder="例如：國定假日休息、特殊服務時間等...">國定假日依政府公告休息，如有緊急需求請撥打24小時服務專線：0800-123-456</textarea>
+                        </div>
+                    </div>
+                </div>
+
+<!-- 操作按鈕 -->
+                <div class="action-buttons">
+                    <button class="btn btn-outline" onclick="resetForm()">
+                        <i class="fas fa-undo"></i> 重設變更
+                    </button>
+                    <button class="btn btn-primary" onclick="saveOrganizationInfo()">
+                        <i class="fas fa-save"></i> 儲存變更
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- JavaScript -->
+    <script src="js/admin.js"></script>
+    <script>
+        // 上傳 Logo
+        function uploadLogo() {
+            // 模擬上傳功能
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const preview = document.getElementById('logoPreview');
+                        preview.innerHTML = '';
+                        preview.style.backgroundImage = `url(${event.target.result})`;
+                        preview.style.backgroundSize = 'cover';
+                        preview.style.backgroundPosition = 'center';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        }
+        
+        // 移除 Logo
+        function removeLogo() {
+            const preview = document.getElementById('logoPreview');
+            preview.style.backgroundImage = '';
+            preview.innerHTML = '仁';
+        }
+        
+        // 儲存機構資訊
+        function saveOrganizationInfo() {
+            // 收集表單資料
+            const formData = {
+                name: document.getElementById('orgName').value,
+                code: document.getElementById('orgCode').value,
+                type: document.getElementById('orgType').value,
+                establishDate: document.getElementById('establishDate').value,
+                taxId: document.getElementById('taxId').value,
+                ownerName: document.getElementById('ownerName').value,
+                description: document.getElementById('orgDescription').value,
+                phone: document.getElementById('phone').value,
+                fax: document.getElementById('fax').value,
+                email: document.getElementById('email').value,
+                website: document.getElementById('website').value,
+                city: document.getElementById('city').value,
+                district: document.getElementById('district').value,
+                address: document.getElementById('address').value
+            };
+            
+            // 驗證必填欄位
+            if (!formData.name || !formData.type || !formData.taxId || !formData.ownerName || !formData.phone || !formData.email) {
+                showNotification('請填寫所有必填欄位', 'error');
+                return;
+            }
+            
+            // 模擬 API 儲存
+            console.log('儲存資料:', formData);
+            showNotification('機構資訊已儲存成功！', 'success');
+        }
+        
+        // 重設表單
+        function resetForm() {
+            if (confirm('確定要重設所有變更嗎？未儲存的資料將會遺失。')) {
+                location.reload();
+            }
+        }
+        
+        // 顯示通知
+        function showNotification(message, type = 'info') {
+            // 建立通知元素
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            `;
+            
+            if (type === 'success') {
+                notification.style.background = '#27ae60';
+            } else if (type === 'error') {
+                notification.style.background = '#e74c3c';
+            } else {
+                notification.style.background = '#3498db';
+            }
+            
+            notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i> ${message}`;
+            
+            document.body.appendChild(notification);
+            
+            // 3秒後自動關閉
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // 添加動畫樣式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂購清單查詢 - 機構端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+                    
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+                    
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>個案列表</span>
+                        </a>
+                        <a href="member-binding.html" class="menu-item">
+                            <span>綁定設定</span>
+                        </a>
+                        <a href="member-review.html" class="menu-item">
+                            <span>綁定審核</span>
+                        </a>
+                    </div>
+                    
+                    <a href="orders.html" class="menu-item active">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單查詢</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">機構功能</div>
+                    
+                    <a href="organization.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>機構資訊管理</span>
+                    </a>
+                    
+                    <a href="admins.html" class="menu-item">
+                        <i class="fas fa-user-shield"></i>
+                        <span>管理者權限管理</span>
+                    </a>
+                    
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>機構公告管理</span>
+                    </a>
+                    
+                    <a href="chat.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>個案關懷通訊</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>訂購清單查詢</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">訂購清單查詢</h1>
+                        <p class="page-subtitle">查看機構下所有個案的訂單與分潤資訊</p>
+                    </div>
+                </div>
+
+                <!-- 數據統計資訊 -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">本月訂單數</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" style="white-space: nowrap;">$428,500</div>
+                            <div class="stat-label">本月總營業額</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fas fa-hand-holding-dollar"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" style="white-space: nowrap;">$128,550</div>
+                            <div class="stat-label">本月分潤金額</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 篩選工具列 -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="filter-toolbar">
+                            <div class="filter-left">
+                                <div class="filter-grid">
+                                    <div class="filter-item">
+                                        <label class="filter-label">訂單編號</label>
+                                        <input type="text" class="form-control" placeholder="輸入訂單編號">
+                                    </div>
+                                    <div class="filter-item">
+                                        <label class="filter-label">服務類型</label>
+                                        <select class="form-control">
+                                            <option value="">全部類型</option>
+                                            <option value="care">居家照護</option>
+                                            <option value="health">健康檢測</option>
+                                            <option value="meal">營養餐食</option>
+                                            <option value="transport">交通接送</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-item">
+                                        <label class="filter-label">日期區間</label>
+                                        <div class="filter-date-range">
+                                            <input type="date" class="form-control">
+                                            <span class="date-separator">至</span>
+                                            <input type="date" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="filter-actions">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-search"></i> 搜尋
+                                        </button>
+                                        <button class="btn btn-outline">
+                                            <i class="fas fa-redo"></i> 重置
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="filter-right">
+                                <button class="btn btn-outline" onclick="exportTableToCSV('orderTable', '訂單列表.csv')">
+                                    <i class="fas fa-download"></i> 匯出報表
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 訂單列表 -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table" id="orderTable">
+                                <thead>
+                                    <tr>
+                                        <th>訂單編號</th>
+                                        <th>個案</th>
+                                        <th>服務項目</th>
+                                        <th>訂單金額</th>
+                                        <th>分潤金額</th>
+                                        <th>訂購日期</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-family: monospace;">ORD202401280001</td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <div class="avatar avatar-sm">王</div>
+                                                <span>王小明</span>
+                                            </div>
+                                        </td>
+                                        <td>專業居家照護服務</td>
+                                        <td style="font-weight: bold;">NT$ 2,400</td>
+                                        <td style="color: #27ae60; font-weight: bold;">NT$ 720</td>
+                                        <td>2025/01/28 10:30</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401280001', '王小明', '專業居家照護服務', 'NT$ 2,400', 'NT$ 720', '2025/01/28 10:30', 'pending', '')">
+                                                <i class="fas fa-eye"></i> 詳情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: monospace;">ORD202401270005</td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <div class="avatar avatar-sm" style="background-color: #e74c3c;">李</div>
+                                                <span>李小華</span>
+                                            </div>
+                                        </td>
+                                        <td>健康檢測套餐</td>
+                                        <td style="font-weight: bold;">NT$ 2,500</td>
+                                        <td style="color: #27ae60; font-weight: bold;">NT$ 750</td>
+                                        <td>2025/01/27 14:20</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401270005', '李小華', '健康檢測套餐', 'NT$ 2,500', 'NT$ 750', '2025/01/27 14:20', 'accepted', '已安排護理師明日上午到府')">
+                                                <i class="fas fa-eye"></i> 詳情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: monospace;">ORD202401270003</td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <div class="avatar avatar-sm" style="background-color: #9b59b6;">張</div>
+                                                <span>張大偉</span>
+                                            </div>
+                                        </td>
+                                        <td>營養餐食配送（週餐）</td>
+                                        <td style="font-weight: bold;">NT$ 1,260</td>
+                                        <td style="color: #27ae60; font-weight: bold;">NT$ 378</td>
+                                        <td>2025/01/27 09:15</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401270003', '張大偉', '營養餐食配送（週餐）', 'NT$ 1,260', 'NT$ 378', '2025/01/27 09:15', 'processing', '餐食已準備完成，配送員已出發')">
+                                                <i class="fas fa-eye"></i> 詳情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: monospace;">ORD202401260012</td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <div class="avatar avatar-sm" style="background-color: #f39c12;">陳</div>
+                                                <span>陳美玲</span>
+                                            </div>
+                                        </td>
+                                        <td>就醫交通接送</td>
+                                        <td style="font-weight: bold;">NT$ 1,000</td>
+                                        <td style="color: #27ae60; font-weight: bold;">NT$ 300</td>
+                                        <td>2025/01/26 16:45</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401260012', '陳美玲', '就醫交通接送', 'NT$ 1,000', 'NT$ 300', '2025/01/26 16:45', 'completed', '服務已完成，個案滿意度良好')">
+                                                <i class="fas fa-eye"></i> 詳情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: monospace;">ORD202401250008</td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <div class="avatar avatar-sm" style="background-color: #1abc9c;">林</div>
+                                                <span>林志明</span>
+                                            </div>
+                                        </td>
+                                        <td>陪伴服務（4小時）</td>
+                                        <td style="font-weight: bold;">NT$ 1,600</td>
+                                        <td style="color: #27ae60; font-weight: bold;">NT$ 480</td>
+                                        <td>2025/01/25 11:30</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401250008', '林志明', '陪伴服務（4小時）', 'NT$ 1,600', 'NT$ 480', '2025/01/25 11:30', 'completed', '服務順利完成')">
+                                                <i class="fas fa-eye"></i> 詳情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: monospace;">ORD202401240015</td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <div class="avatar avatar-sm">王</div>
+                                                <span>王小明</span>
+                                            </div>
+                                        </td>
+                                        <td>居家清潔服務</td>
+                                        <td style="font-weight: bold;">NT$ 2,000</td>
+                                        <td style="color: #27ae60; font-weight: bold;">NT$ 600</td>
+                                        <td>2025/01/24 08:00</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401240015', '王小明', '居家清潔服務', 'NT$ 2,000', 'NT$ 600', '2025/01/24 08:00', 'pending', '')">
+                                                <i class="fas fa-eye"></i> 詳情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- 分頁 -->
+                        <div class="pagination">
+                            <span class="pagination-item disabled"><i class="fas fa-chevron-left"></i></span>
+                            <span class="pagination-item active">1</span>
+                            <span class="pagination-item">2</span>
+                            <span class="pagination-item">3</span>
+                            <span class="pagination-item">...</span>
+                            <span class="pagination-item">15</span>
+                            <span class="pagination-item"><i class="fas fa-chevron-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 訂單詳情彈窗 -->
+    <div id="orderDetailModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-clipboard-list"></i> 訂單詳情</h3>
+                <i class="fas fa-times" onclick="closeOrderDetail()"></i>
+            </div>
+            <div class="modal-body">
+                <!-- 訂單基本資訊 -->
+                <div style="background: #f8f9fa; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div>
+                            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">訂單編號</div>
+                            <div style="font-weight: bold; font-family: monospace;" id="modalOrderId">-</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">訂購日期</div>
+                            <div style="font-weight: bold;" id="modalOrderDate">-</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">個案姓名</div>
+                            <div style="font-weight: bold;" id="modalCustomer">-</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">服務項目</div>
+                            <div style="font-weight: bold;" id="modalService">-</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">訂單金額</div>
+                            <div style="font-weight: bold; color: #2c3e50;" id="modalAmount">-</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">分潤金額</div>
+                            <div style="font-weight: bold; color: #27ae60;" id="modalCommission">-</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer" style="display: flex; gap: 12px; justify-content: flex-end; padding: 16px 24px; border-top: 1px solid #e9ecef;">
+                <button class="btn btn-primary" onclick="closeOrderDetail()">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/admin.js"></script>
+    <script>
+        // 當前操作的訂單ID
+        let currentOrderId = '';
+
+
+        /**
+         * 開啟訂單詳情彈窗
+         */
+        function openOrderDetail(orderId, customer, service, amount, commission, date, status, note) {
+            currentOrderId = orderId;
+            
+            // 填充基本資訊
+            document.getElementById('modalOrderId').textContent = orderId;
+            document.getElementById('modalOrderDate').textContent = date;
+            document.getElementById('modalCustomer').textContent = customer;
+            document.getElementById('modalService').textContent = service;
+            document.getElementById('modalAmount').textContent = amount;
+            document.getElementById('modalCommission').textContent = commission;
+            
+            // 顯示彈窗
+            document.getElementById('orderDetailModal').style.display = 'flex';
+        }
+
+        /**
+         * 關閉訂單詳情彈窗
+         */
+        function closeOrderDetail() {
+            document.getElementById('orderDetailModal').style.display = 'none';
+            currentOrderId = '';
+        }
+
+        // 點擊彈窗外部關閉
+        document.getElementById('orderDetailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeOrderDetail();
+            }
+        });
+    </script>
+
+    <style>
+        /* 狀態徽章樣式 */
+        .status-badge.pending {
+            background-color: #ffeaea;
+            color: #e74c3c;
+        }
+        
+        .status-badge.accepted {
+            background-color: #fff3e0;
+            color: #f39c12;
+        }
+        
+        .status-badge.processing {
+            background-color: #e3f2fd;
+            color: #3498db;
+        }
+        
+        .status-badge.completed {
+            background-color: #e8f5e9;
+            color: #27ae60;
+        }
+        
+        .status-badge.cancelled {
+            background-color: #f5f5f5;
+            color: #95a5a6;
+        }
+        
+        /* 彈窗樣式調整 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal-container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e9ecef;
+            background: #f8f9fa;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+        
+        .modal-header i.fa-times {
+            cursor: pointer;
+            font-size: 18px;
+            color: #999;
+            transition: color 0.2s;
+        }
+        
+        .modal-header i.fa-times:hover {
+            color: #e74c3c;
+        }
+        
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* 篩選條件樣式 */
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1.6fr auto;
+            gap: 16px;
+            align-items: end;
+            width: 100%;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 13px;
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        .filter-date-range {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .date-separator {
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding-bottom: 2px;
+        }
+
+        @media (max-width: 1200px) {
+            .filter-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .filter-actions {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

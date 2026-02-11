@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 訂購清單</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">訂購清單</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <!-- 分頁標籤 -->
+        <div class="tabs">
+            <div class="tab-item active" data-tab="all">全部</div>
+            <div class="tab-item" data-tab="paid">已付款</div>
+            <div class="tab-item" data-tab="processing">處理中</div>
+            <div class="tab-item" data-tab="completed">已完成</div>
+        </div>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <!-- 訂單卡片 1 - 已付款 -->
+            <div class="order-card" data-status="paid">
+                <div class="order-header">
+                    <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202601280001</span>
+                    <span class="order-status paid">已付款</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-image">
+                            <i class="fas fa-user-nurse"></i>
+                        </div>
+                        <div class="order-item-info">
+                            <div class="order-item-name">專業居家照護服務</div>
+                            <div class="order-item-spec">2小時/次 × 1</div>
+                        </div>
+                        <div class="order-item-price">NT$ 2,400</div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共 1 項，合計：<span>NT$ 2,400</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn btn-primary">查看詳情</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 訂單卡片 2 - 處理中 -->
+            <div class="order-card" data-status="processing">
+                <div class="order-header">
+                    <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202601270005</span>
+                    <span class="order-status processing">處理中</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-image" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="order-item-info">
+                            <div class="order-item-name">健康檢測套餐</div>
+                            <div class="order-item-spec">單次服務 × 1</div>
+                        </div>
+                        <div class="order-item-price">NT$ 2,500</div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-item-image" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="order-item-info">
+                            <div class="order-item-name">營養餐食配送</div>
+                            <div class="order-item-spec">每日配送 × 7</div>
+                        </div>
+                        <div class="order-item-price">NT$ 1,260</div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共 2 項，合計：<span>NT$ 3,760</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn btn-secondary" style="background: #3498db; color: white;">聯繫客服</button>
+                        <button class="btn btn-primary">查看詳情</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 訂單卡片 3 - 已完成 -->
+            <div class="order-card" data-status="completed">
+                <div class="order-header">
+                    <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202601200012</span>
+                    <span class="order-status completed">已完成</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-image" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="order-item-info">
+                            <div class="order-item-name">就醫交通接送</div>
+                            <div class="order-item-spec">單程服務 × 2</div>
+                        </div>
+                        <div class="order-item-price">NT$ 1,000</div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共 1 項，合計：<span>NT$ 1,000</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn btn-primary">查看詳情</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部導覽列 -->
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item active" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

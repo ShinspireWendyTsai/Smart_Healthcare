@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 服務詳情</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 服務詳情頁樣式 */
+        .service-detail-header {
+            position: relative;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .service-detail-header i {
+            font-size: 80px;
+            opacity: 0.9;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 32px !important;
+            height: 32px !important;
+            min-width: 32px !important;
+            min-height: 32px !important;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-btn i {
+            font-size: 14px !important;
+        }
+        
+        .service-detail-content {
+            padding: 20px;
+            margin-top: -30px;
+            position: relative;
+            background: var(--background-color);
+            border-radius: 24px 24px 0 0;
+        }
+        
+        .service-title-card {
+            background: var(--card-background);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 16px;
+        }
+        
+        .service-detail-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .service-detail-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(45, 106, 79, 0.1);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .service-detail-desc {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .service-detail-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .service-detail-price .original {
+            font-size: 16px;
+            color: var(--text-light);
+            text-decoration: line-through;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+        
+        .info-section {
+            background: var(--card-background);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 16px;
+        }
+        
+        .info-section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-section-title i {
+            color: var(--primary-color);
+        }
+        
+        .info-list {
+            list-style: none;
+        }
+        
+        .info-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--divider-color);
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .info-list li i {
+            color: var(--primary-color);
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+            margin-top: 2px;
+        }
+        
+        .info-list li span {
+            flex: 1;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .contact-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-height: 56px;
+        }
+        
+        .contact-btn.phone {
+            background: linear-gradient(135deg, #2D6A4F, #1B4332);
+            color: white;
+        }
+        
+        .contact-btn.phone:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
+        }
+        
+        .contact-btn.line {
+            background: linear-gradient(135deg, #06C755, #00B900);
+            color: white;
+        }
+        
+        .contact-btn.line:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 199, 85, 0.3);
+        }
+        
+        .provider-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(45, 106, 79, 0.05);
+            border-radius: var(--radius-md);
+            margin-top: 12px;
+        }
+        
+        .provider-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .provider-info {
+            flex: 1;
+        }
+        
+        .provider-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        
+        .provider-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #F59E0B;
+            font-size: 14px;
+        }
+        
+        .provider-rating span {
+            color: var(--text-secondary);
+            margin-left: 4px;
+        }
+        
+        .bottom-action {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-background);
+            padding: 16px 20px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        .btn-favorite {
+            width: 56px;
+            height: 56px;
+            border: 2px solid var(--border-color);
+            background: var(--card-background);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-favorite:hover {
+            border-color: #E53E3E;
+            color: #E53E3E;
+        }
+        
+        .btn-favorite.active {
+            background: #FFF5F5;
+            border-color: #E53E3E;
+            color: #E53E3E;
+        }
+        
+        .btn-book {
+            flex: 1;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(45, 106, 79, 0.3);
+        }
+        
+        .main-content {
+            padding-bottom: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 服務圖片區域 -->
+        <div class="service-detail-header" id="serviceHeader" style="background: linear-gradient(145deg, #2D6A4F, #1B4332);">
+            <div class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <i class="fas fa-user-nurse" id="serviceIcon"></i>
+        </div>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <div class="service-detail-content">
+                <!-- 服務標題卡片 -->
+                <div class="service-title-card">
+                    <div class="service-detail-category" id="serviceCategory">居家照護</div>
+                    <div class="service-detail-name" id="serviceName">專業居家照護服務</div>
+                    <div class="service-detail-desc" id="serviceDesc">由專業照服員提供貼心的居家照護，包含日常生活協助、身體清潔、餐食準備等服務。</div>
+                    <div class="service-detail-price">
+                        <span id="servicePrice">NT$ 1,200/時</span>
+                        <span class="original" id="serviceOriginalPrice">NT$ 1,500</span>
+                    </div>
+                </div>
+
+                <!-- 服務內容 -->
+                <div class="info-section">
+                    <div class="info-section-title">
+                        <i class="fas fa-list-check"></i>
+                        服務內容
+                    </div>
+                    <ul class="info-list" id="serviceContents">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>日常生活協助（穿衣、進食、如廁）</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>身體清潔照護（沐浴、口腔清潔）</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>餐食準備與餵食協助</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>陪同就醫與用藥提醒</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>簡易居家環境整理</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 服務說明 -->
+                <div class="info-section">
+                    <div class="info-section-title">
+                        <i class="fas fa-info-circle"></i>
+                        服務說明
+                    </div>
+                    <ul class="info-list">
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>服務時間：週一至週日 08:00-20:00</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-hourglass-half"></i>
+                            <span>最低預約時數：2 小時</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>需提前 24 小時預約</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>服務範圍：台北市、新北市</span>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </main>
+
+        <!-- 底部操作按鈕 -->
+        <div class="bottom-action">
+            <button class="btn-book" onclick="bookService()">
+                立即預約
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // 服務資料
+        const servicesData = {
+            1: { name: '專業居家照護服務', desc: '由專業照服員提供貼心的居家照護，包含日常生活協助、身體清潔、餐食準備等服務。', price: 'NT$ 1,200/時', originalPrice: 'NT$ 1,500', category: '居家照護', icon: 'fa-user-nurse', color: '#2D6A4F', colorDark: '#1B4332' },
+            2: { name: '夜間居家照護', desc: '夜間專人陪伴照護服務，確保長者夜間安全與照護需求。', price: 'NT$ 1,800/晚', originalPrice: '', category: '居家照護', icon: 'fa-moon', color: '#2D6A4F', colorDark: '#1B4332' },
+            3: { name: '臨時居家照護', desc: '短期臨時照護需求，彈性預約時段。', price: 'NT$ 800/時', originalPrice: '', category: '居家照護', icon: 'fa-clock', color: '#2D6A4F', colorDark: '#1B4332' },
+            4: { name: '健康檢測套餐', desc: '血壓、血糖、心電圖完整檢測，專業護理師到府服務。', price: 'NT$ 2,500/次', originalPrice: '', category: '健康檢測', icon: 'fa-heartbeat', color: '#2B6CB0', colorDark: '#1A4A7C' },
+            5: { name: '血壓監測服務', desc: '定期血壓追蹤與記錄，建立個人健康檔案。', price: 'NT$ 300/次', originalPrice: '', category: '健康檢測', icon: 'fa-stethoscope', color: '#2B6CB0', colorDark: '#1A4A7C' },
+            6: { name: '血糖檢測服務', desc: '血糖數值監測與分析，提供飲食建議。', price: 'NT$ 350/次', originalPrice: '', category: '健康檢測', icon: 'fa-tint', color: '#2B6CB0', colorDark: '#1A4A7C' },
+            7: { name: '用藥提醒服務', desc: '每日用藥時間提醒與記錄，確保用藥安全。', price: 'NT$ 200/月', originalPrice: '', category: '用藥提醒', icon: 'fa-pills', color: '#C53030', colorDark: '#9B2C2C' },
+            8: { name: '藥物管理服務', desc: '藥物分裝與管理服務，預防用藥錯誤。', price: 'NT$ 500/月', originalPrice: '', category: '用藥提醒', icon: 'fa-prescription-bottle', color: '#C53030', colorDark: '#9B2C2C' },
+            9: { name: '營養餐食配送', desc: '專業營養師調配，每日新鮮配送到府。', price: 'NT$ 180/餐', originalPrice: '', category: '營養餐食', icon: 'fa-utensils', color: '#D4A574', colorDark: '#B8956C' },
+            10: { name: '糖尿病專用餐', desc: '低糖低鈉營養均衡餐點，專為糖尿病患者設計。', price: 'NT$ 220/餐', originalPrice: '', category: '營養餐食', icon: 'fa-leaf', color: '#D4A574', colorDark: '#B8956C' },
+            11: { name: '軟質餐食配送', desc: '易咀嚼易消化的軟質餐點，適合吞嚥困難者。', price: 'NT$ 200/餐', originalPrice: '', category: '營養餐食', icon: 'fa-bowl-food', color: '#D4A574', colorDark: '#B8956C' },
+            15: { name: '長者陪伴服務', desc: '聊天、散步、休閒活動陪伴，增進長者身心健康。', price: 'NT$ 400/時', originalPrice: '', category: '陪伴服務', icon: 'fa-hand-holding-heart', color: '#C4873B', colorDark: '#A66B2E' },
+            16: { name: '就醫陪伴服務', desc: '陪同就醫看診、領藥，全程照護。', price: 'NT$ 500/次', originalPrice: '', category: '陪伴服務', icon: 'fa-user-doctor', color: '#C4873B', colorDark: '#A66B2E' },
+            17: { name: '外出活動陪伴', desc: '陪同購物、運動、社交活動，豐富生活。', price: 'NT$ 450/時', originalPrice: '', category: '陪伴服務', icon: 'fa-walking', color: '#C4873B', colorDark: '#A66B2E' },
+            18: { name: '居家環境清潔', desc: '專業清潔人員到府服務，維持居家整潔。', price: 'NT$ 1,500/次', originalPrice: '', category: '居家清潔', icon: 'fa-broom', color: '#319795', colorDark: '#256D6D' },
+            19: { name: '深度清潔服務', desc: '廚房、浴室深度清潔，去除頑固髒污。', price: 'NT$ 2,500/次', originalPrice: '', category: '居家清潔', icon: 'fa-spray-can-sparkles', color: '#319795', colorDark: '#256D6D' },
+            20: { name: '定期清潔方案', desc: '每週固定清潔服務，長期優惠價格。', price: 'NT$ 5,000/月', originalPrice: 'NT$ 6,000', category: '居家清潔', icon: 'fa-calendar-check', color: '#319795', colorDark: '#256D6D' },
+            21: { name: '輪椅租借', desc: '各式輪椅短期租借服務，含配送到府。', price: 'NT$ 500/週', originalPrice: '', category: '輔具租借', icon: 'fa-wheelchair', color: '#DD6B20', colorDark: '#C05621' },
+            22: { name: '電動床租借', desc: '居家照護電動床租借，提升照護品質。', price: 'NT$ 2,000/月', originalPrice: '', category: '輔具租借', icon: 'fa-bed', color: '#DD6B20', colorDark: '#C05621' },
+            23: { name: '助行器租借', desc: '各式助行器材租借，協助行動不便者。', price: 'NT$ 300/週', originalPrice: '', category: '輔具租借', icon: 'fa-crutch', color: '#DD6B20', colorDark: '#C05621' },
+            24: { name: '氧氣機租借', desc: '居家氧氣設備租借，含使用教學。', price: 'NT$ 3,000/月', originalPrice: '', category: '輔具租借', icon: 'fa-lungs', color: '#DD6B20', colorDark: '#C05621' },
+        };
+
+        // 頁面載入時初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadServiceDetail();
+        });
+
+        /**
+         * 載入服務詳情
+         */
+        function loadServiceDetail() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceId = urlParams.get('id') || '1';
+            const service = servicesData[serviceId];
+
+            if (service) {
+                document.getElementById('serviceHeader').style.background = `linear-gradient(145deg, ${service.color}, ${service.colorDark})`;
+                document.getElementById('serviceIcon').className = `fas ${service.icon}`;
+                document.getElementById('serviceName').textContent = service.name;
+                document.getElementById('serviceDesc').textContent = service.desc;
+                document.getElementById('serviceCategory').textContent = service.category;
+                document.getElementById('servicePrice').textContent = service.price;
+                
+                if (service.originalPrice) {
+                    document.getElementById('serviceOriginalPrice').textContent = service.originalPrice;
+                    document.getElementById('serviceOriginalPrice').style.display = 'inline';
+                } else {
+                    document.getElementById('serviceOriginalPrice').style.display = 'none';
+                }
+                
+                document.title = `智慧照護平台 - ${service.name}`;
+            }
+        }
+
+        /**
+         * 切換收藏狀態
+         */
+        function toggleFavorite(btn) {
+            btn.classList.toggle('active');
+            const icon = btn.querySelector('i');
+            if (btn.classList.contains('active')) {
+                icon.className = 'fas fa-heart';
+                showToast('已加入收藏');
+            } else {
+                icon.className = 'far fa-heart';
+                showToast('已取消收藏');
+            }
+        }
+
+        /**
+         * 預約服務
+         */
+        function bookService() {
+            showToast('即將為您轉接預約頁面', 'success');
+            // 可導向預約頁面
+            // setTimeout(() => navigateTo('booking.html?id=' + serviceId), 1000);
+        }
+    </script>
+</body>
+</html>
