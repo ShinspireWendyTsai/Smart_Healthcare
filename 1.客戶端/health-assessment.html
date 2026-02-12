@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 健康評估</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ─── 進度條 ─── */
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 20px 24px 8px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .progress-step:last-child {
+            flex: 0;
+        }
+
+        .step-circle {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            background: var(--background-color);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-circle i {
+            font-size: 14px;
+        }
+
+        .step-line {
+            flex: 1;
+            height: 3px;
+            background: var(--border-color);
+            transition: background 0.3s ease;
+            margin: 0 -1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-step.completed .step-circle {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .progress-step.completed .step-line {
+            background: var(--primary-color);
+        }
+
+        .progress-step.active .step-circle {
+            background: #fff;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.15);
+        }
+
+        .step-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 16px 12px;
+        }
+
+        .step-label {
+            font-size: 11px;
+            color: var(--text-light);
+            text-align: center;
+            width: 60px;
+            transition: color 0.3s ease;
+        }
+
+        .step-label.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* ─── 步驟卡片 ─── */
+        .step-card {
+            display: none;
+            padding: 0 16px 24px;
+            animation: fadeIn 0.35s ease;
+        }
+
+        .step-card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .step-header .step-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .step-header .step-icon i {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .step-header h2 {
+            font-size: var(--font-size-lg);
+            color: var(--text-primary);
+            margin: 0 0 4px;
+        }
+
+        .step-header p {
+            font-size: var(--font-size-sm);
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* ─── 表單區塊 ─── */
+        .form-card {
+            background: var(--card-background);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .form-card .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-card .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-card label {
+            display: block;
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .form-card .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+            background: var(--card-background);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .form-card .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+        }
+
+        .form-card select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234A5568' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        /* ─── 選項網格（多選/單選） ─── */
+        .option-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .option-grid.cols-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .option-chip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 10px;
+            background: var(--background-color);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            min-height: 48px;
+            user-select: none;
+        }
+
+        .option-chip i {
+            font-size: 14px;
+        }
+
+        .option-chip:hover {
+            border-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .option-chip.selected {
+            background: rgba(45, 106, 79, 0.08);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .option-chip.selected i:first-child {
+            color: var(--primary-color);
+        }
+
+        /* ─── 滑桿 ─── */
+        .range-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .range-group input[type="range"] {
+            flex: 1;
+            height: 6px;
+            appearance: none;
+            background: var(--border-color);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .range-group input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(45, 106, 79, 0.3);
+        }
+
+        .range-value {
+            min-width: 48px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: var(--font-size-base);
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* ─── 底部操作列 ─── */
+        .bottom-action-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-background);
+            border-top: 1px solid var(--divider-color);
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        .bottom-action-bar .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-prev {
+            background: var(--background-color);
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color) !important;
+        }
+
+        .btn-prev:hover {
+            border-color: var(--primary-color) !important;
+            color: var(--primary-color);
+        }
+
+        .btn-next {
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
+        }
+
+        .btn-next:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(45, 106, 79, 0.4);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .main-content {
+            padding-bottom: 90px;
+        }
+
+        /* ─── 提示文字 ─── */
+        .field-hint {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .required-mark {
+            color: var(--danger-color);
+            margin-left: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <div class="header-left">
+                <i class="fas fa-arrow-left" onclick="handleBack()" style="cursor: pointer; margin-right: 12px;"></i>
+                <div class="header-title">健康評估</div>
+            </div>
+            <div class="header-icons">
+                <span style="font-size: 14px; color: rgba(255,255,255,0.8);" id="stepIndicator">1 / 5</span>
+            </div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <!-- 進度條 -->
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="progress-step" data-step="5">
+                    <div class="step-circle">5</div>
+                </div>
+            </div>
+            <div class="step-labels">
+                <span class="step-label active">基本資料</span>
+                <span class="step-label">健康狀態</span>
+                <span class="step-label">生活習慣</span>
+                <span class="step-label">健康目標</span>
+                <span class="step-label">過敏禁忌</span>
+            </div>
+
+            <!-- ===== 步驟 1：基本資料 ===== -->
+            <div class="step-card active" data-step="1">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2>基本資料</h2>
+                    <p>請填寫您的基本資訊，幫助我們更準確評估</p>
+                </div>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label>年齡範圍 <span class="required-mark">*</span></label>
+                        <select class="form-control" id="ageRange" required>
+                            <option value="">請選擇年齡範圍</option>
+                            <option value="40-49">40 - 49 歲</option>
+                            <option value="50-59">50 - 59 歲</option>
+                            <option value="60-69">60 - 69 歲</option>
+                            <option value="70-79">70 - 79 歲</option>
+                            <option value="80+">80 歲以上</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>性別 <span class="required-mark">*</span></label>
+                        <div class="option-grid">
+                            <div class="option-chip" data-name="gender" data-value="male" onclick="selectSingle(this)">
+                                <i class="fas fa-mars"></i> 男性
+                            </div>
+                            <div class="option-chip" data-name="gender" data-value="female" onclick="selectSingle(this)">
+                                <i class="fas fa-venus"></i> 女性
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>體重（公斤）</label>
+                        <input type="number" class="form-control" id="weight" placeholder="例如：65" min="30" max="200">
+                    </div>
+                    <div class="form-group">
+                        <label>身高（公分）</label>
+                        <input type="number" class="form-control" id="height" placeholder="例如：160" min="100" max="220">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 步驟 2：健康狀態 ===== -->
+            <div class="step-card" data-step="2">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <h2>健康狀態</h2>
+                    <p>了解您目前的健康狀況，提供更精準的建議</p>
+                </div>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label>目前是否有以下慢性病？<span class="required-mark">*</span></label>
+                        <p class="field-hint">可複選，若無請選「無」</p>
+                        <div class="option-grid">
+                            <div class="option-chip" data-name="chronic" data-value="高血壓" onclick="toggleMulti(this)">
+                                <i class="fas fa-droplet"></i> 高血壓
+                            </div>
+                            <div class="option-chip" data-name="chronic" data-value="糖尿病" onclick="toggleMulti(this)">
+                                <i class="fas fa-syringe"></i> 糖尿病
+                            </div>
+                            <div class="option-chip" data-name="chronic" data-value="心臟病" onclick="toggleMulti(this)">
+                                <i class="fas fa-heart"></i> 心臟病
+                            </div>
+                            <div class="option-chip" data-name="chronic" data-value="骨質疏鬆" onclick="toggleMulti(this)">
+                                <i class="fas fa-bone"></i> 骨質疏鬆
+                            </div>
+                            <div class="option-chip" data-name="chronic" data-value="關節炎" onclick="toggleMulti(this)">
+                                <i class="fas fa-person-cane"></i> 關節炎
+                            </div>
+                            <div class="option-chip" data-name="chronic" data-value="高血脂" onclick="toggleMulti(this)">
+                                <i class="fas fa-vial"></i> 高血脂
+                            </div>
+                            <div class="option-chip" data-name="chronic" data-value="無" onclick="selectExclusive(this)">
+                                <i class="fas fa-check-circle"></i> 無
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>目前用藥狀況</label>
+                        <textarea class="form-control" id="medication" placeholder="例如：每日服用降血壓藥物..." rows="3" style="resize: vertical;"></textarea>
+                        <p class="field-hint">若無用藥可留空</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 步驟 3：生活習慣 ===== -->
+            <div class="step-card" data-step="3">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h2>生活習慣</h2>
+                    <p>您的日常習慣也會影響保健食品的適配度</p>
+                </div>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label>飲食均衡程度 <span class="required-mark">*</span></label>
+                        <div class="range-group">
+                            <span style="font-size: 13px; color: var(--text-light);">不均衡</span>
+                            <input type="range" id="dietBalance" min="1" max="5" value="3" oninput="updateRangeLabel(this, 'dietLabel')">
+                            <span style="font-size: 13px; color: var(--text-light);">很均衡</span>
+                        </div>
+                        <div style="text-align: center; margin-top: 8px;">
+                            <span class="range-value" id="dietLabel">3 / 5</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>每週運動頻率 <span class="required-mark">*</span></label>
+                        <div class="option-grid">
+                            <div class="option-chip" data-name="exercise" data-value="無" onclick="selectSingle(this)">
+                                幾乎不運動
+                            </div>
+                            <div class="option-chip" data-name="exercise" data-value="1-2" onclick="selectSingle(this)">
+                                1-2 次/週
+                            </div>
+                            <div class="option-chip" data-name="exercise" data-value="3-4" onclick="selectSingle(this)">
+                                3-4 次/週
+                            </div>
+                            <div class="option-chip" data-name="exercise" data-value="5+" onclick="selectSingle(this)">
+                                5 次以上/週
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>每日平均睡眠時數</label>
+                        <select class="form-control" id="sleepHours">
+                            <option value="">請選擇</option>
+                            <option value="<5">不足 5 小時</option>
+                            <option value="5-6">5 - 6 小時</option>
+                            <option value="6-7">6 - 7 小時</option>
+                            <option value="7-8">7 - 8 小時</option>
+                            <option value="8+">8 小時以上</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>日常飲水量</label>
+                        <div class="option-grid">
+                            <div class="option-chip" data-name="water" data-value="<1000" onclick="selectSingle(this)">
+                                少於 1000ml
+                            </div>
+                            <div class="option-chip" data-name="water" data-value="1000-1500" onclick="selectSingle(this)">
+                                1000-1500ml
+                            </div>
+                            <div class="option-chip" data-name="water" data-value="1500-2000" onclick="selectSingle(this)">
+                                1500-2000ml
+                            </div>
+                            <div class="option-chip" data-name="water" data-value="2000+" onclick="selectSingle(this)">
+                                2000ml 以上
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 步驟 4：健康目標 ===== -->
+            <div class="step-card" data-step="4">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h2>健康目標</h2>
+                    <p>選擇您最關注的保健方向（可複選）</p>
+                </div>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label>您希望改善或加強哪些方面？<span class="required-mark">*</span></label>
+                        <div class="option-grid">
+                            <div class="option-chip" data-name="goals" data-value="關節保養" onclick="toggleMulti(this)">
+                                <i class="fas fa-bone"></i> 關節保養
+                            </div>
+                            <div class="option-chip" data-name="goals" data-value="心血管保健" onclick="toggleMulti(this)">
+                                <i class="fas fa-heart"></i> 心血管保健
+                            </div>
+                            <div class="option-chip" data-name="goals" data-value="免疫力提升" onclick="toggleMulti(this)">
+                                <i class="fas fa-shield-virus"></i> 免疫力提升
+                            </div>
+                            <div class="option-chip" data-name="goals" data-value="骨質強化" onclick="toggleMulti(this)">
+                                <i class="fas fa-dumbbell"></i> 骨質強化
+                            </div>
+                            <div class="option-chip" data-name="goals" data-value="消化改善" onclick="toggleMulti(this)">
+                                <i class="fas fa-stomach"></i> 消化改善
+                            </div>
+                            <div class="option-chip" data-name="goals" data-value="體力增強" onclick="toggleMulti(this)">
+                                <i class="fas fa-bolt"></i> 體力增強
+                            </div>
+                            <div class="option-chip" data-name="goals" data-value="睡眠改善" onclick="toggleMulti(this)">
+                                <i class="fas fa-moon"></i> 睡眠改善
+                            </div>
+                            <div class="option-chip" data-name="goals" data-value="視力保健" onclick="toggleMulti(this)">
+                                <i class="fas fa-eye"></i> 視力保健
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 步驟 5：過敏與禁忌 ===== -->
+            <div class="step-card" data-step="5">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i class="fas fa-triangle-exclamation"></i>
+                    </div>
+                    <h2>過敏與禁忌</h2>
+                    <p>確保推薦的保健食品安全適合您</p>
+                </div>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label>食物過敏</label>
+                        <p class="field-hint">若有相關過敏請勾選，若無請選「無」</p>
+                        <div class="option-grid">
+                            <div class="option-chip" data-name="foodAllergy" data-value="海鮮" onclick="toggleMulti(this)">
+                                <i class="fas fa-fish"></i> 海鮮
+                            </div>
+                            <div class="option-chip" data-name="foodAllergy" data-value="堅果" onclick="toggleMulti(this)">
+                                <i class="fas fa-seedling"></i> 堅果
+                            </div>
+                            <div class="option-chip" data-name="foodAllergy" data-value="乳製品" onclick="toggleMulti(this)">
+                                <i class="fas fa-glass-water"></i> 乳製品
+                            </div>
+                            <div class="option-chip" data-name="foodAllergy" data-value="大豆" onclick="toggleMulti(this)">
+                                <i class="fas fa-leaf"></i> 大豆
+                            </div>
+                            <div class="option-chip" data-name="foodAllergy" data-value="蛋" onclick="toggleMulti(this)">
+                                <i class="fas fa-egg"></i> 蛋
+                            </div>
+                            <div class="option-chip" data-name="foodAllergy" data-value="無" onclick="selectExclusive(this)">
+                                <i class="fas fa-check-circle"></i> 無
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>藥物過敏</label>
+                        <input type="text" class="form-control" id="drugAllergy" placeholder="例如：阿斯匹靈、盤尼西林...">
+                        <p class="field-hint">若無可留空</p>
+                    </div>
+                    <div class="form-group">
+                        <label>其他禁忌或注意事項</label>
+                        <textarea class="form-control" id="otherNotes" placeholder="例如：素食者、特殊宗教飲食限制..." rows="3" style="resize: vertical;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部操作按鈕 -->
+        <div class="bottom-action-bar">
+            <button class="btn btn-prev" id="btnPrev" onclick="prevStep()" style="display: none;">
+                <i class="fas fa-arrow-left"></i> 上一步
+            </button>
+            <button class="btn btn-next" id="btnNext" onclick="nextStep()">
+                下一步 <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        /**
+         * ─── 問卷狀態管理 ───
+         */
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        // 儲存所有回答
+        const answers = {
+            ageRange: '',
+            gender: '',
+            weight: '',
+            height: '',
+            chronic: [],
+            medication: '',
+            dietBalance: 3,
+            exercise: '',
+            sleepHours: '',
+            water: '',
+            goals: [],
+            foodAllergy: [],
+            drugAllergy: '',
+            otherNotes: ''
+        };
+
+        /**
+         * ─── 選項互動函式 ───
+         */
+
+        /** 單選：同 name 只能選一個 */
+        function selectSingle(chip) {
+            const name = chip.dataset.name;
+            document.querySelectorAll(`.option-chip[data-name="${name}"]`).forEach(c => c.classList.remove('selected'));
+            chip.classList.add('selected');
+        }
+
+        /** 多選：可切換選取 */
+        function toggleMulti(chip) {
+            const name = chip.dataset.name;
+            // 若之前選了「無」，先取消
+            const noneChip = document.querySelector(`.option-chip[data-name="${name}"][data-value="無"]`);
+            if (noneChip && noneChip.classList.contains('selected') && chip.dataset.value !== '無') {
+                noneChip.classList.remove('selected');
+            }
+            chip.classList.toggle('selected');
+        }
+
+        /** 排他選項：選「無」時清除同組其他選項 */
+        function selectExclusive(chip) {
+            const name = chip.dataset.name;
+            document.querySelectorAll(`.option-chip[data-name="${name}"]`).forEach(c => c.classList.remove('selected'));
+            chip.classList.add('selected');
+        }
+
+        /** 更新滑桿數值顯示 */
+        function updateRangeLabel(input, labelId) {
+            document.getElementById(labelId).textContent = input.value + ' / 5';
+        }
+
+        /**
+         * ─── 步驟導航 ───
+         */
+
+        function nextStep() {
+            // 驗證當前步驟
+            if (!validateStep(currentStep)) return;
+
+            // 收集當前步驟資料
+            collectStepData(currentStep);
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateUI();
+            } else {
+                // 最後一步 → 提交
+                submitAssessment();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                collectStepData(currentStep);
+                currentStep--;
+                updateUI();
+            }
+        }
+
+        function handleBack() {
+            if (currentStep > 1) {
+                prevStep();
+            } else {
+                goBack();
+            }
+        }
+
+        /** 更新整體 UI（進度條、步驟卡片、按鈕、標題） */
+        function updateUI() {
+            // 步驟卡片顯示
+            document.querySelectorAll('.step-card').forEach(card => {
+                card.classList.toggle('active', parseInt(card.dataset.step) === currentStep);
+            });
+
+            // 進度條
+            document.querySelectorAll('.progress-step').forEach(step => {
+                const stepNum = parseInt(step.dataset.step);
+                step.classList.remove('active', 'completed');
+                if (stepNum < currentStep) step.classList.add('completed');
+                else if (stepNum === currentStep) step.classList.add('active');
+            });
+
+            // 步驟標籤
+            document.querySelectorAll('.step-label').forEach((label, idx) => {
+                label.classList.toggle('active', idx === currentStep - 1);
+            });
+
+            // 按鈕
+            const btnPrev = document.getElementById('btnPrev');
+            const btnNext = document.getElementById('btnNext');
+            btnPrev.style.display = currentStep === 1 ? 'none' : 'flex';
+
+            if (currentStep === totalSteps) {
+                btnNext.innerHTML = '<i class="fas fa-check-circle"></i> 取得推薦結果';
+            } else {
+                btnNext.innerHTML = '下一步 <i class="fas fa-arrow-right"></i>';
+            }
+
+            // Header 指示器
+            document.getElementById('stepIndicator').textContent = `${currentStep} / ${totalSteps}`;
+
+            // 捲動到頂部
+            document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /**
+         * ─── 步驟驗證 ───
+         */
+        function validateStep(step) {
+            switch (step) {
+                case 1: {
+                    const age = document.getElementById('ageRange').value;
+                    const gender = document.querySelector('.option-chip[data-name="gender"].selected');
+                    if (!age) { showToast('請選擇年齡範圍', 'warning'); return false; }
+                    if (!gender) { showToast('請選擇性別', 'warning'); return false; }
+                    return true;
+                }
+                case 2: {
+                    const chronic = document.querySelectorAll('.option-chip[data-name="chronic"].selected');
+                    if (chronic.length === 0) { showToast('請選擇健康狀態（或選擇「無」）', 'warning'); return false; }
+                    return true;
+                }
+                case 3: {
+                    const exercise = document.querySelector('.option-chip[data-name="exercise"].selected');
+                    if (!exercise) { showToast('請選擇運動頻率', 'warning'); return false; }
+                    return true;
+                }
+                case 4: {
+                    const goals = document.querySelectorAll('.option-chip[data-name="goals"].selected');
+                    if (goals.length === 0) { showToast('請至少選擇一個健康目標', 'warning'); return false; }
+                    return true;
+                }
+                case 5:
+                    return true; // 過敏禁忌為選填
+            }
+            return true;
+        }
+
+        /**
+         * ─── 收集步驟資料 ───
+         */
+        function collectStepData(step) {
+            switch (step) {
+                case 1:
+                    answers.ageRange = document.getElementById('ageRange').value;
+                    const genderChip = document.querySelector('.option-chip[data-name="gender"].selected');
+                    answers.gender = genderChip ? genderChip.dataset.value : '';
+                    answers.weight = document.getElementById('weight').value;
+                    answers.height = document.getElementById('height').value;
+                    break;
+                case 2:
+                    answers.chronic = getSelectedValues('chronic');
+                    answers.medication = document.getElementById('medication').value;
+                    break;
+                case 3:
+                    answers.dietBalance = parseInt(document.getElementById('dietBalance').value);
+                    const exerciseChip = document.querySelector('.option-chip[data-name="exercise"].selected');
+                    answers.exercise = exerciseChip ? exerciseChip.dataset.value : '';
+                    answers.sleepHours = document.getElementById('sleepHours').value;
+                    const waterChip = document.querySelector('.option-chip[data-name="water"].selected');
+                    answers.water = waterChip ? waterChip.dataset.value : '';
+                    break;
+                case 4:
+                    answers.goals = getSelectedValues('goals');
+                    break;
+                case 5:
+                    answers.foodAllergy = getSelectedValues('foodAllergy');
+                    answers.drugAllergy = document.getElementById('drugAllergy').value;
+                    answers.otherNotes = document.getElementById('otherNotes').value;
+                    break;
+            }
+        }
+
+        /** 取得某組多選的所有已選值 */
+        function getSelectedValues(name) {
+            return Array.from(document.querySelectorAll(`.option-chip[data-name="${name}"].selected`))
+                .map(chip => chip.dataset.value);
+        }
+
+        /**
+         * ─── 提交 & 評分計算 ───
+         */
+        function submitAssessment() {
+            collectStepData(5);
+
+            // 計算推薦結果
+            const results = calculateRecommendations();
+
+            // 存入 localStorage
+            localStorage.setItem('healthAssessmentAnswers', JSON.stringify(answers));
+            localStorage.setItem('healthAssessmentResult', JSON.stringify(results));
+
+            showToast('評估完成，正在為您分析...', 'success');
+
+            setTimeout(() => {
+                navigateTo('supplement-results.html');
+            }, 800);
+        }
+
+        /**
+         * ─── 保健食品資料庫 ───
+         */
+        const supplementProducts = {
+            25: {
+                id: 25, name: '日常保健補給', icon: 'fa-capsules', color: '#3F7C6A', colorDark: '#2E5E50',
+                desc: '綜合維生素與礦物質配方，適合日常營養補給，維持身體基本機能運作。',
+                tags: ['免疫力提升', '體力增強'],
+                ingredients: ['綜合維生素B群', '維生素C', '維生素D3', '鋅', '硒'],
+                benefits: ['補充日常營養缺口', '提升免疫力', '增強體力與精神'],
+                allergens: [],
+                singlePrice: 1200,
+                subscriptionPlans: [
+                    { cycle: '月訂閱', price: 980, originalPrice: 1200, discount: '省18%', months: 1 },
+                    { cycle: '季訂閱', price: 2700, originalPrice: 3600, discount: '省25%', months: 3 },
+                    { cycle: '半年訂閱', price: 5000, originalPrice: 7200, discount: '省31%', months: 6 }
+                ]
+            },
+            26: {
+                id: 26, name: '關節靈活配方', icon: 'fa-bone', color: '#2B6CB0', colorDark: '#1A4A7C',
+                desc: '葡萄糖胺與軟骨素複合配方，保護關節軟骨，改善關節靈活度與舒適度。',
+                tags: ['關節保養', '骨質強化'],
+                ingredients: ['葡萄糖胺', '軟骨素', 'MSM（甲基磺醯甲烷）', '第二型膠原蛋白', '薑黃素'],
+                benefits: ['保護關節軟骨', '減輕關節不適', '提升行動力'],
+                allergens: ['海鮮'],
+                singlePrice: 1500,
+                subscriptionPlans: [
+                    { cycle: '月訂閱', price: 1280, originalPrice: 1500, discount: '省15%', months: 1 },
+                    { cycle: '季訂閱', price: 3500, originalPrice: 4500, discount: '省22%', months: 3 },
+                    { cycle: '半年訂閱', price: 6500, originalPrice: 9000, discount: '省28%', months: 6 }
+                ]
+            },
+            27: {
+                id: 27, name: '心血管守護配方', icon: 'fa-heart-pulse', color: '#C53030', colorDark: '#9B2C2C',
+                desc: '魚油 Omega-3 搭配 CoQ10，維護心血管健康，調節血脂與血壓。',
+                tags: ['心血管保健'],
+                ingredients: ['高濃度魚油 Omega-3', '輔酶 CoQ10', '紅麴', '納豆激酶', '維生素E'],
+                benefits: ['維護心血管健康', '調節血脂', '抗氧化保護'],
+                allergens: ['海鮮'],
+                singlePrice: 1800,
+                subscriptionPlans: [
+                    { cycle: '月訂閱', price: 1500, originalPrice: 1800, discount: '省17%', months: 1 },
+                    { cycle: '季訂閱', price: 4200, originalPrice: 5400, discount: '省22%', months: 3 },
+                    { cycle: '半年訂閱', price: 7800, originalPrice: 10800, discount: '省28%', months: 6 }
+                ]
+            },
+            28: {
+                id: 28, name: '益生菌腸道配方', icon: 'fa-bacterium', color: '#D4A574', colorDark: '#B8956C',
+                desc: '300 億活菌複合配方，改善腸道菌叢生態，增強消化機能與免疫力。',
+                tags: ['消化改善', '免疫力提升'],
+                ingredients: ['嗜酸乳桿菌', '雙歧桿菌', '鼠李糖乳桿菌', '果寡糖', '膳食纖維'],
+                benefits: ['改善腸道健康', '促進消化吸收', '增強免疫屏障'],
+                allergens: ['乳製品'],
+                singlePrice: 1100,
+                subscriptionPlans: [
+                    { cycle: '月訂閱', price: 900, originalPrice: 1100, discount: '省18%', months: 1 },
+                    { cycle: '季訂閱', price: 2500, originalPrice: 3300, discount: '省24%', months: 3 },
+                    { cycle: '半年訂閱', price: 4600, originalPrice: 6600, discount: '省30%', months: 6 }
+                ]
+            },
+            29: {
+                id: 29, name: '鈣質骨力配方', icon: 'fa-dumbbell', color: '#6B46C1', colorDark: '#4C2889',
+                desc: '海藻鈣搭配維生素 D3 與 K2，強化骨骼密度，預防骨質流失。',
+                tags: ['骨質強化', '關節保養'],
+                ingredients: ['海藻鈣', '維生素D3', '維生素K2', '鎂', '鋅'],
+                benefits: ['強化骨骼密度', '促進鈣質吸收', '預防骨質疏鬆'],
+                allergens: [],
+                singlePrice: 1300,
+                subscriptionPlans: [
+                    { cycle: '月訂閱', price: 1080, originalPrice: 1300, discount: '省17%', months: 1 },
+                    { cycle: '季訂閱', price: 3000, originalPrice: 3900, discount: '省23%', months: 3 },
+                    { cycle: '半年訂閱', price: 5600, originalPrice: 7800, discount: '省28%', months: 6 }
+                ]
+            },
+            30: {
+                id: 30, name: '葉黃素護眼配方', icon: 'fa-eye', color: '#DD6B20', colorDark: '#C05621',
+                desc: '游離型葉黃素搭配玉米黃素與花青素，保護黃斑部，維護視力健康。',
+                tags: ['視力保健'],
+                ingredients: ['游離型葉黃素', '玉米黃素', '蝦紅素', '藍莓萃取物', '維生素A'],
+                benefits: ['保護視力健康', '減緩眼睛疲勞', '對抗藍光傷害'],
+                allergens: [],
+                singlePrice: 1200,
+                subscriptionPlans: [
+                    { cycle: '月訂閱', price: 990, originalPrice: 1200, discount: '省18%', months: 1 },
+                    { cycle: '季訂閱', price: 2750, originalPrice: 3600, discount: '省24%', months: 3 },
+                    { cycle: '半年訂閱', price: 5100, originalPrice: 7200, discount: '省29%', months: 6 }
+                ]
+            },
+            31: {
+                id: 31, name: '舒眠GABA配方', icon: 'fa-moon', color: '#319795', colorDark: '#256D6D',
+                desc: '天然 GABA 搭配色胺酸與芝麻素，幫助放鬆身心，改善睡眠品質。',
+                tags: ['睡眠改善'],
+                ingredients: ['GABA（γ-氨基丁酸）', '色胺酸', '芝麻素', '甘胺酸', '鎂'],
+                benefits: ['改善入睡困難', '提升睡眠品質', '舒緩壓力與緊張'],
+                allergens: [],
+                singlePrice: 1400,
+                subscriptionPlans: [
+                    { cycle: '月訂閱', price: 1150, originalPrice: 1400, discount: '省18%', months: 1 },
+                    { cycle: '季訂閱', price: 3200, originalPrice: 4200, discount: '省24%', months: 3 },
+                    { cycle: '半年訂閱', price: 6000, originalPrice: 8400, discount: '省29%', months: 6 }
+                ]
+            },
+            32: {
+                id: 32, name: '活力人蔘精華', icon: 'fa-bolt', color: '#C4873B', colorDark: '#A66B2E',
+                desc: '高麗蔘精華搭配 B群與鐵質，全面提升體力與精神活力。',
+                tags: ['體力增強', '免疫力提升'],
+                ingredients: ['高麗蔘萃取', '維生素B群', '鐵質', '牛磺酸', '左旋肉鹼'],
+                benefits: ['增強體力耐力', '提升精神活力', '改善疲勞感'],
+                allergens: [],
+                singlePrice: 1600,
+                subscriptionPlans: [
+                    { cycle: '月訂閱', price: 1350, originalPrice: 1600, discount: '省16%', months: 1 },
+                    { cycle: '季訂閱', price: 3800, originalPrice: 4800, discount: '省21%', months: 3 },
+                    { cycle: '半年訂閱', price: 7000, originalPrice: 9600, discount: '省27%', months: 6 }
+                ]
+            }
+        };
+
+        /**
+         * ─── 推薦評分算法 ───
+         */
+        function calculateRecommendations() {
+            const scores = {};
+
+            // 對每個商品進行評分
+            Object.values(supplementProducts).forEach(product => {
+                let score = 0;
+                let maxScore = 100;
+
+                // 1. 健康目標匹配（最高 50 分）
+                const goalMatches = product.tags.filter(tag => answers.goals.includes(tag));
+                score += goalMatches.length > 0 ? (goalMatches.length / product.tags.length) * 50 : 0;
+
+                // 2. 慢性病關聯加分（最高 25 分）
+                if (answers.chronic.length > 0 && !answers.chronic.includes('無')) {
+                    const chronicMap = {
+                        '高血壓': ['心血管保健'],
+                        '糖尿病': ['免疫力提升', '消化改善'],
+                        '心臟病': ['心血管保健'],
+                        '骨質疏鬆': ['骨質強化', '關節保養'],
+                        '關節炎': ['關節保養'],
+                        '高血脂': ['心血管保健']
+                    };
+                    let chronicScore = 0;
+                    answers.chronic.forEach(disease => {
+                        const relatedTags = chronicMap[disease] || [];
+                        if (product.tags.some(tag => relatedTags.includes(tag))) {
+                            chronicScore += 12;
+                        }
+                    });
+                    score += Math.min(chronicScore, 25);
+                }
+
+                // 3. 年齡調整（最高 10 分）
+                if (answers.ageRange === '70-79' || answers.ageRange === '80+') {
+                    // 高齡者：基礎保健、骨質、關節加分
+                    if (product.tags.some(t => ['骨質強化', '關節保養', '免疫力提升', '體力增強'].includes(t))) {
+                        score += 10;
+                    }
+                } else if (answers.ageRange === '60-69') {
+                    if (product.tags.some(t => ['心血管保健', '骨質強化', '視力保健'].includes(t))) {
+                        score += 7;
+                    }
+                } else {
+                    if (product.tags.some(t => ['體力增強', '免疫力提升'].includes(t))) {
+                        score += 5;
+                    }
+                }
+
+                // 4. 生活習慣調整（最高 10 分）
+                if (answers.dietBalance <= 2 && product.tags.includes('免疫力提升')) score += 5;
+                if (answers.exercise === '無' && product.tags.includes('體力增強')) score += 5;
+                if ((answers.sleepHours === '<5' || answers.sleepHours === '5-6') && product.tags.includes('睡眠改善')) score += 8;
+
+                // 5. 過敏禁忌扣分/排除
+                let excluded = false;
+                if (answers.foodAllergy.length > 0 && !answers.foodAllergy.includes('無')) {
+                    answers.foodAllergy.forEach(allergy => {
+                        if (product.allergens.includes(allergy)) {
+                            excluded = true;
+                        }
+                    });
+                }
+
+                // 確保分數在合理範圍
+                score = Math.min(Math.round(score), maxScore);
+
+                if (!excluded) {
+                    scores[product.id] = {
+                        id: product.id,
+                        name: product.name,
+                        icon: product.icon,
+                        color: product.color,
+                        colorDark: product.colorDark,
+                        desc: product.desc,
+                        score: score,
+                        matchedGoals: goalMatches ? product.tags.filter(tag => answers.goals.includes(tag)) : [],
+                        singlePrice: product.singlePrice,
+                        subscriptionPrice: product.subscriptionPlans[0].price
+                    };
+                }
+            });
+
+            // 排序取 Top 3
+            const sorted = Object.values(scores)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 3);
+
+            // 將分數正規化為百分比（最高分 = 98%，避免顯示 100%）
+            if (sorted.length > 0) {
+                const maxActual = sorted[0].score;
+                sorted.forEach((item, idx) => {
+                    if (maxActual > 0) {
+                        item.matchPercent = Math.max(Math.round((item.score / maxActual) * 98), 40);
+                    } else {
+                        item.matchPercent = 50;
+                    }
+                    // 微調使排名差異更明顯
+                    item.matchPercent = Math.max(item.matchPercent - idx * 5, 35);
+                });
+            }
+
+            return sorted;
+        }
+    </script>
+</body>
+</html>

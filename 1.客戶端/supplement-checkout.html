@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>智慧照護平台 - 確認訂單</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .main-content {
+            padding-bottom: 100px;
+        }
+
+        /* ─── 訂單摘要卡片 ─── */
+        .order-summary-card {
+            margin: 16px;
+            background: var(--card-background);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+
+        .order-summary-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border-bottom: 1px solid var(--divider-color);
+        }
+
+        .order-product-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .order-product-icon i {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .order-product-info {
+            flex: 1;
+        }
+
+        .order-product-name {
+            font-size: var(--font-size-base);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .order-plan-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .order-plan-badge.single {
+            background: rgba(45, 106, 79, 0.08);
+            color: var(--primary-color);
+        }
+
+        .order-plan-badge.subscription {
+            background: rgba(212, 165, 116, 0.15);
+            color: var(--accent-dark);
+        }
+
+        .order-summary-details {
+            padding: 16px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .detail-row:not(:last-child) {
+            border-bottom: 1px solid var(--divider-color);
+        }
+
+        .detail-label {
+            font-size: var(--font-size-sm);
+            color: var(--text-light);
+        }
+
+        .detail-value {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .detail-value.highlight {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .detail-value.discount {
+            color: var(--danger-color);
+        }
+
+        /* ─── 區塊標題 ─── */
+        .section-card {
+            margin: 16px;
+            background: var(--card-background);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: 20px;
+        }
+
+        .section-card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: var(--font-size-base);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .section-card-title i {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        /* ─── 表單 ─── */
+        .checkout-form .form-group {
+            margin-bottom: 16px;
+        }
+
+        .checkout-form .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .checkout-form label {
+            display: block;
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .required-mark {
+            color: var(--danger-color);
+            margin-left: 2px;
+        }
+
+        .checkout-form .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+            background: var(--card-background);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .checkout-form .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+        }
+
+        .checkout-form select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234A5568' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        .field-hint {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* ─── 付款方式選擇 ─── */
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--card-background);
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary-light);
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(45, 106, 79, 0.03);
+        }
+
+        .payment-radio {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .payment-option.selected .payment-radio {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+        }
+
+        .payment-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            display: none;
+        }
+
+        .payment-option.selected .payment-radio::after {
+            display: block;
+        }
+
+        .payment-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .payment-label {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ─── 訂閱條款 ─── */
+        .subscription-terms {
+            margin: 16px;
+            padding: 16px;
+            background: #F0FFF4;
+            border: 2px solid rgba(45, 106, 79, 0.15);
+            border-radius: var(--radius-lg);
+        }
+
+        .terms-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .terms-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 14px;
+        }
+
+        .terms-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 4px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .terms-list li i {
+            color: var(--primary-color);
+            margin-top: 3px;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 0 0;
+            border-top: 1px solid rgba(45, 106, 79, 0.1);
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .terms-checkbox label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* ─── 金額摘要 ─── */
+        .price-summary {
+            margin: 16px;
+            background: var(--card-background);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: 20px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+
+        .price-row.total {
+            border-top: 2px solid var(--divider-color);
+            margin-top: 8px;
+            padding-top: 14px;
+        }
+
+        .price-row.total .price-label {
+            font-size: var(--font-size-base);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .price-row.total .price-value {
+            font-size: var(--font-size-xl);
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .price-label {
+            color: var(--text-secondary);
+        }
+
+        .price-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .price-value.discount {
+            color: var(--danger-color);
+        }
+
+        .price-value.free {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* ─── 底部確認按鈕 ─── */
+        .bottom-confirm-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-background);
+            border-top: 1px solid var(--divider-color);
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        .btn-confirm {
+            width: 100%;
+            padding: 16px 20px;
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-weight: 700;
+            cursor: pointer;
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(45, 106, 79, 0.4);
+        }
+
+        .btn-confirm:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ─── 成功 Modal ─── */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        .success-modal {
+            background: var(--card-background);
+            border-radius: var(--radius-xl);
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 340px;
+            width: 90%;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .success-icon i {
+            font-size: 32px;
+            color: #fff;
+        }
+
+        .success-modal h2 {
+            font-size: var(--font-size-xl);
+            color: var(--text-primary);
+            margin: 0 0 8px;
+        }
+
+        .success-modal p {
+            font-size: var(--font-size-sm);
+            color: var(--text-light);
+            margin: 0 0 24px;
+            line-height: 1.5;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .success-actions .btn {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-secondary-action {
+            background: var(--background-color);
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color) !important;
+        }
+
+        .btn-primary-action {
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <div class="header-left">
+                <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer; margin-right: 12px;"></i>
+                <div class="header-title">確認訂單</div>
+            </div>
+            <div class="header-icons">
+                <i class="fas fa-shield-halved" style="opacity: 0.8;" title="安全結帳"></i>
+            </div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <!-- 訂單摘要 -->
+            <div class="order-summary-card">
+                <div class="order-summary-header">
+                    <div class="order-product-icon" id="productIconWrap">
+                        <i class="fas fa-capsules" id="productIcon"></i>
+                    </div>
+                    <div class="order-product-info">
+                        <div class="order-product-name" id="productName">載入中...</div>
+                        <div id="planBadge"></div>
+                    </div>
+                </div>
+                <div class="order-summary-details" id="orderDetails">
+                    <!-- 由 JS 動態生成 -->
+                </div>
+            </div>
+
+            <!-- 收件資訊 -->
+            <div class="section-card">
+                <div class="section-card-title">
+                    <i class="fas fa-truck" style="background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));"></i>
+                    <span>收件資訊</span>
+                </div>
+                <div class="checkout-form">
+                    <div class="form-group">
+                        <label>收件人姓名 <span class="required-mark">*</span></label>
+                        <input type="text" class="form-control" id="recipientName" placeholder="請輸入收件人姓名">
+                    </div>
+                    <div class="form-group">
+                        <label>聯絡電話 <span class="required-mark">*</span></label>
+                        <input type="tel" class="form-control" id="recipientPhone" placeholder="例如：0912345678">
+                    </div>
+                    <div class="form-group">
+                        <label>配送地址 <span class="required-mark">*</span></label>
+                        <input type="text" class="form-control" id="deliveryAddress" placeholder="請輸入完整配送地址">
+                    </div>
+                    <div class="form-group">
+                        <label>備註</label>
+                        <textarea class="form-control" id="orderNote" placeholder="例如：請於白天配送..." rows="2" style="resize: vertical;"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 付款方式 -->
+            <div class="section-card">
+                <div class="section-card-title">
+                    <i class="fas fa-credit-card" style="background: linear-gradient(145deg, var(--accent-color), var(--accent-dark));"></i>
+                    <span>付款方式</span>
+                </div>
+                <div class="payment-options">
+                    <div class="payment-option selected" data-method="credit-card" onclick="selectPayment(this)">
+                        <div class="payment-radio"></div>
+                        <div class="payment-icon" style="background: #EBF4FF; color: #2B6CB0;">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <span class="payment-label">信用卡</span>
+                    </div>
+                    <div class="payment-option" data-method="mobile-pay" onclick="selectPayment(this)">
+                        <div class="payment-radio"></div>
+                        <div class="payment-icon" style="background: #F0FFF4; color: var(--primary-color);">
+                            <i class="fas fa-mobile-screen"></i>
+                        </div>
+                        <span class="payment-label">行動支付</span>
+                    </div>
+                    <div class="payment-option" data-method="atm" onclick="selectPayment(this)">
+                        <div class="payment-radio"></div>
+                        <div class="payment-icon" style="background: #FFFBEB; color: var(--warning-color);">
+                            <i class="fas fa-building-columns"></i>
+                        </div>
+                        <span class="payment-label">ATM 轉帳</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 訂閱條款（僅訂閱方案顯示） -->
+            <div class="subscription-terms" id="subscriptionTerms" style="display: none;">
+                <div class="terms-title">
+                    <i class="fas fa-sync-alt"></i>
+                    訂閱方案說明
+                </div>
+                <ul class="terms-list">
+                    <li><i class="fas fa-circle"></i> 訂閱期間每月自動續訂並配送</li>
+                    <li><i class="fas fa-circle"></i> 配送前 7 日將發送提醒通知</li>
+                    <li><i class="fas fa-circle"></i> 配送前 3 日可調整品項或暫停</li>
+                    <li><i class="fas fa-circle"></i> 隨時可於「我的訂單」中取消訂閱</li>
+                    <li><i class="fas fa-circle"></i> 取消後當期訂單仍會完成配送</li>
+                </ul>
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="agreeTerms">
+                    <label for="agreeTerms">我了解並同意訂閱方案條款</label>
+                </div>
+            </div>
+
+            <!-- 首次配送日期（訂閱方案才顯示） -->
+            <div class="section-card" id="deliveryDateSection" style="display: none;">
+                <div class="section-card-title">
+                    <i class="fas fa-calendar-alt" style="background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));"></i>
+                    <span>首次配送日期</span>
+                </div>
+                <div class="checkout-form">
+                    <div class="form-group">
+                        <label>預計配送日 <span class="required-mark">*</span></label>
+                        <input type="date" class="form-control" id="firstDeliveryDate">
+                        <p class="field-hint">首次配送後，將依訂閱週期自動安排後續配送</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 金額摘要 -->
+            <div class="price-summary">
+                <div class="section-card-title" style="margin-bottom: 12px;">
+                    <i class="fas fa-receipt" style="width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));"></i>
+                    <span>金額明細</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label" id="subtotalLabel">商品小計</span>
+                    <span class="price-value" id="subtotalValue">NT$ 0</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">運費</span>
+                    <span class="price-value" id="shippingValue">NT$ 60</span>
+                </div>
+                <div class="price-row" id="discountRow" style="display: none;">
+                    <span class="price-label">訂閱折扣</span>
+                    <span class="price-value discount" id="discountValue"></span>
+                </div>
+                <div class="price-row total">
+                    <span class="price-label">應付金額</span>
+                    <span class="price-value" id="totalValue">NT$ 0</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部確認按鈕 -->
+        <div class="bottom-confirm-bar">
+            <button class="btn-confirm" id="btnConfirm" onclick="confirmOrder()">
+                <i class="fas fa-lock"></i> 確認付款
+            </button>
+        </div>
+
+        <!-- 成功彈窗 -->
+        <div class="success-overlay" id="successOverlay">
+            <div class="success-modal">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2 id="successTitle">訂單建立成功！</h2>
+                <p id="successDesc">您的保健食品訂單已成功建立，我們將儘快為您處理配送。</p>
+                <div class="success-actions">
+                    <button class="btn btn-secondary-action" onclick="navigateTo('categories.html?category=保健食品')">
+                        繼續選購
+                    </button>
+                    <button class="btn btn-primary-action" onclick="navigateTo('orders.html')">
+                        查看訂單
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        /**
+         * ─── 頁面狀態 ───
+         */
+        let orderData = null;
+        let selectedPayment = 'credit-card';
+
+        /**
+         * ─── 初始化 ───
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderData();
+            setDefaultDeliveryDate();
+        });
+
+        /**
+         * 載入訂單資料
+         */
+        function loadOrderData() {
+            const raw = localStorage.getItem('supplementOrder');
+            if (!raw) {
+                showToast('訂單資料不存在', 'error');
+                setTimeout(() => goBack(), 1000);
+                return;
+            }
+
+            orderData = JSON.parse(raw);
+
+            // 商品 icon
+            const iconWrap = document.getElementById('productIconWrap');
+            iconWrap.style.background = `linear-gradient(145deg, ${orderData.productColor}, ${orderData.productColorDark})`;
+            document.getElementById('productIcon').className = `fas ${orderData.productIcon}`;
+
+            // 商品名稱
+            document.getElementById('productName').textContent = orderData.productName;
+
+            // 方案標籤
+            const badgeEl = document.getElementById('planBadge');
+            if (orderData.planType === 'single') {
+                badgeEl.innerHTML = `<span class="order-plan-badge single"><i class="fas fa-box"></i> 一次性購買</span>`;
+            } else {
+                badgeEl.innerHTML = `<span class="order-plan-badge subscription"><i class="fas fa-sync-alt"></i> ${orderData.subscriptionCycle}</span>`;
+            }
+
+            // 訂單詳細
+            renderOrderDetails();
+
+            // 顯示/隱藏訂閱相關區塊
+            if (orderData.planType === 'subscription') {
+                document.getElementById('subscriptionTerms').style.display = 'block';
+                document.getElementById('deliveryDateSection').style.display = 'block';
+                document.getElementById('btnConfirm').innerHTML = '<i class="fas fa-sync-alt"></i> 確認訂閱';
+            }
+
+            // 金額摘要
+            renderPriceSummary();
+        }
+
+        /**
+         * 渲染訂單明細
+         */
+        function renderOrderDetails() {
+            const container = document.getElementById('orderDetails');
+            let html = '';
+
+            if (orderData.planType === 'single') {
+                html += `
+                    <div class="detail-row">
+                        <span class="detail-label">單價</span>
+                        <span class="detail-value">NT$ ${orderData.unitPrice.toLocaleString()}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">數量</span>
+                        <span class="detail-value">${orderData.quantity} 盒</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">金額</span>
+                        <span class="detail-value highlight">NT$ ${orderData.totalPrice.toLocaleString()}</span>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="detail-row">
+                        <span class="detail-label">訂閱方案</span>
+                        <span class="detail-value">${orderData.subscriptionCycle}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">原價</span>
+                        <span class="detail-value" style="text-decoration: line-through; color: var(--text-light);">NT$ ${orderData.originalPrice.toLocaleString()}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">訂閱價</span>
+                        <span class="detail-value highlight">NT$ ${orderData.subscriptionPrice.toLocaleString()}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">折扣</span>
+                        <span class="detail-value discount">${orderData.discount}</span>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        /**
+         * 渲染金額摘要
+         */
+        function renderPriceSummary() {
+            const isSubscription = orderData.planType === 'subscription';
+            const subtotal = orderData.totalPrice;
+            const shipping = isSubscription ? 0 : 60;
+            const discount = isSubscription ? (orderData.originalPrice - orderData.subscriptionPrice) : 0;
+            const total = subtotal + shipping;
+
+            // 小計
+            if (isSubscription) {
+                document.getElementById('subtotalLabel').textContent = `${orderData.subscriptionCycle}費用`;
+            } else {
+                document.getElementById('subtotalLabel').textContent = `商品小計（${orderData.quantity} 盒）`;
+            }
+            document.getElementById('subtotalValue').textContent = `NT$ ${subtotal.toLocaleString()}`;
+
+            // 運費
+            if (isSubscription) {
+                document.getElementById('shippingValue').textContent = '免運費';
+                document.getElementById('shippingValue').classList.add('free');
+            }
+
+            // 折扣
+            if (isSubscription && discount > 0) {
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('discountValue').textContent = `-NT$ ${discount.toLocaleString()}`;
+            }
+
+            // 總計
+            document.getElementById('totalValue').textContent = `NT$ ${total.toLocaleString()}`;
+        }
+
+        /**
+         * 設定預設配送日期（7天後）
+         */
+        function setDefaultDeliveryDate() {
+            const dateInput = document.getElementById('firstDeliveryDate');
+            const minDate = new Date();
+            minDate.setDate(minDate.getDate() + 3);
+            const defaultDate = new Date();
+            defaultDate.setDate(defaultDate.getDate() + 7);
+
+            dateInput.min = minDate.toISOString().split('T')[0];
+            dateInput.value = defaultDate.toISOString().split('T')[0];
+        }
+
+        /**
+         * 選擇付款方式
+         */
+        function selectPayment(el) {
+            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPayment = el.dataset.method;
+        }
+
+        /**
+         * 確認訂單
+         */
+        function confirmOrder() {
+            // 驗證表單
+            const name = document.getElementById('recipientName').value.trim();
+            const phone = document.getElementById('recipientPhone').value.trim();
+            const address = document.getElementById('deliveryAddress').value.trim();
+
+            if (!name) {
+                showToast('請輸入收件人姓名', 'warning');
+                document.getElementById('recipientName').focus();
+                return;
+            }
+
+            if (!phone) {
+                showToast('請輸入聯絡電話', 'warning');
+                document.getElementById('recipientPhone').focus();
+                return;
+            }
+
+            // 驗證手機格式
+            if (!/^09\d{8}$/.test(phone)) {
+                showToast('請輸入正確的手機號碼（09 開頭，共 10 碼）', 'warning');
+                document.getElementById('recipientPhone').focus();
+                return;
+            }
+
+            if (!address) {
+                showToast('請輸入配送地址', 'warning');
+                document.getElementById('deliveryAddress').focus();
+                return;
+            }
+
+            // 訂閱方案需同意條款
+            if (orderData.planType === 'subscription') {
+                const agreed = document.getElementById('agreeTerms').checked;
+                if (!agreed) {
+                    showToast('請先閱讀並同意訂閱方案條款', 'warning');
+                    return;
+                }
+
+                const deliveryDate = document.getElementById('firstDeliveryDate').value;
+                if (!deliveryDate) {
+                    showToast('請選擇首次配送日期', 'warning');
+                    return;
+                }
+            }
+
+            // 禁用按鈕防重複提交
+            const btn = document.getElementById('btnConfirm');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 處理中...';
+
+            // 模擬處理
+            setTimeout(() => {
+                // 清除 localStorage
+                localStorage.removeItem('supplementOrder');
+
+                // 更新成功訊息
+                if (orderData.planType === 'subscription') {
+                    document.getElementById('successTitle').textContent = '訂閱建立成功！';
+                    document.getElementById('successDesc').textContent =
+                        `您已成功訂閱「${orderData.productName}」${orderData.subscriptionCycle}方案，我們將按時為您配送。`;
+                } else {
+                    document.getElementById('successDesc').textContent =
+                        `您的「${orderData.productName}」訂單已建立成功，我們將儘快安排配送。`;
+                }
+
+                // 顯示成功彈窗
+                document.getElementById('successOverlay').classList.add('show');
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
