@@ -568,6 +568,25 @@ function initPricingTabs() {
    ============================================= */
 
 /**
+ * 新增機構
+ */
+function addOrg() {
+    openModal('orgModal');
+    const modalTitle = document.querySelector('#orgModal .modal-title');
+    if (modalTitle) {
+        modalTitle.textContent = '新增機構';
+    }
+    const form = document.getElementById('orgForm');
+    if (form) {
+        form.reset();
+    }
+    const statusToggle = document.getElementById('orgStatusToggle');
+    if (statusToggle) {
+        statusToggle.checked = true;
+    }
+}
+
+/**
  * 檢視機構詳情
  * @param {number} orgId - 機構 ID
  */

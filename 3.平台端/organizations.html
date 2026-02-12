@@ -42,9 +42,6 @@
                         <a href="organizations.html" class="menu-item active">
                             <span>機構列表</span>
                         </a>
-                        <a href="org-review.html" class="menu-item">
-                            <span>機構審核</span>
-                        </a>
                     </div>
                     
                     <div class="menu-item" data-submenu="member-submenu">
@@ -175,7 +172,7 @@
                             <i class="fas fa-download"></i>
                             匯出 Excel
                         </button>
-                        <button class="btn btn-primary" id="addOrgBtn">
+                        <button class="btn btn-primary" id="addOrgBtn" type="button" onclick="addOrg()">
                             <i class="fas fa-plus"></i>
                             新增機構
                         </button>
@@ -556,6 +553,20 @@
                                 <div class="form-group">
                                     <label class="form-label">合約期限</label>
                                     <input type="date" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h5 class="form-section-title">狀態設定</h5>
+                            <div class="form-group">
+                                <label class="form-label">是否啟用</label>
+                                <div class="switch-group">
+                                    <label class="switch">
+                                        <input type="checkbox" id="orgStatusToggle" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <span class="text-muted small">啟用後可顯示於平台並接受訂單</span>
                                 </div>
                             </div>
                         </div>

@@ -166,9 +166,6 @@
                         <a href="organizations.html" class="menu-item">
                             <span>機構列表</span>
                         </a>
-                        <a href="org-review.html" class="menu-item">
-                            <span>機構審核</span>
-                        </a>
                     </div>
 
                     <div class="menu-item" data-submenu="member-submenu">
@@ -306,45 +303,6 @@
                     </div>
                 </div>
 
-                <div class="stats-grid stats-4">
-                    <div class="stat-card">
-                        <div class="stat-icon red">
-                            <i class="fas fa-inbox"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">12</div>
-                            <div class="stat-label">待處理</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon orange">
-                            <i class="fas fa-spinner"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">6</div>
-                            <div class="stat-label">處理中</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon green">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">28</div>
-                            <div class="stat-label">本週結案</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon blue">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">2.4h</div>
-                            <div class="stat-label">平均回覆時間</div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
@@ -453,7 +411,7 @@
                                         <td>2026/02/11 10:20</td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" type="button" onclick="openModal('ticketDetailModal')"><i class="fas fa-eye"></i></button>
                                                 <button class="btn-icon"><i class="fas fa-user-check"></i></button>
                                                 <button class="btn-icon"><i class="fas fa-reply"></i></button>
                                             </div>
@@ -487,7 +445,7 @@
                                         <td>2026/02/11 09:40</td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" type="button" onclick="openModal('ticketDetailModal')"><i class="fas fa-eye"></i></button>
                                                 <button class="btn-icon"><i class="fas fa-user-check"></i></button>
                                                 <button class="btn-icon"><i class="fas fa-reply"></i></button>
                                             </div>
@@ -521,7 +479,7 @@
                                         <td>2026/02/10 18:05</td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" type="button" onclick="openModal('ticketDetailModal')"><i class="fas fa-eye"></i></button>
                                                 <button class="btn-icon"><i class="fas fa-reply"></i></button>
                                                 <button class="btn-icon"><i class="fas fa-copy"></i></button>
                                             </div>
@@ -555,7 +513,7 @@
                                         <td>2026/02/09 14:22</td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" type="button" onclick="openModal('ticketDetailModal')"><i class="fas fa-eye"></i></button>
                                                 <button class="btn-icon"><i class="fas fa-copy"></i></button>
                                                 <button class="btn-icon"><i class="fas fa-trash-alt"></i></button>
                                             </div>
@@ -567,100 +525,106 @@
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fas fa-info-circle"></i>
-                            客服單詳情
-                        </h3>
-                        <div class="card-actions">
-                            <button class="btn btn-outline btn-sm">
-                                <i class="fas fa-user-check"></i>
-                                指派處理人
-                            </button>
-                            <button class="btn btn-primary btn-sm">
-                                <i class="fas fa-check"></i>
-                                結案
-                            </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 客服單詳情 Modal -->
+    <div class="modal" id="ticketDetailModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">客服單詳情</div>
+                    <button class="modal-close" onclick="closeModal('ticketDetailModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">客服單號</div>
+                            <div class="detail-value">CS-20260211-001</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">狀態</div>
+                            <div class="detail-value">待處理</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">問題類型</div>
+                            <div class="detail-value">預約問題</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">來源</div>
+                            <div class="detail-value">客戶端 / 聯絡我們</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">提交人</div>
+                            <div class="detail-value">王小明</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">聯絡方式</div>
+                            <div class="detail-value">0912-345-678</div>
+                        </div>
+                        <div class="detail-item full">
+                            <div class="detail-label">問題描述</div>
+                            <div class="detail-value">明日居家照護服務時間沒有收到通知，想確認到府時間與負責照服員。</div>
+                        </div>
+                        <div class="detail-item full">
+                            <div class="detail-label">附件</div>
+                            <div class="ticket-attachments">
+                                <div class="ticket-attachment"><i class="fas fa-file-image"></i> service-time.jpg</div>
+                                <div class="ticket-attachment"><i class="fas fa-file"></i> order-detail.pdf</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="detail-grid">
-                            <div class="detail-item">
-                                <div class="detail-label">客服單號</div>
-                                <div class="detail-value">CS-20260211-001</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">狀態</div>
-                                <div class="detail-value">待處理</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">問題類型</div>
-                                <div class="detail-value">預約問題</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">來源</div>
-                                <div class="detail-value">客戶端 / 聯絡我們</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">提交人</div>
-                                <div class="detail-value">王小明</div>
-                            </div>
-                            <div class="detail-item">
-                                <div class="detail-label">聯絡方式</div>
-                                <div class="detail-value">0912-345-678</div>
-                            </div>
-                            <div class="detail-item full">
-                                <div class="detail-label">問題描述</div>
-                                <div class="detail-value">明日居家照護服務時間沒有收到通知，想確認到府時間與負責照服員。</div>
-                            </div>
-                            <div class="detail-item full">
-                                <div class="detail-label">附件</div>
-                                <div class="ticket-attachments">
-                                    <div class="ticket-attachment"><i class="fas fa-file-image"></i> service-time.jpg</div>
-                                    <div class="ticket-attachment"><i class="fas fa-file"></i> order-detail.pdf</div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="form-section" style="margin-top: 20px;">
-                            <div class="form-section-title">
-                                <i class="fas fa-stream"></i>
-                                處理紀錄
-                            </div>
-                            <div class="order-notes">
-                                <div class="note-item">
-                                    <div class="note-header">
-                                        <div class="note-author">客服王</div>
-                                        <div class="note-time">2026/02/11 10:30</div>
-                                    </div>
-                                    <div class="note-content">已致電機構確認照服員行程，等待回覆。</div>
-                                </div>
-                                <div class="note-item">
-                                    <div class="note-header">
-                                        <div class="note-author">系統</div>
-                                        <div class="note-time">2026/02/11 10:15</div>
-                                    </div>
-                                    <div class="note-content">客服單建立，來源：客戶端提交問題。</div>
-                                </div>
-                            </div>
+                    <div class="form-section" style="margin-top: 20px;">
+                        <div class="form-section-title">
+                            <i class="fas fa-stream"></i>
+                            處理紀錄
                         </div>
-
-                        <div class="form-section" style="margin-top: 20px;">
-                            <div class="form-section-title">
-                                <i class="fas fa-reply"></i>
-                                回覆內容
+                        <div class="order-notes">
+                            <div class="note-item">
+                                <div class="note-header">
+                                    <div class="note-author">客服王</div>
+                                    <div class="note-time">2026/02/11 10:30</div>
+                                </div>
+                                <div class="note-content">已致電機構確認照服員行程，等待回覆。</div>
                             </div>
-                            <div class="add-note">
-                                <textarea class="form-control" rows="3" placeholder="輸入回覆內容..."></textarea>
-                                <button class="btn btn-primary">
-                                    <i class="fas fa-paper-plane"></i>
-                                    發送回覆
-                                </button>
+                            <div class="note-item">
+                                <div class="note-header">
+                                    <div class="note-author">系統</div>
+                                    <div class="note-time">2026/02/11 10:15</div>
+                                </div>
+                                <div class="note-content">客服單建立，來源：客戶端提交問題。</div>
                             </div>
-                            <div class="form-hint">回覆內容將同步至客戶端「聯絡我們」記錄。</div>
                         </div>
                     </div>
+
+                    <div class="form-section" style="margin-top: 20px;">
+                        <div class="form-section-title">
+                            <i class="fas fa-reply"></i>
+                            回覆內容
+                        </div>
+                        <div class="add-note">
+                            <textarea class="form-control" rows="3" placeholder="輸入回覆內容..."></textarea>
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-paper-plane"></i>
+                                發送回覆
+                            </button>
+                        </div>
+                        <div class="form-hint">回覆內容將同步至客戶端「聯絡我們」記錄。</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" type="button">
+                        <i class="fas fa-user-check"></i>
+                        指派處理人
+                    </button>
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-check"></i>
+                        結案
+                    </button>
                 </div>
             </div>
         </div>
