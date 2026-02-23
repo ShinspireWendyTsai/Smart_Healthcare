@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>訊息詳情</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .message-detail-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .message-detail-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(38, 166, 154, 0.25);
+        }
+
+        .message-detail-title-wrap {
+            flex: 1;
+        }
+
+        .message-detail-title {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .message-detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .message-detail-summary {
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .message-detail-divider {
+            height: 1px;
+            background: var(--divider-color);
+            margin: var(--spacing-md) 0 var(--spacing-lg);
+        }
+
+        .message-detail-content p {
+            margin: 0 0 var(--spacing-md);
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">訊息詳情</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="card">
+                <div class="message-detail-header">
+                    <div class="message-detail-icon" id="messageIcon"></div>
+                    <div class="message-detail-title-wrap">
+                        <div class="message-detail-title" id="messageTitle"></div>
+                    </div>
+                </div>
+
+                <div class="message-detail-meta">
+                    <span id="messageSource"></span>
+                    <span>收到時間 <strong id="messageDateTime"></strong></span>
+                </div>
+
+                <div class="message-detail-divider"></div>
+
+                <div class="message-detail-summary" id="messageSummary"></div>
+                <div class="message-detail-content" id="messageContent"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        const messageData = {
+            '1': {
+                title: '【重要公告】春節服務時間調整',
+                type: '重要公告',
+                badgeClass: 'badge-accent',
+                source: '平台公告',
+                dateTime: '2026/02/23 10:30',
+                icon: 'fa-bullhorn',
+                iconColor: '#ff4757',
+                summary: '親愛的用戶您好，農曆春節期間（1/28-2/2）部分服務時段將調整。',
+                content: [
+                    '春節期間服務時間調整為每日 09:00 - 18:00，夜間時段暫停提供。',
+                    '如需異動既有預約，請於服務前 48 小時在平台提出申請。',
+                    '若有緊急照護需求，請使用客服中心聯繫，我們將優先協助處理。'
+                ],
+                action: {
+                    label: '查看公告列表',
+                    target: 'announcements.html'
+                }
+            },
+            '2': {
+                title: '訂單狀態更新',
+                type: '訂單通知',
+                badgeClass: 'badge-primary',
+                source: '訂單系統',
+                dateTime: '2026/02/23 09:15',
+                icon: 'fa-clipboard-check',
+                iconColor: '#06C755',
+                summary: '您的訂單 ORD202401270005 已開始處理，預計將於指定時段到府服務。',
+                content: [
+                    '機構端已確認接單，照服人員與行前資訊將於服務前再次通知。',
+                    '若需變更服務時間，請盡速至訂單頁面提出申請。'
+                ],
+                action: {
+                    label: '查看訂單詳情',
+                    target: 'order-detail.html'
+                }
+            },
+            '3': {
+                title: '服務預約提醒',
+                type: '預約提醒',
+                badgeClass: 'badge-accent',
+                source: '服務提醒',
+                dateTime: '2026/02/22 18:00',
+                icon: 'fa-bell',
+                iconColor: '#ffa502',
+                summary: '提醒您明天 10:00 有預約的居家照護服務，請提前確認聯絡資訊與服務地址。',
+                content: [
+                    '照服員將於到府前 10 分鐘來電確認。',
+                    '如臨時無法配合，請於服務開始前至少 2 小時通知，以利重新安排。'
+                ],
+                action: {
+                    label: '前往對話確認',
+                    target: 'chat-detail.html?id=care-001'
+                }
+            },
+            '4': {
+                title: '付款成功通知',
+                type: '付款通知',
+                badgeClass: 'badge-primary',
+                source: '金流系統',
+                dateTime: '2026/01/27 14:05',
+                icon: 'fa-credit-card',
+                iconColor: '#3498db',
+                summary: '您已成功付款 NT$ 3,760，訂單編號 ORD202401270005。',
+                content: [
+                    '付款資料已完成入帳，電子收據可於訂單詳情頁查看。',
+                    '若有重複扣款或對帳問題，請於客服中心提出協助單。'
+                ],
+                action: {
+                    label: '查看訂單詳情',
+                    target: 'order-detail.html'
+                }
+            },
+            '5': {
+                title: '機構訊息',
+                type: '機構回覆',
+                badgeClass: 'badge-primary',
+                source: '松山長照協會',
+                dateTime: '2026/01/26 16:20',
+                icon: 'fa-comments',
+                iconColor: '#9b59b6',
+                summary: '關於您詢問的照護方案，機構已提供建議，請查看完整回覆內容。',
+                content: [
+                    '建議可先採用每週 2 次、每次 2 小時之居家照護方案。',
+                    '若家中長者有復能需求，可再追加復健陪同與就醫交通接送服務。'
+                ],
+                action: {
+                    label: '前往機構對話',
+                    target: 'chat-detail.html?id=care-001'
+                }
+            },
+            '6': {
+                title: '服務完成通知',
+                type: '服務結果',
+                badgeClass: 'badge-primary',
+                source: '服務系統',
+                dateTime: '2026/01/20 17:40',
+                icon: 'fa-check-circle',
+                iconColor: '#2ed573',
+                summary: '您的訂單 ORD202401200012 已完成服務，歡迎回饋本次照護體驗。',
+                content: [
+                    '本次服務紀錄已更新至訂單頁，可查看服務時數與執行內容。',
+                    '您的評價將協助我們持續優化照護品質，感謝您的支持。'
+                ],
+                action: {
+                    label: '查看訂單詳情',
+                    target: 'order-detail.html'
+                }
+            },
+            '7': {
+                title: '會員專屬優惠',
+                type: '優惠通知',
+                badgeClass: 'badge-accent',
+                source: '會員中心',
+                dateTime: '2026/01/15 09:00',
+                icon: 'fa-gift',
+                iconColor: '#06C755',
+                summary: '感謝您的支持！本月專屬優惠券已發放至您的帳戶。',
+                content: [
+                    '優惠券可於結帳頁選擇使用，最高可折抵 NT$ 300。',
+                    '本次優惠券使用期限至 2026/02/29，逾期將自動失效。'
+                ],
+                action: {
+                    label: '查看優惠活動',
+                    target: 'promotions.html'
+                }
+            },
+            '8': {
+                title: '系統公告',
+                type: '系統通知',
+                badgeClass: 'badge-primary',
+                source: '平台系統',
+                dateTime: '2026/01/18 12:00',
+                icon: 'fa-info-circle',
+                iconColor: '#667eea',
+                summary: '平台將於 1/20 02:00-06:00 進行系統維護，部分功能可能短暫無法使用。',
+                content: [
+                    '維護期間可能影響預約、訂單查詢與付款流程。',
+                    '建議您提前完成重要操作，造成不便敬請見諒。'
+                ]
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const messageId = params.get('id') || '1';
+        const message = messageData[messageId] || messageData['1'];
+
+        const messageIconEl = document.getElementById('messageIcon');
+        const messageTitleEl = document.getElementById('messageTitle');
+        const messageSourceEl = document.getElementById('messageSource');
+        const messageDateTimeEl = document.getElementById('messageDateTime');
+        const messageSummaryEl = document.getElementById('messageSummary');
+        const messageContentEl = document.getElementById('messageContent');
+
+        if (messageIconEl) {
+            messageIconEl.style.backgroundColor = message.iconColor;
+            messageIconEl.innerHTML = `<i class="fas ${message.icon}"></i>`;
+        }
+
+        if (messageTitleEl) messageTitleEl.textContent = message.title;
+        if (messageSourceEl) messageSourceEl.textContent = message.source;
+        if (messageDateTimeEl) messageDateTimeEl.textContent = message.dateTime;
+        if (messageSummaryEl) messageSummaryEl.textContent = message.summary;
+
+        if (messageContentEl) {
+            messageContentEl.innerHTML = '';
+            message.content.forEach((line) => {
+                const paragraph = document.createElement('p');
+                paragraph.textContent = line;
+                messageContentEl.appendChild(paragraph);
+            });
+        }
+
+        document.title = message.title;
+    </script>
+</body>
+</html>

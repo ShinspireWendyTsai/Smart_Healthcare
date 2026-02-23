@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-    <title>智慧照護平台 - 服務詳情</title>
+    <title>服務詳情</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
@@ -17,6 +17,17 @@
             align-items: center;
             justify-content: center;
             color: white;
+            background-image: url('images/banner-img02.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .service-detail-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
         }
         
         .service-detail-header i {
@@ -276,7 +287,7 @@
         }
         
         .bottom-action {
-            position: fixed;
+            position: sticky;
             bottom: 0;
             left: 0;
             right: 0;
@@ -321,7 +332,7 @@
             height: 56px;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             border: none;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-xl);
             color: white;
             font-size: 18px;
             font-weight: bold;
@@ -343,11 +354,11 @@
     <!-- 手機容器 -->
     <div class="mobile-container">
         <!-- 服務圖片區域 -->
-        <div class="service-detail-header" id="serviceHeader" style="background: linear-gradient(145deg, #2D6A4F, #1B4332);">
+        <div class="service-detail-header" id="serviceHeader">
             <div class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i>
             </div>
-            <i class="fas fa-user-nurse" id="serviceIcon"></i>
+            
         </div>
 
         <!-- 主要內容區 -->
@@ -359,7 +370,7 @@
                     <div class="service-detail-name" id="serviceName">專業居家照護服務</div>
                     <div class="service-detail-desc" id="serviceDesc">由專業照服員提供貼心的居家照護，包含日常生活協助、身體清潔、餐食準備等服務。</div>
                     <div class="service-detail-price">
-                        <span id="servicePrice">NT$ 1,200/時</span>
+                        <span id="servicePrice" style="color:#F18100;">NT$ 1,200/時</span>
                         <span class="original" id="serviceOriginalPrice">NT$ 1,500</span>
                     </div>
                 </div>
@@ -498,8 +509,6 @@
                 const contentsList = document.getElementById('serviceContents');
                 const infoList = document.getElementById('serviceInfoList');
                 const bookBtn = document.querySelector('.btn-book');
-
-                document.getElementById('serviceHeader').style.background = `linear-gradient(145deg, ${service.color}, ${service.colorDark})`;
                 document.getElementById('serviceIcon').className = `fas ${service.icon}`;
                 document.getElementById('serviceName').textContent = service.name;
                 document.getElementById('serviceDesc').textContent = service.desc;
@@ -555,7 +564,7 @@
                     document.getElementById('serviceOriginalPrice').style.display = 'none';
                 }
                 
-                document.title = `智慧照護平台 - ${service.name}`;
+                document.title = service.name;
             }
         }
 

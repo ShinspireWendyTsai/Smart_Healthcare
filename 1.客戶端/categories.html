@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-    <title>智慧照護平台 - 服務</title>
+    <title>服務</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
@@ -377,16 +377,17 @@
 
             // 生成服務卡片 HTML
             let html = '';
-            currentServices.forEach(service => {
+            currentServices.forEach((service, index) => {
                 const onclickHandler = service.needBinding 
                     ? `onclick="event.stopPropagation(); showBindingModal();"` 
                     : `onclick="navigateTo('service-detail.html?id=${service.id}')"`;
+
+                const imageIndex = ((startIndex + index) % 4) + 1;
+                const thumbnail = `<div class="service-image service-image-${imageIndex}"></div>`;
                 
                 html += `
                     <div class="service-card" data-service-id="${service.id}" data-category="${service.category}" ${onclickHandler}>
-                        <div class="service-image" style="background: linear-gradient(145deg, ${service.color}, ${service.colorDark});">
-                            <i class="fas ${service.icon}"></i>
-                        </div>
+                        ${thumbnail}
                         <div class="service-info">
                             <div>
                                 <div class="service-name">${service.name}</div>

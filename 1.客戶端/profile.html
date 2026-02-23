@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-    <title>智慧照護平台 - 個人資訊</title>
+    <title>個人資訊</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
@@ -45,32 +45,36 @@
 
         <!-- 主要內容區 -->
         <main class="main-content">
-            <!-- 個人資訊頭部 -->
+            <!-- 個人資訊頭部 + 統計條 -->
             <section class="profile-header">
-                <div class="profile-avatar">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="profile-name">王小明</div>
-                <div class="profile-id">個案編號：PT2024001234</div>
-            </section>
-
-            <!-- 快速功能區 -->
-            <section class="quick-stats">
-                <div class="quick-stat-item" onclick="navigateTo('orders.html?status=pending')">
-                    <div class="quick-stat-number" style="color: #C4873B;">2</div>
-                    <div class="quick-stat-label">待付款</div>
-                </div>
-                <div class="quick-stat-item" onclick="navigateTo('orders.html?status=processing')">
-                    <div class="quick-stat-number" style="color: #2D6A4F;">3</div>
-                    <div class="quick-stat-label">處理中</div>
-                </div>
-                <div class="quick-stat-item" onclick="navigateTo('orders.html?status=completed')">
-                    <div class="quick-stat-number" style="color: #D4A574;">15</div>
-                    <div class="quick-stat-label">已完成</div>
-                </div>
-                <div class="quick-stat-item" onclick="navigateTo('favorites.html')">
-                    <div class="quick-stat-number" style="color: #6B46C1;">8</div>
-                    <div class="quick-stat-label">收藏</div>
+                <div class="profile-header-card">
+                    <div class="profile-header-main">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-header-info">
+                            <div class="profile-name">王小明</div>
+                            <div class="profile-id">個案編號：PT2024001234</div>
+                        </div>
+                    </div>
+                    <div class="quick-stats">
+                        <div class="quick-stat-item" onclick="navigateTo('orders.html?status=pending')">
+                            <div class="quick-stat-label">待付款</div>
+                            <div class="quick-stat-number" style="color: #FFB74D;">2</div>
+                        </div>
+                        <div class="quick-stat-item" onclick="navigateTo('orders.html?status=processing')">
+                            <div class="quick-stat-label">處理中</div>
+                            <div class="quick-stat-number" style="color: #FFB74D;">3</div>
+                        </div>
+                        <div class="quick-stat-item" onclick="navigateTo('orders.html?status=completed')">
+                            <div class="quick-stat-label">已完成</div>
+                            <div class="quick-stat-number" style="color: #26A69A;">15</div>
+                        </div>
+                        <div class="quick-stat-item" onclick="navigateTo('favorites.html')">
+                            <div class="quick-stat-label">收藏</div>
+                            <div class="quick-stat-number" style="color: #26A69A;">8</div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -125,7 +129,7 @@
             <section class="profile-menu">
                 <!-- 聯絡我們 -->
                 <div class="menu-item" onclick="navigateTo('contact.html')">
-                    <div class="menu-icon" style="background-color: #3498db;">
+                    <div class="menu-icon blue">
                         <i class="fas fa-headset"></i>
                     </div>
                     <div class="menu-text">聯絡我們</div>
@@ -136,7 +140,7 @@
 
                 <!-- 常見問題 -->
                 <div class="menu-item" onclick="navigateTo('faq.html')">
-                    <div class="menu-icon" style="background-color: #9b59b6;">
+                    <div class="menu-icon purple">
                         <i class="fas fa-question-circle"></i>
                     </div>
                     <div class="menu-text">常見問題</div>
@@ -147,7 +151,7 @@
 
                 <!-- 關於我們 -->
                 <div class="menu-item" onclick="navigateTo('about.html')">
-                    <div class="menu-icon" style="background-color: #1abc9c;">
+                    <div class="menu-icon green">
                         <i class="fas fa-info-circle"></i>
                     </div>
                     <div class="menu-text">關於我們</div>

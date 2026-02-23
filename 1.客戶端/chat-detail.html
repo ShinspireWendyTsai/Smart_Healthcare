@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>機構端對話</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .chat-card {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--divider-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header-info {
+            flex: 1;
+        }
+
+        .chat-header-title {
+            font-size: var(--font-size-base);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chat-meta {
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        .chat-status {
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .chat-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .chat-avatar.small {
+            width: 36px;
+            height: 36px;
+            font-size: 14px;
+        }
+
+        .chat-avatar.me {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+        }
+
+        .chat-thread {
+            background: var(--background-color);
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .chat-date {
+            text-align: center;
+        }
+
+        .chat-date span {
+            background: #e0e0e0;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .chat-message.sent {
+            flex-direction: row-reverse;
+        }
+
+        .chat-bubble {
+            max-width: 72%;
+            background: white;
+            padding: 12px 14px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-card);
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+        }
+
+        .chat-message.sent .chat-bubble {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+
+        .chat-time {
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .chat-message.sent .chat-time {
+            text-align: right;
+        }
+
+        .quick-replies {
+            padding: 10px var(--spacing-lg);
+            border-top: 1px solid var(--divider-color);
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            background: var(--card-background);
+        }
+
+        .quick-reply {
+            background: rgba(43, 108, 176, 0.12);
+            color: var(--info-color);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: var(--font-size-xs);
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-top: 1px solid var(--divider-color);
+            background: var(--card-background);
+        }
+
+        .chat-input input {
+            flex: 1;
+            border: 1px solid var(--divider-color);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font-size: var(--font-size-sm);
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(45, 106, 79, 0.12);
+        }
+
+        .chat-action-icon {
+            font-size: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .chat-input .btn {
+            padding: 10px 16px;
+            min-height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">松山長照協會</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="card chat-card">
+                <div class="chat-header">
+                    <div class="chat-avatar">松</div>
+                    <div class="chat-header-info">
+                        <div class="chat-header-title">
+                            個管師 陳照服員
+                            <span class="badge badge-accent">機構端</span>
+                        </div>
+                        <div class="chat-meta">松山長照協會 · 綁定編號 PT2024001234</div>
+                        <div class="chat-status">服務狀態：預約確認中</div>
+                    </div>
+                </div>
+
+                <div class="chat-thread">
+                    <div class="chat-date">
+                        <span>2026年2月15日</span>
+                    </div>
+
+                    <div class="chat-message sent">
+                        <div class="chat-avatar small me">我</div>
+                        <div>
+                            <div class="chat-bubble">
+                                您好，我想確認明天的居家照護服務，預計幾點抵達呢？
+                            </div>
+                            <div class="chat-time">09:15 ✓✓</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message received">
+                        <div class="chat-avatar small">機</div>
+                        <div>
+                            <div class="chat-bubble">
+                                王先生您好！明天的服務預計在上午10:00抵達，照服員會提前10分鐘致電確認。
+                            </div>
+                            <div class="chat-time">09:20</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message sent">
+                        <div class="chat-avatar small me">我</div>
+                        <div>
+                            <div class="chat-bubble">
+                                好的，這次的照服員還是陳照服員嗎？
+                            </div>
+                            <div class="chat-time">09:25 ✓✓</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message received">
+                        <div class="chat-avatar small">機</div>
+                        <div>
+                            <div class="chat-bubble">
+                                是的，這次仍由陳照服員服務，若需要調整時段也可以告訴我們。😊
+                            </div>
+                            <div class="chat-time">09:28</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message sent">
+                        <div class="chat-avatar small me">我</div>
+                        <div>
+                            <div class="chat-bubble">
+                                了解，謝謝您的協助！
+                            </div>
+                            <div class="chat-time">10:30 ✓✓</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-replies">
+                    <span class="quick-reply">收到，謝謝您</span>
+                    <span class="quick-reply">好的，我會配合</span>
+                    <span class="quick-reply">若需補充資料請告知</span>
+                </div>
+
+                <div class="chat-input">
+                    <i class="fas fa-plus-circle chat-action-icon"></i>
+                    <i class="fas fa-image chat-action-icon"></i>
+                    <input type="text" id="chatInput" placeholder="輸入訊息...">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        const chatInput = document.getElementById('chatInput');
+        document.querySelectorAll('.quick-reply').forEach((chip) => {
+            chip.addEventListener('click', () => {
+                if (chatInput) {
+                    chatInput.value = chip.textContent.trim();
+                    chatInput.focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-    <title>智慧照護平台 - 首頁</title>
+    <title>首頁</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
@@ -15,7 +15,6 @@
         <!-- 頂部導覽列 -->
         <header class="header">
             <div class="header-left">
-                <div class="header-title">智慧照護平台</div>
                 <div class="org-switcher-wrap">
                     <button class="org-switcher has-alert" id="orgSwitcher" type="button" aria-expanded="false" aria-haspopup="listbox">
                         <i class="fas fa-building org-switcher-icon"></i>
@@ -49,14 +48,14 @@
             <!-- 輪播圖區域 -->
             <section class="banner-section">
                 <div class="banner-slider">
-                    <div class="banner-slide">
-                        <i class="fas fa-heart"></i>&nbsp;貼心照護服務
+                    <div class="banner-slide banner-slide-1">
+                        <i class="fas fa-heart"></i>&nbsp;<span>貼心照護服務</span>
                     </div>
-                    <div class="banner-slide" style="background: linear-gradient(135deg, #2B6CB0 0%, #1A4A7C 50%, #D4A574 100%);">
-                        <i class="fas fa-gift"></i>&nbsp;新會員優惠
+                    <div class="banner-slide banner-slide-2">
+                        <i class="fas fa-gift"></i>&nbsp;<span>新會員優惠</span>
                     </div>
-                    <div class="banner-slide" style="background: linear-gradient(135deg, #6B46C1 0%, #4C2889 50%, #D4A574 100%);">
-                        <i class="fas fa-star"></i>&nbsp;熱門服務推薦
+                    <div class="banner-slide banner-slide-3">
+                        <i class="fas fa-star"></i>&nbsp;<span>熱門服務推薦</span>
                     </div>
                 </div>
                 <div class="banner-dots">
@@ -75,56 +74,56 @@
                 <div class="category-grid">
                     <!-- 類別項目 1 -->
                     <div class="category-item" onclick="navigateTo('categories.html?category=居家照護')">
-                        <div class="category-icon">
+                        <div class="category-icon category-icon-primary">
                             <i class="fas fa-user-nurse"></i>
                         </div>
                         <div class="category-name">居家照護</div>
                     </div>
                     <!-- 類別項目 2 -->
                     <div class="category-item" onclick="navigateTo('categories.html?category=健康檢測')">
-                        <div class="category-icon" style="background: linear-gradient(145deg, #2B6CB0, #1A4A7C);">
+                        <div class="category-icon category-icon-primary">
                             <i class="fas fa-stethoscope"></i>
                         </div>
                         <div class="category-name">健康檢測</div>
                     </div>
                     <!-- 類別項目 3 -->
                     <div class="category-item" onclick="navigateTo('categories.html?category=用藥提醒')">
-                        <div class="category-icon" style="background: linear-gradient(145deg, #C53030, #9B2C2C);">
+                        <div class="category-icon category-icon-accent">
                             <i class="fas fa-pills"></i>
                         </div>
                         <div class="category-name">用藥提醒</div>
                     </div>
                     <!-- 類別項目 4 -->
                     <div class="category-item" onclick="navigateTo('categories.html?category=營養餐食')">
-                        <div class="category-icon" style="background: linear-gradient(145deg, #D4A574, #B8956C);">
+                        <div class="category-icon category-icon-primary">
                             <i class="fas fa-utensils"></i>
                         </div>
                         <div class="category-name">營養餐食</div>
                     </div>
                     <!-- 類別項目 5 -->
                     <div class="category-item" onclick="navigateTo('categories.html?category=交通接送')">
-                        <div class="category-icon" style="background: linear-gradient(145deg, #6B46C1, #4C2889);">
+                        <div class="category-icon category-icon-accent">
                             <i class="fas fa-car"></i>
                         </div>
                         <div class="category-name">交通接送</div>
                     </div>
                     <!-- 類別項目 6 -->
                     <div class="category-item" onclick="navigateTo('categories.html?category=陪伴服務')">
-                        <div class="category-icon" style="background: linear-gradient(145deg, #C4873B, #A66B2E);">
+                        <div class="category-icon category-icon-accent">
                             <i class="fas fa-hand-holding-heart"></i>
                         </div>
                         <div class="category-name">陪伴服務</div>
                     </div>
                     <!-- 類別項目 7 -->
                     <div class="category-item" onclick="navigateTo('categories.html?category=居家清潔')">
-                        <div class="category-icon" style="background: linear-gradient(145deg, #319795, #256D6D);">
+                        <div class="category-icon category-icon-primary">
                             <i class="fas fa-broom"></i>
                         </div>
                         <div class="category-name">居家清潔</div>
                     </div>
                     <!-- 類別項目 8 -->
                     <div class="category-item" onclick="navigateTo('categories.html')">
-                        <div class="category-icon" style="background: linear-gradient(145deg, #718096, #4A5568);">
+                        <div class="category-icon category-icon-primary">
                             <i class="fas fa-ellipsis-h"></i>
                         </div>
                         <div class="category-name">更多服務</div>
@@ -133,24 +132,30 @@
             </section>
 
             <!-- 機構功能區域 -->
-            <section class="category-section">
+            <section class="category-section org-feature-section">
                 <div class="section-title">
                     <span>機構功能</span>
                 </div>
-                <div class="category-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="org-feature-row">
                     <!-- 個案關懷通訊 -->
-                    <div class="category-item" onclick="navigateTo('chat.html')">
-                        <div class="category-icon" style="width: 72px; height: 72px; font-size: 32px; background: linear-gradient(145deg, #2D6A4F, #1B4332);">
+                    <div class="org-feature-card org-feature-card-chat" onclick="navigateTo('chat.html')">
+                        <div class="org-feature-icon">
                             <i class="fas fa-comments"></i>
                         </div>
-                        <div class="category-name">個案關懷通訊</div>
+                        <div class="org-feature-text">
+                            <div class="org-feature-title">個案關懷通訊</div>
+                            <div class="org-feature-desc">與照護團隊保持聯繫，關心個案近況</div>
+                        </div>
                     </div>
                     <!-- 機構公告 -->
-                    <div class="category-item" onclick="navigateTo('announcements.html')">
-                        <div class="category-icon" style="width: 72px; height: 72px; font-size: 32px; background: linear-gradient(145deg, #D4A574, #B8956C);">
+                    <div class="org-feature-card org-feature-card-announcement" onclick="navigateTo('announcements.html')">
+                        <div class="org-feature-icon">
                             <i class="fas fa-bullhorn"></i>
                         </div>
-                        <div class="category-name">機構公告</div>
+                        <div class="org-feature-text">
+                            <div class="org-feature-title">機構公告</div>
+                            <div class="org-feature-desc">查看最新消息與公告</div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -164,9 +169,7 @@
                 <div class="service-list">
                     <!-- 服務卡片 1 -->
                     <div class="service-card" data-service-id="1">
-                        <div class="service-image" style="background: linear-gradient(145deg, #2D6A4F, #1B4332);">
-                            <i class="fas fa-user-nurse"></i>
-                        </div>
+                        <div class="service-image service-image-1"></div>
                         <div class="service-info">
                             <div>
                                 <div class="service-name">專業居家照護服務</div>
@@ -180,9 +183,7 @@
                     </div>
                     <!-- 服務卡片 2 -->
                     <div class="service-card" data-service-id="2">
-                        <div class="service-image" style="background: linear-gradient(145deg, #2B6CB0, #1A4A7C);">
-                            <i class="fas fa-heartbeat"></i>
-                        </div>
+                        <div class="service-image service-image-2"></div>
                         <div class="service-info">
                             <div>
                                 <div class="service-name">健康檢測套餐</div>
@@ -195,9 +196,7 @@
                     </div>
                     <!-- 服務卡片 3 -->
                     <div class="service-card" data-service-id="3">
-                        <div class="service-image" style="background: linear-gradient(145deg, #D4A574, #B8956C);">
-                            <i class="fas fa-utensils"></i>
-                        </div>
+                        <div class="service-image service-image-3"></div>
                         <div class="service-info">
                             <div>
                                 <div class="service-name">營養餐食配送</div>
@@ -210,9 +209,7 @@
                     </div>
                     <!-- 服務卡片 4 -->
                     <div class="service-card" data-service-id="4" onclick="event.stopPropagation(); showBindingModal();">
-                        <div class="service-image" style="background: linear-gradient(145deg, #6B46C1, #4C2889);">
-                            <i class="fas fa-car"></i>
-                        </div>
+                        <div class="service-image service-image-4"></div>
                         <div class="service-info">
                             <div>
                                 <div class="service-name">就醫交通接送</div>

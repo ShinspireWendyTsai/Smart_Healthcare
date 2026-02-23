@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>個案關懷通訊</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .chat-list {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .chat-list-item {
+            cursor: pointer;
+        }
+
+        .chat-list-item .message-preview {
+            white-space: normal;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .chat-meta {
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .chat-list-meta {
+            text-align: right;
+            min-width: 64px;
+        }
+
+        .chat-list-meta .message-time {
+            margin-left: 0;
+        }
+
+        .chat-unread {
+            background: var(--danger-color);
+            color: white;
+            border-radius: 999px;
+            font-size: 12px;
+            padding: 2px 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 22px;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <div class="header-left">
+                <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+                <div class="header-title">個案關懷通訊</div>
+            </div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="info-banner">
+                <div class="info-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="info-content">
+                    <h3>機構端對話列表</h3>
+                    <p>點選任一對話進入詳細內容，與機構端保持溝通。</p>
+                </div>
+            </section>
+
+            <section class="category-section" style="padding-top: var(--spacing-md);">
+                <div class="section-title">
+                    <span>對話列表</span>
+                    <span class="count-badge">3</span>
+                </div>
+            </section>
+
+            <div class="search-box">
+                <div class="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜尋機構端對話...">
+                </div>
+            </div>
+
+            <div class="message-list chat-list">
+                <div class="message-item chat-list-item unread" onclick="navigateTo('chat-detail.html?id=care-001')">
+                    <div class="message-content">
+                        <div class="message-title">機構·客服</div>
+                        <div class="chat-meta">服務安排</div>
+                        <div class="message-preview">明天服務預計 10:00 抵達，照服員會提前致電確認。</div>
+                    </div>
+                    <div class="chat-list-meta">
+                        <div class="message-time">10:30</div>
+                        <div class="chat-unread">2</div>
+                    </div>
+                </div>
+
+                <div class="message-item chat-list-item" onclick="navigateTo('chat-detail.html?id=care-002')">
+                    <div class="message-content">
+                        <div class="message-title">機構·客服</div>
+                        <div class="chat-meta">營養建議</div>
+                        <div class="message-preview">本週餐食內容已更新，建議一週三次更換菜單。</div>
+                    </div>
+                    <div class="chat-list-meta">
+                        <div class="message-time">昨天</div>
+                    </div>
+                </div>
+
+                <div class="message-item chat-list-item" onclick="navigateTo('chat-detail.html?id=care-003')">
+                    <div class="message-content">
+                        <div class="message-title">機構·客服</div>
+                        <div class="chat-meta">交通接送</div>
+                        <div class="message-preview">已收到您的交通接送申請，正在安排車輛與司機。</div>
+                    </div>
+                    <div class="chat-list-meta">
+                        <div class="message-time">02/18</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

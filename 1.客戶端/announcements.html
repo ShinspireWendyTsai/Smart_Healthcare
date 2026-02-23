@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>機構公告</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .announcement-item {
+            cursor: pointer;
+        }
+
+        .announcement-item .message-preview {
+            white-space: normal;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .announcement-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .announcement-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 10px;
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <div class="header-left">
+                <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+                <div class="header-title">機構公告</div>
+                <div class="org-switcher-wrap">
+                    <button class="org-switcher has-alert" id="orgSwitcher" type="button" aria-expanded="false" aria-haspopup="listbox">
+                        <i class="fas fa-building org-switcher-icon"></i>
+                        <span class="org-switcher-name" id="orgSwitcherName">松山長照協會</span>
+                        <i class="fas fa-chevron-down org-switcher-arrow"></i>
+                        <span class="org-switcher-dot" aria-hidden="true"></span>
+                    </button>
+                    <div class="org-dropdown" id="orgDropdown" role="listbox">
+                        <button class="org-option active" type="button" data-org="松山長照協會">
+                            <span class="org-option-name">松山長照協會</span>
+                            <span class="org-option-tag">目前</span>
+                        </button>
+                        <button class="org-option has-unread" type="button" data-org="陽光長照中心">
+                            <span class="org-option-name">陽光長照中心</span>
+                            <span class="org-option-dot" aria-hidden="true"></span>
+                        </button>
+                        <button class="org-option" type="button" data-org="幸福居家照護">
+                            <span class="org-option-name">幸福居家照護</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div style="font-size: 14px; cursor: pointer;" onclick="markAllRead()">全部已讀</div>
+        </header>
+
+        <main class="main-content">
+            <section class="info-banner">
+                <div class="info-icon">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="info-content">
+                    <h3>機構公告專區</h3>
+                    <p>目前顯示「松山長照協會」公告，可於上方切換機構查看其他公告。</p>
+                </div>
+            </section>
+
+            <section class="category-section" style="padding-top: var(--spacing-md);">
+                <div class="section-title">
+                    <span>最新公告</span>
+                    <span class="badge badge-accent">5 則</span>
+                </div>
+            </section>
+
+            <div class="message-list announcement-list">
+                <div class="message-item announcement-item unread" onclick="navigateTo('announcement-detail.html?id=ann-001')">
+                    <div class="message-icon" style="background-color: var(--danger-color);">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="announcement-title message-title">
+                            <span>【重要公告】春節期間服務時間調整</span>
+                        </div>
+                        <div class="message-preview">2/8-2/12 期間部分服務時段調整，請留意預約與到府安排。</div>
+                        <div class="announcement-meta">
+                            <span>2026/02/10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message-item announcement-item unread" onclick="navigateTo('announcement-detail.html?id=ann-002')">
+                    <div class="message-icon" style="background-color: var(--info-color);">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="announcement-title message-title">
+                            <span>二月健康講座報名開始</span>
+                        </div>
+                        <div class="message-preview">本月主題「長者營養與慢病管理」，開放報名至 2/22，名額有限。</div>
+                        <div class="announcement-meta">
+                            <span>2026/02/18</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message-item announcement-item" onclick="navigateTo('announcement-detail.html?id=ann-003')">
+                    <div class="message-icon" style="background-color: var(--primary-color);">
+                        <i class="fas fa-user-nurse"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="announcement-title message-title">
+                            <span>居家照護服務人力更新</span>
+                        </div>
+                        <div class="message-preview">新增晚班照服人力，部分區域可加開夜間時段，歡迎洽詢。</div>
+                        <div class="announcement-meta">
+                            <span>2026/02/15</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message-item announcement-item" onclick="navigateTo('announcement-detail.html?id=ann-004')">
+                    <div class="message-icon" style="background-color: #6B46C1;">
+                        <i class="fas fa-car-side"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="announcement-title message-title">
+                            <span>交通接送新增夜間路線</span>
+                        </div>
+                        <div class="message-preview">新增松山區、內湖區夜間接送路線，預約請提前 2 日申請。</div>
+                        <div class="announcement-meta">
+                            <span>2026/02/12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message-item announcement-item" onclick="navigateTo('announcement-detail.html?id=ann-005')">
+                    <div class="message-icon" style="background-color: var(--warning-color);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="announcement-title message-title">
+                            <span>系統維護通知</span>
+                        </div>
+                        <div class="message-preview">2/25 22:00-00:00 進行系統維護，期間可能無法預約與查詢訂單。</div>
+                        <div class="announcement-meta">
+                            <span>2026/02/20</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        function markAllRead() {
+            const unreadItems = document.querySelectorAll('.announcement-item.unread');
+            unreadItems.forEach(item => {
+                item.classList.remove('unread');
+            });
+            showToast('已全部標記為已讀');
+        }
+    </script>
+</body>
+</html>

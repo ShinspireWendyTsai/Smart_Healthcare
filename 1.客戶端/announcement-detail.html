@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>公告詳情</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .announcement-detail-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .announcement-detail-title {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .announcement-detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .announcement-detail-summary {
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .announcement-detail-content p {
+            margin: 0 0 var(--spacing-md);
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+
+        .announcement-detail-divider {
+            height: 1px;
+            background: var(--divider-color);
+            margin: var(--spacing-md) 0 var(--spacing-lg);
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">公告詳情</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="card">
+                <div class="announcement-detail-header">
+                    <div class="announcement-detail-title" id="announcementTitle"></div>
+                </div>
+                <div class="announcement-detail-meta">
+                    <span id="announcementOrg"></span>
+                    <span>發布日期 <strong id="announcementDate"></strong></span>
+                </div>
+                <div class="announcement-detail-divider"></div>
+                <div class="announcement-detail-summary" id="announcementSummary"></div>
+                <div class="announcement-detail-content" id="announcementContent"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        const announcementData = {
+            'ann-001': {
+                title: '【重要公告】春節期間服務時間調整',
+                org: '松山長照協會',
+                date: '2026/02/10',
+                summary: '2/8-2/12 期間部分服務時段調整，請留意預約與到府安排。',
+                content: [
+                    '因應春節期間人力安排，部分服務時段將調整至 09:00-18:00。',
+                    '若需變更或取消服務，請於服務前 48 小時聯繫機構端客服。',
+                    '造成不便敬請見諒，祝您春節平安。'
+                ]
+            },
+            'ann-002': {
+                title: '二月健康講座報名開始',
+                org: '松山長照協會',
+                date: '2026/02/18',
+                summary: '本月主題「長者營養與慢病管理」，開放報名至 2/22，名額有限。',
+                content: [
+                    '講座時間：2026/02/24 14:00-16:00。',
+                    '地點：松山長照協會活動中心。',
+                    '如需報名或詢問交通協助，請聯繫機構端客服。'
+                ]
+            },
+            'ann-003': {
+                title: '居家照護服務人力更新',
+                org: '松山長照協會',
+                date: '2026/02/15',
+                summary: '新增晚班照服人力，部分區域可加開夜間時段，歡迎洽詢。',
+                content: [
+                    '新增 3 位晚班照服人員，可支援 18:00 後服務需求。',
+                    '夜間服務需提前 3 日申請，以利安排人力。'
+                ]
+            },
+            'ann-004': {
+                title: '交通接送新增夜間路線',
+                org: '松山長照協會',
+                date: '2026/02/12',
+                summary: '新增松山區、內湖區夜間接送路線，預約請提前 2 日申請。',
+                content: [
+                    '夜間接送服務時段為 18:00-22:00。',
+                    '請於服務前 2 日完成申請，將安排專車接送。'
+                ]
+            },
+            'ann-005': {
+                title: '系統維護通知',
+                org: '松山長照協會',
+                date: '2026/02/20',
+                summary: '2/25 22:00-00:00 進行系統維護，期間可能無法預約與查詢訂單。',
+                content: [
+                    '維護期間平台將暫停服務預約與訂單查詢功能。',
+                    '建議您提前完成必要的預約與資料確認。'
+                ]
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const announcementId = params.get('id') || 'ann-001';
+        const announcement = announcementData[announcementId] || announcementData['ann-001'];
+
+        const titleEl = document.getElementById('announcementTitle');
+        const orgEl = document.getElementById('announcementOrg');
+        const dateEl = document.getElementById('announcementDate');
+        const summaryEl = document.getElementById('announcementSummary');
+        const contentEl = document.getElementById('announcementContent');
+
+        titleEl.textContent = announcement.title;
+        orgEl.textContent = announcement.org;
+        dateEl.textContent = announcement.date;
+        summaryEl.textContent = announcement.summary;
+
+        contentEl.innerHTML = announcement.content
+            .map((item) => `<p>${item}</p>`)
+            .join('');
+    </script>
+</body>
+</html>
