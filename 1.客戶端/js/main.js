@@ -128,6 +128,16 @@ function initTabs() {
  * @param {string} tabId - 標籤 ID
  */
 function switchTabContent(tabId) {
+    const orderCards = document.querySelectorAll('.order-card');
+
+    if (orderCards.length > 0) {
+        orderCards.forEach(card => {
+            const shouldShow = tabId === 'all' || card.dataset.status === tabId;
+            card.style.display = shouldShow ? 'block' : 'none';
+        });
+        return;
+    }
+
     const contents = document.querySelectorAll('.tab-content');
     
     contents.forEach(content => {

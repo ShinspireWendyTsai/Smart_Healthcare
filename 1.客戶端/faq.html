@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>常見問題</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .faq-intro {
+            margin: var(--spacing-md) var(--spacing-lg) 0;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-xl);
+            background: linear-gradient(145deg, rgba(38, 166, 154, 0.16), rgba(255, 183, 77, 0.2));
+            border: 1px solid rgba(38, 166, 154, 0.16);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .faq-intro-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            background: #26A69A;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .faq-intro h3 {
+            font-size: var(--font-size-lg);
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+
+        .faq-intro p {
+            margin: 0;
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .faq-item {
+            border: 1px solid rgba(38, 166, 154, 0.12);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.72);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            text-align: left;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            min-height: var(--min-touch-target);
+        }
+
+        .faq-question i {
+            color: var(--text-secondary);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+            color: var(--primary-color);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 16px 16px;
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-help-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-help-desc {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <div class="header-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="header-title">常見問題</div>
+            <div style="width: 36px;"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="faq-intro">
+                <div class="faq-intro-icon">
+                    <i class="fas fa-circle-question"></i>
+                </div>
+                <div>
+                    <h3>個人中心常見問題</h3>
+                    <p>提供帳號、綁定、訂單與付款等常見問答，點擊問題即可展開查看解答。</p>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <span><i class="fas fa-star" style="color: #FFB74D;"></i> 熱門問題</span>
+                </div>
+
+                <div class="faq-list">
+                    <div class="faq-item active">
+                        <button class="faq-question" type="button">
+                            <span>如何綁定個案帳號？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            請至「我的」→「個案關懷者綁定」，輸入機構提供的邀請碼並完成手機驗證後，即可完成綁定。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">
+                            <span>如何修改預約時間或服務內容？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            請到「訂單」頁面開啟該筆訂單，若狀態允許可直接調整；若超過可修改時間，請改由「聯絡我們」提交客服單。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">
+                            <span>付款失敗或重複扣款怎麼辦？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            先確認銀行是否已入帳與訂單狀態是否更新。若超過 10 分鐘仍未更新，請附上交易時間與末四碼，透過客服協助查核。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">
+                            <span>忘記密碼或無法登入該怎麼辦？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            請在登入頁點選「忘記密碼」，依照手機簡訊驗證重設密碼；若仍無法登入，可透過「聯絡我們」由客服協助處理。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" type="button">
+                            <span>如何申請退款？</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            請到訂單詳情點選「申請退款」，系統會依服務開始時間與退款規則自動判斷。若需人工協助，請至「聯絡我們」提單。
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card faq-help-card">
+                <div class="card-header" style="margin-bottom: 0;">
+                    <span><i class="fas fa-headset" style="color: #26A69A;"></i> 找不到答案？</span>
+                </div>
+                <div class="faq-help-desc">
+                    若您的情況較特殊，建議直接聯繫客服，我們會協助您確認帳號與訂單狀態。
+                </div>
+                <button class="btn btn-primary btn-block" type="button" onclick="navigateTo('contact.html')">
+                    前往聯絡我們
+                </button>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach((button) => {
+            button.addEventListener('click', () => {
+                const item = button.closest('.faq-item');
+                const isActive = item.classList.contains('active');
+
+                document.querySelectorAll('.faq-item').forEach((faqItem) => {
+                    faqItem.classList.remove('active');
+                });
+
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
