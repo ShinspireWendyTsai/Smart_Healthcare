@@ -315,11 +315,6 @@
                         <h1 class="page-title">機構資訊管理</h1>
                         <p class="page-subtitle">管理您的機構基本資料、聯絡資訊與服務設定</p>
                     </div>
-                    <div>
-                        <button class="btn btn-primary" onclick="saveOrganizationInfo()">
-                            <i class="fas fa-save"></i> 儲存變更
-                        </button>
-                    </div>
                 </div>
 
                 <!-- 基本資訊 -->
@@ -356,18 +351,11 @@
                                 <p class="form-hint">系統自動產生，不可修改</p>
                             </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label>機構簡介</label>
-                            <textarea id="orgDescription" placeholder="請輸入機構簡介...">仁愛長照服務中心成立於2018年，致力於提供專業、溫馨的長期照護服務。我們擁有專業的照護團隊，包含護理師、社工師、物理治療師等，為每位長輩提供全方位的照護服務。
-
-我們的服務理念：以「人」為本，尊重每位長輩的獨特性，提供個人化的照護計畫，讓長輩在安全舒適的環境中，維持最佳的生活品質。</textarea>
-                        </div>
                     </div>
                 </div>
 
                 <!-- 聯絡資訊 -->
-                <div class="card info-section">
+                <div class="card info-section" style="display: none;">
                     <div class="card-body">
                         <h3 class="section-title">
                             <i class="fas fa-phone-alt"></i>
@@ -419,7 +407,7 @@
                 </div>
 
                 <!-- 營業時間 -->
-                <div class="card info-section">
+                <div class="card info-section" style="display: none;">
                     <div class="card-body">
                         <h3 class="section-title">
                             <i class="fas fa-clock"></i>
@@ -576,7 +564,6 @@
                 establishDate: document.getElementById('establishDate').value,
                 taxId: document.getElementById('taxId').value,
                 ownerName: document.getElementById('ownerName').value,
-                description: document.getElementById('orgDescription').value,
                 phone: document.getElementById('phone').value,
                 fax: document.getElementById('fax').value,
                 email: document.getElementById('email').value,

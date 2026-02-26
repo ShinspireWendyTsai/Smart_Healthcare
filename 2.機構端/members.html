@@ -207,7 +207,7 @@
                                                     data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline" data-tooltip="通訊">
+                                                <button class="btn btn-sm btn-outline" data-tooltip="通訊" onclick="openMemberChatPage()">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning" data-tooltip="解除綁定">
@@ -256,7 +256,7 @@
                                                     data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" data-tooltip="通訊" onclick="openMemberChatPage()">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning">
@@ -305,7 +305,7 @@
                                                     data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" data-tooltip="通訊" onclick="openMemberChatPage()">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning">
@@ -354,7 +354,7 @@
                                                     data-status="inactive">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" data-tooltip="通訊" onclick="openMemberChatPage()">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning">
@@ -403,7 +403,7 @@
                                                     data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" data-tooltip="通訊" onclick="openMemberChatPage()">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning">
@@ -479,29 +479,6 @@
                         </div>
                         <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0; font-size: 13px; color: #666;">
                             待審核申請：幸福居家照護（ORG2024025）｜申請時間：2024/01/25
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 16px;">
-                    <div style="background: #fff; border: 1px solid #e9ecef; border-radius: 10px; padding: 16px;">
-                        <div style="font-weight: bold; margin-bottom: 10px;">家人綁定</div>
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 14px;">
-                            <div style="display: flex; justify-content: space-between; gap: 8px;">
-                                <div>
-                                    <div style="font-weight: 600;">王小美（女兒）</div>
-                                    <div style="color:#666; font-size: 12px;">0912-***-678</div>
-                                </div>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; gap: 8px;">
-                                <div>
-                                    <div style="font-weight: 600;">王大明（兒子）</div>
-                                    <div style="color:#666; font-size: 12px;">0923-***-456</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0; font-size: 13px; color: #666;">
-                            已發送邀請：0934-567-890（配偶）｜邀請時間：2024/01/26
                         </div>
                     </div>
                 </div>
@@ -663,6 +640,10 @@
 
     <!-- JavaScript -->
     <script>
+        function openMemberChatPage() {
+            window.location.href = 'chat.html';
+        }
+
         function openMemberViewModal() {
             document.getElementById('memberViewModal').style.display = 'flex';
         }
