@@ -107,38 +107,7 @@
                 <div class="page-header">
                     <div>
                         <h1 class="page-title">訂購清單查詢</h1>
-                        <p class="page-subtitle">查看機構下所有個案的訂單與分潤資訊</p>
-                    </div>
-                </div>
-
-                <!-- 數據統計資訊 -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon blue">
-                            <i class="fas fa-clipboard-list"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value">156</div>
-                            <div class="stat-label">本月訂單數</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon green">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value" style="white-space: nowrap;">$428,500</div>
-                            <div class="stat-label">本月總營業額</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon orange">
-                            <i class="fas fa-hand-holding-dollar"></i>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value" style="white-space: nowrap;">$128,550</div>
-                            <div class="stat-label">本月分潤金額</div>
-                        </div>
+                        <p class="page-subtitle">查看機構下所有個案的訂單資訊</p>
                     </div>
                 </div>
 
@@ -200,7 +169,6 @@
                                         <th>個案</th>
                                         <th>服務項目</th>
                                         <th>訂單金額</th>
-                                        <th>分潤金額</th>
                                         <th>訂購日期</th>
                                         <th>操作</th>
                                     </tr>
@@ -216,10 +184,9 @@
                                         </td>
                                         <td>專業居家照護服務</td>
                                         <td style="font-weight: bold;">NT$ 2,400</td>
-                                        <td style="color: #27ae60; font-weight: bold;">NT$ 720</td>
                                         <td>2025/01/28 10:30</td>
                                         <td>
-                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401280001', '王小明', '專業居家照護服務', 'NT$ 2,400', 'NT$ 720', '2025/01/28 10:30', 'pending', '')">
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401280001', '王小明', '專業居家照護服務', 'NT$ 2,400', '2025/01/28 10:30', 'pending', '')">
                                                 <i class="fas fa-eye"></i> 詳情
                                             </button>
                                         </td>
@@ -234,10 +201,9 @@
                                         </td>
                                         <td>健康檢測套餐</td>
                                         <td style="font-weight: bold;">NT$ 2,500</td>
-                                        <td style="color: #27ae60; font-weight: bold;">NT$ 750</td>
                                         <td>2025/01/27 14:20</td>
                                         <td>
-                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401270005', '李小華', '健康檢測套餐', 'NT$ 2,500', 'NT$ 750', '2025/01/27 14:20', 'accepted', '已安排護理師明日上午到府')">
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401270005', '李小華', '健康檢測套餐', 'NT$ 2,500', '2025/01/27 14:20', 'accepted', '已安排護理師明日上午到府')">
                                                 <i class="fas fa-eye"></i> 詳情
                                             </button>
                                         </td>
@@ -252,10 +218,9 @@
                                         </td>
                                         <td>營養餐食配送（週餐）</td>
                                         <td style="font-weight: bold;">NT$ 1,260</td>
-                                        <td style="color: #27ae60; font-weight: bold;">NT$ 378</td>
                                         <td>2025/01/27 09:15</td>
                                         <td>
-                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401270003', '張大偉', '營養餐食配送（週餐）', 'NT$ 1,260', 'NT$ 378', '2025/01/27 09:15', 'processing', '餐食已準備完成，配送員已出發')">
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401270003', '張大偉', '營養餐食配送（週餐）', 'NT$ 1,260', '2025/01/27 09:15', 'processing', '餐食已準備完成，配送員已出發')">
                                                 <i class="fas fa-eye"></i> 詳情
                                             </button>
                                         </td>
@@ -270,10 +235,9 @@
                                         </td>
                                         <td>就醫交通接送</td>
                                         <td style="font-weight: bold;">NT$ 1,000</td>
-                                        <td style="color: #27ae60; font-weight: bold;">NT$ 300</td>
                                         <td>2025/01/26 16:45</td>
                                         <td>
-                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401260012', '陳美玲', '就醫交通接送', 'NT$ 1,000', 'NT$ 300', '2025/01/26 16:45', 'completed', '服務已完成，個案滿意度良好')">
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401260012', '陳美玲', '就醫交通接送', 'NT$ 1,000', '2025/01/26 16:45', 'completed', '服務已完成，個案滿意度良好')">
                                                 <i class="fas fa-eye"></i> 詳情
                                             </button>
                                         </td>
@@ -288,10 +252,9 @@
                                         </td>
                                         <td>陪伴服務（4小時）</td>
                                         <td style="font-weight: bold;">NT$ 1,600</td>
-                                        <td style="color: #27ae60; font-weight: bold;">NT$ 480</td>
                                         <td>2025/01/25 11:30</td>
                                         <td>
-                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401250008', '林志明', '陪伴服務（4小時）', 'NT$ 1,600', 'NT$ 480', '2025/01/25 11:30', 'completed', '服務順利完成')">
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401250008', '林志明', '陪伴服務（4小時）', 'NT$ 1,600', '2025/01/25 11:30', 'completed', '服務順利完成')">
                                                 <i class="fas fa-eye"></i> 詳情
                                             </button>
                                         </td>
@@ -306,10 +269,9 @@
                                         </td>
                                         <td>居家清潔服務</td>
                                         <td style="font-weight: bold;">NT$ 2,000</td>
-                                        <td style="color: #27ae60; font-weight: bold;">NT$ 600</td>
                                         <td>2025/01/24 08:00</td>
                                         <td>
-                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401240015', '王小明', '居家清潔服務', 'NT$ 2,000', 'NT$ 600', '2025/01/24 08:00', 'pending', '')">
+                                            <button class="btn btn-sm btn-outline" onclick="openOrderDetail('ORD202401240015', '王小明', '居家清潔服務', 'NT$ 2,000', '2025/01/24 08:00', 'pending', '')">
                                                 <i class="fas fa-eye"></i> 詳情
                                             </button>
                                         </td>
@@ -365,10 +327,6 @@
                             <div style="font-size: 12px; color: #666; margin-bottom: 4px;">訂單金額</div>
                             <div style="font-weight: bold; color: #2c3e50;" id="modalAmount">-</div>
                         </div>
-                        <div>
-                            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">分潤金額</div>
-                            <div style="font-weight: bold; color: #27ae60;" id="modalCommission">-</div>
-                        </div>
                     </div>
                 </div>
 
@@ -389,7 +347,7 @@
         /**
          * 開啟訂單詳情彈窗
          */
-        function openOrderDetail(orderId, customer, service, amount, commission, date, status, note) {
+        function openOrderDetail(orderId, customer, service, amount, date, status, note) {
             currentOrderId = orderId;
             
             // 填充基本資訊
@@ -398,7 +356,6 @@
             document.getElementById('modalCustomer').textContent = customer;
             document.getElementById('modalService').textContent = service;
             document.getElementById('modalAmount').textContent = amount;
-            document.getElementById('modalCommission').textContent = commission;
             
             // 顯示彈窗
             document.getElementById('orderDetailModal').style.display = 'flex';

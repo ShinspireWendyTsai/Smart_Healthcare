@@ -379,6 +379,28 @@
         </div>
     </div>
 
+    <!-- 機構服務時間 Modal -->
+    <div id="institutionServiceTimeModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>機構服務時間</h3>
+                <i class="fas fa-times" onclick="closeModal('institutionServiceTimeModal')"></i>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 12px;">
+                    <div id="serviceTimeInstitutionName" style="font-size: var(--font-size-lg); font-weight: 700; margin-bottom: 4px;">-</div>
+                    <div id="serviceTimeInstitutionId" style="font-size: var(--font-size-sm); color: var(--text-secondary);">-</div>
+                </div>
+                <div id="institutionServiceTimeList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+                <div style="display: flex; gap: 8px; align-items: flex-start; margin: 14px 0 16px; padding: 10px 12px; background: rgba(45, 106, 79, 0.08); border-radius: var(--radius-md); color: var(--primary-dark);">
+                    <i class="fas fa-info-circle" style="margin-top: 2px;"></i>
+                    <span id="serviceTimeNotice" style="font-size: var(--font-size-sm);">-</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="closeModal('institutionServiceTimeModal')">關閉</button>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script>
@@ -438,6 +460,47 @@
             closeModal('confirmBindingModal');
         }
 
+        const institutionServiceHoursMap = {
+            ORG2024001: {
+                name: '陽光長照中心',
+                notice: '國定假日依機構公告調整，夜間或緊急需求請提前聯繫關懷者。',
+                serviceHours: [
+                    { day: '週一', time: '08:00 - 18:00', enabled: true },
+                    { day: '週二', time: '08:00 - 18:00', enabled: true },
+                    { day: '週三', time: '08:00 - 18:00', enabled: true },
+                    { day: '週四', time: '08:00 - 18:00', enabled: true },
+                    { day: '週五', time: '08:00 - 18:00', enabled: true },
+                    { day: '週六', time: '09:00 - 17:00', enabled: true },
+                    { day: '週日', time: '休息', enabled: false }
+                ]
+            }
+        };
+
+        function viewInstitutionDetail(orgId) {
+            const institution = institutionServiceHoursMap[orgId];
+
+            if (!institution) {
+                alert('目前查無該機構的服務時間資料');
+                return;
+            }
+
+            document.getElementById('serviceTimeInstitutionName').textContent = institution.name;
+            document.getElementById('serviceTimeInstitutionId').textContent = `機構編號：${orgId}`;
+            document.getElementById('serviceTimeNotice').textContent = institution.notice || '實際服務時段請以機構公告為準。';
+
+            const serviceTimeRows = institution.serviceHours.map((item) => {
+                return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid rgba(38, 166, 154, 0.15); border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.75);">
+                        <span style="font-weight: 600;">${item.day}</span>
+                        <span style="font-size: var(--font-size-sm); color: var(--text-secondary);">${item.time}</span>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('institutionServiceTimeList').innerHTML = serviceTimeRows;
+            document.getElementById('institutionServiceTimeModal').style.display = 'flex';
+        }
+
         function confirmUnbind(orgId) {
             if (confirm('確定要解除與此機構的綁定嗎？解除後將無法使用該機構的專屬服務。')) {
                 alert('已解除綁定');
@@ -447,6 +510,12 @@
         function openQRScanner() {
             alert('開啟相機掃描 QR Code（此為模擬功能）');
         }
+
+        document.getElementById('institutionServiceTimeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal('institutionServiceTimeModal');
+            }
+        });
     </script>
 </body>
 </html>

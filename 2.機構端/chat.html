@@ -8,6 +8,111 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
     <link rel="stylesheet" href="css/admin.css">
+    <style>
+        .chat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+            max-width: 340px;
+        }
+
+        .relation-tag-btn {
+            white-space: nowrap;
+        }
+
+        .case-relation-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: flex-end;
+            min-height: 24px;
+        }
+
+        .relation-tag-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(52, 152, 219, 0.12);
+            color: var(--primary-dark);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .relation-tag-chip.editable {
+            padding-right: 6px;
+        }
+
+        .relation-tag-remove {
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .relation-tag-remove:hover {
+            color: var(--danger-color);
+        }
+
+        .relation-tag-empty {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .relation-tag-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .relation-tag-input-row .form-control {
+            flex: 1;
+        }
+
+        .relation-tag-input-row .btn {
+            white-space: nowrap;
+        }
+
+        #relationTagModal .modal-container {
+            max-width: 560px;
+        }
+
+        @media (max-width: 768px) {
+            .chat-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .chat-header-right {
+                width: 100%;
+                align-items: flex-start;
+                max-width: 100%;
+            }
+
+            .case-relation-tags {
+                justify-content: flex-start;
+            }
+
+            .relation-tag-input-row {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="admin-layout">
@@ -109,11 +214,6 @@
                         <h1 class="page-title">個案關懷通訊</h1>
                         <p class="page-subtitle">與個案及其家屬進行即時溝通</p>
                     </div>
-                    <div>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i> 群發訊息
-                        </button>
-                    </div>
                 </div>
 
                 <!-- 聊天室容器 -->
@@ -183,7 +283,6 @@
                                 <div class="chat-item-info">
                                     <div class="chat-item-name">
                                         林志明
-                                        <span class="chat-role-badge">家屬</span>
                                     </div>
                                     <div class="chat-item-meta">王小明・父親</div>
                                     <div class="chat-item-preview">我想詢問營養餐的內容</div>
@@ -197,18 +296,22 @@
                     </div>
 
                     <!-- 聊天主區域 -->
-                    <div class="chat-main">
+                    <div class="chat-main" data-case-name="王小明" data-relation="父親">
                         <div class="chat-header">
-                            <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="chat-header-left">
                                 <div class="chat-item-avatar" style="background-color: #1abc9c;">林</div>
                                 <div>
                                     <div style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
-                                        林志明
-                                        <span class="chat-role-badge">家屬</span>
+                                        <span id="chatHeaderContactName">林志明</span>
                                     </div>
-                                    <div class="chat-item-meta">王小明・父親</div>
                                     <div style="font-size: 12px; color: #999;">PT2024001234 • 在線</div>
                                 </div>
+                            </div>
+                            <div class="chat-header-right">
+                                <button class="btn btn-outline btn-sm relation-tag-btn" onclick="openRelationTagModal()">
+                                    <i class="fas fa-tags"></i> 貼標籤
+                                </button>
+                                <div id="caseRelationTags" class="case-relation-tags"></div>
                             </div>
                         </div>
                         
@@ -295,9 +398,171 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="relationTagModal" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>個案關係標籤</h3>
+                <i class="fas fa-times" onclick="closeRelationTagModal()"></i>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>個案姓名</label>
+                    <input type="text" id="relationTagCaseName" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label>新增標籤</label>
+                    <div class="relation-tag-input-row">
+                        <input type="text" id="relationTagInput" class="form-control" placeholder="例如：王大明(父親)">
+                        <button type="button" class="btn btn-primary" onclick="addRelationTag()">新增</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>目前標籤</label>
+                    <div id="relationTagEditList" class="case-relation-tags" style="justify-content: flex-start;"></div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeRelationTagModal()">取消</button>
+                    <button class="btn btn-primary" onclick="saveRelationTags()">儲存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script src="js/admin.js"></script>
     <script>
+        let currentRelationTagCase = '';
+        const caseRelationTagStore = {};
+
+        function notify(message, type = 'success') {
+            if (typeof showToast === 'function') {
+                showToast(message, type);
+                return;
+            }
+            alert(message);
+        }
+
+        function getCurrentChatContext() {
+            const chatMainEl = document.querySelector('.chat-main');
+            const contactNameEl = document.getElementById('chatHeaderContactName');
+            const contactName = contactNameEl ? contactNameEl.textContent.trim() : '';
+            const caseName = chatMainEl?.dataset.caseName?.trim() || '未指定個案';
+            const relation = chatMainEl?.dataset.relation?.trim() || '';
+
+            return { caseName, contactName, relation };
+        }
+
+        function ensureCaseTags(caseName) {
+            if (!caseRelationTagStore[caseName]) {
+                caseRelationTagStore[caseName] = [];
+            }
+        }
+
+        function seedTagFromCurrentContext(caseName) {
+            const context = getCurrentChatContext();
+            ensureCaseTags(caseName);
+
+            if (caseRelationTagStore[caseName].length === 0 && context.caseName && context.relation) {
+                caseRelationTagStore[caseName].push(`${context.caseName}${context.relation}`);
+            }
+        }
+
+        function renderCaseTagSummary(caseName) {
+            const container = document.getElementById('caseRelationTags');
+            if (!container) {
+                return;
+            }
+
+            const tags = caseRelationTagStore[caseName] || [];
+            if (tags.length === 0) {
+                container.innerHTML = '<span class="relation-tag-empty">尚未設定關係標籤</span>';
+                return;
+            }
+
+            container.innerHTML = tags.map(tag => `<span class="relation-tag-chip">${tag}</span>`).join('');
+        }
+
+        function renderRelationTagEditList() {
+            const listEl = document.getElementById('relationTagEditList');
+            if (!listEl) {
+                return;
+            }
+
+            const tags = caseRelationTagStore[currentRelationTagCase] || [];
+            if (tags.length === 0) {
+                listEl.innerHTML = '<span class="relation-tag-empty">尚未設定標籤</span>';
+                return;
+            }
+
+            listEl.innerHTML = tags.map((tag, index) => `
+                <span class="relation-tag-chip editable">
+                    <span>${tag}</span>
+                    <button type="button" class="relation-tag-remove" onclick="removeRelationTag(${index})" aria-label="移除標籤">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </span>
+            `).join('');
+        }
+
+        function openRelationTagModal() {
+            const context = getCurrentChatContext();
+            currentRelationTagCase = context.caseName;
+            seedTagFromCurrentContext(currentRelationTagCase);
+            document.getElementById('relationTagCaseName').value = currentRelationTagCase;
+            renderRelationTagEditList();
+            renderCaseTagSummary(currentRelationTagCase);
+            document.getElementById('relationTagModal').style.display = 'flex';
+
+            const input = document.getElementById('relationTagInput');
+            if (input) {
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        function closeRelationTagModal() {
+            document.getElementById('relationTagModal').style.display = 'none';
+        }
+
+        function addRelationTag() {
+            const input = document.getElementById('relationTagInput');
+            const value = input.value.trim();
+
+            if (!value) {
+                notify('請輸入標籤內容', 'warning');
+                return;
+            }
+
+            ensureCaseTags(currentRelationTagCase);
+            const tags = caseRelationTagStore[currentRelationTagCase];
+
+            if (tags.includes(value)) {
+                notify('此標籤已存在', 'warning');
+                return;
+            }
+
+            tags.push(value);
+            input.value = '';
+            renderRelationTagEditList();
+            renderCaseTagSummary(currentRelationTagCase);
+        }
+
+        function removeRelationTag(index) {
+            const tags = caseRelationTagStore[currentRelationTagCase] || [];
+            if (index < 0 || index >= tags.length) {
+                return;
+            }
+
+            tags.splice(index, 1);
+            renderRelationTagEditList();
+            renderCaseTagSummary(currentRelationTagCase);
+        }
+
+        function saveRelationTags() {
+            closeRelationTagModal();
+            notify('關係標籤已儲存', 'success');
+        }
+
         // 聊天項目切換
         document.querySelectorAll('.chat-item').forEach(item => {
             item.addEventListener('click', function() {
@@ -305,6 +570,23 @@
                 this.classList.add('active');
             });
         });
+
+        document.getElementById('relationTagInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addRelationTag();
+            }
+        });
+
+        document.getElementById('relationTagModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRelationTagModal();
+            }
+        });
+
+        const initContext = getCurrentChatContext();
+        seedTagFromCurrentContext(initContext.caseName);
+        renderCaseTagSummary(initContext.caseName);
     </script>
 </body>
 </html>

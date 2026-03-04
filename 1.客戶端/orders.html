@@ -48,6 +48,7 @@
             <div class="tab-item" data-tab="paid">已付款</div>
             <div class="tab-item" data-tab="processing">處理中</div>
             <div class="tab-item" data-tab="completed">已完成</div>
+            <div class="tab-item" data-tab="cancelled">已取消</div>
         </div>
 
         <!-- 主要內容區 -->
@@ -135,6 +136,32 @@
                     </div>
                     <div class="order-actions">
                         <button class="btn btn-primary" onclick="navigateTo('order-detail.html?id=ORD202601200012')">查看詳情</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 訂單卡片 4 - 已取消 -->
+            <div class="order-card" data-status="cancelled">
+                <div class="order-header">
+                    <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202601190021</span>
+                    <span class="order-status cancelled">已取消</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-image order-item-image-2"></div>
+                        <div class="order-item-info">
+                            <div class="order-item-name">臨時居家照護</div>
+                            <div class="order-item-spec">2小時/次 × 1</div>
+                        </div>
+                        <div class="order-item-price">NT$ 1,600</div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共 1 項，合計：<span>NT$ 1,600</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn btn-primary" onclick="navigateTo('order-detail.html?id=ORD202601190021')">查看詳情</button>
                     </div>
                 </div>
             </div>

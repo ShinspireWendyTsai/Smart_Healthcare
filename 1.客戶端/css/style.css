@@ -1013,6 +1013,11 @@ a, button, [onclick], .clickable {
     color: var(--accent-dark);
 }
 
+.order-status.cancelled {
+    background: rgba(120, 120, 120, 0.16);
+    color: #6b7280;
+}
+
 .order-body {
     padding:20px 20px 4px 20px;
 }

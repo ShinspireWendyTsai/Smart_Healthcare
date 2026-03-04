@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-    <title>下訂單</title>
+    <title>付款資訊填寫</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
@@ -12,8 +12,8 @@
 <body>
     <div class="mobile-container">
         <header class="header">
-            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
-            <div class="header-title">下訂單</div>
+            <i class="fas fa-arrow-left" onclick="goToPreviousStep()" style="cursor: pointer;"></i>
+            <div class="header-title">付款資訊填寫</div>
             <div style="width: 20px;"></div>
         </header>
 
@@ -48,15 +48,15 @@
                 </div>
                 <div class="form-group">
                     <label>服務地址</label>
-                    <input class="form-control" type="text" placeholder="輸入完整地址">
+                    <input class="form-control" id="addressInput" type="text" placeholder="輸入完整地址">
                 </div>
                 <div class="form-group">
                     <label>聯絡人姓名</label>
-                    <input class="form-control" type="text" placeholder="輸入聯絡人姓名">
+                    <input class="form-control" id="contactNameInput" type="text" placeholder="輸入聯絡人姓名">
                 </div>
                 <div class="form-group">
                     <label>聯絡人電話</label>
-                    <input class="form-control" type="text" placeholder="輸入手機或市話">
+                    <input class="form-control" id="contactPhoneInput" type="text" placeholder="輸入手機或市話">
                 </div>
 
                 <div class="promo-section">
@@ -68,7 +68,7 @@
 
                 <div class="form-group">
                     <label>備註</label>
-                    <textarea class="form-control" rows="3" placeholder="輸入備註" style="resize: none;"></textarea>
+                    <textarea class="form-control" id="noteInput" rows="3" placeholder="輸入備註" style="resize: none;"></textarea>
                 </div>
 
                 <div class="checkout-summary">
@@ -82,13 +82,58 @@
                     </div>
                 </div>
 
-                <button class="btn btn-accent btn-block" type="button">
-                    確認送出
+                <button class="btn btn-accent btn-block" id="submitOrderBtn" type="button">
+                    付款資訊確認
                 </button>
             </section>
         </main>
+
     </div>
 
     <script src="js/main.js"></script>
+    <script>
+        function goToPreviousStep() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceId = urlParams.get('id');
+
+            if (serviceId) {
+                navigateTo(`service-detail.html?id=${encodeURIComponent(serviceId)}`);
+                return;
+            }
+
+            if (window.history.length > 1) {
+                window.history.back();
+                return;
+            }
+
+            navigateTo('index.html');
+        }
+
+        function collectCheckoutData() {
+            return {
+                serviceName: '專業居家照護服務',
+                serviceTime: '2026/02/15 10:00',
+                address: document.getElementById('addressInput')?.value.trim() || '未填寫',
+                contactName: document.getElementById('contactNameInput')?.value.trim() || '未填寫',
+                contactPhone: document.getElementById('contactPhoneInput')?.value.trim() || '未填寫',
+                promoCode: document.getElementById('promoCodeInput')?.value.trim() || '未使用',
+                note: document.getElementById('noteInput')?.value.trim() || '無',
+                subtotal: document.getElementById('checkoutSubtotal')?.textContent.trim() || 'NT$ 2,400',
+                total: document.getElementById('checkoutTotal')?.textContent.trim() || 'NT$ 2,400'
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitBtn = document.getElementById('submitOrderBtn');
+
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function() {
+                    const checkoutData = collectCheckoutData();
+                    sessionStorage.setItem('checkoutConfirmData', JSON.stringify(checkoutData));
+                    navigateTo('payment-confirm.html');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -203,11 +203,14 @@
                                                     data-emergency-name="王小美"
                                                     data-emergency-relation="女兒"
                                                     data-emergency-phone="0912-***-678"
+                                                    data-allergy="青黴素過敏"
+                                                    data-chronic-history="高血壓、糖尿病"
+                                                    data-other-notes="需協助上下樓梯"
                                                     data-notes="需協助上下樓梯"
                                                     data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline" data-tooltip="通訊">
+                                                <button class="btn btn-sm btn-outline" data-tooltip="通訊" onclick="navigateTo('chat.html')">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning" data-tooltip="解除綁定">
@@ -252,11 +255,14 @@
                                                     data-emergency-name="李大明"
                                                     data-emergency-relation="兒子"
                                                     data-emergency-phone="0923-***-456"
+                                                    data-allergy="海鮮過敏"
+                                                    data-chronic-history="退化性關節炎"
+                                                    data-other-notes="需定期回診"
                                                     data-notes="需定期回診"
                                                     data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" onclick="navigateTo('chat.html')">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning">
@@ -301,11 +307,14 @@
                                                     data-emergency-name="張小玲"
                                                     data-emergency-relation="配偶"
                                                     data-emergency-phone="0934-***-890"
+                                                    data-allergy="無"
+                                                    data-chronic-history="高血脂"
+                                                    data-other-notes="需協助用藥提醒"
                                                     data-notes="需協助用藥提醒"
                                                     data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" onclick="navigateTo('chat.html')">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning">
@@ -350,11 +359,14 @@
                                                     data-emergency-name="陳大明"
                                                     data-emergency-relation="兒子"
                                                     data-emergency-phone="0945-***-901"
+                                                    data-allergy="磺胺類藥物過敏"
+                                                    data-chronic-history="糖尿病"
+                                                    data-other-notes="需留意血糖變化"
                                                     data-notes="需留意血糖變化"
                                                     data-status="inactive">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" onclick="navigateTo('chat.html')">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning">
@@ -399,11 +411,14 @@
                                                     data-emergency-name="林小美"
                                                     data-emergency-relation="女兒"
                                                     data-emergency-phone="0956-***-012"
+                                                    data-allergy="花粉過敏"
+                                                    data-chronic-history="高血壓"
+                                                    data-other-notes="行動需輔助"
                                                     data-notes="行動需輔助"
                                                     data-status="active">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline">
+                                                <button class="btn btn-sm btn-outline" onclick="navigateTo('chat.html')">
                                                     <i class="fas fa-comment"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-warning">
@@ -479,29 +494,6 @@
                         </div>
                         <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0; font-size: 13px; color: #666;">
                             待審核申請：幸福居家照護（ORG2024025）｜申請時間：2024/01/25
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 16px;">
-                    <div style="background: #fff; border: 1px solid #e9ecef; border-radius: 10px; padding: 16px;">
-                        <div style="font-weight: bold; margin-bottom: 10px;">家人綁定</div>
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 14px;">
-                            <div style="display: flex; justify-content: space-between; gap: 8px;">
-                                <div>
-                                    <div style="font-weight: 600;">王小美（女兒）</div>
-                                    <div style="color:#666; font-size: 12px;">0912-***-678</div>
-                                </div>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; gap: 8px;">
-                                <div>
-                                    <div style="font-weight: 600;">王大明（兒子）</div>
-                                    <div style="color:#666; font-size: 12px;">0923-***-456</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0; font-size: 13px; color: #666;">
-                            已發送邀請：0934-567-890（配偶）｜邀請時間：2024/01/26
                         </div>
                     </div>
                 </div>
@@ -587,10 +579,19 @@
                             <label>緊急電話</label>
                             <input type="text" class="form-control" id="editMemberEmergencyPhone">
                         </div>
-                        <div class="form-group">
-                            <label>健康狀況備註</label>
-                            <input type="text" class="form-control" id="editMemberNotes">
-                        </div>
+                    </div>
+                    <div style="margin: 10px 0 8px; font-weight: 600; color: #374151;">健康提醒</div>
+                    <div class="form-group">
+                        <label>過敏資訊</label>
+                        <textarea class="form-control" id="editMemberAllergy" rows="2" style="resize: vertical;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>慢性病史</label>
+                        <textarea class="form-control" id="editMemberChronicHistory" rows="2" style="resize: vertical;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>其他備註</label>
+                        <textarea class="form-control" id="editMemberOtherNotes" rows="2" style="resize: vertical;"></textarea>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
                         <button type="button" class="btn btn-outline" onclick="closeModal('editMemberModal')">取消</button>
@@ -697,7 +698,9 @@
             setValue('editMemberEmergencyName', data.emergencyName);
             setValue('editMemberEmergencyRelation', data.emergencyRelation);
             setValue('editMemberEmergencyPhone', data.emergencyPhone);
-            setValue('editMemberNotes', data.notes);
+            setValue('editMemberAllergy', data.allergy);
+            setValue('editMemberChronicHistory', data.chronicHistory);
+            setValue('editMemberOtherNotes', data.otherNotes || data.notes);
             setValue('editMemberStatus', data.status || 'active');
 
             openModal('editMemberModal');
@@ -719,7 +722,9 @@
             const emergencyName = document.getElementById('editMemberEmergencyName').value.trim();
             const emergencyRelation = document.getElementById('editMemberEmergencyRelation').value.trim();
             const emergencyPhone = document.getElementById('editMemberEmergencyPhone').value.trim();
-            const notes = document.getElementById('editMemberNotes').value.trim();
+            const allergy = document.getElementById('editMemberAllergy').value.trim();
+            const chronicHistory = document.getElementById('editMemberChronicHistory').value.trim();
+            const otherNotes = document.getElementById('editMemberOtherNotes').value.trim();
             const status = document.getElementById('editMemberStatus').value;
 
             const nameEl = editingRow.querySelector('.member-name');
@@ -757,7 +762,10 @@
             editingTrigger.dataset.emergencyName = emergencyName;
             editingTrigger.dataset.emergencyRelation = emergencyRelation;
             editingTrigger.dataset.emergencyPhone = emergencyPhone;
-            editingTrigger.dataset.notes = notes;
+            editingTrigger.dataset.allergy = allergy;
+            editingTrigger.dataset.chronicHistory = chronicHistory;
+            editingTrigger.dataset.otherNotes = otherNotes;
+            editingTrigger.dataset.notes = otherNotes;
             editingTrigger.dataset.status = status;
 
             if (typeof showToast === 'function') {
