@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理者權限管理 - 機構端管理系統</title>
+    <title>使用者管理 - 機構端管理系統</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
@@ -170,11 +170,6 @@
                         <span>機構資訊管理</span>
                     </a>
                     
-                    <a href="admins.html" class="menu-item active">
-                        <i class="fas fa-user-shield"></i>
-                        <span>管理者權限管理</span>
-                    </a>
-                    
                     <a href="announcements.html" class="menu-item">
                         <i class="fas fa-bullhorn"></i>
                         <span>機構公告管理</span>
@@ -184,6 +179,26 @@
                         <i class="fas fa-comments"></i>
                         <span>個案關懷通訊</span>
                     </a>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item expanded" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu show" id="system-submenu">
+                        <a href="admins.html" class="menu-item active">
+                            <span>使用者管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item">
+                            <span>操作紀錄查詢</span>
+                        </a>
+                    </div>
                 </div>
             </nav>
         </aside>
@@ -197,7 +212,7 @@
                     <div class="breadcrumb">
                         <a href="index.html">首頁</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>管理者權限管理</span>
+                        <span>使用者管理</span>
                     </div>
                 </div>
                 
@@ -216,8 +231,8 @@
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">管理者權限管理</h1>
-                        <p class="page-subtitle">管理管理者帳號、角色權限與操作範圍。</p>
+                        <h1 class="page-title">使用者管理</h1>
+                        <p class="page-subtitle">管理機構管理者帳號、角色與權限。</p>
                     </div>
                 </div>
 
@@ -302,123 +317,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-layer-group"></i> 角色權限設定</h3>
-                        <button class="btn btn-sm btn-outline"><i class="fas fa-plus"></i> 新增角色</button>
-                    </div>
-                    <div class="card-body">
-                        <div class="role-grid" style="grid-template-columns: 1fr;">
-                            <div class="role-card">
-                                <div class="role-header">
-                                    <div class="role-name">全域管理員</div>
-                                    <span class="status-badge active">全權限</span>
-                                </div>
-                                <div class="role-desc">可管理所有功能與帳號，包含權限設定與機構資訊。</div>
-                                <div class="role-actions" style="margin-top: 14px;">
-                                    <button class="btn btn-sm btn-outline" onclick="openRoleEdit('全域管理員')"><i class="fas fa-pen"></i> 編輯</button>
-                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> 停用</button>
-                                </div>
-                            </div>
-                            <div class="role-card">
-                                <div class="role-header">
-                                    <div class="role-name">營運主管</div>
-                                    <span class="status-badge processing">營運權限</span>
-                                </div>
-                                <div class="role-desc">可管理訂單、報表與公告，無法修改系統權限。</div>
-                                <div class="role-actions" style="margin-top: 14px;">
-                                    <button class="btn btn-sm btn-outline" onclick="openRoleEdit('營運主管')"><i class="fas fa-pen"></i> 編輯</button>
-                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> 停用</button>
-                                </div>
-                            </div>
-                            <div class="role-card">
-                                <div class="role-header">
-                                    <div class="role-name">個案管理</div>
-                                    <span class="status-badge active">服務中</span>
-                                </div>
-                                <div class="role-desc">負責個案資料管理與綁定設定。</div>
-                                <div class="role-actions" style="margin-top: 14px;">
-                                    <button class="btn btn-sm btn-outline" onclick="openRoleEdit('個案管理')"><i class="fas fa-pen"></i> 編輯</button>
-                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> 停用</button>
-                                </div>
-                            </div>
-                            <div class="role-card">
-                                <div class="role-header">
-                                    <div class="role-name">客服人員</div>
-                                    <span class="status-badge pending">只讀</span>
-                                </div>
-                                <div class="role-desc">可檢視訂單與通訊內容，無法修改資料。</div>
-                                <div class="role-actions" style="margin-top: 14px;">
-                                    <button class="btn btn-sm btn-outline" onclick="openRoleEdit('客服人員')"><i class="fas fa-pen"></i> 編輯</button>
-                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> 停用</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-shield-check"></i> 權限模組</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="permission-grid">
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">個案會員管理</div>
-                                    <div class="permission-desc">個案列表與綁定設定權限</div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">訂購清單管理</div>
-                                    <div class="permission-desc">訂單查詢、狀態追蹤</div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">機構資訊管理</div>
-                                    <div class="permission-desc">修改機構資訊與營業設定</div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">公告與訊息</div>
-                                    <div class="permission-desc">公告管理、關懷訊息</div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">權限設定</div>
-                                    <div class="permission-desc">新增與調整角色權限</div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div style="margin-top: 18px; text-align: right;">
-                            <button class="btn btn-primary"><i class="fas fa-save"></i> 儲存權限</button>
                         </div>
                     </div>
                 </div>
@@ -523,80 +421,6 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="roleEditModal" style="display: none;">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3>角色權限設定</h3>
-                <i class="fas fa-times" onclick="closeRoleEdit()"></i>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>角色名稱</label>
-                    <input id="roleNameInput" class="form-control" type="text" value="">
-                </div>
-                <div class="form-group">
-                    <label>權限設定</label>
-                    <div class="settings-grid" style="grid-template-columns: 1fr;">
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-title">個案會員管理</div>
-                                <div class="setting-desc">個案列表、綁定、審核權限</div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-title">訂購清單管理</div>
-                                <div class="setting-desc">訂單查詢、狀態追蹤</div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-title">機構資訊管理</div>
-                                <div class="setting-desc">修改機構資訊與營業設定</div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-title">公告與訊息</div>
-                                <div class="setting-desc">公告管理、關懷訊息</div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <div class="setting-title">權限設定</div>
-                                <div class="setting-desc">新增與調整角色權限</div>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn btn-outline" onclick="closeRoleEdit()">取消</button>
-                    <button class="btn btn-primary" onclick="saveRoleEdit()">儲存</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="js/admin.js"></script>
     <script>
         function openAdminEdit(name, email, role, status) {
@@ -614,19 +438,6 @@
 
         function saveAdminEdit() {
             closeAdminEdit();
-        }
-
-        function openRoleEdit(roleName) {
-            document.getElementById('roleNameInput').value = roleName || '';
-            document.getElementById('roleEditModal').style.display = 'flex';
-        }
-
-        function closeRoleEdit() {
-            document.getElementById('roleEditModal').style.display = 'none';
-        }
-
-        function saveRoleEdit() {
-            closeRoleEdit();
         }
     </script>
 </body>

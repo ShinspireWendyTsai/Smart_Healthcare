@@ -9,28 +9,6 @@
     <!-- 自訂樣式 -->
     <link rel="stylesheet" href="css/platform.css">
     <style>
-        .member-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 600;
-            background: rgba(59, 130, 246, 0.12);
-            color: var(--info-color);
-        }
-
-        .member-badge.family {
-            background: rgba(16, 185, 129, 0.12);
-            color: var(--success-color);
-        }
-
-        .member-badge.caregiver {
-            background: rgba(245, 158, 11, 0.12);
-            color: var(--warning-color);
-        }
-
         .member-actions {
             display: flex;
             gap: 8px;
@@ -239,15 +217,6 @@
                                         <option>停用</option>
                                     </select>
                                 </div>
-                                <div class="filter-group">
-                                    <label class="filter-label">角色篩選</label>
-                                    <select class="form-select">
-                                        <option>全部角色</option>
-                                        <option>個案</option>
-                                        <option>家屬</option>
-                                        <option>關懷者</option>
-                                    </select>
-                                </div>
                                 <div class="filter-actions">
                                     <button class="btn btn-outline">
                                         <i class="fas fa-redo"></i> 重置
@@ -264,7 +233,6 @@
                                     <tr>
                                         <th>會員資訊</th>
                                         <th>個案編號</th>
-                                        <th>角色</th>
                                         <th>綁定機構</th>
                                         <th>狀態</th>
                                         <th>最後登入</th>
@@ -285,14 +253,12 @@
                                             </div>
                                         </td>
                                         <td>PT2024001234</td>
-                                        <td><span class="member-badge"><i class="fas fa-user"></i> 個案</span></td>
                                         <td>陽光照護中心</td>
                                         <td><span class="status-badge status-active">已綁定</span></td>
                                         <td>2026/02/03 09:10</td>
                                         <td>
                                             <div class="member-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberModal()"><i class="fas fa-eye"></i></button>
-                                                <button class="btn btn-sm btn-outline"><i class="fas fa-pen"></i></button>
                                                 <button class="btn btn-sm btn-danger"><i class="fas fa-ban"></i></button>
                                             </div>
                                         </td>
@@ -310,14 +276,12 @@
                                             </div>
                                         </td>
                                         <td>FAM2024012201</td>
-                                        <td><span class="member-badge family"><i class="fas fa-heart"></i> 家屬</span></td>
                                         <td>陽光照護中心</td>
                                         <td><span class="status-badge status-active">已綁定</span></td>
                                         <td>2026/02/02 20:18</td>
                                         <td>
                                             <div class="member-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberModal()"><i class="fas fa-eye"></i></button>
-                                                <button class="btn btn-sm btn-outline"><i class="fas fa-pen"></i></button>
                                                 <button class="btn btn-sm btn-danger"><i class="fas fa-ban"></i></button>
                                             </div>
                                         </td>
@@ -335,14 +299,12 @@
                                             </div>
                                         </td>
                                         <td>CARE2023120903</td>
-                                        <td><span class="member-badge caregiver"><i class="fas fa-stethoscope"></i> 關懷者</span></td>
                                         <td>安心居服協會</td>
                                         <td><span class="status-badge status-pending">待綁定</span></td>
                                         <td>尚未登入</td>
                                         <td>
                                             <div class="member-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberModal()"><i class="fas fa-eye"></i></button>
-                                                <button class="btn btn-sm btn-outline"><i class="fas fa-pen"></i></button>
                                                 <button class="btn btn-sm btn-danger"><i class="fas fa-ban"></i></button>
                                             </div>
                                         </td>
@@ -394,29 +356,6 @@
                             </div>
                             <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0; font-size: 13px; color: #666;">
                                 待審核申請：幸福居家照護（ORG2024025）｜申請時間：2024/01/25
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 16px;">
-                        <div style="background: #fff; border: 1px solid #e9ecef; border-radius: 10px; padding: 16px;">
-                            <div style="font-weight: bold; margin-bottom: 10px;">家人綁定</div>
-                            <div style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 14px;">
-                                <div style="display: flex; justify-content: space-between; gap: 8px;">
-                                    <div>
-                                        <div style="font-weight: 600;">王小美（女兒）</div>
-                                        <div style="color:#666; font-size: 12px;">0912-***-678</div>
-                                    </div>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; gap: 8px;">
-                                    <div>
-                                        <div style="font-weight: 600;">王大明（兒子）</div>
-                                        <div style="color:#666; font-size: 12px;">0923-***-456</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0; font-size: 13px; color: #666;">
-                                已發送邀請：0934-567-890（配偶）｜邀請時間：2024/01/26
                             </div>
                         </div>
                     </div>

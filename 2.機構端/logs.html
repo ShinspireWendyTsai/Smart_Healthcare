@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>操作紀錄查詢 - 機構端管理系統</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <style>
+        .log-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(52, 152, 219, 0.12);
+            color: var(--info-color);
+        }
+
+        .log-tag.warning {
+            background: rgba(243, 156, 18, 0.12);
+            color: var(--warning-color);
+        }
+
+        .log-tag.danger {
+            background: rgba(231, 76, 60, 0.12);
+            color: var(--danger-color);
+        }
+
+        .log-note {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        .date-range-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .date-range-wrap .form-control {
+            width: 160px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>個案列表</span>
+                        </a>
+                        <a href="member-binding.html" class="menu-item">
+                            <span>綁定設定</span>
+                        </a>
+                    </div>
+
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單查詢</span>
+                    </a>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-section-title">機構功能</div>
+
+                    <a href="organization.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>機構資訊管理</span>
+                    </a>
+
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>機構公告管理</span>
+                    </a>
+
+                    <a href="chat.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>個案關懷通訊</span>
+                    </a>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item expanded" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu show" id="system-submenu">
+                        <a href="admins.html" class="menu-item">
+                            <span>使用者管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item active">
+                            <span>操作紀錄查詢</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>操作紀錄查詢</span>
+                    </div>
+                </div>
+
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">操作紀錄查詢</h1>
+                        <p class="page-subtitle">追蹤機構端管理者的操作歷程與異動事件。</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-history"></i> 操作紀錄</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="filter-toolbar" style="margin-bottom: 16px;">
+                            <div class="filter-left">
+                                <div class="date-range-wrap">
+                                    <input type="date" class="form-control" value="2026-03-05">
+                                    <span>至</span>
+                                    <input type="date" class="form-control" value="2026-03-05">
+                                </div>
+                                <select class="form-control" style="width: 180px;">
+                                    <option>全部事件</option>
+                                    <option>登入</option>
+                                    <option>使用者管理</option>
+                                    <option>角色權限</option>
+                                    <option>資料更新</option>
+                                </select>
+                            </div>
+                            <div class="filter-right">
+                                <button class="btn btn-outline">
+                                    <i class="fas fa-redo"></i> 重置
+                                </button>
+                                <button class="btn btn-outline">
+                                    <i class="fas fa-search"></i> 查詢
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>時間</th>
+                                        <th>管理者</th>
+                                        <th>事件</th>
+                                        <th>內容</th>
+                                        <th>IP</th>
+                                        <th>風險</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2026/03/05 09:10</td>
+                                        <td>陳小華</td>
+                                        <td><span class="log-tag"><i class="fas fa-sign-in-alt"></i> 登入</span></td>
+                                        <td>機構端管理者登入系統</td>
+                                        <td>203.64.88.21</td>
+                                        <td><span class="status-badge active">一般</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2026/03/05 08:45</td>
+                                        <td>林小美</td>
+                                        <td><span class="log-tag warning"><i class="fas fa-user-shield"></i> 角色權限</span></td>
+                                        <td>調整「營運主管」可見模組</td>
+                                        <td>203.64.88.22</td>
+                                        <td><span class="status-badge pending">警示</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2026/03/04 17:35</td>
+                                        <td>王大明</td>
+                                        <td><span class="log-tag"><i class="fas fa-user-edit"></i> 使用者管理</span></td>
+                                        <td>更新管理者帳號狀態為「停用」</td>
+                                        <td>203.64.88.29</td>
+                                        <td><span class="status-badge active">一般</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2026/03/04 15:12</td>
+                                        <td>陳小華</td>
+                                        <td><span class="log-tag danger"><i class="fas fa-exclamation-triangle"></i> 高風險操作</span></td>
+                                        <td>刪除角色「試用帳號」</td>
+                                        <td>203.64.88.21</td>
+                                        <td><span class="status-badge inactive">高風險</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="log-note">* 高風險事件建議設定即時通知給全域管理員。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
