@@ -108,6 +108,22 @@ function initBottomNav() {
  */
 function initTabs() {
     const tabs = document.querySelectorAll('.tab-item');
+    const orderStatusSelect = document.getElementById('orderStatusSelect');
+
+    if (orderStatusSelect) {
+        const initialStatus = orderStatusSelect.value || 'pending';
+        switchTabContent(initialStatus);
+
+        orderStatusSelect.addEventListener('change', function() {
+            switchTabContent(this.value);
+        });
+
+        return;
+    }
+
+    if (tabs.length === 0) {
+        return;
+    }
     
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
@@ -121,6 +137,11 @@ function initTabs() {
             switchTabContent(tabId);
         });
     });
+
+    const activeTab = document.querySelector('.tab-item.active');
+    if (activeTab && activeTab.dataset.tab) {
+        switchTabContent(activeTab.dataset.tab);
+    }
 }
 
 /**

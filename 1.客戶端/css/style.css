@@ -1416,6 +1416,58 @@ a, button, [onclick], .clickable {
     background: rgba(38, 166, 154, 0.04);
 }
 
+.order-status-filter {
+    position: sticky;
+    top: 68px;
+    z-index: 99;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(38, 166, 154, 0.1);
+    padding: 12px var(--spacing-lg);
+}
+
+.order-status-filter-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.order-status-select-wrap {
+    position: relative;
+}
+
+.order-status-select {
+    width: 100%;
+    min-height: 44px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(38, 166, 154, 0.25);
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-primary);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    padding: 10px 40px 10px 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.order-status-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.12);
+}
+
+.order-status-select-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
 /* --- 空狀態 --- */
 .empty-state {
     text-align: center;

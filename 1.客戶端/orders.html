@@ -42,17 +42,78 @@
             <div style="width: 20px;"></div>
         </header>
 
-        <!-- 分頁標籤 -->
-        <div class="tabs">
-            <div class="tab-item active" data-tab="all">全部</div>
-            <div class="tab-item" data-tab="paid">已付款</div>
-            <div class="tab-item" data-tab="processing">處理中</div>
-            <div class="tab-item" data-tab="completed">已完成</div>
-            <div class="tab-item" data-tab="cancelled">已取消</div>
+        <!-- 訂單狀態篩選 -->
+        <div class="order-status-filter">
+            <label for="orderStatusSelect" class="order-status-filter-label">訂單狀態</label>
+            <div class="order-status-select-wrap">
+                <select id="orderStatusSelect" class="order-status-select" aria-label="訂單狀態篩選">
+                    <option value="all">全部</option>
+                    <option value="pending" selected>待付款</option>
+                    <option value="paid">已付款</option>
+                    <option value="processing">處理中</option>
+                    <option value="completed">已完成</option>
+                    <option value="cancelled">已取消</option>
+                </select>
+                <i class="fas fa-chevron-down order-status-select-icon" aria-hidden="true"></i>
+            </div>
         </div>
 
         <!-- 主要內容區 -->
         <main class="main-content">
+            <!-- 訂單卡片 0 - 待付款 -->
+            <div class="order-card" data-status="pending">
+                <div class="order-header">
+                    <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202603050001</span>
+                    <span class="order-status pending">待付款</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-image order-item-image-3"></div>
+                        <div class="order-item-info">
+                            <div class="order-item-name">營養餐食配送</div>
+                            <div class="order-item-spec">每日配送 × 5</div>
+                        </div>
+                        <div class="order-item-price">NT$ 2,400</div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共 1 項，合計：<span>NT$ 2,400</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn btn-secondary" style="background: #FFB74D; color: white;" onclick="navigateTo('payment-confirm.html')">前往付款</button>
+                        <button class="btn btn-primary" onclick="navigateTo('order-detail.html?id=ORD202603050001')">查看詳情</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 訂單卡片 0-2 - 待付款 -->
+            <div class="order-card" data-status="pending">
+                <div class="order-header">
+                    <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202603050002</span>
+                    <span class="order-status pending">待付款</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-image order-item-image-1"></div>
+                        <div class="order-item-info">
+                            <div class="order-item-name">專業居家照護服務</div>
+                            <div class="order-item-spec">2小時/次 × 1</div>
+                        </div>
+                        <div class="order-item-price">NT$ 1,800</div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共 1 項，合計：<span>NT$ 1,800</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn btn-secondary" style="background: #FFB74D; color: white;" onclick="navigateTo('payment-confirm.html')">前往付款</button>
+                        <button class="btn btn-primary" onclick="navigateTo('order-detail.html?id=ORD202603050002')">查看詳情</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- 訂單卡片 1 - 已付款 -->
             <div class="order-card" data-status="paid">
                 <div class="order-header">

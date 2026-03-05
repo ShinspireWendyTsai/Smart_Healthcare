@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-    <title>付款資訊確認</title>
+    <title>前往付款</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -11,49 +11,11 @@
     <div class="mobile-container">
         <header class="header">
             <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
-            <div class="header-title">付款資訊確認</div>
+            <div class="header-title">前往付款</div>
             <div style="width: 20px;"></div>
         </header>
 
         <main class="main-content">
-            <section class="card">
-                <div class="card-header">
-                    <div>確認頁面資訊</div>
-                    <span class="badge badge-accent">請確認</span>
-                </div>
-
-                <div class="detail-list">
-                    <div class="detail-row">
-                        <span class="detail-label">服務項目</span>
-                        <span class="detail-value detail-value-left" id="confirmServiceName">專業居家照護服務</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">服務時間</span>
-                        <span class="detail-value detail-value-left" id="confirmServiceTime">2026/02/15 10:00</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">服務地址</span>
-                        <span class="detail-value detail-value-left" id="confirmAddress">未填寫</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">聯絡人姓名</span>
-                        <span class="detail-value detail-value-left" id="confirmContactName">未填寫</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">聯絡人電話</span>
-                        <span class="detail-value detail-value-left" id="confirmContactPhone">未填寫</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">折扣碼</span>
-                        <span class="detail-value detail-value-left" id="confirmPromoCode">未使用</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">備註</span>
-                        <span class="detail-value detail-value-left" id="confirmNote">無</span>
-                    </div>
-                </div>
-            </section>
-
             <section class="card">
                 <div class="card-header">
                     <div>匯款資訊</div>
@@ -87,10 +49,29 @@
                 </div>
 
                 <div style="font-size: 13px; color: #6B7280; line-height: 1.7; margin-bottom: 12px;">
-                    請於 24 小時內完成匯款，並保留轉帳明細以利後續核對。
+                    請於 3天內完成匯款，並保留轉帳明細以利後續核對。
                 </div>
 
-                <button class="btn btn-accent btn-block" id="finalSubmitBtn" type="button">確認送出</button>
+                <div style="padding: 14px; border: 1px solid rgba(38, 166, 154, 0.2); border-radius: 16px; background: rgba(38, 166, 154, 0.04);">
+                    <div style="font-size: 15px; font-weight: 700; color: #374151; margin-bottom: 8px;">匯款回報</div>
+                    <div style="font-size: 13px; color: #6B7280; line-height: 1.7; margin-bottom: 10px;">
+                        匯款完成後，請輸入您的轉出帳戶後 5 碼，協助我們加速核對款項。
+                    </div>
+                    <input
+                        id="accountLastFive"
+                        class="form-control"
+                        type="text"
+                        inputmode="numeric"
+                        maxlength="5"
+                        placeholder="請輸入帳戶後 5 碼"
+                        aria-label="轉出帳戶後五碼"
+                        style="margin-bottom: 10px;"
+                    >
+                    <button class="btn btn-accent btn-block" id="submitLastFiveBtn" type="button">送出匯款資訊</button>
+                    <div id="paymentVerifyMessage" style="display: none; margin-top: 10px; font-size: 13px; color: #2E7D6F; line-height: 1.6;">
+                        已收到您的匯款回報，款項核對完成後將以系統訊息通知您，屆時再請留意。
+                    </div>
+                </div>
             </section>
         </main>
     </div>
@@ -109,13 +90,6 @@
 
             try {
                 const data = JSON.parse(rawData);
-                setText('confirmServiceName', data.serviceName, '專業居家照護服務');
-                setText('confirmServiceTime', data.serviceTime, '2026/02/15 10:00');
-                setText('confirmAddress', data.address, '未填寫');
-                setText('confirmContactName', data.contactName, '未填寫');
-                setText('confirmContactPhone', data.contactPhone, '未填寫');
-                setText('confirmPromoCode', data.promoCode, '未使用');
-                setText('confirmNote', data.note, '無');
                 setText('confirmSubtotal', data.subtotal, 'NT$ 2,400');
                 setText('confirmTotal', data.total, 'NT$ 2,400');
             } catch (error) {
@@ -123,21 +97,43 @@
             }
         }
 
-        function submitOrderFinal() {
-            if (typeof showToast === 'function') {
-                showToast('成功', 'success');
+        function submitLastFiveDigits() {
+            const accountLastFiveInput = document.getElementById('accountLastFive');
+            const submitLastFiveBtn = document.getElementById('submitLastFiveBtn');
+            const paymentVerifyMessage = document.getElementById('paymentVerifyMessage');
+
+            if (!accountLastFiveInput || !submitLastFiveBtn || !paymentVerifyMessage) {
                 return;
             }
-            alert('成功');
+
+            const value = accountLastFiveInput.value.trim();
+            const isValid = /^\d{5}$/.test(value);
+
+            if (!isValid) {
+                if (typeof showToast === 'function') {
+                    showToast('請輸入正確的帳戶後 5 碼（數字）', 'warning');
+                }
+                accountLastFiveInput.focus();
+                return;
+            }
+
+            paymentVerifyMessage.style.display = 'block';
+            accountLastFiveInput.readOnly = true;
+            submitLastFiveBtn.disabled = true;
+            submitLastFiveBtn.textContent = '已送出';
+
+            if (typeof showToast === 'function') {
+                showToast('匯款資訊已送出', 'success');
+            }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             loadConfirmData();
 
-            const finalSubmitBtn = document.getElementById('finalSubmitBtn');
-            if (finalSubmitBtn) {
-                finalSubmitBtn.addEventListener('click', function() {
-                    submitOrderFinal();
+            const submitLastFiveBtn = document.getElementById('submitLastFiveBtn');
+            if (submitLastFiveBtn) {
+                submitLastFiveBtn.addEventListener('click', function() {
+                    submitLastFiveDigits();
                 });
             }
         });
