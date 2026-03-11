@@ -10,7 +10,7 @@
 <body>
     <div class="mobile-container">
         <header class="header">
-            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <i class="fas fa-arrow-left" onclick="goToPreviousStep()" style="cursor: pointer;"></i>
             <div class="header-title">訂單確認資訊</div>
             <div style="width: 20px;"></div>
         </header>
@@ -97,6 +97,39 @@
 
     <script src="js/main.js"></script>
     <script>
+        function getCheckoutServiceId() {
+            const rawData = sessionStorage.getItem('checkoutConfirmData');
+
+            if (rawData) {
+                try {
+                    const data = JSON.parse(rawData);
+                    if (data && data.serviceId) {
+                        return String(data.serviceId);
+                    }
+                } catch (error) {
+                    console.warn('checkoutConfirmData 解析失敗', error);
+                }
+            }
+
+            return sessionStorage.getItem('checkoutServiceId') || '';
+        }
+
+        function goToPreviousStep() {
+            const serviceId = getCheckoutServiceId();
+
+            if (serviceId) {
+                navigateTo(`checkout.html?id=${encodeURIComponent(serviceId)}`);
+                return;
+            }
+
+            if (window.history.length > 1) {
+                window.history.back();
+                return;
+            }
+
+            navigateTo('checkout.html');
+        }
+
         function setText(id, value, fallback = '-') {
             const element = document.getElementById(id);
             if (!element) return;

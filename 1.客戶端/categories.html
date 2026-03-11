@@ -113,6 +113,32 @@
             border-color: var(--primary-color);
             color: white;
         }
+
+        /* 保健食品專用圖片 */
+        .supplement-image-1 {
+            background-image: linear-gradient(rgba(63, 124, 106, 0.26), rgba(63, 124, 106, 0.26)), url('images/banner-img01.jpg');
+        }
+
+        .supplement-image-2 {
+            background-image: linear-gradient(rgba(63, 124, 106, 0.2), rgba(63, 124, 106, 0.2)), url('images/banner-img02.jpg');
+        }
+
+        .supplement-image-3 {
+            background-image: linear-gradient(rgba(63, 124, 106, 0.2), rgba(63, 124, 106, 0.2)), url('images/banner-img03.jpg');
+        }
+
+        /* 交通接送專用圖片 */
+        .transport-image-1 {
+            background-image: linear-gradient(rgba(76, 40, 137, 0.26), rgba(76, 40, 137, 0.26)), url('images/service-image04.png');
+        }
+
+        .transport-image-2 {
+            background-image: linear-gradient(rgba(76, 40, 137, 0.2), rgba(76, 40, 137, 0.2)), url('images/banner-img02.jpg');
+        }
+
+        .transport-image-3 {
+            background-image: linear-gradient(rgba(76, 40, 137, 0.2), rgba(76, 40, 137, 0.2)), url('images/banner-img03.jpg');
+        }
     </style>
 </head>
 <body>
@@ -268,10 +294,10 @@
             { id: 2, name: '夜間居家照護', desc: '夜間專人陪伴照護服務', price: 'NT$ 1,800/晚', originalPrice: '', category: '居家照護', icon: 'fa-moon', color: '#2D6A4F', colorDark: '#1B4332', needBinding: false },
             { id: 3, name: '臨時居家照護', desc: '短期臨時照護需求', price: 'NT$ 800/時', originalPrice: '', category: '居家照護', icon: 'fa-clock', color: '#2D6A4F', colorDark: '#1B4332', needBinding: false },
 
-            // 保健食品類別（訂閱制）
-            { id: 25, name: '日常保健補給訂閱', desc: '維持活力的每日營養補給，月訂閱配送', price: 'NT$ 980/月', originalPrice: '', category: '保健食品', icon: 'fa-capsules', color: '#3F7C6A', colorDark: '#2E5E50', needBinding: false },
-            { id: 26, name: '關節靈活訂閱組合', desc: '關節保養配方，訂閱制每月到府', price: 'NT$ 1,280/月', originalPrice: 'NT$ 1,480', category: '保健食品', icon: 'fa-leaf', color: '#3F7C6A', colorDark: '#2E5E50', needBinding: false },
-            { id: 27, name: '心血管守護訂閱', desc: '日常心血管保健營養配方，月訂閱制', price: 'NT$ 1,500/月', originalPrice: '', category: '保健食品', icon: 'fa-heart-pulse', color: '#3F7C6A', colorDark: '#2E5E50', needBinding: false },
+            // 保健食品類別
+            { id: 25, name: '日常保健補給', desc: '維持活力的每日營養補給，常溫配送', price: 'NT$ 980/盒', originalPrice: '', category: '保健食品', icon: 'fa-capsules', color: '#3F7C6A', colorDark: '#2E5E50', needBinding: false },
+            { id: 26, name: '關節靈活保養組合', desc: '關節保養配方，到府配送', price: 'NT$ 1,280/盒', originalPrice: 'NT$ 1,480', category: '保健食品', icon: 'fa-leaf', color: '#3F7C6A', colorDark: '#2E5E50', needBinding: false },
+            { id: 27, name: '心血管守護', desc: '日常心血管保健營養配方', price: 'NT$ 1,500/盒', originalPrice: '', category: '保健食品', icon: 'fa-heart-pulse', color: '#3F7C6A', colorDark: '#2E5E50', needBinding: false },
             
             // 健康檢測類別
             { id: 4, name: '健康檢測套餐', desc: '血壓、血糖、心電圖完整檢測', price: 'NT$ 2,500/次', originalPrice: '', category: '健康檢測', icon: 'fa-heartbeat', color: '#2B6CB0', colorDark: '#1A4A7C', needBinding: false },
@@ -309,11 +335,17 @@
             { id: 24, name: '氧氣機租借', desc: '居家氧氣設備租借', price: 'NT$ 3,000/月', originalPrice: '', category: '輔具租借', icon: 'fa-lungs', color: '#DD6B20', colorDark: '#C05621', needBinding: false },
         ];
 
+        // 目前僅開放的服務類別
+        const supportedServiceCategories = ['居家照護', '保健食品', '交通接送'];
+
+        // 依開放類別篩選可顯示的服務
+        const availableServices = allServices.filter(service => supportedServiceCategories.includes(service.category));
+
         // 分頁設定
         const itemsPerPage = 10;
         let currentPage = 1;
         let currentCategory = 'all';
-        let filteredServices = [...allServices];
+        let filteredServices = [...availableServices];
 
         // 頁面載入時初始化
         document.addEventListener('DOMContentLoaded', function() {
@@ -349,10 +381,13 @@
             currentPage = 1;
             
             if (category === 'all') {
-                filteredServices = [...allServices];
+                filteredServices = [...availableServices];
                 document.getElementById('serviceSectionTitle').textContent = '全部服務';
+            } else if (supportedServiceCategories.includes(category)) {
+                filteredServices = availableServices.filter(service => service.category === category);
+                document.getElementById('serviceSectionTitle').textContent = category + '服務';
             } else {
-                filteredServices = allServices.filter(service => service.category === category);
+                filteredServices = [];
                 document.getElementById('serviceSectionTitle').textContent = category + '服務';
             }
 
@@ -375,6 +410,17 @@
             // 更新服務數量顯示
             document.getElementById('serviceCount').textContent = `(共 ${totalItems} 項)`;
 
+            if (totalItems === 0) {
+                serviceList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-box-open"></i>
+                        <p>暫無服務</p>
+                    </div>
+                `;
+                renderPagination(0);
+                return;
+            }
+
             // 生成服務卡片 HTML
             let html = '';
             currentServices.forEach((service, index) => {
@@ -383,7 +429,17 @@
                     : `onclick="navigateTo('service-detail.html?id=${service.id}')"`;
 
                 const imageIndex = ((startIndex + index) % 4) + 1;
-                const thumbnail = `<div class="service-image service-image-${imageIndex}"></div>`;
+                let thumbnailClass = `service-image-${imageIndex}`;
+
+                if (service.category === '保健食品') {
+                    const supplementImageIndex = ((service.id - 25 + 3) % 3) + 1;
+                    thumbnailClass = `supplement-image-${supplementImageIndex}`;
+                } else if (service.category === '交通接送') {
+                    const transportImageIndex = ((service.id - 12 + 3) % 3) + 1;
+                    thumbnailClass = `transport-image-${transportImageIndex}`;
+                }
+
+                const thumbnail = `<div class="service-image ${thumbnailClass}"></div>`;
                 
                 html += `
                     <div class="service-card" data-service-id="${service.id}" data-category="${service.category}" ${onclickHandler}>

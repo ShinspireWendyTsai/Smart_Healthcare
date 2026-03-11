@@ -354,7 +354,7 @@
     <div class="mobile-container">
         <!-- 服務圖片區域 -->
         <div class="service-detail-header" id="serviceHeader">
-            <div class="back-btn" onclick="goBack()">
+            <div class="back-btn" onclick="goToServicesPage()">
                 <i class="fas fa-arrow-left"></i>
             </div>
             
@@ -447,25 +447,91 @@
     <script>
         // 服務資料
         let currentServiceId = '1';
-        const supplementContents = [
-            '每月固定到府配送一次',
-            '每期提供 30 天份營養補給',
-            '訂閱可隨時暫停或調整品項',
-            '到期前 7 日提醒下期配送'
-        ];
-        const supplementInfo = [
-            '配送範圍：全台本島宅配',
-            '付款方式：信用卡 / 行動支付',
-            '配送變更：配送前 3 日可調整',
-            '訂閱說明：每月自動續訂，可隨時取消'
-        ];
         const servicesData = {
             1: { name: '專業居家照護服務', desc: '由專業照服員提供貼心的居家照護，包含日常生活協助、身體清潔、餐食準備等服務。', price: 'NT$ 1,200/時', originalPrice: 'NT$ 1,500', category: '居家照護', icon: 'fa-user-nurse', color: '#2D6A4F', colorDark: '#1B4332' },
             2: { name: '夜間居家照護', desc: '夜間專人陪伴照護服務，確保長者夜間安全與照護需求。', price: 'NT$ 1,800/晚', originalPrice: '', category: '居家照護', icon: 'fa-moon', color: '#2D6A4F', colorDark: '#1B4332' },
             3: { name: '臨時居家照護', desc: '短期臨時照護需求，彈性預約時段。', price: 'NT$ 800/時', originalPrice: '', category: '居家照護', icon: 'fa-clock', color: '#2D6A4F', colorDark: '#1B4332' },
-            25: { name: '日常保健補給訂閱', desc: '維持活力的每日營養補給，月訂閱配送。', price: 'NT$ 980/月', originalPrice: '', category: '保健食品', icon: 'fa-capsules', color: '#3F7C6A', colorDark: '#2E5E50', contents: supplementContents, info: supplementInfo, contentsTitle: '訂閱內容', infoTitle: '訂閱說明', actionText: '立即訂閱', contentsIcon: 'fa-box-open', infoIcon: 'fa-clipboard-list' },
-            26: { name: '關節靈活訂閱組合', desc: '關節保養配方，訂閱制每月到府。', price: 'NT$ 1,280/月', originalPrice: 'NT$ 1,480', category: '保健食品', icon: 'fa-leaf', color: '#3F7C6A', colorDark: '#2E5E50', contents: supplementContents, info: supplementInfo, contentsTitle: '訂閱內容', infoTitle: '訂閱說明', actionText: '立即訂閱', contentsIcon: 'fa-box-open', infoIcon: 'fa-clipboard-list' },
-            27: { name: '心血管守護訂閱', desc: '日常心血管保健營養配方，月訂閱制。', price: 'NT$ 1,500/月', originalPrice: '', category: '保健食品', icon: 'fa-heart-pulse', color: '#3F7C6A', colorDark: '#2E5E50', contents: supplementContents, info: supplementInfo, contentsTitle: '訂閱內容', infoTitle: '訂閱說明', actionText: '立即訂閱', contentsIcon: 'fa-box-open', infoIcon: 'fa-clipboard-list' },
+            25: {
+                name: '日常保健補給',
+                desc: '主打日常活力與基礎營養補充，提供銀髮族每日所需的維生素與礦物質配方。',
+                price: 'NT$ 980/盒',
+                originalPrice: '',
+                category: '保健食品',
+                icon: 'fa-capsules',
+                color: '#3F7C6A',
+                colorDark: '#2E5E50',
+                contents: [
+                    '綜合維生素與礦物質 30 日份',
+                    '每日 1 包分裝，方便長者規律補充',
+                    '附贈食用提醒卡與補充建議',
+                    '下單後安排配送，免重複填寫資料'
+                ],
+                info: [
+                    '食用方式：每日飯後 1 包，搭配溫開水',
+                    '適用族群：需日常營養補充之成人與長者',
+                    '配送方式：常溫宅配，全台本島可送',
+                    '注意事項：慢性病或用藥中請先諮詢醫療人員'
+                ],
+                contentsTitle: '產品內容',
+                infoTitle: '食用與配送資訊',
+                actionText: '立即購買',
+                contentsIcon: 'fa-box-open',
+                infoIcon: 'fa-circle-info'
+            },
+            26: {
+                name: '關節靈活保養組合',
+                desc: '針對關節保養設計，包含葡萄糖胺與軟骨素等配方，協助維持行動靈活度。',
+                price: 'NT$ 1,280/盒',
+                originalPrice: 'NT$ 1,480',
+                category: '保健食品',
+                icon: 'fa-leaf',
+                color: '#3F7C6A',
+                colorDark: '#2E5E50',
+                contents: [
+                    '關節保養複方膠囊 30 日份',
+                    '含葡萄糖胺、軟骨素與二型膠原蛋白',
+                    '搭配日常活動建議與保養小卡',
+                    '下單後 2-3 個工作天出貨，省去補貨困擾'
+                ],
+                info: [
+                    '食用方式：每日 2 粒，建議餐後分次食用',
+                    '適用族群：關節保養需求、活動量較高族群',
+                    '配送方式：常溫宅配，全台本島可送',
+                    '注意事項：甲殼類過敏者請先確認成分來源'
+                ],
+                contentsTitle: '產品內容',
+                infoTitle: '食用與配送資訊',
+                actionText: '立即購買',
+                contentsIcon: 'fa-box-open',
+                infoIcon: 'fa-circle-info'
+            },
+            27: {
+                name: '心血管守護',
+                desc: '以心血管保健為核心，搭配魚油與輔酶 Q10 等營養成分，支援日常循環保養。',
+                price: 'NT$ 1,500/盒',
+                originalPrice: '',
+                category: '保健食品',
+                icon: 'fa-heart-pulse',
+                color: '#3F7C6A',
+                colorDark: '#2E5E50',
+                contents: [
+                    '心血管保健配方膠囊 30 日份',
+                    '含 Omega-3 與輔酶 Q10 複方',
+                    '附心血管飲食建議與生活指引',
+                    '下單後 2-3 個工作天安排出貨'
+                ],
+                info: [
+                    '食用方式：每日 1-2 粒，隨餐食用',
+                    '適用族群：重視循環保養與日常保健者',
+                    '配送方式：常溫宅配，全台本島可送',
+                    '注意事項：服用抗凝血藥物者請先諮詢醫師'
+                ],
+                contentsTitle: '產品內容',
+                infoTitle: '食用與配送資訊',
+                actionText: '立即購買',
+                contentsIcon: 'fa-box-open',
+                infoIcon: 'fa-circle-info'
+            },
             4: { name: '健康檢測套餐', desc: '血壓、血糖、心電圖完整檢測，專業護理師到府服務。', price: 'NT$ 2,500/次', originalPrice: '', category: '健康檢測', icon: 'fa-heartbeat', color: '#2B6CB0', colorDark: '#1A4A7C' },
             5: { name: '血壓監測服務', desc: '定期血壓追蹤與記錄，建立個人健康檔案。', price: 'NT$ 300/次', originalPrice: '', category: '健康檢測', icon: 'fa-stethoscope', color: '#2B6CB0', colorDark: '#1A4A7C' },
             6: { name: '血糖檢測服務', desc: '血糖數值監測與分析，提供飲食建議。', price: 'NT$ 350/次', originalPrice: '', category: '健康檢測', icon: 'fa-tint', color: '#2B6CB0', colorDark: '#1A4A7C' },
@@ -508,7 +574,10 @@
                 const contentsList = document.getElementById('serviceContents');
                 const infoList = document.getElementById('serviceInfoList');
                 const bookBtn = document.querySelector('.btn-book');
-                document.getElementById('serviceIcon').className = `fas ${service.icon}`;
+                const serviceIconEl = document.getElementById('serviceIcon');
+                if (serviceIconEl) {
+                    serviceIconEl.className = `fas ${service.icon}`;
+                }
                 document.getElementById('serviceName').textContent = service.name;
                 document.getElementById('serviceDesc').textContent = service.desc;
                 document.getElementById('serviceCategory').textContent = service.category;
@@ -565,6 +634,17 @@
                 
                 document.title = service.name;
             }
+        }
+
+        function goToServicesPage() {
+            const service = servicesData[currentServiceId];
+
+            if (service && service.category) {
+                navigateTo(`categories.html?category=${encodeURIComponent(service.category)}`);
+                return;
+            }
+
+            navigateTo('categories.html');
         }
 
         /**

@@ -24,19 +24,19 @@
                     <span class="order-status pending">待付款</span>
                 </div>
                 <div class="order-body">
-                    <div class="order-item" data-price="2400">
+                    <div class="order-item" id="checkoutOrderItem" data-price="2400">
                         <div class="order-item-info">
-                            <div class="order-item-name">專業居家照護服務</div>
-                            <div class="order-item-spec">2 小時 / 次 · 到府服務</div>
-                            <div class="order-item-spec">服務時間：2026/02/15 10:00</div>
+                            <div class="order-item-name" id="checkoutServiceName">專業居家照護服務</div>
+                            <div class="order-item-spec" id="checkoutServiceSpec">2 小時 / 次 · 到府服務</div>
+                            <div class="order-item-spec" id="checkoutServiceSchedule">服務時間：2026/02/15 10:00</div>
                         </div>
-                        <div class="order-item-price">NT$ 2,400</div>
+                        <div class="order-item-price" id="checkoutServicePrice">NT$ 2,400</div>
                     </div>
                 </div>
                 <div class="order-footer">
                     <div class="order-total">
                         合計：
-                        <span class="total-amount">NT$ 2,400</span>
+                        <span class="total-amount" id="checkoutCardTotal">NT$ 2,400</span>
                     </div>
                 </div>
             </section>
@@ -47,15 +47,15 @@
                     <span class="badge badge-accent">填寫資料</span>
                 </div>
                 <div class="form-group">
-                    <label>服務地址</label>
+                    <label id="addressLabel">服務地址</label>
                     <input class="form-control" id="addressInput" type="text" placeholder="輸入完整地址">
                 </div>
                 <div class="form-group">
-                    <label>聯絡人姓名</label>
+                    <label id="contactNameLabel">聯絡人姓名</label>
                     <input class="form-control" id="contactNameInput" type="text" placeholder="輸入聯絡人姓名">
                 </div>
                 <div class="form-group">
-                    <label>聯絡人電話</label>
+                    <label id="contactPhoneLabel">聯絡人電話</label>
                     <input class="form-control" id="contactPhoneInput" type="text" placeholder="輸入手機或市話">
                 </div>
 
@@ -92,9 +92,78 @@
 
     <script src="js/main.js"></script>
     <script>
+        const checkoutServiceMap = {
+            1: { name: '專業居家照護服務', spec: '2 小時 / 次 · 到府服務', serviceTime: '2026/02/15 10:00', scheduleText: '服務時間：2026/02/15 10:00', total: 2400, category: '居家照護' },
+            2: { name: '夜間居家照護', spec: '1 晚 / 次 · 到府服務', serviceTime: '2026/02/15 20:00', scheduleText: '服務時間：2026/02/15 20:00', total: 1800, category: '居家照護' },
+            3: { name: '臨時居家照護', spec: '1 小時 / 次 · 到府服務', serviceTime: '2026/02/15 14:00', scheduleText: '服務時間：2026/02/15 14:00', total: 800, category: '居家照護' },
+            12: { name: '就醫交通接送', spec: '1 趟 / 次 · 專車接送', serviceTime: '2026/02/15 09:30', scheduleText: '服務時間：2026/02/15 09:30', total: 500, category: '交通接送' },
+            13: { name: '復健接送服務', spec: '1 趟 / 次 · 專車接送', serviceTime: '2026/02/16 15:00', scheduleText: '服務時間：2026/02/16 15:00', total: 450, category: '交通接送' },
+            14: { name: '長照專車接送', spec: '1 趟 / 次 · 專車接送', serviceTime: '2026/02/17 08:30', scheduleText: '服務時間：2026/02/17 08:30', total: 400, category: '交通接送' },
+            25: { name: '日常保健補給', spec: '1 盒 / 次 · 常溫宅配', serviceTime: '下單後 2-3 個工作天配送', scheduleText: '配送時段：下單後 2-3 個工作天配送', total: 980, category: '保健食品' },
+            26: { name: '關節靈活保養組合', spec: '1 盒 / 次 · 常溫宅配', serviceTime: '下單後 2-3 個工作天配送', scheduleText: '配送時段：下單後 2-3 個工作天配送', total: 1280, category: '保健食品' },
+            27: { name: '心血管守護', spec: '1 盒 / 次 · 常溫宅配', serviceTime: '下單後 2-3 個工作天配送', scheduleText: '配送時段：下單後 2-3 個工作天配送', total: 1500, category: '保健食品' }
+        };
+
+        let checkoutContext = checkoutServiceMap[1];
+        let currentCheckoutServiceId = '1';
+
+        function formatCheckoutAmount(amount) {
+            return `NT$ ${Number(amount).toLocaleString()}`;
+        }
+
+        function setElementText(id, value) {
+            const element = document.getElementById(id);
+            if (!element) return;
+            element.textContent = value;
+        }
+
+        function initCheckoutByServiceId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceId = urlParams.get('id') || '1';
+            currentCheckoutServiceId = checkoutServiceMap[serviceId] ? serviceId : '1';
+            checkoutContext = checkoutServiceMap[currentCheckoutServiceId] || checkoutServiceMap[1];
+
+            sessionStorage.setItem('checkoutServiceId', currentCheckoutServiceId);
+
+            const totalText = formatCheckoutAmount(checkoutContext.total);
+
+            setElementText('checkoutServiceName', checkoutContext.name);
+            setElementText('checkoutServiceSpec', checkoutContext.spec);
+            setElementText('checkoutServiceSchedule', checkoutContext.scheduleText);
+            setElementText('checkoutServicePrice', totalText);
+            setElementText('checkoutCardTotal', totalText);
+            setElementText('checkoutSubtotal', totalText);
+            setElementText('checkoutTotal', totalText);
+
+            const orderItem = document.getElementById('checkoutOrderItem');
+            if (orderItem) {
+                orderItem.dataset.price = String(checkoutContext.total);
+            }
+
+            const addressLabel = document.getElementById('addressLabel');
+            const addressInput = document.getElementById('addressInput');
+            const contactNameLabel = document.getElementById('contactNameLabel');
+            const contactNameInput = document.getElementById('contactNameInput');
+            const contactPhoneLabel = document.getElementById('contactPhoneLabel');
+
+            if (checkoutContext.category === '保健食品') {
+                if (addressLabel) addressLabel.textContent = '收件地址';
+                if (addressInput) addressInput.placeholder = '輸入完整收件地址';
+                if (contactNameLabel) contactNameLabel.textContent = '收件人姓名';
+                if (contactNameInput) contactNameInput.placeholder = '輸入收件人姓名';
+                if (contactPhoneLabel) contactPhoneLabel.textContent = '收件人電話';
+            } else {
+                if (addressLabel) addressLabel.textContent = '服務地址';
+                if (addressInput) addressInput.placeholder = '輸入完整地址';
+                if (contactNameLabel) contactNameLabel.textContent = '聯絡人姓名';
+                if (contactNameInput) contactNameInput.placeholder = '輸入聯絡人姓名';
+                if (contactPhoneLabel) contactPhoneLabel.textContent = '聯絡人電話';
+            }
+        }
+
         function goToPreviousStep() {
             const urlParams = new URLSearchParams(window.location.search);
-            const serviceId = urlParams.get('id');
+            const serviceId = urlParams.get('id') || currentCheckoutServiceId || sessionStorage.getItem('checkoutServiceId');
 
             if (serviceId) {
                 navigateTo(`service-detail.html?id=${encodeURIComponent(serviceId)}`);
@@ -111,19 +180,22 @@
 
         function collectCheckoutData() {
             return {
-                serviceName: '專業居家照護服務',
-                serviceTime: '2026/02/15 10:00',
+                serviceId: currentCheckoutServiceId,
+                serviceName: checkoutContext.name,
+                serviceTime: checkoutContext.serviceTime,
                 address: document.getElementById('addressInput')?.value.trim() || '未填寫',
                 contactName: document.getElementById('contactNameInput')?.value.trim() || '未填寫',
                 contactPhone: document.getElementById('contactPhoneInput')?.value.trim() || '未填寫',
                 promoCode: document.getElementById('promoCodeInput')?.value.trim() || '未使用',
                 note: document.getElementById('noteInput')?.value.trim() || '無',
-                subtotal: document.getElementById('checkoutSubtotal')?.textContent.trim() || 'NT$ 2,400',
-                total: document.getElementById('checkoutTotal')?.textContent.trim() || 'NT$ 2,400'
+                subtotal: document.getElementById('checkoutSubtotal')?.textContent.trim() || formatCheckoutAmount(checkoutContext.total),
+                total: document.getElementById('checkoutTotal')?.textContent.trim() || formatCheckoutAmount(checkoutContext.total)
             };
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            initCheckoutByServiceId();
+
             const submitBtn = document.getElementById('submitOrderBtn');
 
             if (submitBtn) {

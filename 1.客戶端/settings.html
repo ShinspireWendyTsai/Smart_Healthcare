@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>設定</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <div class="header-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="header-title">設定</div>
+            <div style="width: 36px;"></div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+            <section class="settings-card">
+                <div class="settings-section-title">字體大小</div>
+                <div class="settings-section-hint">可調整全站字體為一般、中、大，點選後立即生效。</div>
+
+                <div class="font-size-options" role="group" aria-label="字體大小設定">
+                    <button class="font-size-option" type="button" data-font-size-option="normal" aria-pressed="false">
+                        <span class="font-size-option-label">一般</span>
+                        <span class="font-size-option-sample">Aa</span>
+                    </button>
+                    <button class="font-size-option" type="button" data-font-size-option="medium" aria-pressed="false">
+                        <span class="font-size-option-label">中</span>
+                        <span class="font-size-option-sample">Aa</span>
+                    </button>
+                    <button class="font-size-option" type="button" data-font-size-option="large" aria-pressed="false">
+                        <span class="font-size-option-label">大</span>
+                        <span class="font-size-option-sample">Aa</span>
+                    </button>
+                </div>
+
+                <div class="settings-preview">
+                    <strong>預覽文字</strong>
+                    字體大小將同步套用到服務、訂單、訊息與個人中心等頁面，讓閱讀更舒適。
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -53,6 +53,7 @@
     --font-size-lg: 20px;
     --font-size-xl: 24px;
     --font-size-2xl: 28px;
+    --base-html-font-size: 18px;
     
     /* 增加間距 - 更寬鬆 */
     --spacing-sm: 14px;
@@ -71,6 +72,37 @@
     --radius-full: 9999px;
 }
 
+:root[data-font-size='normal'],
+:root[data-font-size='small'] {
+    --font-size-xs: 14px;
+    --font-size-sm: 16px;
+    --font-size-base: 18px;
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+    --font-size-2xl: 28px;
+    --base-html-font-size: 18px;
+}
+
+:root[data-font-size='medium'] {
+    --font-size-xs: 16px;
+    --font-size-sm: 18px;
+    --font-size-base: 20px;
+    --font-size-lg: 22px;
+    --font-size-xl: 26px;
+    --font-size-2xl: 30px;
+    --base-html-font-size: 20px;
+}
+
+:root[data-font-size='large'] {
+    --font-size-xs: 18px;
+    --font-size-sm: 20px;
+    --font-size-base: 22px;
+    --font-size-lg: 24px;
+    --font-size-xl: 28px;
+    --font-size-2xl: 32px;
+    --base-html-font-size: 22px;
+}
+
 /* --- 全域重置 --- */
 * {
     margin: 0;
@@ -79,7 +111,7 @@
 }
 
 html {
-    font-size: 18px; /* 高齡友善基礎字體 */
+    font-size: var(--base-html-font-size); /* 高齡友善基礎字體 */
 }
 
 body {
@@ -1306,6 +1338,102 @@ a, button, [onclick], .clickable {
 .menu-item:hover .menu-arrow {
     transform: translateX(6px);
     color: var(--primary-color);
+}
+
+/* --- 設定頁 --- */
+.settings-card {
+    margin: var(--spacing-md) var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-card);
+}
+
+.settings-section-title {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.settings-section-hint {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.font-size-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.font-size-option {
+    border: 1px solid rgba(38, 166, 154, 0.25);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--radius-md);
+    min-height: 108px;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.font-size-option:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 20px rgba(38, 166, 154, 0.14);
+    transform: translateY(-1px);
+}
+
+.font-size-option.active {
+    border-color: var(--primary-color);
+    background: rgba(38, 166, 154, 0.14);
+    box-shadow: 0 8px 20px rgba(38, 166, 154, 0.14);
+}
+
+.font-size-option-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+
+.font-size-option-sample {
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1;
+}
+
+.font-size-option[data-font-size-option='normal'] .font-size-option-sample {
+    font-size: 20px;
+}
+
+.font-size-option[data-font-size-option='medium'] .font-size-option-sample {
+    font-size: 26px;
+}
+
+.font-size-option[data-font-size-option='large'] .font-size-option-sample {
+    font-size: 32px;
+}
+
+.settings-preview {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    background: rgba(38, 166, 154, 0.08);
+    border: 1px solid rgba(38, 166, 154, 0.14);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.settings-preview strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+    font-size: var(--font-size-base);
 }
 
 /* --- 資料修改 --- */

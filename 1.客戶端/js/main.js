@@ -8,16 +8,88 @@ document.addEventListener('DOMContentLoaded', function() {
     initApp();
 });
 
+const FONT_SIZE_STORAGE_KEY = 'clientFontSizePreference';
+const FONT_SIZE_LEVELS = ['normal', 'medium', 'large'];
+const FONT_SIZE_LABELS = {
+    normal: '一般',
+    medium: '中',
+    large: '大'
+};
+
 /**
  * 初始化應用程式
  */
 function initApp() {
+    initFontSizePreference();
     initBannerSlider();
     initBottomNav();
     initTabs();
     initNotifications();
     initServiceCards();
     initOrgSwitcher();
+}
+
+/* --- 字體大小設定 --- */
+
+function initFontSizePreference() {
+    const savedSize = localStorage.getItem(FONT_SIZE_STORAGE_KEY);
+    const initialSize = normalizeFontSizeValue(savedSize) || 'normal';
+
+    applyFontSizePreference(initialSize, false);
+    initFontSizeOptions();
+}
+
+function normalizeFontSizeValue(size) {
+    if (size === 'small') {
+        return 'normal';
+    }
+
+    return FONT_SIZE_LEVELS.includes(size) ? size : null;
+}
+
+function initFontSizeOptions() {
+    const options = document.querySelectorAll('[data-font-size-option]');
+
+    if (options.length === 0) {
+        return;
+    }
+
+    options.forEach((option) => {
+        option.addEventListener('click', () => {
+            const selectedSize = option.dataset.fontSizeOption;
+            applyFontSizePreference(selectedSize, true);
+        });
+    });
+
+    const currentSize = normalizeFontSizeValue(document.documentElement.getAttribute('data-font-size')) || 'normal';
+    updateFontSizeOptionState(currentSize);
+}
+
+function applyFontSizePreference(size, showFeedback = true) {
+    const normalizedSize = normalizeFontSizeValue(size);
+
+    if (!normalizedSize) {
+        return;
+    }
+
+    document.documentElement.setAttribute('data-font-size', normalizedSize);
+    localStorage.setItem(FONT_SIZE_STORAGE_KEY, normalizedSize);
+    updateFontSizeOptionState(normalizedSize);
+
+    if (showFeedback) {
+        const sizeLabel = FONT_SIZE_LABELS[normalizedSize] || FONT_SIZE_LABELS.normal;
+        showToast(`已切換為${sizeLabel}字體`, 'success');
+    }
+}
+
+function updateFontSizeOptionState(size) {
+    const options = document.querySelectorAll('[data-font-size-option]');
+
+    options.forEach((option) => {
+        const isActive = option.dataset.fontSizeOption === size;
+        option.classList.toggle('active', isActive);
+        option.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
 }
 
 /* --- 輪播圖功能 --- */
