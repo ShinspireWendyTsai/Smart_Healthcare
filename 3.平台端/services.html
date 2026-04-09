@@ -708,29 +708,55 @@
                                     </div>
                                     <input type="file" accept="image/*" hidden>
                                 </div>
-                                <div class="image-upload-item">
-                                    <div class="upload-placeholder">
-                                        <i class="fas fa-plus"></i>
-                                        <span>附圖 1</span>
+                            </div>
+                            <p class="form-hint">建議尺寸：800x600px，支援 JPG、PNG 格式</p>
+                        </div>
+
+                        <!-- 商品內頁圖片 -->
+                        <div class="form-section">
+                            <h5 class="form-section-title">
+                                <i class="fas fa-images" style="color:var(--primary-color);margin-right:6px;"></i>
+                                商品內頁圖片
+                                <span style="font-size:13px;font-weight:400;color:var(--text-secondary);margin-left:8px;">（顯示於客戶端商品介紹頁面，最多 4 張）</span>
+                            </h5>
+                            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+                                <div class="image-upload-item" style="aspect-ratio:16/9;width:100%;" onclick="this.querySelector('input').click()" id="bannerUpload1">
+                                    <div class="upload-placeholder" style="flex-direction:column;gap:6px;">
+                                        <i class="fas fa-image" style="font-size:22px;"></i>
+                                        <span>圖片 1</span>
+                                        <span style="font-size:11px;color:var(--text-light);">建議 750×420px</span>
                                     </div>
-                                    <input type="file" accept="image/*" hidden>
+                                    <input type="file" accept="image/*" hidden onchange="previewBannerImg(this, 'bannerUpload1')">
                                 </div>
-                                <div class="image-upload-item">
-                                    <div class="upload-placeholder">
-                                        <i class="fas fa-plus"></i>
-                                        <span>附圖 2</span>
+                                <div class="image-upload-item" style="aspect-ratio:16/9;width:100%;" onclick="this.querySelector('input').click()" id="bannerUpload2">
+                                    <div class="upload-placeholder" style="flex-direction:column;gap:6px;">
+                                        <i class="fas fa-image" style="font-size:22px;"></i>
+                                        <span>圖片 2</span>
+                                        <span style="font-size:11px;color:var(--text-light);">建議 750×420px</span>
                                     </div>
-                                    <input type="file" accept="image/*" hidden>
+                                    <input type="file" accept="image/*" hidden onchange="previewBannerImg(this, 'bannerUpload2')">
                                 </div>
-                                <div class="image-upload-item">
-                                    <div class="upload-placeholder">
-                                        <i class="fas fa-plus"></i>
-                                        <span>附圖 3</span>
+                                <div class="image-upload-item" style="aspect-ratio:16/9;width:100%;" onclick="this.querySelector('input').click()" id="bannerUpload3">
+                                    <div class="upload-placeholder" style="flex-direction:column;gap:6px;">
+                                        <i class="fas fa-image" style="font-size:22px;"></i>
+                                        <span>圖片 3</span>
+                                        <span style="font-size:11px;color:var(--text-light);">建議 750×420px</span>
                                     </div>
-                                    <input type="file" accept="image/*" hidden>
+                                    <input type="file" accept="image/*" hidden onchange="previewBannerImg(this, 'bannerUpload3')">
+                                </div>
+                                <div class="image-upload-item" style="aspect-ratio:16/9;width:100%;" onclick="this.querySelector('input').click()" id="bannerUpload4">
+                                    <div class="upload-placeholder" style="flex-direction:column;gap:6px;">
+                                        <i class="fas fa-image" style="font-size:22px;"></i>
+                                        <span>圖片 4</span>
+                                        <span style="font-size:11px;color:var(--text-light);">建議 750×420px</span>
+                                    </div>
+                                    <input type="file" accept="image/*" hidden onchange="previewBannerImg(this, 'bannerUpload4')">
                                 </div>
                             </div>
-                            <p class="form-hint">建議尺寸：800x600px，支援 JPG、PNG 格式，最多上傳 4 張</p>
+                            <p class="form-hint" style="margin-top:8px;">
+                                <i class="fas fa-info-circle" style="color:var(--primary-color);"></i>
+                                支援 JPG、PNG，建議圖檔寬高比 16:9
+                            </p>
                         </div>
                         
                         <!-- 服務規格 -->
@@ -953,5 +979,21 @@
 
     <!-- JavaScript -->
     <script src="js/platform.js"></script>
+    <script>
+        function previewBannerImg(input, containerId) {
+            if (!input.files || !input.files[0]) return;
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                container.style.backgroundImage = 'url(' + e.target.result + ')';
+                container.style.backgroundSize = 'cover';
+                container.style.backgroundPosition = 'center';
+                const placeholder = container.querySelector('.upload-placeholder');
+                if (placeholder) placeholder.style.opacity = '0';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
 </body>
 </html>

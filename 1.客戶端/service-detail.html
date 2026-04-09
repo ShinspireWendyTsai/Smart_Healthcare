@@ -10,28 +10,77 @@
     <link rel="stylesheet" href="css/style.css">
     <style>
         /* 服務詳情頁樣式 */
-        .service-detail-header {
-            position: relative;
-            height: 200px;
+        /* 頂部返回列 */
+        .service-topbar {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            background-image: url('images/banner-img02.jpg');
+            padding: 12px 16px;
+            background: var(--card-background);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        /* === 內容區輪播 === */
+        .banner-carousel {
+            position: relative;
+            width: 100%;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        .banner-track {
+            display: flex;
+            height: 300px;
+            transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+            will-change: transform;
+        }
+        .banner-slide {
+            flex: 0 0 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
-        .service-detail-header::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.35);
+        .banner-slide.placeholder-slide {
+            background: #e8efe4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .service-detail-header i {
-            font-size: 80px;
-            opacity: 0.9;
+        .banner-slide.placeholder-slide i {
+            font-size: 48px;
+            color: #8aab96;
+        }
+        /* 指示條 */
+        .banner-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .info-section .banner-carousel .banner-dots .banner-dot {
+            width: 6px !important;
+            height: 6px !important;
+            min-width: 6px !important;
+            min-height: 6px !important;
+            max-width: 6px !important;
+            max-height: 6px !important;
+            border-radius: 50% !important;
+            background: rgba(255,255,255,0.45) !important;
+            cursor: pointer;
+            transition: background .25s;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .info-section .banner-carousel .banner-dots .banner-dot.active {
+            background: #fff !important;
+            width: 6px !important;
+            max-width: 6px !important;
         }
         
         .back-btn {
@@ -92,10 +141,8 @@
         
         .service-detail-content {
             padding: 20px;
-            margin-top: -30px;
             position: relative;
             background: var(--background-color);
-            border-radius: 24px 24px 0 0;
         }
         
         .service-title-card {
@@ -352,12 +399,11 @@
 <body>
     <!-- 手機容器 -->
     <div class="mobile-container">
-        <!-- 服務圖片區域 -->
-        <div class="service-detail-header" id="serviceHeader">
-            <div class="back-btn" onclick="goToServicesPage()">
-                <i class="fas fa-arrow-left"></i>
+        <!-- 頂部返回列 -->
+        <div class="service-topbar">
+            <div class="back-btn" onclick="goToServicesPage()" style="position:relative;top:auto;left:auto;background:rgba(45,106,79,0.1);">
+                <i class="fas fa-arrow-left" style="color:var(--primary-color);"></i>
             </div>
-            
         </div>
 
         <!-- 主要內容區 -->
@@ -371,6 +417,24 @@
                     <div class="service-detail-price">
                         <span id="servicePrice" style="color:#F18100;">NT$ 1,200/時</span>
                         <span class="original" id="serviceOriginalPrice">NT$ 1,500</span>
+                    </div>
+                </div>
+
+                <!-- 商品說明圖片輪播 -->
+                <div class="info-section" style="padding:16px;">
+                    <div class="banner-carousel" id="bannerCarousel">
+                        <div class="banner-track" id="bannerTrack">
+                            <div class="banner-slide" style="background-image:url('images/banner-img02.jpg')"></div>
+                            <div class="banner-slide placeholder-slide"><i class="fas fa-image"></i></div>
+                            <div class="banner-slide placeholder-slide"><i class="fas fa-image"></i></div>
+                            <div class="banner-slide placeholder-slide"><i class="fas fa-image"></i></div>
+                        </div>
+                        <div class="banner-dots" id="bannerDots">
+                            <div class="banner-dot active" onclick="goToSlide(0)"></div>
+                            <div class="banner-dot" onclick="goToSlide(1)"></div>
+                            <div class="banner-dot" onclick="goToSlide(2)"></div>
+                            <div class="banner-dot" onclick="goToSlide(3)"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -445,7 +509,42 @@
     <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script>
-        // 服務資料
+        /* ===== Banner 輪播 ===== */
+        let bannerCurrent = 0;
+        let bannerTotal = 4;
+        let bannerTimer = null;
+
+        function goToSlide(idx) {
+            bannerCurrent = (idx + bannerTotal) % bannerTotal;
+            document.getElementById('bannerTrack').style.transform =
+                `translateX(-${bannerCurrent * 100}%)`;
+            document.querySelectorAll('.banner-dot').forEach((d, i) =>
+                d.classList.toggle('active', i === bannerCurrent));
+        }
+
+        function nextSlide() { goToSlide(bannerCurrent + 1); }
+
+        function startBannerAuto() {
+            bannerTimer = setInterval(nextSlide, 3500);
+        }
+        function stopBannerAuto() { clearInterval(bannerTimer); }
+
+        // 觸控滑動
+        (function initSwipe() {
+            const track = document.getElementById('bannerTrack');
+            if (!track) return;
+            let sx = 0;
+            track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; stopBannerAuto(); }, {passive:true});
+            track.addEventListener('touchend',   e => {
+                const dx = e.changedTouches[0].clientX - sx;
+                if (Math.abs(dx) > 40) goToSlide(bannerCurrent + (dx < 0 ? 1 : -1));
+                startBannerAuto();
+            }, {passive:true});
+        })();
+
+        // 不自動輪播
+
+        /* ===== 服務資料 ===== */
         let currentServiceId = '1';
         const servicesData = {
             1: { name: '專業居家照護服務', desc: '由專業照服員提供貼心的居家照護，包含日常生活協助、身體清潔、餐食準備等服務。', price: 'NT$ 1,200/時', originalPrice: 'NT$ 1,500', category: '居家照護', icon: 'fa-user-nurse', color: '#2D6A4F', colorDark: '#1B4332' },

@@ -101,31 +101,73 @@
       font-size: 1.06rem;
     }
 
-    .mermaid {
-      background: #fcfdfb;
-      border: 1px solid #e5ece2;
+    /* ── Swimlane ── */
+    .swim-wrap {
+      position: relative;
+      border: 2px solid #c5deca;
       border-radius: 10px;
-      padding: 14px;
-      overflow: auto;
-      min-height: 560px;
+      overflow: hidden;
+      background: #fcfdfb;
+    }
+    .swim-cols {
       display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      min-height: 720px;
+      position: relative;
     }
-
-    .mermaid svg {
-      width: auto !important;
-      height: auto !important;
-      min-width: 980px;
+    .swim-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-right: 2px solid #c5deca;
     }
-
-    .mermaid .cluster-label text {
-      font-size: 20px !important;
+    .swim-col:last-child { border-right: none; }
+    .swim-col-head {
+      background: var(--brand);
+      color: #fff;
+      text-align: center;
+      padding: 12px 6px;
+      font-size: 1.1rem;
       font-weight: 700;
+      letter-spacing: .5px;
     }
-
-    .mermaid .label {
-      font-size: 22px !important;
+    .swim-col-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 18px 10px;
+    }
+    .sv-spacer { flex: 1; }
+    .snode {
+      background: #fff;
+      border: 2px solid var(--brand);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      text-align: center;
+      width: 88%;
+      line-height: 1.45;
+    }
+    .snode-alt {
+      border-style: dashed;
+      border-color: #8aab96;
+      color: var(--muted);
+      font-size: .9rem;
+      background: #f6fbf7;
+    }
+    .snode-end { background: var(--brand-soft); }
+    .sv-arrow {
+      color: var(--brand);
+      font-size: 1.5rem;
+      line-height: 1.2;
+      padding: 1px 0;
+    }
+    .sv-arrow--dash { color: #8aab96; font-size: 1.2rem; }
+    #swim-svg {
+      position: absolute;
+      top: 0; left: 0;
+      pointer-events: none;
+      overflow: visible;
     }
 
     table {
@@ -190,55 +232,92 @@
       .card { padding: 12px 10px 8px; }
       .kpi { grid-template-columns: 1fr; }
       table { font-size: 0.88rem; }
-      .mermaid { min-height: 420px; padding: 10px; }
-      .mermaid svg { min-width: 860px; }
+      .mermaid { min-height: 560px; padding: 10px; }
+    }
+
+    @media print {
+      @page { size: A4 portrait; margin: 12mm 14mm; }
+      body {
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .hero, .card {
+        box-shadow: none !important;
+        border-color: #ccc !important;
+      }
+      /* 節點絕對不可跨頁裁斷 */
+      .snode, .snode-alt, .snode-end {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      /* 箭頭區塊（sv-arrow）允許跨頁，不設限制 */
+      /* 整張 card 若放得下，優先不裁；放不下時在箭頭處斷 */
+      .card { break-inside: auto; page-break-inside: auto; }
+      /* SVG 跨頁箭頭印出時隱藏（位置偏移），保留欄內 ↓ 文字箭頭 */
+      #swim-svg { display: none; }
+      .wrap { width: 100%; margin: 0; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section class="hero">
-      <h1>SMART HEALTH CARE_DORA｜MVP 渠道圖（流程 x 功能對應）</h1>
+      <h1>流程 x 功能對應說明圖</h1>
       <div class="subtitle">目標：明確展示「哪個流程對應哪個功能」，並標示未完成節點的最低替代方案。</div>
-      <div class="badge-row">
-        <span class="badge">客戶端渠道</span>
-        <span class="badge">平台端渠道</span>
-        <span class="badge">供應商渠道</span>
-        <span class="badge">機構端渠道</span>
-      </div>
     </section>
 
     <section class="card">
       <h2>渠道流程圖（泳道）</h2>
-      <div class="mermaid">
-flowchart LR
-  subgraph CH1[客戶端渠道]
-    C1[流程1 下單]
-    C2[流程2 回報匯款資訊]
-    C3[流程8 查詢最終狀態]
-  end
+      <div class="swim-wrap" id="swimlane">
+        <div class="swim-cols">
 
-  subgraph CH2[平台端渠道]
-    P1[流程3 人工核款]
-    P2[流程4 改狀態 待出貨]
-    P3[流程5 通知供應商出貨]
-    P4[流程7 狀態推進 已出貨 已送達 已完成]
-  end
+          <!-- 客戶端 -->
+          <div class="swim-col">
+            <div class="swim-col-head">客戶端</div>
+            <div class="swim-col-body">
+              <div class="snode" id="c1">流程1<br>下單</div>
+              <div class="sv-arrow">↓</div>
+              <div class="snode" id="c2">流程2<br>回報匯款資訊</div>
+              <div class="sv-spacer"></div>
+              <div class="snode snode-end" id="c3">流程8<br>查詢最終狀態</div>
+            </div>
+          </div>
 
-  subgraph CH3[供應商渠道]
-    S1[流程6 回報物流商 單號 出貨日]
-  end
+          <!-- 供應商端 -->
+          <div class="swim-col">
+            <div class="swim-col-head">供應商端</div>
+            <div class="swim-col-body">
+              <div class="sv-spacer"></div>
+              <div class="snode" id="s1">流程6<br>回報物流商<br>單號 出貨日</div>
+              <div class="sv-arrow sv-arrow--dash">⋮</div>
+              <div class="snode snode-alt" id="s1m">替代：供應商<br>Email / 電話回報</div>
+              <div class="sv-spacer"></div>
+            </div>
+          </div>
 
-  subgraph CH4[機構端渠道]
-    O1[流程9 查詢最終狀態]
-  end
+          <!-- 平台端 -->
+          <div class="swim-col">
+            <div class="swim-col-head">平台端</div>
+            <div class="swim-col-body">
+              <div class="snode" id="p1">流程3<br>人工核款</div>
+              <div class="sv-arrow">↓</div>
+              <div class="snode" id="p2">流程4<br>改狀態 待出貨</div>
+              <div class="sv-arrow">↓</div>
+              <div class="snode" id="p3">流程5<br>通知供應商出貨</div>
+              <div class="sv-arrow sv-arrow--dash">⋮</div>
+              <div class="snode snode-alt" id="p3m">替代：人工寄 Email<br>並補寄送紀錄</div>
+              <div class="sv-arrow">↓</div>
+              <div class="snode" id="p4">流程7<br>狀態推進<br>已出貨 / 已送達 / 已完成</div>
+              <div class="sv-arrow sv-arrow--dash">⋮</div>
+              <div class="snode snode-alt" id="p4m">替代：平台批次<br>或人工更新</div>
+              <div class="sv-arrow">↓</div>
+              <div class="snode snode-end" id="p9">流程9<br>機構端查詢狀態</div>
+            </div>
+          </div>
 
-  C1 --> C2 --> P1 --> P2 --> P3 --> S1 --> P4 --> C3
-  P4 --> O1
-
-  P3 -.通知功能未完成.-> P3M[人工寄 Email 並補寄送紀錄]
-  S1 -.供應商端未完成.-> S1M[供應商以 Email 或電話回報]
-  P4 -.跨端同步未完成.-> P4M[平台批次或人工更新]
+        </div>
+        <svg id="swim-svg"></svg>
       </div>
     </section>
 
@@ -324,31 +403,74 @@ flowchart LR
     </section>
   </div>
 
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: "base",
-      themeVariables: {
-        primaryColor: "#f7fcf7",
-        primaryTextColor: "#1f2a1f",
-        primaryBorderColor: "#2f6f4f",
-        lineColor: "#3e5e49",
-        secondaryColor: "#fdf7ef",
-        tertiaryColor: "#eef5ea",
-        fontSize: "24px",
-        fontFamily: "Noto Sans TC, PingFang TC, Microsoft JhengHei, sans-serif"
-      },
-      flowchart: {
-        curve: "basis",
-        htmlLabels: false,
-        useMaxWidth: false,
-        nodeSpacing: 18,
-        rankSpacing: 28,
-        padding: 22,
-        wrappingWidth: 520
+  <script>
+    function drawSwimArrows() {
+      const wrap = document.getElementById('swimlane');
+      const svg  = document.getElementById('swim-svg');
+      if (!wrap || !svg) return;
+      const W = wrap.offsetWidth;
+      const H = wrap.offsetHeight;
+      svg.setAttribute('width', W);
+      svg.setAttribute('height', H);
+      svg.innerHTML = `
+        <defs>
+          <marker id="ah" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0,9 3.5,0 7" fill="#2f6f4f"/>
+          </marker>
+          <marker id="ah-d" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0,9 3.5,0 7" fill="#8aab96"/>
+          </marker>
+        </defs>`;
+
+      const base = wrap.getBoundingClientRect();
+      function r(id) {
+        const el = document.getElementById(id);
+        if (!el) return null;
+        const b = el.getBoundingClientRect();
+        return {
+          l: b.left - base.left, r: b.right - base.left,
+          t: b.top  - base.top,  b: b.bottom - base.top,
+          mx: b.left - base.left + b.width  / 2,
+          my: b.top  - base.top  + b.height / 2
+        };
       }
-    });
+
+      function line(d, dash) {
+        const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+        p.setAttribute('d', d);
+        p.setAttribute('stroke', dash ? '#8aab96' : '#2f6f4f');
+        p.setAttribute('stroke-width', '2.5');
+        p.setAttribute('fill', 'none');
+        if (dash) p.setAttribute('stroke-dasharray','7 4');
+        p.setAttribute('marker-end', dash ? 'url(#ah-d)' : 'url(#ah)');
+        svg.appendChild(p);
+      }
+
+      /* elbow connector: exit fromSide of A, enter toSide of B */
+      function elbow(fId, tId, fSide, tSide, dash) {
+        const f = r(fId), t = r(tId);
+        if (!f || !t) return;
+        const x1 = fSide === 'r' ? f.r : f.l;
+        const y1 = f.my;
+        const x2 = tSide === 'l' ? t.l : t.r;
+        const y2 = t.my;
+        const mx = (x1 + x2) / 2;
+        line(`M${x1},${y1} L${mx},${y1} L${mx},${y2} L${x2},${y2}`, dash);
+      }
+
+      // 主流程跨欄連線
+      elbow('c2','p1','r','l',false);  // 客戶端→平台端
+      elbow('p3','s1','l','r',false);  // 平台端→供應商端
+      elbow('s1','p4','r','l',false);  // 供應商端→平台端
+      elbow('p4','c3','l','r',false);  // 平台端→客戶端
+
+      // 替代方案跨欄連線 (虛線)
+      elbow('s1m','p4','r','l',true);  // 供應商替代→平台端
+      elbow('p4m','c3','l','r',true);  // 平台替代→客戶端
+    }
+
+    window.addEventListener('load', drawSwimArrows);
+    window.addEventListener('resize', drawSwimArrows);
   </script>
 </body>
 </html>
