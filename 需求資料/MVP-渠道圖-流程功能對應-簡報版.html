@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMART HEALTH CARE_DORA｜MVP 渠道圖（流程 x 功能對應）</title>
+  <style>
+    :root {
+      --bg1: #f6f8f3;
+      --bg2: #e8efe4;
+      --card: #ffffff;
+      --text: #1f2a1f;
+      --muted: #5d6b5d;
+      --line: #d4dfd0;
+      --brand: #2f6f4f;
+      --brand-soft: #e6f2ea;
+      --accent: #c9762b;
+      --font: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, #ffffff 0%, transparent 35%),
+        radial-gradient(circle at 85% 20%, #f4f0e7 0%, transparent 30%),
+        linear-gradient(145deg, var(--bg1), var(--bg2));
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(1180px, 94vw);
+      margin: 28px auto 36px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero, .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(31, 42, 31, 0.06);
+    }
+
+    .hero {
+      padding: 20px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      right: -60px;
+      top: -70px;
+      background: linear-gradient(135deg, rgba(47, 111, 79, 0.16), rgba(201, 118, 43, 0.06));
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.3vw, 2rem);
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .badge-row {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--brand-soft);
+      color: var(--brand);
+      border: 1px solid #cbe2d3;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .card {
+      padding: 14px 14px 10px;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1.06rem;
+    }
+
+    .mermaid {
+      background: #fcfdfb;
+      border: 1px solid #e5ece2;
+      border-radius: 10px;
+      padding: 14px;
+      overflow: auto;
+      min-height: 560px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .mermaid svg {
+      width: auto !important;
+      height: auto !important;
+      min-width: 980px;
+    }
+
+    .mermaid .cluster-label text {
+      font-size: 20px !important;
+      font-weight: 700;
+    }
+
+    .mermaid .label {
+      font-size: 22px !important;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.93rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 8px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f6ef;
+      color: #2b4a36;
+      font-weight: 700;
+    }
+
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .kpi-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      background: #fbfdf9;
+    }
+
+    .kpi-item .name {
+      font-size: 0.83rem;
+      color: var(--muted);
+    }
+
+    .kpi-item .value {
+      margin-top: 6px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--brand);
+    }
+
+    .footnote {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    @media (max-width: 900px) {
+      .kpi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: 96vw; }
+      .hero { padding: 16px 14px; }
+      .card { padding: 12px 10px 8px; }
+      .kpi { grid-template-columns: 1fr; }
+      table { font-size: 0.88rem; }
+      .mermaid { min-height: 420px; padding: 10px; }
+      .mermaid svg { min-width: 860px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>SMART HEALTH CARE_DORA｜MVP 渠道圖（流程 x 功能對應）</h1>
+      <div class="subtitle">目標：明確展示「哪個流程對應哪個功能」，並標示未完成節點的最低替代方案。</div>
+      <div class="badge-row">
+        <span class="badge">客戶端渠道</span>
+        <span class="badge">平台端渠道</span>
+        <span class="badge">供應商渠道</span>
+        <span class="badge">機構端渠道</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>渠道流程圖（泳道）</h2>
+      <div class="mermaid">
+flowchart LR
+  subgraph CH1[客戶端渠道]
+    C1[流程1 下單]
+    C2[流程2 回報匯款資訊]
+    C3[流程8 查詢最終狀態]
+  end
+
+  subgraph CH2[平台端渠道]
+    P1[流程3 人工核款]
+    P2[流程4 改狀態 待出貨]
+    P3[流程5 通知供應商出貨]
+    P4[流程7 狀態推進 已出貨 已送達 已完成]
+  end
+
+  subgraph CH3[供應商渠道]
+    S1[流程6 回報物流商 單號 出貨日]
+  end
+
+  subgraph CH4[機構端渠道]
+    O1[流程9 查詢最終狀態]
+  end
+
+  C1 --> C2 --> P1 --> P2 --> P3 --> S1 --> P4 --> C3
+  P4 --> O1
+
+  P3 -.通知功能未完成.-> P3M[人工寄 Email 並補寄送紀錄]
+  S1 -.供應商端未完成.-> S1M[供應商以 Email 或電話回報]
+  P4 -.跨端同步未完成.-> P4M[平台批次或人工更新]
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>流程對應功能表</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>流程節點</th>
+            <th>主要責任渠道</th>
+            <th>對應必要功能</th>
+            <th>未完成時替代方案</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>流程1 下單</td>
+            <td>客戶端</td>
+            <td>可建立訂單</td>
+            <td>無（此節點必須可用）</td>
+          </tr>
+          <tr>
+            <td>流程2 回報匯款資訊</td>
+            <td>客戶端</td>
+            <td>可填寫匯款資訊（至少末五碼）</td>
+            <td>無（此節點必須可用）</td>
+          </tr>
+          <tr>
+            <td>流程3 人工核款</td>
+            <td>平台端</td>
+            <td>人工核對銀行入帳與末五碼</td>
+            <td>持續人工核款</td>
+          </tr>
+          <tr>
+            <td>流程4 改狀態 待出貨</td>
+            <td>平台端</td>
+            <td>核款後改為待出貨</td>
+            <td>持續人工改狀態</td>
+          </tr>
+          <tr>
+            <td>流程5 通知供應商出貨</td>
+            <td>平台端</td>
+            <td>供應商通知（優先系統寄信）</td>
+            <td>平台人工寄 Email，補記錄收件者/時間/寄送人</td>
+          </tr>
+          <tr>
+            <td>流程6 回報出貨資訊</td>
+            <td>供應商端</td>
+            <td>回報物流商、單號、出貨日</td>
+            <td>供應商以 Email/電話回報給平台</td>
+          </tr>
+          <tr>
+            <td>流程7 狀態推進</td>
+            <td>平台端</td>
+            <td>更新為已出貨、已送達、已完成</td>
+            <td>平台代操作推進狀態</td>
+          </tr>
+          <tr>
+            <td>流程8 客戶查詢狀態</td>
+            <td>客戶端</td>
+            <td>顯示待出貨、已出貨、已送達、已完成</td>
+            <td>批次更新後可查</td>
+          </tr>
+          <tr>
+            <td>流程9 機構查詢狀態</td>
+            <td>機構端</td>
+            <td>顯示待出貨、已出貨、已送達、已完成</td>
+            <td>批次更新後可查</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>MVP 指標摘要</h2>
+      <div class="kpi">
+        <div class="kpi-item"><div class="name">主流程步驟</div><div class="value">9</div></div>
+        <div class="kpi-item"><div class="name">核心渠道</div><div class="value">4</div></div>
+        <div class="kpi-item"><div class="name">人工補位節點</div><div class="value">3</div></div>
+        <div class="kpi-item"><div class="name">必備狀態集合</div><div class="value">4</div></div>
+      </div>
+      <div class="footnote">必備狀態集合：待出貨、已出貨、已送達、已完成。</div>
+    </section>
+  </div>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      themeVariables: {
+        primaryColor: "#f7fcf7",
+        primaryTextColor: "#1f2a1f",
+        primaryBorderColor: "#2f6f4f",
+        lineColor: "#3e5e49",
+        secondaryColor: "#fdf7ef",
+        tertiaryColor: "#eef5ea",
+        fontSize: "24px",
+        fontFamily: "Noto Sans TC, PingFang TC, Microsoft JhengHei, sans-serif"
+      },
+      flowchart: {
+        curve: "basis",
+        htmlLabels: false,
+        useMaxWidth: false,
+        nodeSpacing: 18,
+        rankSpacing: 28,
+        padding: 22,
+        wrappingWidth: 520
+      }
+    });
+  </script>
+</body>
+</html>
