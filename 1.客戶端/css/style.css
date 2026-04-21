@@ -1030,6 +1030,17 @@ a, button, [onclick], .clickable {
     color: var(--primary-color);
 }
 
+
+.order-status.confirmed {
+    background: rgba(38, 166, 154, 0.15);
+    color: var(--primary-color);
+}
+
+.order-status.refunded {
+    background: rgba(99, 102, 241, 0.12);
+    color: #6366f1;
+}
+
 .order-status.processing {
     background: rgba(255, 183, 77, 0.2);
     color: var(--accent-dark);

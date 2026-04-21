@@ -3,32 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>???????? - ??潸??????/title>
+    <title>?????????? - ??潸??????/title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- ?????? -->
     <link rel="stylesheet" href="css/platform.css">
     <style>
-        .announcement-summary {
-            color: var(--text-secondary);
-            font-size: 13px;
-        }
-        .announcement-title {
+        .faq-question {
             font-weight: 600;
             color: var(--text-primary);
         }
-        .announcement-actions {
+        .faq-answer-preview {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            max-width: 400px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .faq-actions {
             display: flex;
             gap: 8px;
         }
-        .announcement-preview {
-            padding: 16px;
+        .faq-answer-block {
+            padding: 14px 16px;
             background: #f8f9fa;
             border-radius: 10px;
-            margin-top: 12px;
+            margin-top: 8px;
             color: var(--text-secondary);
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
         .form-grid-two {
             display: grid;
@@ -36,9 +41,7 @@
             gap: 16px;
         }
         @media (max-width: 768px) {
-            .form-grid-two {
-                grid-template-columns: 1fr;
-            }
+            .form-grid-two { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -111,7 +114,7 @@
                         <span>??潮???????</span>
                     </a>
 
-                    <a href="notifications.html" class="menu-item active">
+                    <a href="notifications.html" class="menu-item">
                         <i class="fas fa-bell"></i>
                         <span>????????</span>
                     </a>
@@ -121,7 +124,7 @@
                         <span>??潭嚗??獢??/span>
                     </a>
 
-                    <a href="faq.html" class="menu-item">
+                    <a href="faq.html" class="menu-item active">
                         <i class="fas fa-question-circle"></i>
                         <span>??????????</span>
                     </a>
@@ -161,7 +164,7 @@
                         <i class="fas fa-chevron-right"></i>
                         <span>???賹?</span>
                         <i class="fas fa-chevron-right"></i>
-                        <span>????????</span>
+                        <span>??????????</span>
                     </div>
                 </div>
 
@@ -200,30 +203,36 @@
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">????????</h1>
-                        <p class="page-subtitle">???????瞉??蹓質?蹇??謍船??????/p>
+                        <h1 class="page-title">??????????</h1>
+                        <p class="page-subtitle">????輯???瞉??亙????穿???選??????/p>
                     </div>
                     <div>
-                        <button class="btn btn-primary" onclick="openModal('announcementModal')">
+                        <button class="btn btn-primary" onclick="openModal('faqModal')">
                             <i class="fas fa-plus"></i> ??????
                         </button>
                     </div>
                 </div>
 
-                <!-- ????謅?-->
+                <!-- ????????謅?-->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-bullhorn"></i> ????謅?/h3>
+                        <h3 class="card-title"><i class="fas fa-question-circle"></i> ????謅?/h3>
                         <div style="display:flex;gap:10px;align-items:center;">
                             <div class="search-input" style="width:220px;">
                                 <i class="fas fa-search"></i>
                                 <input type="text" class="form-control" placeholder="?謚???????">
                             </div>
-                            <select class="form-select" style="width:140px;">
+                            <select class="form-select" style="width:150px;">
+                                <option>??賂???</option>
+                                <option>????????/option>
+                                <option>????????/option>
+                                <option>?朵???倦???/option>
+                                <option>???</option>
+                            </select>
+                            <select class="form-select" style="width:130px;">
                                 <option>??賂????/option>
                                 <option>?瞉???/option>
                                 <option>??仿</option>
-                                <option>????/option>
                             </select>
                         </div>
                     </div>
@@ -233,54 +242,69 @@
                                 <thead>
                                     <tr>
                                         <th>??????</th>
-                                        <th>?瞉??蹇?</th>
+                                        <th>???</th>
+                                        <th>???</th>
                                         <th>????/th>
-                                        <th>?謅?</th>
                                         <th>???</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <div class="announcement-title">????秋撕??秋扒?倦????堆??謍船?</div>
-                                            <div class="announcement-summary">2026 ?鈭??賹?????蹇??方葭?桀???????謕???/div>
+                                            <div class="faq-question">????秋撒???舫◢?啣??????/div>
+                                            <div class="faq-answer-preview">?ｇ????箄?賹澈?????啣??蹓?????岳?舐?賹????????ｇ???..</div>
                                         </td>
-                                        <td>2026/01/25 10:00</td>
+                                        <td>????????/td>
+                                        <td>1</td>
                                         <td><span class="status-badge status-active">?瞉???/span></td>
-                                        <td>??賂??蛔</td>
                                         <td>
-                                            <div class="announcement-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('announcementModal')"><i class="fas fa-pen"></i></button>
+                                            <div class="faq-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openModal('faqModal')"><i class="fas fa-pen"></i></button>
                                                 <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="announcement-title">?鈭???瞍??????</div>
-                                            <div class="announcement-summary">3/10 ?鈭???瞍??????鼓???????啣???????/div>
+                                            <div class="faq-question">????鈭亙眺?殉?謘?????</div>
+                                            <div class="faq-answer-preview">?擗?綽謘????????朝???嚗畸?鈭???????獢????????..</div>
                                         </td>
-                                        <td>2026/01/20 14:30</td>
+                                        <td>????????/td>
+                                        <td>2</td>
+                                        <td><span class="status-badge status-active">?瞉???/span></td>
+                                        <td>
+                                            <div class="faq-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openModal('faqModal')"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="faq-question">?朵??摮?????叟??</div>
+                                            <div class="faq-answer-preview">???獢?????賤???嚚蹎酪M ?改??????爸??????..</div>
+                                        </td>
+                                        <td>?朵???倦???/td>
+                                        <td>3</td>
+                                        <td><span class="status-badge status-active">?瞉???/span></td>
+                                        <td>
+                                            <div class="faq-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openModal('faqModal')"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="faq-question">???????????</div>
+                                            <div class="faq-answer-preview">?ｇ?謘????堆???7 ?鈭???????芸???倦???鞎??ｇ????..</div>
+                                        </td>
+                                        <td>?朵???倦???/td>
+                                        <td>4</td>
                                         <td><span class="status-badge status-processing">??仿</span></td>
-                                        <td>???堊城?舀??/td>
                                         <td>
-                                            <div class="announcement-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('announcementModal')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="announcement-title">??蝯?◢???</div>
-                                            <div class="announcement-summary">2/5 ?謍???蝯?◢??????鞈?甽?謚阬?/div>
-                                        </td>
-                                        <td>2026/01/12 09:00</td>
-                                        <td><span class="status-badge status-inactive">????/span></td>
-                                        <td>??賂??蛔</td>
-                                        <td>
-                                            <div class="announcement-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('announcementModal')"><i class="fas fa-pen"></i></button>
+                                            <div class="faq-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openModal('faqModal')"><i class="fas fa-pen"></i></button>
                                                 <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
@@ -294,20 +318,29 @@
         </div>
     </div>
 
-    <!-- ????璆??穿??Modal -->
-    <div class="modal" id="announcementModal">
+    <!-- ????璆??祈??穿????Modal -->
+    <div class="modal" id="faqModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">????桀??</div>
-                    <button class="modal-close" onclick="closeModal('announcementModal')"><i class="fas fa-times"></i></button>
+                    <div class="modal-title">????????桀??</div>
+                    <button class="modal-close" onclick="closeModal('faqModal')"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="form-label">??????</label>
-                        <input type="text" class="form-control" placeholder="?ｇ???鈭?????>
+                        <input type="text" class="form-control" placeholder="?ｇ???鈭??選???>
                     </div>
                     <div class="form-grid-two">
+                        <div class="form-group">
+                            <label class="form-label">??????</label>
+                            <select class="form-select">
+                                <option>????????/option>
+                                <option>????????/option>
+                                <option>?朵???倦???/option>
+                                <option>???</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label class="form-label">?瞉?????/label>
                             <select class="form-select">
@@ -315,29 +348,23 @@
                                 <option>??仿</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">??????</label>
-                            <input type="text" class="form-control" placeholder="?閰???????" inputmode="numeric" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">?瞏捍蹓???/label>
-                        <select class="form-select">
-                            <option>??賂??蛔</option>
-                        </select>
+                        <label class="form-label">???</label>
+                        <input type="text" class="form-control" placeholder="?閰???????" inputmode="numeric" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">?????寞?</label>
-                        <textarea class="form-control" rows="5" placeholder="?ｇ???鈭???望?></textarea>
+                        <label class="form-label">??????</label>
+                        <textarea class="form-control" rows="5" placeholder="?ｇ???鈭方縐?????????曇??></textarea>
                     </div>
                     <div class="form-group">
                         <label class="form-label">??????</label>
-                        <div class="announcement-preview">?ｇ???鈭?啣音????祈都??輯???瞏剛縐??/div>
+                        <div class="faq-answer-block">?ｇ???鈭亙??????祈都??輯???瞏剛縐??/div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeModal('announcementModal')">?謘?</button>
-                    <button class="btn btn-primary" onclick="closeModal('announcementModal')">???</button>
+                    <button class="btn btn-outline" onclick="closeModal('faqModal')">?謘?</button>
+                    <button class="btn btn-primary" onclick="closeModal('faqModal')">???</button>
                 </div>
             </div>
         </div>

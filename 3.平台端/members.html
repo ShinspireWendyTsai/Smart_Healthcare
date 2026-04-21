@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>會員列表 - 平台端管理系統</title>
+    <title>??蛔?謅?- ??潸??????/title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 自訂樣式 -->
+    <!-- ?????? -->
     <link rel="stylesheet" href="css/platform.css">
     <style>
         .member-actions {
@@ -58,176 +58,174 @@
 </head>
 <body>
     <div class="admin-layout">
-        <!-- 側邊欄 -->
+        <!-- ?皝???-->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
                     <i class="fas fa-shield-alt"></i>
                 </div>
                 <div>
-                    <div class="sidebar-title">智慧照護平台</div>
-                    <div class="sidebar-subtitle">平台端管理系統</div>
+                    <div class="sidebar-title">?蝞賂??舫◢???/div>
+                    <div class="sidebar-subtitle">??潸??????/div>
                 </div>
             </div>
             
             <nav class="sidebar-menu">
-                <!-- 主選單 -->
+                <!-- ??蹓??-->
                 <div class="menu-section">
-                    <div class="menu-section-title">主要功能</div>
+                    <div class="menu-section-title">????賹?</div>
                     
                     <a href="index.html" class="menu-item">
                         <i class="fas fa-tachometer-alt"></i>
-                        <span>儀表板</span>
+                        <span>???萄豰?/span>
                     </a>
                     
-                    <div class="menu-item" data-submenu="org-submenu">
+                    <a href="organizations.html" class="menu-item">
                         <i class="fas fa-building"></i>
-                        <span>機構管理</span>
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
-                    <div class="submenu" id="org-submenu">
-                        <a href="organizations.html" class="menu-item">
-                            <span>機構列表</span>
-                        </a>
-                    </div>
+                        <span>????謅?/span>
+                    </a>
                     
-                    <div class="menu-item expanded" data-submenu="member-submenu">
+                    <a href="members.html" class="menu-item active">
                         <i class="fas fa-users"></i>
-                        <span>個案會員管理</span>
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
-                    <div class="submenu show" id="member-submenu">
-                        <a href="members.html" class="menu-item active">
-                            <span>會員列表</span>
-                        </a>
-                    </div>
+                        <span>?????蛔?謅?/span>
+                    </a>
                     
                     <a href="orders.html" class="menu-item">
                         <i class="fas fa-shopping-cart"></i>
-                        <span>訂購清單管理</span>
+                        <span>?殉????荒????</span>
                     </a>
                 </div>
                 
-                <!-- 服務設定 -->
+                <!-- ????桀?? -->
                 <div class="menu-section">
-                    <div class="menu-section-title">服務設定</div>
+                    <div class="menu-section-title">????桀??</div>
                     
                     <a href="categories.html" class="menu-item">
                         <i class="fas fa-tags"></i>
-                        <span>服務類別管理</span>
+                        <span>????遴竣????</span>
                     </a>
                     
                     <a href="services.html" class="menu-item">
                         <i class="fas fa-concierge-bell"></i>
-                        <span>服務管理</span>
+                        <span>??????</span>
+                    </a>
+
+                    <a href="suppliers.html" class="menu-item">
+                        <i class="fas fa-truck"></i>
+                        <span>???????/span>
                     </a>
                 </div>
                 
-                <!-- 平台功能 -->
+                <!-- ???賹? -->
                 <div class="menu-section">
-                    <div class="menu-section-title">平台功能</div>
+                    <div class="menu-section-title">???賹?</div>
                     
                     <a href="announcements.html" class="menu-item">
                         <i class="fas fa-bullhorn"></i>
-                        <span>平台輪播管理</span>
+                        <span>??潮???????</span>
                     </a>
 
                     <a href="notifications.html" class="menu-item">
                         <i class="fas fa-bell"></i>
-                        <span>平台公告管理</span>
+                        <span>????????</span>
                     </a>
                     
                     <a href="tickets.html" class="menu-item">
                         <i class="fas fa-headset"></i>
-                        <span>平台客服單管理</span>
+                        <span>??潭嚗??獢??/span>
+                    </a>
+
+                    <a href="faq.html" class="menu-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>??????????</span>
                     </a>
                 </div>
                 
-                <!-- 系統管理 -->
+                <!-- ??蝯??? -->
                 <div class="menu-section">
-                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-section-title">??蝯???</div>
                     <div class="menu-item" data-submenu="system-submenu">
                         <i class="fas fa-cog"></i>
-                        <span>系統管理</span>
+                        <span>??蝯???</span>
                         <i class="fas fa-chevron-right arrow"></i>
                     </div>
                     <div class="submenu" id="system-submenu">
                         <a href="admins.html" class="menu-item">
-                            <span>使用者管理</span>
+                            <span>?輯撒???望??/span>
                         </a>
                         <a href="roles.html" class="menu-item">
-                            <span>角色權限管理</span>
+                            <span>?恃??啁??????</span>
                         </a>
                         <a href="logs.html" class="menu-item">
-                            <span>操作紀錄查詢</span>
+                            <span>?????????/span>
                         </a>
                     </div>
                 </div>
             </nav>
         </aside>
 
-        <!-- 主要內容區 -->
+        <!-- ?????寞??? -->
         <div class="main-content">
-            <!-- 頂部導覽列 -->
+            <!-- ?蹇豢?????-->
             <header class="top-navbar">
                 <div class="navbar-left">
                     <i class="fas fa-bars menu-toggle"></i>
                     <div class="breadcrumb">
-                        <a href="index.html">首頁</a>
+                        <a href="index.html">???</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>會員列表</span>
+                        <span>??蛔?謅?/span>
                     </div>
                 </div>
                 
                 <div class="navbar-right">
                     <div class="user-dropdown">
-                        <div class="user-avatar">陳</div>
+                        <div class="user-avatar">??/div>
                         <div class="user-info">
-                            <div class="user-name">陳小華</div>
-                            <div class="user-role">平台管理員</div>
+                            <div class="user-name">?????/div>
+                            <div class="user-role">??潸?????/div>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- 頁面內容 -->
+            <!-- ?蹓遴???寞? -->
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">會員列表</h1>
-                        <p class="page-subtitle">檢視個案會員資訊、綁定狀態與服務使用狀況。</p>
+                        <h1 class="page-title">??蛔?謅?/h1>
+                        <p class="page-subtitle">?潘撩??????蛔???蹓??堊垓????????輯撒????撕??/p>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">會員清單</h3>
+                        <h3 class="card-title">??蛔?謘?/h3>
                     </div>
                     <div class="card-body">
                         <div class="filter-section" style="margin-bottom: 16px;">
                             <div class="filter-row">
                                 <div class="filter-group">
-                                    <label class="filter-label">關鍵字搜尋</label>
+                                    <label class="filter-label">?謚殷?殉????/label>
                                     <div class="search-input">
                                         <i class="fas fa-search"></i>
-                                        <input type="text" class="form-control" placeholder="搜尋姓名、手機或個案編號">
+                                        <input type="text" class="form-control" placeholder="?謚??軋??蹓????????箏?">
                                     </div>
                                 </div>
                                 <div class="filter-group">
-                                    <label class="filter-label">狀態篩選</label>
+                                    <label class="filter-label">???????/label>
                                     <select class="form-select">
-                                        <option>全部狀態</option>
-                                        <option>已綁定</option>
-                                        <option>待綁定</option>
-                                        <option>停用</option>
+                                        <option>??賂????/option>
+                                        <option>????/option>
+                                        <option>?綽???/option>
+                                        <option>?謚秋?</option>
                                     </select>
                                 </div>
                                 <div class="filter-actions">
                                     <button class="btn btn-outline">
-                                        <i class="fas fa-redo"></i> 重置
+                                        <i class="fas fa-redo"></i> ??
                                     </button>
                                     <button class="btn btn-outline">
-                                        <i class="fas fa-search"></i> 查詢
+                                        <i class="fas fa-search"></i> ?鈭亙眺
                                     </button>
                                 </div>
                             </div>
@@ -236,12 +234,12 @@
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>會員資訊</th>
-                                        <th>個案編號</th>
-                                        <th>綁定機構</th>
-                                        <th>狀態</th>
-                                        <th>最後登入</th>
-                                        <th>操作</th>
+                                        <th>??蛔??</th>
+                                        <th>????箏?</th>
+                                        <th>?秋撒????</th>
+                                        <th>????/th>
+                                        <th>???綽謒??/th>
+                                        <th>???</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -252,14 +250,14 @@
                                                     <i class="fas fa-user"></i>
                                                 </div>
                                                 <div>
-                                                    <div class="org-name">王小明</div>
+                                                    <div class="org-name">?????/div>
                                                     <div class="org-email">0912-345-678</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>PT2024001234</td>
-                                        <td>陽光照護中心</td>
-                                        <td><span class="status-badge status-active">已綁定</span></td>
+                                        <td>?鞈???舫◢???</td>
+                                        <td><span class="status-badge status-active">????/span></td>
                                         <td>2026/02/03 09:10</td>
                                         <td>
                                             <div class="member-actions">
@@ -275,14 +273,14 @@
                                                     <i class="fas fa-user-friends"></i>
                                                 </div>
                                                 <div>
-                                                    <div class="org-name">王小美</div>
+                                                    <div class="org-name">?????/div>
                                                     <div class="org-email">0912-***-678</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>FAM2024012201</td>
-                                        <td>陽光照護中心</td>
-                                        <td><span class="status-badge status-active">已綁定</span></td>
+                                        <td>?鞈???舫◢???</td>
+                                        <td><span class="status-badge status-active">????/span></td>
                                         <td>2026/02/02 20:18</td>
                                         <td>
                                             <div class="member-actions">
@@ -298,15 +296,15 @@
                                                     <i class="fas fa-user-nurse"></i>
                                                 </div>
                                                 <div>
-                                                    <div class="org-name">李小華</div>
+                                                    <div class="org-name">?????/div>
                                                     <div class="org-email">caregiver@sunnycare.com</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>CARE2023120903</td>
-                                        <td>安心居服協會</td>
-                                        <td><span class="status-badge status-pending">待綁定</span></td>
-                                        <td>尚未登入</td>
+                                        <td>?堆??????</td>
+                                        <td><span class="status-badge status-pending">?綽???/span></td>
+                                        <td>?垮謓?擗</td>
                                         <td>
                                             <div class="member-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openMemberModal()"><i class="fas fa-eye"></i></button>
@@ -327,46 +325,46 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">會員詳情</div>
+                    <div class="modal-title">??蛔?啣?</div>
                     <button class="modal-close" onclick="closeMemberModal()"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
                     <div style="background: #f8f9fa; border-radius: 10px; padding: 16px;">
-                        <div style="font-weight: bold; margin-bottom: 12px;">個案基本資料</div>
+                        <div style="font-weight: bold; margin-bottom: 12px;">????蝞賃秧??</div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px;">
-                            <div><span style="color:#888;">姓名：</span>王小明</div>
-                            <div><span style="color:#888;">性別：</span>男</div>
-                            <div><span style="color:#888;">生日：</span>1955/06/18</div>
-                            <div><span style="color:#888;">身分證字號：</span>A123456789</div>
-                            <div><span style="color:#888;">手機：</span>0912-345-678</div>
-                            <div><span style="color:#888;">Email：</span>mwang@example.com</div>
-                            <div style="grid-column: span 2;"><span style="color:#888;">地址：</span>台中市西區民生路一段 88 號 6F</div>
-                            <div><span style="color:#888;">緊急聯絡人：</span>王小美</div>
-                            <div><span style="color:#888;">關係：</span>女兒</div>
-                            <div style="grid-column: span 2;"><span style="color:#888;">緊急電話：</span>0912-***-678</div>
-                            <div style="grid-column: span 2;"><span style="color:#888;">過敏：</span>青黴素過敏</div>
-                            <div style="grid-column: span 2;"><span style="color:#888;">慢性病史：</span>高血壓、糖尿病</div>
-                            <div style="grid-column: span 2;"><span style="color:#888;">其他備註：</span>需協助上下樓梯</div>
+                            <div><span style="color:#888;">?軋???/span>?????/div>
+                            <div><span style="color:#888;">??對???/span>??/div>
+                            <div><span style="color:#888;">?賹???/span>1955/06/18</div>
+                            <div><span style="color:#888;">?冽????賹?</span>A123456789</div>
+                            <div><span style="color:#888;">?????/span>0912-345-678</div>
+                            <div><span style="color:#888;">Email??/span>mwang@example.com</div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">?????/span>??祈????甇????????88 ??6F</div>
+                            <div><span style="color:#888;">?綽??鈭伍??胼???/span>?????/div>
+                            <div><span style="color:#888;">?謚???/span>??</div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">?綽??隞遴迤?唳╡?</span>0912-***-678</div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">?????/span>????滯???/div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">?嚗蜃?????</span>?此??荒?蹓??撒?</div>
+                            <div style="grid-column: span 2;"><span style="color:#888;">????謕???/span>????????嚗?/div>
                         </div>
                     </div>
 
                     <div style="margin-top: 16px;">
                         <div style="background: #fff; border: 1px solid #e9ecef; border-radius: 10px; padding: 16px;">
-                            <div style="font-weight: bold; margin-bottom: 10px;">個案關懷者綁定</div>
+                            <div style="font-weight: bold; margin-bottom: 10px;">????謚恬?????/div>
                             <div style="display: grid; grid-template-columns: 1fr; gap: 8px; font-size: 14px;">
-                                <div><span style="color:#888;">機構：</span>陽光照護中心（ORG2024001）</div>
-                                <div><span style="color:#888;">關懷者：</span>陳小華</div>
-                                <div><span style="color:#888;">狀態：</span><span style="color:#27ae60; font-weight: 600;">已綁定</span></div>
-                                <div><span style="color:#888;">綁定時間：</span>2024/01/15</div>
+                                <div><span style="color:#888;">?????/span>?鞈???舫◢?????RG2024001??/div>
+                                <div><span style="color:#888;">?謚恬???</span>?????/div>
+                                <div><span style="color:#888;">?????</span><span style="color:#27ae60; font-weight: 600;">????/span></div>
+                                <div><span style="color:#888;">?秋撒??蹇???/span>2024/01/15</div>
                             </div>
                             <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e0e0e0; font-size: 13px; color: #666;">
-                                待審核申請：幸福居家照護（ORG2024025）｜申請時間：2024/01/25
+                                ?綽蟡?鞎??ｇ????????舫◢??RG2024025??????蹇???024/01/25
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" onclick="closeMemberModal()">關閉</button>
+                    <button class="btn btn-primary" onclick="closeMemberModal()">?謚?</button>
                 </div>
             </div>
         </div>

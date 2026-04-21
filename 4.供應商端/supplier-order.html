@@ -3,52 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>供應商訂單管理 - 全方位智慧貼身照護平台</title>
+    <title>?謢???????ｇ蹍??- ??頦????雓???楊??蝓???????/title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 自訂樣式 -->
+    <!-- ?????? -->
     <link rel="stylesheet" href="css/supplier.css">
 </head>
 <body>
 
     <!-- ============================================= -->
-    <!-- 第一層：密碼驗證閘門 -->
+    <!-- ?謍????圈???謖???????雓? -->
     <!-- ============================================= -->
     <div class="auth-gate" id="authGate">
         <div class="auth-container">
-            <!-- 品牌識別 -->
+            <!-- ?頩???豢??-->
             <div class="auth-logo">
                 <div class="logo-icon">
                     <i class="fas fa-shield-alt"></i>
                 </div>
-                <h1 class="auth-title">智慧照護平台</h1>
-                <p class="auth-subtitle">供應商訂單管理系統</p>
+                <h1 class="auth-title">???????徉?賹???/h1>
+                <p class="auth-subtitle">?謢???????ｇ蹍??????/p>
             </div>
 
-            <!-- 訂單摘要（驗證前可見） -->
+            <!-- ?畾?雓?雓??謅????察???????-->
             <div class="auth-order-preview">
                 <div class="preview-icon">
                     <i class="fas fa-box"></i>
                 </div>
                 <div class="preview-info">
-                    <div class="preview-label">訂單編號</div>
+                    <div class="preview-label">?畾?雓豰??</div>
                     <div class="preview-value" id="previewOrderId">#ORD-2026040101</div>
                 </div>
             </div>
 
-            <!-- 密碼輸入表單 -->
+            <!-- ?謖?????啣?????雓?-->
             <form class="auth-form" id="authForm" onsubmit="return handleAuth(event)">
                 <div class="form-group">
                     <label class="form-label" for="supplierPassword">
                         <i class="fas fa-lock"></i>
-                        請輸入供應商密碼
+                        ?嚚?????????謖???
                     </label>
                     <div class="password-input-wrapper">
                         <input 
                             type="password" 
                             id="supplierPassword" 
                             class="form-control" 
-                            placeholder="輸入與平台約定的供應商密碼"
+                            placeholder="?謜眾?????????????謢???????
                             required
                             autocomplete="off"
                         >
@@ -58,61 +58,61 @@
                     </div>
                     <div class="form-error" id="authError" style="display: none;">
                         <i class="fas fa-exclamation-circle"></i>
-                        <span id="authErrorMsg">密碼錯誤，請重新輸入</span>
+                        <span id="authErrorMsg">?謖???????謅?ㄠ???謢??謜眾??/span>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" id="authSubmitBtn">
                     <i class="fas fa-sign-in-alt"></i>
-                    驗證進入
+                    ?頦???????
                 </button>
             </form>
 
-            <!-- 安全提示 -->
+            <!-- ??????? -->
             <div class="auth-footer">
-                <p><i class="fas fa-info-circle"></i> 此連結為供應商專屬訂單頁面，請勿將連結或密碼提供給第三方。</p>
+                <p><i class="fas fa-info-circle"></i> ??軋???????????蹎???叟?頩江??頩??謅?ㄠ????????雓??????謢??▼?????啾???/p>
             </div>
         </div>
     </div>
 
     <!-- ============================================= -->
-    <!-- 第二層：訂單管理主畫面（驗證後顯示） -->
+    <!-- ?謍????圈???畾?雓????豲??????頦???蝬踐ㄡ??豰? -->
     <!-- ============================================= -->
     <div class="order-page" id="orderPage" style="display: none;">
 
-        <!-- 頂部導覽列 -->
+        <!-- ?頩偌?鞊??謅???-->
         <header class="supplier-navbar">
             <div class="navbar-brand">
-                <a href="supplier-orders.html" class="back-to-list" title="返回訂單列表">
+                <a href="supplier-orders.html" class="back-to-list" title="?????畾?雓?雓飢??>
                     <i class="fas fa-arrow-left"></i>
                 </a>
                 <i class="fas fa-shield-alt"></i>
-                <span>智慧照護平台｜供應商訂單</span>
+                <span>???????徉?賹??瞉?雓?????畾?雓?/span>
             </div>
             <div class="navbar-right">
                 <span class="supplier-name" id="supplierNameDisplay">
                     <i class="fas fa-store"></i>
-                    健康生活有限公司
+                    ??叟???鞈察?????????
                 </span>
                 <button class="btn btn-outline btn-sm" onclick="handleLogout()">
                     <i class="fas fa-sign-out-alt"></i>
-                    離開
+                    ???
                 </button>
             </div>
         </header>
 
-        <!-- 主要內容 -->
+        <!-- ?豲????撖? -->
         <main class="order-main">
 
-            <!-- 訂單狀態時間軸 -->
+            <!-- ?畾?雓????????? -->
             <section class="order-timeline-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-route"></i> 訂單進度</h2>
+                    <h2><i class="fas fa-route"></i> ?畾?雓?????/h2>
                 </div>
                 <div class="timeline">
                     <div class="timeline-step completed">
                         <div class="step-icon"><i class="fas fa-shopping-cart"></i></div>
                         <div class="step-info">
-                            <div class="step-label">訂單成立</div>
+                            <div class="step-label">?畾?雓???</div>
                             <div class="step-time">2026/04/01 10:30</div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                     <div class="timeline-step completed">
                         <div class="step-icon"><i class="fas fa-credit-card"></i></div>
                         <div class="step-info">
-                            <div class="step-label">已付款</div>
+                            <div class="step-label">??????/div>
                             <div class="step-time">2026/04/01 10:35</div>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                     <div class="timeline-step active">
                         <div class="step-icon"><i class="fas fa-envelope"></i></div>
                         <div class="step-info">
-                            <div class="step-label">通知供應商</div>
+                            <div class="step-label">?雓??謢????/div>
                             <div class="step-time">2026/04/01 10:36</div>
                         </div>
                     </div>
@@ -136,96 +136,96 @@
                     <div class="timeline-step">
                         <div class="step-icon"><i class="fas fa-check-circle"></i></div>
                         <div class="step-info">
-                            <div class="step-label">供應商確認</div>
-                            <div class="step-time">等待中</div>
+                            <div class="step-label">?謢???????/div>
+                            <div class="step-time">??蛔????/div>
                         </div>
                     </div>
                     <div class="timeline-connector"></div>
                     <div class="timeline-step">
                         <div class="step-icon"><i class="fas fa-truck"></i></div>
                         <div class="step-info">
-                            <div class="step-label">已出貨</div>
-                            <div class="step-time">等待中</div>
+                            <div class="step-label">??踝?????/div>
+                            <div class="step-time">??蛔????/div>
                         </div>
                     </div>
                     <div class="timeline-connector"></div>
                     <div class="timeline-step">
                         <div class="step-icon"><i class="fas fa-box-open"></i></div>
                         <div class="step-info">
-                            <div class="step-label">已送達</div>
-                            <div class="step-time">等待中</div>
+                            <div class="step-label">??踝??頩?</div>
+                            <div class="step-time">??蛔????/div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 訂單基本資訊 -->
+            <!-- ?畾?雓???蝘??? -->
             <section class="order-info-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-file-invoice"></i> 訂單資訊</h2>
-                    <span class="order-status-badge status-waiting">待供應商確認</span>
+                    <h2><i class="fas fa-file-invoice"></i> ?畾?雓???</h2>
+                    <span class="order-status-badge status-waiting">?蝬踝?????????</span>
                 </div>
                 <div class="info-grid">
                     <div class="info-card">
-                        <div class="info-label">訂單編號</div>
+                        <div class="info-label">?畾?雓豰??</div>
                         <div class="info-value highlight">#ORD-2026040101</div>
                     </div>
                     <div class="info-card">
-                        <div class="info-label">訂單日期</div>
+                        <div class="info-label">?畾?雓???</div>
                         <div class="info-value">2026/04/01 10:30</div>
                     </div>
                     <div class="info-card">
-                        <div class="info-label">付款狀態</div>
+                        <div class="info-label">?豯剜?????/div>
                         <div class="info-value">
-                            <span class="status-dot success"></span> 已付款
+                            <span class="status-dot success"></span> ??????
                         </div>
                     </div>
                     <div class="info-card">
-                        <div class="info-label">付款方式</div>
-                        <div class="info-value">ATM 匯款</div>
+                        <div class="info-label">?豯剜????</div>
+                        <div class="info-value">ATM ?????/div>
                     </div>
                 </div>
             </section>
 
-            <!-- 收件人資訊 -->
+            <!-- ???瑣??????-->
             <section class="recipient-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-map-marker-alt"></i> 配送資訊</h2>
+                    <h2><i class="fas fa-map-marker-alt"></i> ??謆祁頩???/h2>
                 </div>
                 <div class="info-grid">
                     <div class="info-card">
-                        <div class="info-label">收件人</div>
-                        <div class="info-value">王大明</div>
+                        <div class="info-label">???瑣??/div>
+                        <div class="info-value">??豲???/div>
                     </div>
                     <div class="info-card">
-                        <div class="info-label">聯絡電話</div>
+                        <div class="info-label">???????</div>
                         <div class="info-value">0912-345-678</div>
                     </div>
                     <div class="info-card full-width">
-                        <div class="info-label">配送地址</div>
-                        <div class="info-value">台北市大安區忠孝東路四段120號</div>
+                        <div class="info-label">??謆祁頩?蝘??</div>
+                        <div class="info-value">????????????撖???????雓???20??/div>
                     </div>
                     <div class="info-card full-width">
-                        <div class="info-label">備註</div>
-                        <div class="info-value note">請於工作日白天配送，管理員代收即可。</div>
+                        <div class="info-label">?雓??</div>
+                        <div class="info-value note">?嚚?雓?????凋?韏?????頩??豯?????萇???察???蝝?/div>
                     </div>
                 </div>
             </section>
 
-            <!-- 訂購商品明細 -->
+            <!-- ?畾???????謘踐? -->
             <section class="items-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-list-alt"></i> 訂購商品明細</h2>
+                    <h2><i class="fas fa-list-alt"></i> ?畾???????謘踐?</h2>
                 </div>
                 <div class="items-table-wrapper">
                     <table class="items-table">
                         <thead>
                             <tr>
-                                <th>商品名稱</th>
-                                <th>規格</th>
-                                <th>數量</th>
-                                <th>單價</th>
-                                <th>小計</th>
+                                <th>?????謕?</th>
+                                <th>?蝘?韏?/th>
+                                <th>???</th>
+                                <th>??Ⅹ??/th>
+                                <th>?蹎抆??</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -233,10 +233,10 @@
                                 <td>
                                     <div class="item-name">
                                         <div class="item-icon"><i class="fas fa-pills"></i></div>
-                                        <span>綜合維他命B群</span>
+                                        <span>?蝘????????頛荒??/span>
                                     </div>
                                 </td>
-                                <td>60粒/瓶</td>
+                                <td>60????/td>
                                 <td>2</td>
                                 <td>$580</td>
                                 <td class="amount">$1,160</td>
@@ -245,10 +245,10 @@
                                 <td>
                                     <div class="item-name">
                                         <div class="item-icon"><i class="fas fa-capsules"></i></div>
-                                        <span>高濃度魚油 Omega-3</span>
+                                        <span>??暹???賃必???Omega-3</span>
                                     </div>
                                 </td>
-                                <td>120粒/瓶</td>
+                                <td>120????/td>
                                 <td>1</td>
                                 <td>$1,280</td>
                                 <td class="amount">$1,280</td>
@@ -257,10 +257,10 @@
                                 <td>
                                     <div class="item-name">
                                         <div class="item-icon"><i class="fas fa-leaf"></i></div>
-                                        <span>葉黃素膠囊</span>
+                                        <span>????豲遛???/span>
                                     </div>
                                 </td>
-                                <td>30粒/盒</td>
+                                <td>30????/td>
                                 <td>3</td>
                                 <td>$420</td>
                                 <td class="amount">$1,260</td>
@@ -268,136 +268,136 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- 金額小計 -->
+                <!-- ????蹎抆?? -->
                 <div class="price-summary">
                     <div class="price-row">
-                        <span>商品小計</span>
+                        <span>????蹎抆??</span>
                         <span>$3,700</span>
                     </div>
                     <div class="price-row">
-                        <span>運費</span>
-                        <span>$0（免運）</span>
+                        <span>??蹎?</span>
+                        <span>$0?謅?????</span>
                     </div>
                     <div class="price-row">
-                        <span>折扣</span>
+                        <span>?雓Ｙ???/span>
                         <span class="discount">-$200</span>
                     </div>
                     <div class="price-row total">
-                        <span>訂單總計</span>
+                        <span>?畾?雓豰??</span>
                         <span>$3,500</span>
                     </div>
                 </div>
             </section>
 
             <!-- ============================================= -->
-            <!-- 供應商操作區 -->
+            <!-- ?謢???????湧?? -->
             <!-- ============================================= -->
             <section class="supplier-actions-section" id="supplierActions">
                 <div class="section-header">
-                    <h2><i class="fas fa-cogs"></i> 出貨管理</h2>
+                    <h2><i class="fas fa-cogs"></i> ?????豯??</h2>
                 </div>
 
-                <!-- 操作步驟卡片 -->
+                <!-- ?????券????? -->
                 <div class="action-cards">
 
-                    <!-- 步驟 1：確認接單 -->
+                    <!-- ??券?? 1?謅Ｗ???遴狗?謢???-->
                     <div class="action-card" id="stepConfirm">
                         <div class="action-card-header">
                             <div class="step-number">1</div>
-                            <h3>確認接單</h3>
-                            <span class="step-status" id="stepConfirmStatus">待處理</span>
+                            <h3>??????叟??</h3>
+                            <span class="step-status" id="stepConfirmStatus">?蝬踝????/span>
                         </div>
                         <div class="action-card-body">
-                            <p class="action-desc">請確認您已收到此訂單，並可於預計時間內出貨。</p>
+                            <p class="action-desc">?嚚???遴狗?謢???踝?????曄??畾?雓??撖????雓????頩???撠??????/p>
                             <div class="form-group">
-                                <label class="form-label">預計出貨日期</label>
+                                <label class="form-label">??????????</label>
                                 <input type="date" class="form-control" id="estimatedShipDate">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">接單備註（選填）</label>
-                                <textarea class="form-control" rows="2" id="confirmNote" placeholder="如有特殊情況請於此說明"></textarea>
+                                <label class="form-label">??叟???雓???謅?頩????</label>
+                                <textarea class="form-control" rows="2" id="confirmNote" placeholder="???????????嚚?雓??撖改??></textarea>
                             </div>
                             <div class="action-buttons">
                                 <button class="btn btn-primary" onclick="confirmOrder()">
-                                    <i class="fas fa-check"></i> 確認接單
+                                    <i class="fas fa-check"></i> ??????叟??
                                 </button>
                                 <button class="btn btn-outline-danger" onclick="showRejectModal()">
-                                    <i class="fas fa-times"></i> 無法接單
+                                    <i class="fas fa-times"></i> ?????叟??
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 步驟 2：出貨資訊 -->
+                    <!-- ??券?? 2?謅Ｗ????????-->
                     <div class="action-card disabled" id="stepShipping">
                         <div class="action-card-header">
                             <div class="step-number">2</div>
-                            <h3>填寫出貨資訊</h3>
-                            <span class="step-status">等待上一步</span>
+                            <h3>?謜蹎????????</h3>
+                            <span class="step-status">??蛔???豲???/span>
                         </div>
                         <div class="action-card-body">
-                            <p class="action-desc">請填寫物流資訊，以便平台與客戶追蹤貨物。</p>
+                            <p class="action-desc">?嚚???????謍寞??畾???豯???????橫????遙???佇???????Ⅹ?/p>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label">物流公司</label>
+                                    <label class="form-label">???????</label>
                                     <select class="form-control" id="shippingCarrier">
-                                        <option value="">請選擇物流公司</option>
-                                        <option value="黑貓宅急便">黑貓宅急便</option>
-                                        <option value="新竹物流">新竹物流</option>
-                                        <option value="宅配通">宅配通</option>
-                                        <option value="郵局包裹">郵局包裹</option>
-                                        <option value="嘉里大榮">嘉里大榮</option>
-                                        <option value="other">其他</option>
+                                        <option value="">?嚚?頩???秋?謍寞????/option>
+                                        <option value="?蝬???????謒?>?蝬???????謒?/option>
+                                        <option value="??蹓????">??蹓????</option>
+                                        <option value="??????>??????/option>
+                                        <option value="??????荔?">??????荔?</option>
+                                        <option value="???????>???????/option>
+                                        <option value="other">???</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">貨運追蹤編號</label>
-                                    <input type="text" class="form-control" id="trackingNumber" placeholder="輸入物流追蹤編號">
+                                    <label class="form-label">???????剜?璇荒???</label>
+                                    <input type="text" class="form-control" id="trackingNumber" placeholder="?謜眾???????剜?璇荒???">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">實際出貨日期</label>
+                                <label class="form-label">?謖謋????????</label>
                                 <input type="date" class="form-control" id="actualShipDate">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">出貨備註（選填）</label>
-                                <textarea class="form-control" rows="2" id="shippingNote" placeholder="包裹件數、特殊包裝說明等"></textarea>
+                                <label class="form-label">?????雓???謅?頩????</label>
+                                <textarea class="form-control" rows="2" id="shippingNote" placeholder="???荔??豯???頩???璈?????????"></textarea>
                             </div>
                             <div class="action-buttons">
                                 <button class="btn btn-primary" onclick="submitShipping()">
-                                    <i class="fas fa-truck"></i> 確認出貨
+                                    <i class="fas fa-truck"></i> ????????
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 步驟 3：送達確認 -->
+                    <!-- ??券?? 3?謅Ｗ??頩????? -->
                     <div class="action-card disabled" id="stepDelivery">
                         <div class="action-card-header">
                             <div class="step-number">3</div>
-                            <h3>送達確認</h3>
-                            <span class="step-status">等待上一步</span>
+                            <h3>?頩?????</h3>
+                            <span class="step-status">??蛔???豲???/span>
                         </div>
                         <div class="action-card-body">
-                            <p class="action-desc">貨物送達後，請確認配送完成。若有異常請回報。</p>
+                            <p class="action-desc">?????頩??蝬???嚚???遴狗???頩????頩????隡援?????鞊舀迫曌??/p>
                             <div class="delivery-status-display" style="display: none;" id="deliveryInfo">
                                 <div class="tracking-info">
                                     <div class="tracking-row">
-                                        <span class="tracking-label">物流公司</span>
-                                        <span class="tracking-value" id="displayCarrier">—</span>
+                                        <span class="tracking-label">???????</span>
+                                        <span class="tracking-value" id="displayCarrier">??/span>
                                     </div>
                                     <div class="tracking-row">
-                                        <span class="tracking-label">追蹤編號</span>
-                                        <span class="tracking-value" id="displayTracking">—</span>
+                                        <span class="tracking-label">???剜?璇荒???</span>
+                                        <span class="tracking-value" id="displayTracking">??/span>
                                     </div>
                                 </div>
                             </div>
                             <div class="action-buttons">
                                 <button class="btn btn-success" onclick="confirmDelivery()">
-                                    <i class="fas fa-box-open"></i> 確認已送達
+                                    <i class="fas fa-box-open"></i> ??????踝??頩?
                                 </button>
                                 <button class="btn btn-outline-warning" onclick="showIssueModal()">
-                                    <i class="fas fa-exclamation-triangle"></i> 回報異常
+                                    <i class="fas fa-exclamation-triangle"></i> ?鞊舀迫曌????
                                 </button>
                             </div>
                         </div>
@@ -405,30 +405,30 @@
                 </div>
             </section>
 
-            <!-- 操作歷程 -->
+            <!-- ??????? -->
             <section class="history-section">
                 <div class="section-header">
-                    <h2><i class="fas fa-history"></i> 操作歷程</h2>
+                    <h2><i class="fas fa-history"></i> ???????</h2>
                 </div>
                 <div class="history-list" id="historyList">
                     <div class="history-item">
                         <div class="history-icon system"><i class="fas fa-robot"></i></div>
                         <div class="history-content">
-                            <div class="history-title">系統自動發送訂單通知信至供應商</div>
+                            <div class="history-title">?賹?????????頩???ｇ??雓??鞈????雓???/div>
                             <div class="history-time">2026/04/01 10:36</div>
                         </div>
                     </div>
                     <div class="history-item">
                         <div class="history-icon system"><i class="fas fa-credit-card"></i></div>
                         <div class="history-content">
-                            <div class="history-title">客戶已完成付款（ATM 匯款）</div>
+                            <div class="history-title">????謅??????????ATM ???????/div>
                             <div class="history-time">2026/04/01 10:35</div>
                         </div>
                     </div>
                     <div class="history-item">
                         <div class="history-icon system"><i class="fas fa-file-alt"></i></div>
                         <div class="history-content">
-                            <div class="history-title">訂單成立</div>
+                            <div class="history-title">?畾?雓???</div>
                             <div class="history-time">2026/04/01 10:30</div>
                         </div>
                     </div>
@@ -437,45 +437,45 @@
 
         </main>
 
-        <!-- 頁尾 -->
+        <!-- ?頩?? -->
         <footer class="supplier-footer">
-            <p>&copy; 2026 全方位智慧貼身照護平台．供應商訂單管理系統</p>
-            <p class="footer-note">如有任何問題，請聯絡平台客服：service@smartcare.com.tw</p>
+            <p>&copy; 2026 ??頦????雓???楊??蝓?????????謢???????ｇ蹍??????/p>
+            <p class="footer-note">?????豯剁??????謅?ㄠ??????賹??瞏叟???謅?ervice@smartcare.com.tw</p>
         </footer>
     </div>
 
     <!-- ============================================= -->
-    <!-- 無法接單 Modal -->
+    <!-- ?????叟?? Modal -->
     <!-- ============================================= -->
     <div class="modal-overlay" id="rejectModal" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4><i class="fas fa-times-circle"></i> 無法接單原因</h4>
+                    <h4><i class="fas fa-times-circle"></i> ?????叟???鞈?</h4>
                     <button class="modal-close" onclick="closeModal('rejectModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="form-label">無法接單原因</label>
+                        <label class="form-label">?????叟???鞈?</label>
                         <select class="form-control" id="rejectReason">
-                            <option value="">請選擇原因</option>
-                            <option value="缺貨">商品缺貨</option>
-                            <option value="停產">商品已停產</option>
-                            <option value="配送區域限制">無法配送至該地區</option>
-                            <option value="other">其他原因</option>
+                            <option value="">?嚚?頩?????/option>
+                            <option value="?擗???>????擗???/option>
+                            <option value="?雓?謆?>?????踝????/option>
+                            <option value="??謆祁頩??鞈???>?????謆祁頩?????雓??</option>
+                            <option value="other">????鞈?</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">詳細說明</label>
-                        <textarea class="form-control" rows="3" id="rejectDetail" placeholder="請說明無法接單的具體原因"></textarea>
+                        <label class="form-label">?????∵狗??</label>
+                        <textarea class="form-control" rows="3" id="rejectDetail" placeholder="?嚚????謖??謚?????????鞈?"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeModal('rejectModal')">取消</button>
+                    <button class="btn btn-outline" onclick="closeModal('rejectModal')">?雓?</button>
                     <button class="btn btn-danger" onclick="rejectOrder()">
-                        <i class="fas fa-times"></i> 確認拒絕
+                        <i class="fas fa-times"></i> ???????
                     </button>
                 </div>
             </div>
@@ -483,39 +483,39 @@
     </div>
 
     <!-- ============================================= -->
-    <!-- 回報異常 Modal -->
+    <!-- ?鞊舀迫曌???? Modal -->
     <!-- ============================================= -->
     <div class="modal-overlay" id="issueModal" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4><i class="fas fa-exclamation-triangle"></i> 回報配送異常</h4>
+                    <h4><i class="fas fa-exclamation-triangle"></i> ?鞊舀迫曌??謆祁頩?豱??/h4>
                     <button class="modal-close" onclick="closeModal('issueModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="form-label">異常類型</label>
+                        <label class="form-label">??????渡咯?</label>
                         <select class="form-control" id="issueType">
-                            <option value="">請選擇異常類型</option>
-                            <option value="配送延遲">配送延遲</option>
-                            <option value="部分商品缺貨">部分商品缺貨</option>
-                            <option value="商品損壞">商品損壞</option>
-                            <option value="地址無法送達">地址無法送達</option>
-                            <option value="收件人拒收">收件人拒收</option>
-                            <option value="other">其他</option>
+                            <option value="">?嚚?頩???援??????/option>
+                            <option value="??謆祁頩?暻??>??謆祁頩?暻??/option>
+                            <option value="???????擗???>???????擗???/option>
+                            <option value="??????">??????</option>
+                            <option value="???????頩?">???????頩?</option>
+                            <option value="???瑣??????>???瑣??????/option>
+                            <option value="other">???</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">異常說明</label>
-                        <textarea class="form-control" rows="3" id="issueDetail" placeholder="請詳細描述異常情況"></textarea>
+                        <label class="form-label">??????對?</label>
+                        <textarea class="form-control" rows="3" id="issueDetail" placeholder="?嚚??制??????????????></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeModal('issueModal')">取消</button>
+                    <button class="btn btn-outline" onclick="closeModal('issueModal')">?雓?</button>
                     <button class="btn btn-warning" onclick="reportIssue()">
-                        <i class="fas fa-paper-plane"></i> 送出回報
+                        <i class="fas fa-paper-plane"></i> ?頩陷??鞊舀迫曌?
                     </button>
                 </div>
             </div>
@@ -523,7 +523,7 @@
     </div>
 
     <!-- ============================================= -->
-    <!-- 操作成功提示 -->
+    <!-- ????????? -->
     <!-- ============================================= -->
     <div class="toast-container" id="toastContainer"></div>
 

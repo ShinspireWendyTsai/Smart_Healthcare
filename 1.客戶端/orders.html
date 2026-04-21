@@ -47,11 +47,11 @@
             <label for="orderStatusSelect" class="order-status-filter-label">訂單狀態</label>
             <div class="order-status-select-wrap">
                 <select id="orderStatusSelect" class="order-status-select" aria-label="訂單狀態篩選">
-                    <option value="all">全部</option>
-                    <option value="pending" selected>待付款</option>
-                    <option value="paid">已付款</option>
+                    <option value="all" selected>全部</option>
                     <option value="processing">處理中</option>
+                    <option value="confirmed">已確認</option>
                     <option value="completed">已完成</option>
+                    <option value="refunded">已退款</option>
                     <option value="cancelled">已取消</option>
                 </select>
                 <i class="fas fa-chevron-down order-status-select-icon" aria-hidden="true"></i>
@@ -60,11 +60,11 @@
 
         <!-- 主要內容區 -->
         <main class="main-content">
-            <!-- 訂單卡片 0 - 待付款 -->
-            <div class="order-card" data-status="pending">
+            <!-- 訂單卡片 0 - 處理中 -->
+            <div class="order-card" data-status="processing">
                 <div class="order-header">
                     <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202603050001</span>
-                    <span class="order-status pending">待付款</span>
+                    <span class="order-status processing">處理中</span>
                 </div>
                 <div class="order-body">
                     <div class="order-item">
@@ -87,11 +87,11 @@
                 </div>
             </div>
 
-            <!-- 訂單卡片 0-2 - 待付款 -->
-            <div class="order-card" data-status="pending">
+            <!-- 訂單卡片 0-2 - 處理中 -->
+            <div class="order-card" data-status="processing">
                 <div class="order-header">
                     <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202603050002</span>
-                    <span class="order-status pending">待付款</span>
+                    <span class="order-status processing">處理中</span>
                 </div>
                 <div class="order-body">
                     <div class="order-item">
@@ -114,11 +114,11 @@
                 </div>
             </div>
 
-            <!-- 訂單卡片 1 - 已付款 -->
-            <div class="order-card" data-status="paid">
+            <!-- 訂單卡片 1 - 已確認 -->
+            <div class="order-card" data-status="confirmed">
                 <div class="order-header">
                     <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202601280001</span>
-                    <span class="order-status paid">已付款</span>
+                    <span class="order-status confirmed">已確認</span>
                 </div>
                 <div class="order-body">
                     <div class="order-item">
@@ -197,6 +197,32 @@
                     </div>
                     <div class="order-actions">
                         <button class="btn btn-primary" onclick="navigateTo('order-detail.html?id=ORD202601200012')">查看詳情</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 訂單卡片 5 - 已退款 -->
+            <div class="order-card" data-status="refunded">
+                <div class="order-header">
+                    <span style="font-size: 16px; color: #4a4a4a;">訂單編號：ORD202601150008</span>
+                    <span class="order-status refunded">已退款</span>
+                </div>
+                <div class="order-body">
+                    <div class="order-item">
+                        <div class="order-item-image order-item-image-2"></div>
+                        <div class="order-item-info">
+                            <div class="order-item-name">健康檢測套餐</div>
+                            <div class="order-item-spec">單次服務 × 1</div>
+                        </div>
+                        <div class="order-item-price">NT$ 2,500</div>
+                    </div>
+                </div>
+                <div class="order-footer">
+                    <div class="order-total">
+                        共 1 項，合計：<span>NT$ 2,500</span>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn btn-primary" onclick="navigateTo('order-detail.html?id=ORD202601150008')">查看詳情</button>
                     </div>
                 </div>
             </div>
