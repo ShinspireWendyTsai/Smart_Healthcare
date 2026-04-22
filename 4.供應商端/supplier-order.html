@@ -1,227 +1,533 @@
-﻿<!DOCTYPE html>
-<html lang=zh-TW>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-    <meta charset=UTF-8>
-    <meta name=viewport content=width=device-width, initial-scale=1.0>
-    <title>訂單詳情 - 供應商端管理系統</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>供應商訂單管理 - 全方位智慧貼身照護平台</title>
     <!-- Font Awesome CDN -->
-    <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
-    <link rel=stylesheet href=css/supplier.css>
+    <link rel="stylesheet" href="css/supplier.css">
 </head>
 <body>
-    <div class=admin-layout>
-        <!-- 頂部導覽列 -->
-        <header class=top-navbar>
-            <div class=navbar-left>
-                <a href=supplier-orders.html class=back-button title=返回訂單列表>
-                    <i class=fas fa-arrow-left></i>
-                </a>
-                <div class=navbar-brand>
-                    <i class=fas fa-shield-alt></i>
-                    <span>智慧照護平台 - 供應商管理系統</span>
+
+    <!-- ============================================= -->
+    <!-- 第一層：密碼驗證閘門 -->
+    <!-- ============================================= -->
+    <div class="auth-gate" id="authGate">
+        <div class="auth-container">
+            <!-- 品牌識別 -->
+            <div class="auth-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1 class="auth-title">智慧照護平台</h1>
+                <p class="auth-subtitle">供應商訂單管理系統</p>
+            </div>
+
+            <!-- 訂單摘要（驗證前可見） -->
+            <div class="auth-order-preview">
+                <div class="preview-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="preview-info">
+                    <div class="preview-label">訂單編號</div>
+                    <div class="preview-value" id="previewOrderId">#ORD-2026040101</div>
                 </div>
             </div>
-            
-            <div class=navbar-right>
-                <div class=user-dropdown>
-                    <div class=user-avatar>供</div>
-                    <div class=user-info>
-                        <div class=user-name>春暉藥局</div>
-                        <div class=user-role>供應商</div>
+
+            <!-- 密碼輸入表單 -->
+            <form class="auth-form" id="authForm" onsubmit="return handleAuth(event)">
+                <div class="form-group">
+                    <label class="form-label" for="supplierPassword">
+                        <i class="fas fa-lock"></i>
+                        請輸入供應商密碼
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input 
+                            type="password" 
+                            id="supplierPassword" 
+                            class="form-control" 
+                            placeholder="輸入與平台約定的供應商密碼"
+                            required
+                            autocomplete="off"
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                        </button>
                     </div>
-                    <button class=btn btn-outline btn-sm onclick=handleLogout()>
-                        <i class=fas fa-sign-out-alt></i>
-                        登出
-                    </button>
-                </div>
-            </div>
-        </header>
-
-        <!-- 主要內容區 -->
-        <div class=main-content>
-            <!-- 頁面標題 -->
-            <div class=page-header>
-                <div>
-                    <h1 class=page-title>訂單詳情</h1>
-                    <p class=page-subtitle>訂單編號：#ORD-2026040101</p>
-                </div>
-                <div>
-                    <span class=status-badge style=background: #ffa500; color: white; font-size: 14px;>待處理</span>
-                </div>
-            </div>
-
-            <!-- 訂單基本資訊 -->
-            <div class=card>
-                <div class=card-header>
-                    <h3 class=card-title>
-                        <i class=fas fa-info-circle></i> 訂單基本資訊
-                    </h3>
-                </div>
-                <div class=card-body>
-                    <div style=display: grid; grid-template-columns: 1fr 1fr; gap: 20px;>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>訂單編號</div>
-                            <div style=font-weight: bold; font-size: 16px;>#ORD-2026040101</div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>訂單狀態</div>
-                            <div><span class=status-badge style=background: #ffa500; color: white;>待處理</span></div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>訂單日期</div>
-                            <div style=font-weight: bold;>2026/04/20 10:30</div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>預計出貨日期</div>
-                            <div style=font-weight: bold;>2026/04/25</div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>機構名稱</div>
-                            <div style=font-weight: bold;>陽光長照中心</div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>機構編號</div>
-                            <div style=font-weight: bold;>ORG2024001</div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>聯絡電話</div>
-                            <div style=font-weight: bold;>04-2262-1234</div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>聯絡人</div>
-                            <div style=font-weight: bold;>陳小華</div>
-                        </div>
+                    <div class="form-error" id="authError" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="authErrorMsg">密碼錯誤，請重新輸入</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- 訂購商品 -->
-            <div class=card style=margin-top: 20px;>
-                <div class=card-header>
-                    <h3 class=card-title>
-                        <i class=fas fa-box></i> 訂購商品
-                    </h3>
-                </div>
-                <div class=card-body>
-                    <div class=table-responsive>
-                        <table class=data-table>
-                            <thead>
-                                <tr>
-                                    <th>商品名稱</th>
-                                    <th>規格</th>
-                                    <th>單位</th>
-                                    <th>數量</th>
-                                    <th>單價</th>
-                                    <th>小計</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>維他命B12注射液</td>
-                                    <td>1000mcg/mL</td>
-                                    <td>支</td>
-                                    <td>50</td>
-                                    <td>NT</td>
-                                    <td>NT,000</td>
-                                </tr>
-                                <tr>
-                                    <td>血糖試片</td>
-                                    <td>50片/盒</td>
-                                    <td>盒</td>
-                                    <td>20</td>
-                                    <td>NT</td>
-                                    <td>NT,600</td>
-                                </tr>
-                                <tr>
-                                    <td>膠布（防水）</td>
-                                    <td>50mm×50m</td>
-                                    <td>捲</td>
-                                    <td>5</td>
-                                    <td>NT</td>
-                                    <td>NT</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- 金額統計 -->
-                    <div style=margin-top: 20px; text-align: right; padding-top: 20px; border-top: 1px solid #e0e0e0;>
-                        <div style=display: grid; grid-template-columns: 200px 150px; gap: 10px; margin-left: auto; width: fit-content;>
-                            <div style=text-align: right;>小計</div>
-                            <div style=font-weight: bold; text-align: right;>NT,500</div>
-                            <div style=text-align: right;>運費</div>
-                            <div style=font-weight: bold; text-align: right;>NT,000</div>
-                            <div style=text-align: right; font-size: 16px; font-weight: bold; color: #e74c3c;>合計</div>
-                            <div style=font-weight: bold; text-align: right; font-size: 16px; color: #e74c3c;>NT,500</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 配送資訊 -->
-            <div class=card style=margin-top: 20px;>
-                <div class=card-header>
-                    <h3 class=card-title>
-                        <i class=fas fa-truck></i> 配送資訊
-                    </h3>
-                </div>
-                <div class=card-body>
-                    <div style=display: grid; grid-template-columns: 1fr 1fr; gap: 20px;>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>配送地址</div>
-                            <div style=font-weight: bold;>台中市西區民生路一段 88 號 6F</div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>配送方式</div>
-                            <div style=font-weight: bold;>宅配（含簽收）</div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>收貨人</div>
-                            <div style=font-weight: bold;>陳小華</div>
-                        </div>
-                        <div>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>收貨電話</div>
-                            <div style=font-weight: bold;>04-2262-1234</div>
-                        </div>
-                        <div style=grid-column: span 2;>
-                            <div style=color: #666; font-size: 12px; margin-bottom: 4px;>備註</div>
-                            <div style=font-weight: bold;>請於營業時間內送達，感謝。</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 操作按鈕 -->
-            <div style=margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;>
-                <button class=btn btn-outline onclick=printOrder()>
-                    <i class=fas fa-print></i> 列印
+                <button type="submit" class="btn btn-primary btn-block" id="authSubmitBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    驗證進入
                 </button>
-                <button class=btn btn-success onclick=confirmOrder()>
-                    <i class=fas fa-check></i> 確認訂單
-                </button>
+            </form>
+
+            <!-- 安全提示 -->
+            <div class="auth-footer">
+                <p><i class="fas fa-info-circle"></i> 此連結為供應商專屬訂單頁面，請勿將連結或密碼提供給第三方。</p>
             </div>
         </div>
     </div>
 
-    <script>
-        function handleLogout() {
-            if (confirm('確定要登出？')) {
-                window.location.href = '#';
-            }
-        }
+    <!-- ============================================= -->
+    <!-- 第二層：訂單管理主畫面（驗證後顯示） -->
+    <!-- ============================================= -->
+    <div class="order-page" id="orderPage" style="display: none;">
 
-        function printOrder() {
-            window.print();
-        }
+        <!-- 頂部導覽列 -->
+        <header class="supplier-navbar">
+            <div class="navbar-brand">
+                <a href="supplier-orders.html" class="back-to-list" title="返回訂單列表">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <i class="fas fa-shield-alt"></i>
+                <span>智慧照護平台｜供應商訂單</span>
+            </div>
+            <div class="navbar-right">
+                <span class="supplier-name" id="supplierNameDisplay">
+                    <i class="fas fa-store"></i>
+                    健康生活有限公司
+                </span>
+                <button class="btn btn-outline btn-sm" onclick="handleLogout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    離開
+                </button>
+            </div>
+        </header>
 
-        function confirmOrder() {
-            if (confirm('確認接受此訂單？')) {
-                alert('訂單已確認');
-                window.location.href = 'supplier-orders.html';
-            }
-        }
-    </script>
-    <script src=js/admin.js></script>
+        <!-- 主要內容 -->
+        <main class="order-main">
+
+            <!-- 訂單狀態時間軸 -->
+            <section class="order-timeline-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-route"></i> 訂單進度</h2>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-step completed">
+                        <div class="step-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="step-info">
+                            <div class="step-label">訂單成立</div>
+                            <div class="step-time">2026/04/01 10:30</div>
+                        </div>
+                    </div>
+                    <div class="timeline-connector completed"></div>
+                    <div class="timeline-step completed">
+                        <div class="step-icon"><i class="fas fa-credit-card"></i></div>
+                        <div class="step-info">
+                            <div class="step-label">已付款</div>
+                            <div class="step-time">2026/04/01 10:35</div>
+                        </div>
+                    </div>
+                    <div class="timeline-connector completed"></div>
+                    <div class="timeline-step active">
+                        <div class="step-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="step-info">
+                            <div class="step-label">通知供應商</div>
+                            <div class="step-time">2026/04/01 10:36</div>
+                        </div>
+                    </div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-step">
+                        <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="step-info">
+                            <div class="step-label">供應商確認</div>
+                            <div class="step-time">等待中</div>
+                        </div>
+                    </div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-step">
+                        <div class="step-icon"><i class="fas fa-truck"></i></div>
+                        <div class="step-info">
+                            <div class="step-label">已出貨</div>
+                            <div class="step-time">等待中</div>
+                        </div>
+                    </div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-step">
+                        <div class="step-icon"><i class="fas fa-box-open"></i></div>
+                        <div class="step-info">
+                            <div class="step-label">已送達</div>
+                            <div class="step-time">等待中</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 訂單基本資訊 -->
+            <section class="order-info-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-invoice"></i> 訂單資訊</h2>
+                    <span class="order-status-badge status-waiting">待供應商確認</span>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">訂單編號</div>
+                        <div class="info-value highlight">#ORD-2026040101</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">訂單日期</div>
+                        <div class="info-value">2026/04/01 10:30</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">付款狀態</div>
+                        <div class="info-value">
+                            <span class="status-dot success"></span> 已付款
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">付款方式</div>
+                        <div class="info-value">ATM 匯款</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 收件人資訊 -->
+            <section class="recipient-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-map-marker-alt"></i> 配送資訊</h2>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">收件人</div>
+                        <div class="info-value">王大明</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">聯絡電話</div>
+                        <div class="info-value">0912-345-678</div>
+                    </div>
+                    <div class="info-card full-width">
+                        <div class="info-label">配送地址</div>
+                        <div class="info-value">台北市大安區忠孝東路四段120號</div>
+                    </div>
+                    <div class="info-card full-width">
+                        <div class="info-label">備註</div>
+                        <div class="info-value note">請於工作日白天配送，管理員代收即可。</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 訂購商品明細 -->
+            <section class="items-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list-alt"></i> 訂購商品明細</h2>
+                </div>
+                <div class="items-table-wrapper">
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>商品名稱</th>
+                                <th>規格</th>
+                                <th>數量</th>
+                                <th>單價</th>
+                                <th>小計</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="item-name">
+                                        <div class="item-icon"><i class="fas fa-pills"></i></div>
+                                        <span>綜合維他命B群</span>
+                                    </div>
+                                </td>
+                                <td>60粒/瓶</td>
+                                <td>2</td>
+                                <td>$580</td>
+                                <td class="amount">$1,160</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="item-name">
+                                        <div class="item-icon"><i class="fas fa-capsules"></i></div>
+                                        <span>高濃度魚油 Omega-3</span>
+                                    </div>
+                                </td>
+                                <td>120粒/瓶</td>
+                                <td>1</td>
+                                <td>$1,280</td>
+                                <td class="amount">$1,280</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="item-name">
+                                        <div class="item-icon"><i class="fas fa-leaf"></i></div>
+                                        <span>葉黃素膠囊</span>
+                                    </div>
+                                </td>
+                                <td>30粒/盒</td>
+                                <td>3</td>
+                                <td>$420</td>
+                                <td class="amount">$1,260</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 金額小計 -->
+                <div class="price-summary">
+                    <div class="price-row">
+                        <span>商品小計</span>
+                        <span>$3,700</span>
+                    </div>
+                    <div class="price-row">
+                        <span>運費</span>
+                        <span>$0（免運）</span>
+                    </div>
+                    <div class="price-row">
+                        <span>折扣</span>
+                        <span class="discount">-$200</span>
+                    </div>
+                    <div class="price-row total">
+                        <span>訂單總計</span>
+                        <span>$3,500</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================= -->
+            <!-- 供應商操作區 -->
+            <!-- ============================================= -->
+            <section class="supplier-actions-section" id="supplierActions">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> 出貨管理</h2>
+                </div>
+
+                <!-- 操作步驟卡片 -->
+                <div class="action-cards">
+
+                    <!-- 步驟 1：確認接單 -->
+                    <div class="action-card" id="stepConfirm">
+                        <div class="action-card-header">
+                            <div class="step-number">1</div>
+                            <h3>確認接單</h3>
+                            <span class="step-status" id="stepConfirmStatus">待處理</span>
+                        </div>
+                        <div class="action-card-body">
+                            <p class="action-desc">請確認您已收到此訂單，並可於預計時間內出貨。</p>
+                            <div class="form-group">
+                                <label class="form-label">預計出貨日期</label>
+                                <input type="date" class="form-control" id="estimatedShipDate">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">接單備註（選填）</label>
+                                <textarea class="form-control" rows="2" id="confirmNote" placeholder="如有特殊情況請於此說明"></textarea>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="confirmOrder()">
+                                    <i class="fas fa-check"></i> 確認接單
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="showRejectModal()">
+                                    <i class="fas fa-times"></i> 無法接單
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 步驟 2：出貨資訊 -->
+                    <div class="action-card disabled" id="stepShipping">
+                        <div class="action-card-header">
+                            <div class="step-number">2</div>
+                            <h3>填寫出貨資訊</h3>
+                            <span class="step-status">等待上一步</span>
+                        </div>
+                        <div class="action-card-body">
+                            <p class="action-desc">請填寫物流資訊，以便平台與客戶追蹤貨物。</p>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">物流公司</label>
+                                    <select class="form-control" id="shippingCarrier">
+                                        <option value="">請選擇物流公司</option>
+                                        <option value="黑貓宅急便">黑貓宅急便</option>
+                                        <option value="新竹物流">新竹物流</option>
+                                        <option value="宅配通">宅配通</option>
+                                        <option value="郵局包裹">郵局包裹</option>
+                                        <option value="嘉里大榮">嘉里大榮</option>
+                                        <option value="other">其他</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">貨運追蹤編號</label>
+                                    <input type="text" class="form-control" id="trackingNumber" placeholder="輸入物流追蹤編號">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">實際出貨日期</label>
+                                <input type="date" class="form-control" id="actualShipDate">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">出貨備註（選填）</label>
+                                <textarea class="form-control" rows="2" id="shippingNote" placeholder="包裹件數、特殊包裝說明等"></textarea>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="submitShipping()">
+                                    <i class="fas fa-truck"></i> 確認出貨
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 步驟 3：送達確認 -->
+                    <div class="action-card disabled" id="stepDelivery">
+                        <div class="action-card-header">
+                            <div class="step-number">3</div>
+                            <h3>送達確認</h3>
+                            <span class="step-status">等待上一步</span>
+                        </div>
+                        <div class="action-card-body">
+                            <p class="action-desc">貨物送達後，請確認配送完成。若有異常請回報。</p>
+                            <div class="delivery-status-display" style="display: none;" id="deliveryInfo">
+                                <div class="tracking-info">
+                                    <div class="tracking-row">
+                                        <span class="tracking-label">物流公司</span>
+                                        <span class="tracking-value" id="displayCarrier">—</span>
+                                    </div>
+                                    <div class="tracking-row">
+                                        <span class="tracking-label">追蹤編號</span>
+                                        <span class="tracking-value" id="displayTracking">—</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-success" onclick="confirmDelivery()">
+                                    <i class="fas fa-box-open"></i> 確認已送達
+                                </button>
+                                <button class="btn btn-outline-warning" onclick="showIssueModal()">
+                                    <i class="fas fa-exclamation-triangle"></i> 回報異常
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 操作歷程 -->
+            <section class="history-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-history"></i> 操作歷程</h2>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="history-item">
+                        <div class="history-icon system"><i class="fas fa-robot"></i></div>
+                        <div class="history-content">
+                            <div class="history-title">系統自動發送訂單通知信至供應商</div>
+                            <div class="history-time">2026/04/01 10:36</div>
+                        </div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon system"><i class="fas fa-credit-card"></i></div>
+                        <div class="history-content">
+                            <div class="history-title">客戶已完成付款（ATM 匯款）</div>
+                            <div class="history-time">2026/04/01 10:35</div>
+                        </div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon system"><i class="fas fa-file-alt"></i></div>
+                        <div class="history-content">
+                            <div class="history-title">訂單成立</div>
+                            <div class="history-time">2026/04/01 10:30</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- 頁尾 -->
+        <footer class="supplier-footer">
+            <p>&copy; 2026 全方位智慧貼身照護平台．供應商訂單管理系統</p>
+            <p class="footer-note">如有任何問題，請聯絡平台客服：service@smartcare.com.tw</p>
+        </footer>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- 無法接單 Modal -->
+    <!-- ============================================= -->
+    <div class="modal-overlay" id="rejectModal" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4><i class="fas fa-times-circle"></i> 無法接單原因</h4>
+                    <button class="modal-close" onclick="closeModal('rejectModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">無法接單原因</label>
+                        <select class="form-control" id="rejectReason">
+                            <option value="">請選擇原因</option>
+                            <option value="缺貨">商品缺貨</option>
+                            <option value="停產">商品已停產</option>
+                            <option value="配送區域限制">無法配送至該地區</option>
+                            <option value="other">其他原因</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">詳細說明</label>
+                        <textarea class="form-control" rows="3" id="rejectDetail" placeholder="請說明無法接單的具體原因"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('rejectModal')">取消</button>
+                    <button class="btn btn-danger" onclick="rejectOrder()">
+                        <i class="fas fa-times"></i> 確認拒絕
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- 回報異常 Modal -->
+    <!-- ============================================= -->
+    <div class="modal-overlay" id="issueModal" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4><i class="fas fa-exclamation-triangle"></i> 回報配送異常</h4>
+                    <button class="modal-close" onclick="closeModal('issueModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">異常類型</label>
+                        <select class="form-control" id="issueType">
+                            <option value="">請選擇異常類型</option>
+                            <option value="配送延遲">配送延遲</option>
+                            <option value="部分商品缺貨">部分商品缺貨</option>
+                            <option value="商品損壞">商品損壞</option>
+                            <option value="地址無法送達">地址無法送達</option>
+                            <option value="收件人拒收">收件人拒收</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">異常說明</label>
+                        <textarea class="form-control" rows="3" id="issueDetail" placeholder="請詳細描述異常情況"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('issueModal')">取消</button>
+                    <button class="btn btn-warning" onclick="reportIssue()">
+                        <i class="fas fa-paper-plane"></i> 送出回報
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- 操作成功提示 -->
+    <!-- ============================================= -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="js/supplier.js"></script>
 </body>
 </html>

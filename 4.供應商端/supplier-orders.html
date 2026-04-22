@@ -1,188 +1,546 @@
-﻿<!DOCTYPE html>
-<html lang=zh-TW>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-    <meta charset=UTF-8>
-    <meta name=viewport content=width=device-width, initial-scale=1.0>
-    <title>訂單列表 - 供應商端管理系統</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>供應商訂單列表 - 全方位智慧貼身照護平台</title>
     <!-- Font Awesome CDN -->
-    <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 自訂樣式 -->
-    <link rel=stylesheet href=css/supplier.css>
+    <link rel="stylesheet" href="css/supplier.css">
 </head>
 <body>
-    <div class=admin-layout>
-        <!-- 頂部導覽列 -->
-        <header class=top-navbar>
-            <div class=navbar-left>
-                <div class=navbar-brand>
-                    <i class=fas fa-shield-alt></i>
-                    <span>智慧照護平台 - 供應商管理系統</span>
+
+    <!-- ============================================= -->
+    <!-- 第一層：密碼驗證閘門 -->
+    <!-- ============================================= -->
+    <div class="auth-gate" id="authGate">
+        <div class="auth-container">
+            <!-- 品牌識別 -->
+            <div class="auth-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1 class="auth-title">智慧照護平台</h1>
+                <p class="auth-subtitle">供應商訂單管理系統</p>
+            </div>
+
+            <!-- 供應商識別區 -->
+            <div class="auth-order-preview">
+                <div class="preview-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="preview-info">
+                    <div class="preview-label">供應商入口</div>
+                    <div class="preview-value" id="previewSupplierName">訂單總覽</div>
                 </div>
             </div>
-            
-            <div class=navbar-right>
-                <div class=user-dropdown>
-                    <div class=user-avatar>供</div>
-                    <div class=user-info>
-                        <div class=user-name>春暉藥局</div>
-                        <div class=user-role>供應商</div>
+
+            <!-- 密碼輸入表單 -->
+            <form class="auth-form" id="authForm" onsubmit="return handleAuth(event)">
+                <div class="form-group">
+                    <label class="form-label" for="supplierPassword">
+                        <i class="fas fa-lock"></i>
+                        請輸入供應商密碼
+                    </label>
+                    <div class="password-input-wrapper">
+                        <input 
+                            type="password" 
+                            id="supplierPassword" 
+                            class="form-control" 
+                            placeholder="輸入與平台約定的供應商密碼"
+                            required
+                            autocomplete="off"
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                        </button>
                     </div>
-                    <button class=btn btn-outline btn-sm onclick=handleLogout()>
-                        <i class=fas fa-sign-out-alt></i>
-                        登出
-                    </button>
+                    <div class="form-error" id="authError" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="authErrorMsg">密碼錯誤，請重新輸入</span>
+                    </div>
                 </div>
+                <button type="submit" class="btn btn-primary btn-block" id="authSubmitBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    驗證進入
+                </button>
+            </form>
+
+            <!-- 安全提示 -->
+            <div class="auth-footer">
+                <p><i class="fas fa-info-circle"></i> 此連結為供應商專屬頁面，請勿將連結或密碼提供給第三方。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- 第二層：訂單列表主畫面（驗證後顯示） -->
+    <!-- ============================================= -->
+    <div class="order-page" id="orderPage" style="display: none;">
+
+        <!-- 頂部導覽列 -->
+        <header class="supplier-navbar">
+            <div class="navbar-brand">
+                <i class="fas fa-shield-alt"></i>
+                <span>智慧照護平台｜供應商訂單</span>
+            </div>
+            <div class="navbar-right">
+                <span class="supplier-name" id="supplierNameDisplay">
+                    <i class="fas fa-store"></i>
+                    健康生活有限公司
+                </span>
+                <button class="btn btn-outline btn-sm" onclick="handleLogout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    離開
+                </button>
             </div>
         </header>
 
-        <!-- 主要內容區 -->
-        <div class=main-content>
-            <!-- 頁面標題 -->
-            <div class=page-header>
-                <div>
-                    <h1 class=page-title>訂單列表</h1>
-                    <p class=page-subtitle>查看和管理所有訂單</p>
+        <!-- 主要內容 -->
+        <main class="order-main">
+
+            <!-- 統計摘要卡片 -->
+            <section class="stats-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-bar"></i> 訂單概況</h2>
+                    <span class="stats-period">近 30 日</span>
                 </div>
-            </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon waiting"><i class="fas fa-bell"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="statWaiting">3</div>
+                            <div class="stat-label">待確認</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon confirmed"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="statConfirmed">2</div>
+                            <div class="stat-label">待出貨</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon shipped"><i class="fas fa-truck"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="statShipped">1</div>
+                            <div class="stat-label">配送中</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon delivered"><i class="fas fa-check-double"></i></div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="statDelivered">12</div>
+                            <div class="stat-label">已完成</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-            <!-- 篩選工具列 -->
-            <div class=card>
-                <div class=card-body>
-                    <div class=filter-toolbar>
-                        <div class=filter-left>
-                            <div class=search-box style=width: 300px;>
-                                <i class=fas fa-search></i>
-                                <input type=text placeholder=搜尋訂單編號、機構名稱... onkeyup=searchTable('orderTable', this.value)>
+            <!-- 篩選與搜尋列 -->
+            <section class="filter-section">
+                <div class="filter-bar">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-filter="all" onclick="filterOrders('all', this)">
+                            全部 <span class="tab-count">18</span>
+                        </button>
+                        <button class="filter-tab" data-filter="notified" onclick="filterOrders('notified', this)">
+                            待確認 <span class="tab-count">3</span>
+                        </button>
+                        <button class="filter-tab" data-filter="confirmed" onclick="filterOrders('confirmed', this)">
+                            待出貨 <span class="tab-count">2</span>
+                        </button>
+                        <button class="filter-tab" data-filter="shipped" onclick="filterOrders('shipped', this)">
+                            配送中 <span class="tab-count">1</span>
+                        </button>
+                        <button class="filter-tab" data-filter="delivered" onclick="filterOrders('delivered', this)">
+                            已完成 <span class="tab-count">12</span>
+                        </button>
+                    </div>
+                    <div class="filter-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="搜尋訂單編號..." id="orderSearch" oninput="searchOrders(this.value)">
+                        </div>
+                        <select class="form-control filter-select" id="dateRange" onchange="filterByDate(this.value)">
+                            <option value="30">近 30 日</option>
+                            <option value="90">近 3 個月</option>
+                            <option value="180">近半年</option>
+                            <option value="all">全部</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 訂單列表 -->
+            <section class="order-list-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list-ul"></i> 訂單列表</h2>
+                    <span class="result-count" id="resultCount">共 18 筆</span>
+                </div>
+                <div class="order-list" id="orderList">
+
+                    <!-- 訂單項目 1: 待確認 -->
+                    <div class="order-list-item" data-status="notified" data-order-id="ORD-2026040103">
+                        <div class="order-item-header">
+                            <div class="order-item-id">
+                                <span class="order-number">#ORD-2026040103</span>
+                                <span class="order-date">2026/04/01 14:20</span>
                             </div>
-                            <select class=form-control style=width: 150px;>
-                                <option value=">全部狀態</option>
- <option value=pending>待處理</option>
- <option value=confirmed>已確認</option>
- <option value=shipped>已出貨</option>
- <option value=delivered>已送達</option>
- </select>
- <input type=date class=form-control style=width: 150px;>
- <span>至</span>
- <input type=date class=form-control style=width: 150px;>
- </div>
- <div class=filter-right>
- <button class=btn btn-outline>
- <i class=fas fa-filter></i> 進階篩選
- </button>
- <button class=btn btn-outline onclick=exportTableToCSV('orderTable', '訂單列表.csv')>
- <i class=fas fa-download></i> 匯出 Excel
- </button>
- </div>
- </div>
- </div>
- </div>
+                            <span class="order-status-badge status-waiting">待確認</span>
+                        </div>
+                        <div class="order-item-body">
+                            <div class="order-item-products">
+                                <div class="product-tag"><i class="fas fa-pills"></i> 綜合維他命B群 ×2</div>
+                                <div class="product-tag"><i class="fas fa-leaf"></i> 葉黃素膠囊 ×1</div>
+                            </div>
+                            <div class="order-item-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>台北市大安區</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="order-amount">$1,580</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-item-footer">
+                            <span class="urgency-tag urgent"><i class="fas fa-clock"></i> 等待 2 小時</span>
+                            <a href="supplier-order.html?order=ORD-2026040103" class="btn btn-primary btn-sm">
+                                <i class="fas fa-arrow-right"></i> 處理訂單
+                            </a>
+                        </div>
+                    </div>
 
- <!-- 訂單列表 -->
- <div class=card>
- <div class=card-body>
- <div class=table-responsive>
- <table class=data-table id=orderTable>
- <thead>
- <tr>
- <th><input type=checkbox class=select-all></th>
- <th>訂單編號</th>
- <th>機構名稱</th>
- <th>訂購金額</th>
- <th>訂單日期</th>
- <th>預計出貨</th>
- <th>狀態</th>
- <th>操作</th>
- </tr>
- </thead>
- <tbody>
- <tr>
- <td><input type=checkbox></td>
- <td><a href=supplier-order.html style=color: #3b82f6; text-decoration: none;>#ORD-2026040101</a></td>
- <td>陽光長照中心</td>
- <td>NT,500</td>
- <td>2026/04/20</td>
- <td>2026/04/25</td>
- <td><span class=status-badge style=background: #ffa500; color: white;>待處理</span></td>
- <td>
- <div class=table-actions>
- <button class=btn btn-sm btn-outline>
- <i class=fas fa-eye></i>
- </button>
- </div>
- </td>
- </tr>
- <tr>
- <td><input type=checkbox></td>
- <td><a href=supplier-order.html style=color: #3b82f6; text-decoration: none;>#ORD-2026040102</a></td>
- <td>幸福居家照護</td>
- <td>NT,200</td>
- <td>2026/04/19</td>
- <td>2026/04/24</td>
- <td><span class=status-badge style=background: #27ae60; color: white;>已確認</span></td>
- <td>
- <div class=table-actions>
- <button class=btn btn-sm btn-outline>
- <i class=fas fa-eye></i>
- </button>
- </div>
- </td>
- </tr>
- </tbody>
- </table>
- </div>
- </div>
- </div>
- </div>
- </div>
+                    <!-- 訂單項目 2: 待確認 -->
+                    <div class="order-list-item" data-status="notified" data-order-id="ORD-2026040102">
+                        <div class="order-item-header">
+                            <div class="order-item-id">
+                                <span class="order-number">#ORD-2026040102</span>
+                                <span class="order-date">2026/04/01 11:45</span>
+                            </div>
+                            <span class="order-status-badge status-waiting">待確認</span>
+                        </div>
+                        <div class="order-item-body">
+                            <div class="order-item-products">
+                                <div class="product-tag"><i class="fas fa-capsules"></i> 高濃度魚油 Omega-3 ×3</div>
+                            </div>
+                            <div class="order-item-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>新北市板橋區</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="order-amount">$3,840</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-item-footer">
+                            <span class="urgency-tag urgent"><i class="fas fa-clock"></i> 等待 5 小時</span>
+                            <a href="supplier-order.html?order=ORD-2026040102" class="btn btn-primary btn-sm">
+                                <i class="fas fa-arrow-right"></i> 處理訂單
+                            </a>
+                        </div>
+                    </div>
 
- <script>
- function handleLogout() {
- if (confirm('確定要登出？')) {
- window.location.href = '#';
- }
- }
+                    <!-- 訂單項目 3: 待確認 -->
+                    <div class="order-list-item" data-status="notified" data-order-id="ORD-2026040101">
+                        <div class="order-item-header">
+                            <div class="order-item-id">
+                                <span class="order-number">#ORD-2026040101</span>
+                                <span class="order-date">2026/04/01 10:30</span>
+                            </div>
+                            <span class="order-status-badge status-waiting">待確認</span>
+                        </div>
+                        <div class="order-item-body">
+                            <div class="order-item-products">
+                                <div class="product-tag"><i class="fas fa-pills"></i> 綜合維他命B群 ×2</div>
+                                <div class="product-tag"><i class="fas fa-capsules"></i> 高濃度魚油 ×1</div>
+                                <div class="product-tag"><i class="fas fa-leaf"></i> 葉黃素膠囊 ×3</div>
+                            </div>
+                            <div class="order-item-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>台北市大安區</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="order-amount">$3,500</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-item-footer">
+                            <span class="urgency-tag warning"><i class="fas fa-clock"></i> 等待 6 小時</span>
+                            <a href="supplier-order.html?order=ORD-2026040101" class="btn btn-primary btn-sm">
+                                <i class="fas fa-arrow-right"></i> 處理訂單
+                            </a>
+                        </div>
+                    </div>
 
- function searchTable(tableId, searchValue) {
- const table = document.getElementById(tableId);
- const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
- for (let row of rows) {
- const text = row.innerText.toLowerCase();
- row.style.display = text.includes(searchValue.toLowerCase()) ? '' : 'none';
- }
- }
+                    <!-- 訂單項目 4: 待出貨（已確認） -->
+                    <div class="order-list-item" data-status="confirmed" data-order-id="ORD-2026033105">
+                        <div class="order-item-header">
+                            <div class="order-item-id">
+                                <span class="order-number">#ORD-2026033105</span>
+                                <span class="order-date">2026/03/31 16:00</span>
+                            </div>
+                            <span class="order-status-badge status-confirmed">待出貨</span>
+                        </div>
+                        <div class="order-item-body">
+                            <div class="order-item-products">
+                                <div class="product-tag"><i class="fas fa-heart"></i> 納豆紅麴膠囊 ×2</div>
+                                <div class="product-tag"><i class="fas fa-pills"></i> 鈣+D3錠 ×1</div>
+                            </div>
+                            <div class="order-item-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>桃園市中壢區</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="order-amount">$2,100</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span>預計 04/02 出貨</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-item-footer">
+                            <span class="urgency-tag info"><i class="fas fa-clipboard-check"></i> 已確認接單</span>
+                            <a href="supplier-order.html?order=ORD-2026033105" class="btn btn-primary btn-sm">
+                                <i class="fas fa-arrow-right"></i> 填寫出貨
+                            </a>
+                        </div>
+                    </div>
 
- function exportTableToCSV(tableId, filename) {
- const table = document.getElementById(tableId);
- let csv = [];
- const headers = [];
- table.querySelectorAll('thead th').forEach(th => {
- headers.push(th.innerText);
- });
- csv.push(headers.join(','));
- table.querySelectorAll('tbody tr').forEach(tr => {
- const cells = [];
- tr.querySelectorAll('td').forEach((td, index) => {
- if (index > 0) cells.push(td.innerText.replace(/,/g, '，'));
- });
- if (cells.length > 0) csv.push(cells.join(','));
- });
- const csvContent = csv.join('\n');
- const link = document.createElement('a');
- link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent('\uFEFF' + csvContent);
- link.download = filename;
- link.click();
- }
+                    <!-- 訂單項目 5: 待出貨（已確認） -->
+                    <div class="order-list-item" data-status="confirmed" data-order-id="ORD-2026033008">
+                        <div class="order-item-header">
+                            <div class="order-item-id">
+                                <span class="order-number">#ORD-2026033008</span>
+                                <span class="order-date">2026/03/30 09:15</span>
+                            </div>
+                            <span class="order-status-badge status-confirmed">待出貨</span>
+                        </div>
+                        <div class="order-item-body">
+                            <div class="order-item-products">
+                                <div class="product-tag"><i class="fas fa-seedling"></i> 益生菌粉 ×5</div>
+                            </div>
+                            <div class="order-item-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>台中市西屯區</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="order-amount">$4,500</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span>預計 04/01 出貨</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-item-footer">
+                            <span class="urgency-tag warning"><i class="fas fa-exclamation-circle"></i> 已逾預計出貨日</span>
+                            <a href="supplier-order.html?order=ORD-2026033008" class="btn btn-primary btn-sm">
+                                <i class="fas fa-arrow-right"></i> 填寫出貨
+                            </a>
+                        </div>
+                    </div>
 
- document.addEventListener('DOMContentLoaded', function() {
- const selectAllCheckbox = document.querySelector('.select-all');
- if (selectAllCheckbox) {
- selectAllCheckbox.addEventListener('change', function() {
- const checkboxes = document.querySelectorAll('tbody input[type=checkbox]');
- checkboxes.forEach(cb => cb.checked = this.checked);
- });
- }
- });
- </script>
- <script src=js/admin.js></script>
+                    <!-- 訂單項目 6: 配送中 -->
+                    <div class="order-list-item" data-status="shipped" data-order-id="ORD-2026032901">
+                        <div class="order-item-header">
+                            <div class="order-item-id">
+                                <span class="order-number">#ORD-2026032901</span>
+                                <span class="order-date">2026/03/29 13:40</span>
+                            </div>
+                            <span class="order-status-badge status-shipped">配送中</span>
+                        </div>
+                        <div class="order-item-body">
+                            <div class="order-item-products">
+                                <div class="product-tag"><i class="fas fa-capsules"></i> 高濃度魚油 Omega-3 ×2</div>
+                                <div class="product-tag"><i class="fas fa-leaf"></i> 葉黃素膠囊 ×2</div>
+                            </div>
+                            <div class="order-item-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>高雄市前鎮區</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="order-amount">$3,400</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-truck"></i>
+                                    <span>黑貓 TW20260330001</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-item-footer">
+                            <span class="urgency-tag info"><i class="fas fa-shipping-fast"></i> 03/30 已出貨</span>
+                            <a href="supplier-order.html?order=ORD-2026032901" class="btn btn-outline btn-sm">
+                                <i class="fas fa-eye"></i> 查看詳情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 訂單項目 7: 已完成 -->
+                    <div class="order-list-item" data-status="delivered" data-order-id="ORD-2026032501">
+                        <div class="order-item-header">
+                            <div class="order-item-id">
+                                <span class="order-number">#ORD-2026032501</span>
+                                <span class="order-date">2026/03/25 10:00</span>
+                            </div>
+                            <span class="order-status-badge status-delivered">已完成</span>
+                        </div>
+                        <div class="order-item-body">
+                            <div class="order-item-products">
+                                <div class="product-tag"><i class="fas fa-pills"></i> 綜合維他命B群 ×1</div>
+                            </div>
+                            <div class="order-item-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>台北市信義區</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="order-amount">$580</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>03/27 已送達</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-item-footer">
+                            <span class="urgency-tag success"><i class="fas fa-check-double"></i> 已完成</span>
+                            <a href="supplier-order.html?order=ORD-2026032501" class="btn btn-outline btn-sm">
+                                <i class="fas fa-eye"></i> 查看詳情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 訂單項目 8: 已完成 -->
+                    <div class="order-list-item" data-status="delivered" data-order-id="ORD-2026032201">
+                        <div class="order-item-header">
+                            <div class="order-item-id">
+                                <span class="order-number">#ORD-2026032201</span>
+                                <span class="order-date">2026/03/22 08:50</span>
+                            </div>
+                            <span class="order-status-badge status-delivered">已完成</span>
+                        </div>
+                        <div class="order-item-body">
+                            <div class="order-item-products">
+                                <div class="product-tag"><i class="fas fa-heart"></i> 納豆紅麴膠囊 ×1</div>
+                                <div class="product-tag"><i class="fas fa-seedling"></i> 益生菌粉 ×2</div>
+                            </div>
+                            <div class="order-item-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>新竹市東區</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="order-amount">$2,680</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>03/24 已送達</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-item-footer">
+                            <span class="urgency-tag success"><i class="fas fa-check-double"></i> 已完成</span>
+                            <a href="supplier-order.html?order=ORD-2026032201" class="btn btn-outline btn-sm">
+                                <i class="fas fa-eye"></i> 查看詳情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 訂單項目 9: 已拒絕 -->
+                    <div class="order-list-item" data-status="rejected" data-order-id="ORD-2026031801">
+                        <div class="order-item-header">
+                            <div class="order-item-id">
+                                <span class="order-number">#ORD-2026031801</span>
+                                <span class="order-date">2026/03/18 15:30</span>
+                            </div>
+                            <span class="order-status-badge status-rejected">已拒絕</span>
+                        </div>
+                        <div class="order-item-body">
+                            <div class="order-item-products">
+                                <div class="product-tag"><i class="fas fa-pills"></i> 已停產商品A ×1</div>
+                            </div>
+                            <div class="order-item-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>台南市安平區</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span class="order-amount">$750</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-times-circle"></i>
+                                    <span>原因：商品已停產</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-item-footer">
+                            <span class="urgency-tag danger"><i class="fas fa-ban"></i> 無法接單</span>
+                            <a href="supplier-order.html?order=ORD-2026031801" class="btn btn-outline btn-sm">
+                                <i class="fas fa-eye"></i> 查看詳情
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 空狀態提示 -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon"><i class="fas fa-inbox"></i></div>
+                    <div class="empty-title">沒有符合條件的訂單</div>
+                    <div class="empty-desc">請嘗試調整篩選條件或搜尋關鍵字</div>
+                </div>
+
+                <!-- 分頁 -->
+                <div class="pagination" id="pagination">
+                    <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- 頁尾 -->
+        <footer class="supplier-footer">
+            <p>&copy; 2026 全方位智慧貼身照護平台．供應商訂單管理系統</p>
+            <p class="footer-note">如有任何問題，請聯絡平台客服：service@smartcare.com.tw</p>
+        </footer>
+    </div>
+
+    <!-- Toast 通知容器 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="js/supplier.js"></script>
+    <script>
+        // 列表頁專用初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const supplierId = params.get('supplier');
+            if (supplierId) {
+                const el = document.getElementById('previewSupplierName');
+                if (el) el.textContent = escapeHtml(supplierId);
+            }
+        });
+    </script>
 </body>
 </html>
