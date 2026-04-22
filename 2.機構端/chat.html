@@ -1,253 +1,152 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>????雓??雓? - ??????????????/title>
+    <title>個案關懷通訊 - 機構端管理系統</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- ?????? -->
+    <!-- 自訂樣式 -->
     <link rel="stylesheet" href="css/admin.css">
-    <style>
-        .chat-header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .chat-header-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 10px;
-            max-width: 340px;
-        }
-
-        .relation-tag-btn {
-            white-space: nowrap;
-        }
-
-        .case-relation-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: flex-end;
-            min-height: 24px;
-        }
-
-        .relation-tag-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(52, 152, 219, 0.12);
-            color: var(--primary-dark);
-            border: 1px solid rgba(52, 152, 219, 0.2);
-            border-radius: 999px;
-            padding: 4px 10px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .relation-tag-chip.editable {
-            padding-right: 6px;
-        }
-
-        .relation-tag-remove {
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            cursor: pointer;
-            width: 18px;
-            height: 18px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-        }
-
-        .relation-tag-remove:hover {
-            color: var(--danger-color);
-        }
-
-        .relation-tag-empty {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
-        .relation-tag-input-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .relation-tag-input-row .form-control {
-            flex: 1;
-        }
-
-        .relation-tag-input-row .btn {
-            white-space: nowrap;
-        }
-
-        #relationTagModal .modal-container {
-            max-width: 560px;
-        }
-
-        @media (max-width: 768px) {
-            .chat-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-            .chat-header-right {
-                width: 100%;
-                align-items: flex-start;
-                max-width: 100%;
-            }
-
-            .case-relation-tags {
-                justify-content: flex-start;
-            }
-
-            .relation-tag-input-row {
-                flex-direction: column;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="admin-layout">
-        <!-- ?????-->
+        <!-- 側邊欄 -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
                     <i class="fas fa-heartbeat"></i>
                 </div>
                 <div>
-                    <div class="sidebar-title">???????徉?賹???/div>
-                    <div class="sidebar-subtitle">??????????????/div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
                 </div>
             </div>
             
             <nav class="sidebar-menu">
                 <div class="menu-section">
-                    <div class="menu-section-title">?豲???鞈對??</div>
+                    <div class="menu-section-title">主要功能</div>
                     
                     <a href="index.html" class="menu-item">
                         <i class="fas fa-tachometer-alt"></i>
-                        <span>????鞊?/span>
+                        <span>儀表板</span>
                     </a>
                     
                     <div class="menu-item" data-submenu="member-submenu">
                         <i class="fas fa-users"></i>
-                        <span>????????豯??</span>
+                        <span>個案會員管理</span>
                         <i class="fas fa-chevron-right arrow"></i>
                     </div>
                     <div class="submenu" id="member-submenu">
                         <a href="members.html" class="menu-item">
-                            <span>????雓飢??/span>
+                            <span>個案列表</span>
                         </a>
-                        <a href="member-binding.html" class="menu-item">
-                            <span>?蝘???獢??</span>
+                                                <a href="member-binding.html" class="menu-item">
+                            <span>綁定設定</span>
                         </a>
                     </div>
                     
                     <a href="orders.html" class="menu-item">
                         <i class="fas fa-shopping-cart"></i>
-                        <span>?畾?????????凋???/span>
+                        <span>訂購清單查詢</span>
                     </a>
                 </div>
                 
                 <div class="menu-section">
-                    <div class="menu-section-title">?????鞈對??</div>
+                    <div class="menu-section-title">機構功能</div>
                     
                     <a href="organization.html" class="menu-item">
                         <i class="fas fa-building"></i>
-                        <span>????????豯??</span>
+                        <span>機構資訊管理</span>
                     </a>
                     
                     <a href="announcements.html" class="menu-item">
                         <i class="fas fa-bullhorn"></i>
-                        <span>????????豯??</span>
+                        <span>機構公告管理</span>
                     </a>
                     
                     <a href="chat.html" class="menu-item active">
                         <i class="fas fa-comments"></i>
-                        <span>????雓??雓?</span>
+                        <span>個案關懷通訊</span>
                     </a>
                 </div>
-
                 <div class="menu-section">
-                    <div class="menu-section-title">?賹??荒筆???</div>
+                    <div class="menu-section-title">系統管理</div>
                     <div class="menu-item" data-submenu="system-submenu">
                         <i class="fas fa-cog"></i>
-                        <span>?賹??荒筆???</span>
+                        <span>系統管理</span>
                         <i class="fas fa-chevron-right arrow"></i>
                     </div>
                     <div class="submenu" id="system-submenu">
                         <a href="admins.html" class="menu-item">
-                            <span>?頛舀?????遜??/span>
+                            <span>管理員帳號管理</span>
                         </a>
                         <a href="roles.html" class="menu-item">
-                            <span>?????????豯??</span>
+                            <span>角色權限管理</span>
                         </a>
                         <a href="logs.html" class="menu-item">
-                            <span>????豰刈??????/span>
+                            <span>操作日誌記錄</span>
                         </a>
                     </div>
                 </div>
             </nav>
         </aside>
 
-        <!-- ?豲????撖??? -->
+        <!-- 主要內容區 -->
         <div class="main-content">
-            <!-- ?頩偌?鞊??謅???-->
+            <!-- 頂部導覽列 -->
             <header class="top-navbar">
                 <div class="navbar-left">
                     <i class="fas fa-bars menu-toggle"></i>
                     <div class="breadcrumb">
-                        <a href="index.html">????</a>
+                        <a href="index.html">首頁</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>????雓??雓?</span>
+                        <span>個案關懷通訊</span>
                     </div>
                 </div>
                 
                 <div class="navbar-right">
                     <div class="user-dropdown">
-                        <div class="user-avatar">??/div>
+                        <div class="user-avatar">陳</div>
                         <div class="user-info">
-                            <div class="user-name">?????/div>
-                            <div class="user-role">?????豯????/div>
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- ?頩???撖? -->
+            <!-- 頁面內容 -->
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">????雓??雓?</h1>
-                        <p class="page-subtitle">?????????????????????豯???/p>
+                        <h1 class="page-title">個案關懷通訊</h1>
+                        <p class="page-subtitle">與個案及其家屬進行即時溝通</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> 群發訊息
+                        </button>
                     </div>
                 </div>
 
-                <!-- ????哨???????-->
+                <!-- 聊天室容器 -->
                 <div class="chat-container">
-                    <!-- ?????雓飢??????-->
+                    <!-- 聊天列表側邊欄 -->
                     <div class="chat-sidebar">
                         <div class="chat-search">
                             <div class="search-box">
                                 <i class="fas fa-search"></i>
-                                <input type="text" placeholder="?雓????/??????..">
+                                <input type="text" placeholder="搜尋個案/家人...">
                             </div>
                         </div>
                         <div class="chat-list">
-                            <!-- ??????璇? 1 - ??甇Ｙ坐??? -->
+                            <!-- 聊天項目 1 - 有未讀 -->
                             <div class="chat-item">
-                                <div class="chat-item-avatar">??/div>
+                                <div class="chat-item-avatar">王</div>
                                 <div class="chat-item-info">
-                                    <div class="chat-item-name">?????/div>
-                                    <div class="chat-item-preview">?賹???謅?ㄠ????頩????蝛??</div>
+                                    <div class="chat-item-name">王小明</div>
+                                    <div class="chat-item-preview">好的，謝謝您的回覆！</div>
                                 </div>
                                 <div style="text-align: right;">
                                     <div class="chat-item-time">10:30</div>
@@ -255,12 +154,12 @@
                                 </div>
                             </div>
                             
-                            <!-- ??????璇? 2 -->
+                            <!-- 聊天項目 2 -->
                             <div class="chat-item">
-                                <div class="chat-item-avatar" style="background-color: #e74c3c;">??/div>
+                                <div class="chat-item-avatar" style="background-color: #e74c3c;">李</div>
                                 <div class="chat-item-info">
-                                    <div class="chat-item-name">?????/div>
-                                    <div class="chat-item-preview">?嚚??????????雓???雿???/div>
+                                    <div class="chat-item-name">李小華</div>
+                                    <div class="chat-item-preview">請問明天的服務時間是？</div>
                                 </div>
                                 <div style="text-align: right;">
                                     <div class="chat-item-time">09:45</div>
@@ -268,39 +167,40 @@
                                 </div>
                             </div>
                             
-                            <!-- ??????璇? 3 -->
+                            <!-- 聊天項目 3 -->
                             <div class="chat-item">
-                                <div class="chat-item-avatar" style="background-color: #9b59b6;">??/div>
+                                <div class="chat-item-avatar" style="background-color: #9b59b6;">張</div>
                                 <div class="chat-item-info">
-                                    <div class="chat-item-name">?謢????/div>
-                                    <div class="chat-item-preview">?????謅?ㄞ?????頩???/div>
+                                    <div class="chat-item-name">張大偉</div>
+                                    <div class="chat-item-preview">收到，我會準時的。</div>
                                 </div>
                                 <div style="text-align: right;">
-                                    <div class="chat-item-time">??閮?</div>
+                                    <div class="chat-item-time">昨天</div>
                                 </div>
                             </div>
                             
-                            <!-- ??????璇? 4 -->
+                            <!-- 聊天項目 4 -->
                             <div class="chat-item">
-                                <div class="chat-item-avatar" style="background-color: #f39c12;">??/div>
+                                <div class="chat-item-avatar" style="background-color: #f39c12;">陳</div>
                                 <div class="chat-item-info">
-                                    <div class="chat-item-name">?????/div>
-                                    <div class="chat-item-preview">?鞈????????謢麻謚??/div>
+                                    <div class="chat-item-name">陳美玲</div>
+                                    <div class="chat-item-preview">感謝您們的照顧！</div>
                                 </div>
                                 <div style="text-align: right;">
                                     <div class="chat-item-time">01/26</div>
                                 </div>
                             </div>
                             
-                            <!-- ??????璇? 5 -->
+                            <!-- 聊天項目 5 -->
                             <div class="chat-item active">
-                                <div class="chat-item-avatar" style="background-color: #1abc9c;">??/div>
+                                <div class="chat-item-avatar" style="background-color: #1abc9c;">林</div>
                                 <div class="chat-item-info">
                                     <div class="chat-item-name">
-                                        ?雓???
+                                        林志明
+                                        <span class="chat-role-badge">家屬</span>
                                     </div>
-                                    <div class="chat-item-meta">???????????</div>
-                                    <div class="chat-item-preview">??蝛?????鞈??謅????撖?</div>
+                                    <div class="chat-item-meta">王小明・父親</div>
+                                    <div class="chat-item-preview">我想詢問營養餐的內容</div>
                                 </div>
                                 <div style="text-align: right;">
                                     <div class="chat-item-time">01/25</div>
@@ -310,99 +210,95 @@
                         </div>
                     </div>
 
-                    <!-- ????哨??????-->
-                    <div class="chat-main" data-case-name="????? data-relation="????">
+                    <!-- 聊天主區域 -->
+                    <div class="chat-main">
                         <div class="chat-header">
-                            <div class="chat-header-left">
-                                <div class="chat-item-avatar" style="background-color: #1abc9c;">??/div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div class="chat-item-avatar" style="background-color: #1abc9c;">林</div>
                                 <div>
                                     <div style="font-weight: bold; display: flex; align-items: center; gap: 6px;">
-                                        <span id="chatHeaderContactName">?雓???/span>
+                                        林志明
+                                        <span class="chat-role-badge">家屬</span>
                                     </div>
-                                    <div style="font-size: 12px; color: #999;">PT2024001234 ?????</div>
+                                    <div class="chat-item-meta">王小明・父親</div>
+                                    <div style="font-size: 12px; color: #999;">PT2024001234 • 在線</div>
                                 </div>
-                            </div>
-                            <div class="chat-header-right">
-                                <button class="btn btn-outline btn-sm relation-tag-btn" onclick="openRelationTagModal()">
-                                    <i class="fas fa-tags"></i> ?????
-                                </button>
-                                <div id="caseRelationTags" class="case-relation-tags"></div>
                             </div>
                         </div>
                         
                         <div class="chat-messages">
-                            <!-- ?????? -->
+                            <!-- 日期分隔 -->
                             <div style="text-align: center; margin: 20px 0;">
-                                <span style="background: #e0e0e0; padding: 5px 15px; border-radius: 15px; font-size: 12px; color: #666;">2025????8??/span>
+                                <span style="background: #e0e0e0; padding: 5px 15px; border-radius: 15px; font-size: 12px; color: #666;">2025年1月28日</span>
                             </div>
                             
-                            <!-- ?????????-->
+                            <!-- 收到的訊息 -->
                             <div class="message received">
-                                <div class="message-avatar" style="background-color: #1abc9c;">??/div>
+                                <div class="message-avatar" style="background-color: #1abc9c;">林</div>
                                 <div>
                                     <div class="message-bubble">
-                                        ??鞊ｆ秣?謅?ㄞ????????豲???????豲????對?????徉????謅?ㄝ???頩朱謑?蝬????????
+                                        您好，我想請問一下明天預約的居家照護服務，大概幾點會到呢？
                                     </div>
                                     <div class="message-time">09:15</div>
                                 </div>
                             </div>
                             
-                            <!-- ????頩??畾?頩?-->
+                            <!-- 發送的訊息 -->
                             <div class="message sent">
-                                <div class="message-avatar" style="background-color: #27ae60;">??/div>
+                                <div class="message-avatar" style="background-color: #27ae60;">機</div>
                                 <div>
                                     <div class="message-bubble">
-                                        ?雓??鞈察縑??賹??????????雓??畾?雓?????10:00????謅?ㄟ???謅ｆ??????0??????餈??????
+                                        林先生您好！明天的服務預計在上午10:00抵達，照服員會提前10分鐘致電確認。
                                     </div>
-                                    <div class="message-time">09:20 ???</div>
+                                    <div class="message-time">09:20 ✓✓</div>
                                 </div>
                             </div>
                             
-                            <!-- ?????????-->
+                            <!-- 收到的訊息 -->
                             <div class="message received">
-                                <div class="message-avatar" style="background-color: #1abc9c;">??/div>
+                                <div class="message-avatar" style="background-color: #1abc9c;">林</div>
                                 <div>
                                     <div class="message-bubble">
-                                        ?賹???謅?ㄡ頩?謇???雓???????謅ｆ???????頩?謆????
+                                        好的，那請問這次的照服員是上次那位嗎？
                                     </div>
                                     <div class="message-time">09:25</div>
                                 </div>
                             </div>
                             
-                            <!-- ????頩??畾?頩?-->
+                            <!-- 發送的訊息 -->
                             <div class="message sent">
-                                <div class="message-avatar" style="background-color: #27ae60;">??/div>
+                                <div class="message-avatar" style="background-color: #27ae60;">機</div>
                                 <div>
                                     <div class="message-bubble">
-                                        ????謅?ㄡ?雓???????????????蹎批????雓??賹????????蝬??????嚚??謜?暻鄞頩??
+                                        是的，這次還是由陳照服員為您服務，她對您的情況很熟悉，請放心。😊
                                     </div>
-                                    <div class="message-time">09:28 ???</div>
+                                    <div class="message-time">09:28 ✓✓</div>
                                 </div>
                             </div>
                             
-                            <!-- ?????????-->
+                            <!-- 收到的訊息 -->
                             <div class="message received">
-                                <div class="message-avatar" style="background-color: #1abc9c;">??/div>
+                                <div class="message-avatar" style="background-color: #1abc9c;">林</div>
                                 <div>
                                     <div class="message-bubble">
-                                        ????????????????鞊???
+                                        太好了！謝謝您的回覆！
                                     </div>
                                     <div class="message-time">10:30</div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- ?撖隡??鞊? -->
+                        <!-- 快捷回覆 -->
                         <div style="padding: 10px 20px; border-top: 1px solid #e0e0e0; display: flex; gap: 10px; overflow-x: auto;">
-                            <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap;">?????謅?ㄞ????頩?????/span>
-                            <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap;">?賹???謅?ㄞ???????啗???</span>
-                            <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap;">????????嚚?雓?頩????/span>
+                            <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap;">收到，感謝您的訊息</span>
+                            <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap;">好的，我們會盡快處理</span>
+                            <span style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 15px; font-size: 12px; cursor: pointer; white-space: nowrap;">如有問題請隨時聯繫</span>
                         </div>
                         
                         <div class="chat-input">
                             <i class="fas fa-plus-circle" style="font-size: 24px; color: #666; cursor: pointer;"></i>
                             <i class="fas fa-image" style="font-size: 20px; color: #666; cursor: pointer;"></i>
-                            <input type="text" placeholder="?謜眾??恃??蹐?...">
+                            <input type="text" placeholder="輸入訊息...">
                             <button class="btn btn-primary">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
@@ -413,195 +309,16 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="relationTagModal" style="display: none;">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3>????雓??????/h3>
-                <i class="fas fa-times" onclick="closeRelationTagModal()"></i>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>????頠狐?</label>
-                    <input type="text" id="relationTagCaseName" class="form-control" readonly>
-                </div>
-                <div class="form-group">
-                    <label>????????/label>
-                    <div class="relation-tag-input-row">
-                        <input type="text" id="relationTagInput" class="form-control" placeholder="?謏???謅Ｗ?????(????)">
-                        <button type="button" class="btn btn-primary" onclick="addRelationTag()">???</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>??Ⅹ??????/label>
-                    <div id="relationTagEditList" class="case-relation-tags" style="justify-content: flex-start;"></div>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn btn-outline" onclick="closeRelationTagModal()">?雓?</button>
-                    <button class="btn btn-primary" onclick="saveRelationTags()">???</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- JavaScript -->
     <script src="js/admin.js"></script>
     <script>
-        let currentRelationTagCase = '';
-        const caseRelationTagStore = {};
-
-        function notify(message, type = 'success') {
-            if (typeof showToast === 'function') {
-                showToast(message, type);
-                return;
-            }
-            alert(message);
-        }
-
-        function getCurrentChatContext() {
-            const chatMainEl = document.querySelector('.chat-main');
-            const contactNameEl = document.getElementById('chatHeaderContactName');
-            const contactName = contactNameEl ? contactNameEl.textContent.trim() : '';
-            const caseName = chatMainEl?.dataset.caseName?.trim() || '?????????';
-            const relation = chatMainEl?.dataset.relation?.trim() || '';
-
-            return { caseName, contactName, relation };
-        }
-
-        function ensureCaseTags(caseName) {
-            if (!caseRelationTagStore[caseName]) {
-                caseRelationTagStore[caseName] = [];
-            }
-        }
-
-        function seedTagFromCurrentContext(caseName) {
-            const context = getCurrentChatContext();
-            ensureCaseTags(caseName);
-
-            if (caseRelationTagStore[caseName].length === 0 && context.caseName && context.relation) {
-                caseRelationTagStore[caseName].push(`${context.caseName}${context.relation}`);
-            }
-        }
-
-        function renderCaseTagSummary(caseName) {
-            const container = document.getElementById('caseRelationTags');
-            if (!container) {
-                return;
-            }
-
-            const tags = caseRelationTagStore[caseName] || [];
-            if (tags.length === 0) {
-                container.innerHTML = '<span class="relation-tag-empty">?蹎批雓謘???雓??????/span>';
-                return;
-            }
-
-            container.innerHTML = tags.map(tag => `<span class="relation-tag-chip">${tag}</span>`).join('');
-        }
-
-        function renderRelationTagEditList() {
-            const listEl = document.getElementById('relationTagEditList');
-            if (!listEl) {
-                return;
-            }
-
-            const tags = caseRelationTagStore[currentRelationTagCase] || [];
-            if (tags.length === 0) {
-                listEl.innerHTML = '<span class="relation-tag-empty">?蹎批雓謘???????/span>';
-                return;
-            }
-
-            listEl.innerHTML = tags.map((tag, index) => `
-                <span class="relation-tag-chip editable">
-                    <span>${tag}</span>
-                    <button type="button" class="relation-tag-remove" onclick="removeRelationTag(${index})" aria-label="?謢?雓??雓??">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </span>
-            `).join('');
-        }
-
-        function openRelationTagModal() {
-            const context = getCurrentChatContext();
-            currentRelationTagCase = context.caseName;
-            seedTagFromCurrentContext(currentRelationTagCase);
-            document.getElementById('relationTagCaseName').value = currentRelationTagCase;
-            renderRelationTagEditList();
-            renderCaseTagSummary(currentRelationTagCase);
-            document.getElementById('relationTagModal').style.display = 'flex';
-
-            const input = document.getElementById('relationTagInput');
-            if (input) {
-                input.value = '';
-                input.focus();
-            }
-        }
-
-        function closeRelationTagModal() {
-            document.getElementById('relationTagModal').style.display = 'none';
-        }
-
-        function addRelationTag() {
-            const input = document.getElementById('relationTagInput');
-            const value = input.value.trim();
-
-            if (!value) {
-                notify('?嚚???????????, 'warning');
-                return;
-            }
-
-            ensureCaseTags(currentRelationTagCase);
-            const tags = caseRelationTagStore[currentRelationTagCase];
-
-            if (tags.includes(value)) {
-                notify('?????????渲洽憛?', 'warning');
-                return;
-            }
-
-            tags.push(value);
-            input.value = '';
-            renderRelationTagEditList();
-            renderCaseTagSummary(currentRelationTagCase);
-        }
-
-        function removeRelationTag(index) {
-            const tags = caseRelationTagStore[currentRelationTagCase] || [];
-            if (index < 0 || index >= tags.length) {
-                return;
-            }
-
-            tags.splice(index, 1);
-            renderRelationTagEditList();
-            renderCaseTagSummary(currentRelationTagCase);
-        }
-
-        function saveRelationTags() {
-            closeRelationTagModal();
-            notify('?雓?????謚??????, 'success');
-        }
-
-        // ??????璇????
+        // 聊天項目切換
         document.querySelectorAll('.chat-item').forEach(item => {
             item.addEventListener('click', function() {
                 document.querySelectorAll('.chat-item').forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
             });
         });
-
-        document.getElementById('relationTagInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                addRelationTag();
-            }
-        });
-
-        document.getElementById('relationTagModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeRelationTagModal();
-            }
-        });
-
-        const initContext = getCurrentChatContext();
-        seedTagFromCurrentContext(initContext.caseName);
-        renderCaseTagSummary(initContext.caseName);
     </script>
 </body>
 </html>

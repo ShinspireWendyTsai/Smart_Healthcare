@@ -1,67 +1,48 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>?????????豯?? - ??????????????/title>
+    <title>角色權限管理 - 機構端管理系統</title>
+    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
     <link rel="stylesheet" href="css/admin.css">
     <style>
-        .permission-grid {
+        .role-table-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .role-table-actions .btn {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .role-modal-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .permission-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px 16px;
+            margin-top: 8px;
         }
 
         .permission-item {
-            padding: 14px;
-            border-radius: 10px;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .permission-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .permission-title {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .permission-desc {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .modal-section-title {
-            margin: 8px 0 10px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .permission-check-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px 16px;
-        }
-
-        .permission-check-item {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 14px;
+            color: var(--text-primary);
         }
 
-        @media (max-width: 1024px) {
-            .permission-grid,
-            .permission-check-grid {
+        @media (max-width: 900px) {
+            .role-modal-grid,
+            .permission-list {
                 grid-template-columns: 1fr;
             }
         }
@@ -69,141 +50,109 @@
 </head>
 <body>
     <div class="admin-layout">
+        <!-- 側邊欄 -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <i class="fas fa-heartbeat"></i>
-                </div>
+                <div class="sidebar-logo"><i class="fas fa-heartbeat"></i></div>
                 <div>
-                    <div class="sidebar-title">???????徉?賹???/div>
-                    <div class="sidebar-subtitle">??????????????/div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
                 </div>
             </div>
-
             <nav class="sidebar-menu">
                 <div class="menu-section">
-                    <div class="menu-section-title">?豲???鞈對??</div>
-
-                    <a href="index.html" class="menu-item">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>????鞊?/span>
-                    </a>
-
-                    <div class="menu-item" data-submenu="member-submenu">
-                        <i class="fas fa-users"></i>
-                        <span>????????豯??</span>
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
+                    <div class="menu-section-title">主要功能</div>
+                    <a href="index.html" class="menu-item"><i class="fas fa-tachometer-alt"></i><span>儀表板</span></a>
+                    <div class="menu-item" data-submenu="member-submenu"><i class="fas fa-users"></i><span>個案會員管理</span><i class="fas fa-chevron-right arrow"></i></div>
                     <div class="submenu" id="member-submenu">
-                        <a href="members.html" class="menu-item">
-                            <span>????雓飢??/span>
-                        </a>
-                        <a href="member-binding.html" class="menu-item">
-                            <span>?蝘???獢??</span>
-                        </a>
+                        <a href="members.html" class="menu-item"><span>個案列表</span></a>
+                        <a href="member-binding.html" class="menu-item"><span>綁定設定</span></a>
                     </div>
-
-                    <a href="orders.html" class="menu-item">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>?畾?????????凋???/span>
-                    </a>
+                    <a href="orders.html" class="menu-item"><i class="fas fa-shopping-cart"></i><span>訂購清單查詢</span></a>
                 </div>
-
                 <div class="menu-section">
-                    <div class="menu-section-title">?????鞈對??</div>
-
-                    <a href="organization.html" class="menu-item">
-                        <i class="fas fa-building"></i>
-                        <span>????????豯??</span>
-                    </a>
-
-                    <a href="announcements.html" class="menu-item">
-                        <i class="fas fa-bullhorn"></i>
-                        <span>????????豯??</span>
-                    </a>
-
-                    <a href="chat.html" class="menu-item">
-                        <i class="fas fa-comments"></i>
-                        <span>????雓??雓?</span>
-                    </a>
+                    <div class="menu-section-title">機構功能</div>
+                    <a href="organization.html" class="menu-item"><i class="fas fa-building"></i><span>機構資訊管理</span></a>
+                    <a href="announcements.html" class="menu-item"><i class="fas fa-bullhorn"></i><span>機構公告管理</span></a>
+                    <a href="chat.html" class="menu-item"><i class="fas fa-comments"></i><span>個案關懷通訊</span></a>
                 </div>
-
                 <div class="menu-section">
-                    <div class="menu-section-title">?賹??荒筆???</div>
-                    <div class="menu-item expanded" data-submenu="system-submenu">
-                        <i class="fas fa-cog"></i>
-                        <span>?賹??荒筆???</span>
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item expanded" data-submenu="system-submenu"><i class="fas fa-cog"></i><span>系統管理</span><i class="fas fa-chevron-right arrow"></i></div>
                     <div class="submenu show" id="system-submenu">
-                        <a href="admins.html" class="menu-item">
-                            <span>?頛舀?????遜??/span>
-                        </a>
-                        <a href="roles.html" class="menu-item active">
-                            <span>?????????豯??</span>
-                        </a>
-                        <a href="logs.html" class="menu-item">
-                            <span>????豰刈??????/span>
-                        </a>
+                        <a href="admins.html" class="menu-item"><span>管理員帳號管理</span></a>
+                        <a href="roles.html" class="menu-item active"><span>角色權限管理</span></a>
+                        <a href="logs.html" class="menu-item"><span>操作紀錄查詢</span></a>
                     </div>
                 </div>
             </nav>
         </aside>
 
+        <!-- 主要內容區 -->
         <div class="main-content">
+            <!-- 頂部導覽列 -->
             <header class="top-navbar">
                 <div class="navbar-left">
                     <i class="fas fa-bars menu-toggle"></i>
                     <div class="breadcrumb">
-                        <a href="index.html">????</a>
+                        <a href="index.html">首頁</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>?????????豯??</span>
+                        <span>角色權限管理</span>
                     </div>
                 </div>
-
                 <div class="navbar-right">
                     <div class="user-dropdown">
-                        <div class="user-avatar">??/div>
+                        <div class="user-avatar">陳</div>
                         <div class="user-info">
-                            <div class="user-name">?????/div>
-                            <div class="user-role">?????豯????/div>
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
                         </div>
                     </div>
                 </div>
             </header>
 
+            <!-- 頁面內容 -->
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">?????????豯??</h1>
-                        <p class="page-subtitle">?獢??????????????????????????撢?/p>
+                        <h1 class="page-title">角色權限管理</h1>
+                        <p class="page-subtitle">設定機構角色與權限範圍。</p>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-layer-group"></i> ?????雓飢??/h3>
+                        <h3 class="card-title">角色權限列表</h3>
                     </div>
                     <div class="card-body">
-                        <div class="filter-toolbar" style="margin-bottom: 16px;">
-                            <div class="filter-left">
-                                <div class="search-box" style="width: 280px;">
-                                    <i class="fas fa-search"></i>
-                                    <input type="text" placeholder="?雓???????謕?">
+                        <div class="filter-section" style="margin-bottom: 16px;">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label class="filter-label">關鍵字搜尋</label>
+                                    <div class="search-input">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" class="form-control" placeholder="請輸入角色權限名稱">
+                                    </div>
                                 </div>
-                                <select class="form-control" style="width: 160px;">
-                                    <option>??鞈????/option>
-                                    <option>?鞈對?</option>
-                                    <option>?雓??</option>
-                                </select>
-                            </div>
-                            <div class="filter-right">
-                                <button class="btn btn-outline">
-                                    <i class="fas fa-redo"></i> ??謕?
-                                </button>
-                                <button class="btn btn-primary" onclick="openRoleModal()">
-                                    <i class="fas fa-plus"></i> ????????
-                                </button>
+                                <div class="filter-group">
+                                    <label class="filter-label">狀態篩選</label>
+                                    <select class="form-select">
+                                        <option selected>全部</option>
+                                        <option>啟用</option>
+                                        <option>停用</option>
+                                    </select>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="btn btn-outline">
+                                        <i class="fas fa-redo"></i> 重置
+                                    </button>
+                                    <button class="btn btn-outline">
+                                        <i class="fas fa-search"></i> 查詢
+                                    </button>
+                                    <button class="btn btn-primary" onclick="openRoleModal()">
+                                        <i class="fas fa-plus"></i> 新增角色權限
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -212,63 +161,82 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 80px;">ID</th>
-                                        <th>??????謕?</th>
-                                        <th>??對?</th>
-                                        <th style="width: 120px;">????/th>
-                                        <th style="width: 170px;">?????頩?</th>
-                                        <th style="width: 150px;">???</th>
+                                        <th>角色權限名稱</th>
+                                        <th style="width: 120px;">狀態</th>
+                                        <th style="width: 160px;">異動時間</th>
+                                        <th style="width: 160px;">操作功能</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>????豯????/td>
-                                        <td>???遜????頦???????????????獢????/td>
-                                        <td><span class="status-badge active">?鞈對?</span></td>
-                                        <td>2026/03/01 11:20</td>
+                                        <td>機構管理員</td>
+                                        <td><span class="status-badge status-active">啟用</span></td>
+                                        <td>2026/04/01 10:20</td>
                                         <td>
-                                            <div class="table-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openRoleModal('????豯????, '???遜????頦???????????????獢????, 'active')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div class="role-table-actions">
+                                                <button class="btn btn-outline" title="編輯"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
-                                        <td>?鞈??豲???/td>
-                                        <td>?豯???畾?雓?頩陷?????????鞈??????/td>
-                                        <td><span class="status-badge active">?鞈對?</span></td>
-                                        <td>2026/02/25 15:40</td>
+                                        <td>營運主管</td>
+                                        <td><span class="status-badge status-active">啟用</span></td>
+                                        <td>2026/03/30 15:45</td>
                                         <td>
-                                            <div class="table-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openRoleModal('?鞈??豲???, '?豯???畾?雓?頩陷?????????鞈??????, 'active')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div class="role-table-actions">
+                                                <button class="btn btn-outline" title="編輯"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
-                                        <td>????豯??</td>
-                                        <td>?豯???????謅??頩??????雓??雓???/td>
-                                        <td><span class="status-badge active">?鞈對?</span></td>
-                                        <td>2026/02/20 09:15</td>
+                                        <td>個案管理</td>
+                                        <td><span class="status-badge status-active">啟用</span></td>
+                                        <td>2026/03/25 09:05</td>
                                         <td>
-                                            <div class="table-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openRoleModal('????豯??', '?豯???????謅??頩??????雓??雓???, 'active')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div class="role-table-actions">
+                                                <button class="btn btn-outline" title="編輯"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
-                                        <td>?????????/td>
-                                        <td>??????雓?????鞊??雓??謅?ㄜ????堊????????/td>
-                                        <td><span class="status-badge pending">?雓??</span></td>
-                                        <td>2026/02/18 18:05</td>
+                                        <td>客服人員</td>
+                                        <td><span class="status-badge status-active">啟用</span></td>
+                                        <td>2026/03/20 11:30</td>
                                         <td>
-                                            <div class="table-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openRoleModal('?????????, '??????雓?????鞊??雓??謅?ㄜ????堊????????, 'inactive')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div class="role-table-actions">
+                                                <button class="btn btn-outline" title="編輯"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>照護人員</td>
+                                        <td><span class="status-badge status-active">啟用</span></td>
+                                        <td>2026/03/12 09:40</td>
+                                        <td>
+                                            <div class="role-table-actions">
+                                                <button class="btn btn-outline" title="編輯"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>報表查看</td>
+                                        <td><span class="status-badge status-active">啟用</span></td>
+                                        <td>2026/03/08 16:55</td>
+                                        <td>
+                                            <div class="role-table-actions">
+                                                <button class="btn btn-outline" title="編輯"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -277,106 +245,64 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-shield-check"></i> ????????</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="permission-grid">
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">????????豯??</div>
-                                    <div class="permission-desc">????雓飢??頩?????冽伍雓??謘?韏?/div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">?畾?????????凋???/div>
-                                    <div class="permission-desc">?畾?雓??凋????????減??/div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">????????豯??</div>
-                                    <div class="permission-desc">????????????蹎⊥???????/div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">?????????雓?</div>
-                                    <div class="permission-desc">????蝞???????喉???????/div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="permission-item">
-                                <div class="permission-info">
-                                    <div class="permission-title">?賹??荒筆???</div>
-                                    <div class="permission-desc">?頛舀?????汕頩????????豰刈??/div>
-                                </div>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="roleModal" style="display: none;">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3>?????????獢??</h3>
-                <i class="fas fa-times" onclick="closeRoleModal()"></i>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>??????謕?</label>
-                    <input id="roleNameInput" class="form-control" type="text" value="">
+    <div class="modal" id="roleModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">新增角色權限</div>
+                    <button class="modal-close" onclick="closeRoleModal()"><i class="fas fa-times"></i></button>
                 </div>
-                <div class="form-group">
-                    <label>?????狗??</label>
-                    <input id="roleDescInput" class="form-control" type="text" value="">
+                <div class="modal-body">
+                    <div class="role-modal-grid">
+                        <div>
+                            <label class="form-label">角色名稱</label>
+                            <input type="text" class="form-control" placeholder="請輸入角色名稱">
+                        </div>
+                        <div>
+                            <label class="form-label">狀態</label>
+                            <select class="form-select">
+                                <option>啟用</option>
+                                <option>停用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <label class="form-label">權限項目</label>
+                        <div class="permission-list">
+                            <label class="permission-item">
+                                <input type="checkbox" checked>
+                                個案會員管理
+                            </label>
+                            <label class="permission-item">
+                                <input type="checkbox" checked>
+                                訂單管理
+                            </label>
+                            <label class="permission-item">
+                                <input type="checkbox">
+                                機構公告
+                            </label>
+                            <label class="permission-item">
+                                <input type="checkbox" checked>
+                                個案關懷通訊
+                            </label>
+                            <label class="permission-item">
+                                <input type="checkbox" checked>
+                                機構資訊管理
+                            </label>
+                            <label class="permission-item">
+                                <input type="checkbox" checked>
+                                系統管理
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>????/label>
-                    <select id="roleStatusInput" class="form-control">
-                        <option value="active">?鞈對?</option>
-                        <option value="inactive">?雓??</option>
-                    </select>
-                </div>
-
-                <div class="modal-section-title">?????獢??</div>
-                <div class="permission-check-grid">
-                    <label class="permission-check-item"><input type="checkbox" checked> ????????豯??</label>
-                    <label class="permission-check-item"><input type="checkbox" checked> ?畾?????????凋???/label>
-                    <label class="permission-check-item"><input type="checkbox"> ????????豯??</label>
-                    <label class="permission-check-item"><input type="checkbox" checked> ????豯??</label>
-                    <label class="permission-check-item"><input type="checkbox" checked> ?雓??雓?</label>
-                    <label class="permission-check-item"><input type="checkbox" checked> ?賹??荒筆???</label>
-                </div>
-
-                <div class="modal-actions">
-                    <button class="btn btn-outline" onclick="closeRoleModal()">?雓?</button>
-                    <button class="btn btn-primary" onclick="saveRoleModal()">???</button>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeRoleModal()">取消</button>
+                    <button class="btn btn-primary" onclick="closeRoleModal()">儲存</button>
                 </div>
             </div>
         </div>
@@ -384,22 +310,12 @@
 
     <script src="js/admin.js"></script>
     <script>
-        function openRoleModal(name = '', desc = '', status = 'active') {
-            document.getElementById('roleNameInput').value = name;
-            document.getElementById('roleDescInput').value = desc;
-            document.getElementById('roleStatusInput').value = status;
-            document.getElementById('roleModal').style.display = 'flex';
+        function openRoleModal() {
+            document.getElementById('roleModal').classList.add('show');
         }
 
         function closeRoleModal() {
-            document.getElementById('roleModal').style.display = 'none';
-        }
-
-        function saveRoleModal() {
-            if (typeof showToast === 'function') {
-                showToast('??????????踝?雓??, 'success');
-            }
-            closeRoleModal();
+            document.getElementById('roleModal').classList.remove('show');
         }
     </script>
 </body>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人資料 - 平台管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/platform.css">
+    <style>
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 28px;
+            background: var(--card-background, #fff);
+            border-radius: 16px;
+            border: 1px solid var(--border-color, #e5e7eb);
+            margin-bottom: 24px;
+        }
+
+        .profile-avatar-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .profile-avatar-lg {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #fff;
+        }
+
+        .avatar-edit-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary-color, #6366f1);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .profile-meta h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary, #111827);
+            margin: 0 0 4px;
+        }
+
+        .profile-meta .role-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color, #6366f1);
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .profile-meta .last-login {
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--text-secondary, #6b7280);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary, #6b7280);
+        }
+
+        .form-control {
+            padding: 10px 14px;
+            border: 1px solid var(--border-color, #e5e7eb);
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--text-primary, #111827);
+            background: var(--background-color, #f9fafb);
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color, #6366f1);
+            background: #fff;
+        }
+
+        .form-control[readonly] {
+            background: var(--background-color, #f3f4f6);
+            cursor: not-allowed;
+            color: var(--text-secondary, #6b7280);
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border-color, #e5e7eb);
+            margin: 24px 0;
+        }
+
+        .section-title-sm {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary, #111827);
+            margin-bottom: 16px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">全方位智慧照護</div>
+                    <div class="sidebar-subtitle">平台管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">核心管理</div>
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>系統總覽</span>
+                    </a>
+                    <a href="organizations.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>機構管理</span>
+                    </a>
+                    <a href="members.html" class="menu-item">
+                        <i class="fas fa-users"></i>
+                        <span>會員管理</span>
+                    </a>
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂單總覽</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">服務管理</div>
+                    <a href="categories.html" class="menu-item">
+                        <i class="fas fa-folder-tree"></i>
+                        <span>服務類別管理</span>
+                    </a>
+                    <a href="services.html" class="menu-item">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>服務管理</span>
+                    </a>
+                    <a href="suppliers.html" class="menu-item">
+                        <i class="fas fa-truck"></i>
+                        <span>供應商管理</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">溝通管理</div>
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>公告訊息管理</span>
+                    </a>
+                    <a href="notifications.html" class="menu-item">
+                        <i class="fas fa-bell"></i>
+                        <span>推播通知管理</span>
+                    </a>
+                    <a href="tickets.html" class="menu-item">
+                        <i class="fas fa-headset"></i>
+                        <span>客服工單管理</span>
+                    </a>
+                    <a href="faq.html" class="menu-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>常見問題管理</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="system-submenu">
+                        <a href="admins.html" class="menu-item">
+                            <span>平台管理員管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item">
+                            <span>操作紀錄</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區域 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>個人資料</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="dropdown">
+                        <div class="user-dropdown dropdown-toggle">
+                            <div class="user-avatar admin">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">平台管理員</div>
+                                <div class="user-role">超級管理員</div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="profile.html" class="dropdown-item active">
+                                <i class="fas fa-user"></i>
+                                <span>個人資料</span>
+                            </a>
+                            <a href="settings.html" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                <span>系統設定</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="logout.html" class="dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>登出系統</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面主要內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">個人資料</h1>
+                        <p class="page-subtitle">管理您的帳號基本資訊與安全設定</p>
+                    </div>
+                </div>
+
+                <!-- 個人資料頭像區 -->
+                <div class="profile-header">
+                    <div class="profile-avatar-wrap">
+                        <div class="profile-avatar-lg">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <button class="avatar-edit-btn" title="更換頭像" onclick="handleAvatarChange()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <div class="profile-meta">
+                        <h2>平台管理員</h2>
+                        <div class="role-tag">
+                            <i class="fas fa-shield-alt"></i> 超級管理員
+                        </div>
+                        <div class="last-login">
+                            <i class="fas fa-clock"></i> 上次登入：2024/01/28 09:45
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 基本資料卡 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-id-card"></i> 基本資料
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">姓名</label>
+                                <input type="text" class="form-control" id="adminName" value="平台管理員">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">帳號 (Email)</label>
+                                <input type="email" class="form-control" id="adminEmail" value="admin@platform.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">聯絡電話</label>
+                                <input type="tel" class="form-control" id="adminPhone" value="0912-345-678">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">角色</label>
+                                <input type="text" class="form-control" readonly value="超級管理員">
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">備註</label>
+                                <textarea class="form-control" id="adminNote" rows="3" style="resize:vertical;">平台核心管理員帳號，負責整體系統維運。</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-outline" onclick="resetProfileForm()">
+                                <i class="fas fa-undo"></i> 還原
+                            </button>
+                            <button class="btn btn-primary" onclick="saveProfile()">
+                                <i class="fas fa-save"></i> 儲存變更
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 密碼變更卡 -->
+                <div class="card" style="margin-top: 24px;">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-lock"></i> 變更密碼
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label class="form-label">目前密碼</label>
+                                <input type="password" class="form-control" id="currentPassword" placeholder="請輸入目前密碼">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">新密碼</label>
+                                <input type="password" class="form-control" id="newPassword" placeholder="請輸入新密碼（至少8碼）">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">確認新密碼</label>
+                                <input type="password" class="form-control" id="confirmPassword" placeholder="請再次輸入新密碼">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="changePassword()">
+                                <i class="fas fa-key"></i> 更新密碼
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/platform.js"></script>
+    <script>
+        function saveProfile() {
+            const name = document.getElementById('adminName').value.trim();
+            const email = document.getElementById('adminEmail').value.trim();
+            if (!name || !email) {
+                alert('姓名與帳號為必填欄位');
+                return;
+            }
+            alert('個人資料已儲存');
+        }
+
+        function resetProfileForm() {
+            document.getElementById('adminName').value = '平台管理員';
+            document.getElementById('adminEmail').value = 'admin@platform.com';
+            document.getElementById('adminPhone').value = '0912-345-678';
+            document.getElementById('adminNote').value = '平台核心管理員帳號，負責整體系統維運。';
+        }
+
+        function changePassword() {
+            const current = document.getElementById('currentPassword').value;
+            const newPwd = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            if (!current || !newPwd || !confirm) {
+                alert('請填寫所有密碼欄位');
+                return;
+            }
+            if (newPwd.length < 8) {
+                alert('新密碼至少需要 8 個字元');
+                return;
+            }
+            if (newPwd !== confirm) {
+                alert('兩次輸入的新密碼不一致');
+                return;
+            }
+            alert('密碼已成功更新');
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        function handleAvatarChange() {
+            alert('頭像上傳功能開發中');
+        }
+    </script>
+</body>
+</html>

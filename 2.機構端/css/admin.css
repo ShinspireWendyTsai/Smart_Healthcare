@@ -1542,3 +1542,105 @@ a {
     height: 60px;
     font-size: 24px;
 }
+
+/* =============================================
+   搜尋輸入框（對齊平台端）
+   ============================================= */
+.search-input {
+    position: relative;
+}
+
+.search-input i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+.search-input .form-control {
+    padding-left: 40px;
+}
+
+/* =============================================
+   日期區間（對齊平台端）
+   ============================================= */
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.date-separator {
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.date-range .form-control {
+    min-width: 0;
+    width: 140px;
+}
+
+/* =============================================
+   篩選區域（對齊平台端）
+   ============================================= */
+.filter-section {
+    padding: 8px 0;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 180px;
+}
+
+.filter-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* =============================================
+   狀態標籤（對齊平台端 class 命名）
+   ============================================= */
+.status-active, .status-completed {
+    background-color: rgba(39, 174, 96, 0.1);
+    color: var(--success-color);
+}
+
+.status-pending, .status-processing {
+    background-color: rgba(243, 156, 18, 0.1);
+    color: var(--warning-color);
+}
+
+.status-inactive, .status-cancelled {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--danger-color);
+}
+
+/* =============================================
+   篩選區域 RWD
+   ============================================= */
+@media (max-width: 768px) {
+    .filter-row {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        min-width: 100%;
+    }
+}

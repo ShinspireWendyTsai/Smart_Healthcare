@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統設定 - 平台管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/platform.css">
+    <style>
+        .settings-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border-color, #e5e7eb);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .settings-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary, #111827);
+        }
+
+        .settings-item-desc {
+            font-size: 12px;
+            color: var(--text-secondary, #6b7280);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #d1d5db;
+            border-radius: 999px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--primary-color, #6366f1);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+
+        .settings-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color, #e5e7eb);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text-primary, #111827);
+            background: var(--background-color, #f9fafb);
+            outline: none;
+            cursor: pointer;
+            min-width: 130px;
+        }
+
+        .settings-select:focus {
+            border-color: var(--primary-color, #6366f1);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary, #111827);
+            margin-bottom: 4px;
+        }
+
+        .section-heading i {
+            color: var(--primary-color, #6366f1);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">全方位智慧照護</div>
+                    <div class="sidebar-subtitle">平台管理系統</div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">核心管理</div>
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>系統總覽</span>
+                    </a>
+                    <a href="organizations.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>機構管理</span>
+                    </a>
+                    <a href="members.html" class="menu-item">
+                        <i class="fas fa-users"></i>
+                        <span>會員管理</span>
+                    </a>
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂單總覽</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">服務管理</div>
+                    <a href="categories.html" class="menu-item">
+                        <i class="fas fa-folder-tree"></i>
+                        <span>服務類別管理</span>
+                    </a>
+                    <a href="services.html" class="menu-item">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>服務管理</span>
+                    </a>
+                    <a href="suppliers.html" class="menu-item">
+                        <i class="fas fa-truck"></i>
+                        <span>供應商管理</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">溝通管理</div>
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>公告訊息管理</span>
+                    </a>
+                    <a href="notifications.html" class="menu-item">
+                        <i class="fas fa-bell"></i>
+                        <span>推播通知管理</span>
+                    </a>
+                    <a href="tickets.html" class="menu-item">
+                        <i class="fas fa-headset"></i>
+                        <span>客服工單管理</span>
+                    </a>
+                    <a href="faq.html" class="menu-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>常見問題管理</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="system-submenu">
+                        <a href="admins.html" class="menu-item">
+                            <span>平台管理員管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item">
+                            <span>操作紀錄</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區域 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>系統設定</span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="dropdown">
+                        <div class="user-dropdown dropdown-toggle">
+                            <div class="user-avatar admin">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">平台管理員</div>
+                                <div class="user-role">超級管理員</div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a href="profile.html" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                <span>個人資料</span>
+                            </a>
+                            <a href="settings.html" class="dropdown-item active">
+                                <i class="fas fa-cog"></i>
+                                <span>系統設定</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="logout.html" class="dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>登出系統</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面主要內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">系統設定</h1>
+                        <p class="page-subtitle">調整後台介面顯示、通知偏好與安全性設定</p>
+                    </div>
+                </div>
+
+                <!-- 介面設定 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-palette"></i> 介面設定
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="settings-group">
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">語言</div>
+                                    <div class="settings-item-desc">系統介面顯示語言</div>
+                                </div>
+                                <select class="settings-select" id="langSelect">
+                                    <option value="zh-TW" selected>繁體中文</option>
+                                    <option value="zh-CN">简体中文</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">每頁顯示筆數</div>
+                                    <div class="settings-item-desc">列表頁面預設分頁數量</div>
+                                </div>
+                                <select class="settings-select" id="pageSizeSelect">
+                                    <option value="10">10 筆</option>
+                                    <option value="20" selected>20 筆</option>
+                                    <option value="50">50 筆</option>
+                                    <option value="100">100 筆</option>
+                                </select>
+                            </div>
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">日期格式</div>
+                                    <div class="settings-item-desc">系統日期顯示格式</div>
+                                </div>
+                                <select class="settings-select" id="dateFormatSelect">
+                                    <option value="YYYY/MM/DD" selected>YYYY/MM/DD</option>
+                                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                    <option value="DD-MM-YYYY">DD-MM-YYYY</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 通知設定 -->
+                <div class="card" style="margin-top: 24px;">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-bell"></i> 通知設定
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="settings-group">
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">Email 通知</div>
+                                    <div class="settings-item-desc">接收系統警示、新訂單及審核事件的 Email</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="emailNotif" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">機構審核通知</div>
+                                    <div class="settings-item-desc">有新機構申請入駐時發送通知</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="orgReviewNotif" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">客服工單通知</div>
+                                    <div class="settings-item-desc">有新工單建立或回覆時發送通知</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="ticketNotif" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">系統異常通知</div>
+                                    <div class="settings-item-desc">系統發生異常或錯誤時立即通知</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="errorNotif" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 安全性設定 -->
+                <div class="card" style="margin-top: 24px;">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-shield-alt"></i> 安全性設定
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="settings-group">
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">登入逾時自動登出</div>
+                                    <div class="settings-item-desc">閒置超過指定時間後自動登出系統</div>
+                                </div>
+                                <select class="settings-select" id="sessionTimeout">
+                                    <option value="30">30 分鐘</option>
+                                    <option value="60" selected>60 分鐘</option>
+                                    <option value="120">2 小時</option>
+                                    <option value="0">不自動登出</option>
+                                </select>
+                            </div>
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">雙重驗證 (2FA)</div>
+                                    <div class="settings-item-desc">登入時需要額外的驗證步驟</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="twoFA">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-item">
+                                <div class="settings-item-info">
+                                    <div class="settings-item-title">記錄操作紀錄</div>
+                                    <div class="settings-item-desc">記錄所有後台操作行為至稽核日誌</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="auditLog" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-outline" onclick="resetSettings()">
+                        <i class="fas fa-undo"></i> 還原預設
+                    </button>
+                    <button class="btn btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> 儲存設定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/platform.js"></script>
+    <script>
+        function saveSettings() {
+            alert('設定已儲存');
+        }
+
+        function resetSettings() {
+            if (!confirm('確定要還原所有設定為預設值嗎？')) return;
+            document.getElementById('langSelect').value = 'zh-TW';
+            document.getElementById('pageSizeSelect').value = '20';
+            document.getElementById('dateFormatSelect').value = 'YYYY/MM/DD';
+            document.getElementById('emailNotif').checked = true;
+            document.getElementById('orgReviewNotif').checked = true;
+            document.getElementById('ticketNotif').checked = true;
+            document.getElementById('errorNotif').checked = true;
+            document.getElementById('sessionTimeout').value = '60';
+            document.getElementById('twoFA').checked = false;
+            document.getElementById('auditLog').checked = true;
+            alert('已還原為預設設定');
+        }
+    </script>
+</body>
+</html>

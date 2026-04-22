@@ -1,134 +1,139 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>?????? - ??潸??????/title>
+    <title>服務管理 - 平台端管理系統</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- ?????? -->
+    <!-- 自訂樣式 -->
     <link rel="stylesheet" href="css/platform.css">
 </head>
 <body>
     <div class="admin-layout">
-        <!-- ?皝???-->
+        <!-- 側邊欄 -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
                     <i class="fas fa-shield-alt"></i>
                 </div>
                 <div>
-                    <div class="sidebar-title">?蝞賂??舫◢???/div>
-                    <div class="sidebar-subtitle">??潸??????/div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">平台端管理系統</div>
                 </div>
             </div>
             
             <nav class="sidebar-menu">
-                <!-- ??蹓??-->
+                <!-- 主選單 -->
                 <div class="menu-section">
-                    <div class="menu-section-title">????賹?</div>
+                    <div class="menu-section-title">主要功能</div>
                     
                     <a href="index.html" class="menu-item">
                         <i class="fas fa-tachometer-alt"></i>
-                        <span>???萄豰?/span>
+                        <span>儀表板</span>
                     </a>
                     
-                    <a href="organizations.html" class="menu-item">
+                    <div class="menu-item" data-submenu="org-submenu">
                         <i class="fas fa-building"></i>
-                        <span>????謅?/span>
-                    </a>
+                        <span>機構管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="org-submenu">
+                        <a href="organizations.html" class="menu-item">
+                            <span>機構列表</span>
+                        </a>
+                    </div>
                     
-                    <a href="members.html" class="menu-item">
+                    <div class="menu-item" data-submenu="member-submenu">
                         <i class="fas fa-users"></i>
-                        <span>?????蛔?謅?/span>
-                    </a>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>會員列表</span>
+                        </a>
+                    </div>
                     
                     <a href="orders.html" class="menu-item">
                         <i class="fas fa-shopping-cart"></i>
-                        <span>?殉????荒????</span>
+                        <span>訂購清單管理</span>
                     </a>
                 </div>
                 
-                <!-- ????桀?? -->
+                <!-- 服務設定 -->
                 <div class="menu-section">
-                    <div class="menu-section-title">????桀??</div>
+                    <div class="menu-section-title">服務設定</div>
                     
                     <a href="categories.html" class="menu-item">
                         <i class="fas fa-folder-tree"></i>
-                        <span>????遴竣????</span>
+                        <span>服務類別管理</span>
                     </a>
                     
                     <a href="services.html" class="menu-item active">
                         <i class="fas fa-concierge-bell"></i>
-                        <span>??????</span>
-                    </a>
-
-                    <a href="suppliers.html" class="menu-item">
-                        <i class="fas fa-truck"></i>
-                        <span>???????/span>
+                        <span>服務管理</span>
                     </a>
                 </div>
                 
-                <!-- ???賹? -->
+                <!-- 平台功能 -->
                 <div class="menu-section">
-                    <div class="menu-section-title">???賹?</div>
+                    <div class="menu-section-title">平台功能</div>
                     
                     <a href="announcements.html" class="menu-item">
                         <i class="fas fa-bullhorn"></i>
-                        <span>??潮???????</span>
-                    </a>
-
-                    <a href="notifications.html" class="menu-item">
-                        <i class="fas fa-bell"></i>
-                        <span>????????</span>
+                        <span>平台公告管理</span>
                     </a>
                     
-                    <a href="tickets.html" class="menu-item">
+                                        <a href="tickets.html" class="menu-item">
                         <i class="fas fa-headset"></i>
-                        <span>??潭嚗??獢??/span>
+                        <span>平台客服單管理</span>
                     </a>
-
+                    <a href="notifications.html" class="menu-item">
+                        <i class="fas fa-bell"></i>
+                        <span>推播通知管理</span>
+                    </a>
                     <a href="faq.html" class="menu-item">
                         <i class="fas fa-question-circle"></i>
-                        <span>??????????</span>
+                        <span>常見問題管理</span>
                     </a>
                 </div>
                 
-                <!-- ??蝯??? -->
+                <!-- 系統管理 -->
                 <div class="menu-section">
-                    <div class="menu-section-title">??蝯???</div>
+                    <div class="menu-section-title">系統管理</div>
                     <div class="menu-item" data-submenu="system-submenu">
                         <i class="fas fa-cog"></i>
-                        <span>??蝯???</span>
+                        <span>系統管理</span>
                         <i class="fas fa-chevron-right arrow"></i>
                     </div>
                     <div class="submenu" id="system-submenu">
                         <a href="admins.html" class="menu-item">
-                            <span>?輯撒???望??/span>
+                            <span>使用者管理</span>
                         </a>
                         <a href="roles.html" class="menu-item">
-                            <span>?恃??啁??????</span>
+                            <span>角色權限管理</span>
                         </a>
                         <a href="logs.html" class="menu-item">
-                            <span>?????????/span>
+                            <span>操作紀錄查詢</span>
                         </a>
                     </div>
                 </div>
             </nav>
         </aside>
 
-        <!-- ?????寞??? -->
+        <!-- 主要內容區 -->
         <div class="main-content">
-            <!-- ?蹇豢?????-->
+            <!-- 頂部導覽列 -->
             <header class="top-navbar">
                 <div class="navbar-left">
                     <i class="fas fa-bars menu-toggle"></i>
                     <div class="breadcrumb">
-                        <a href="index.html">???</a>
+                        <a href="index.html">首頁</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>????桀??</span>
+                        <span>服務設定</span>
                         <i class="fas fa-chevron-right"></i>
-                        <span>??????</span>
+                        <span>服務管理</span>
                     </div>
                 </div>
                 
@@ -139,102 +144,102 @@
                                 <i class="fas fa-user-tie"></i>
                             </div>
                             <div class="user-info">
-                                <div class="user-name">??蝯?????/div>
-                                <div class="user-role">???????/div>
+                                <div class="user-name">系統管理員</div>
+                                <div class="user-role">超級管理員</div>
                             </div>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="dropdown-menu">
                             <a href="profile.html" class="dropdown-item">
                                 <i class="fas fa-user"></i>
-                                <span>?????</span>
+                                <span>個人資料</span>
                             </a>
                             <a href="settings.html" class="dropdown-item">
                                 <i class="fas fa-cog"></i>
-                                <span>??蝯??</span>
+                                <span>系統設定</span>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="logout.html" class="dropdown-item text-danger">
                                 <i class="fas fa-sign-out-alt"></i>
-                                <span>?擗??蝯?/span>
+                                <span>登出系統</span>
                             </a>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- ?蹓遴???寞? -->
+            <!-- 頁面內容 -->
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">??????</h1>
-                        <p class="page-subtitle">???????????謕???朝蹓??撖????????/p>
+                        <h1 class="page-title">服務管理</h1>
+                        <p class="page-subtitle">管理平台所有服務項目、定價與上下架狀態</p>
                     </div>
                     <div class="page-actions">
                         <button class="btn btn-outline">
                             <i class="fas fa-download"></i>
-                            ??穿???
+                            匯出服務
                         </button>
                         <button class="btn btn-primary" onclick="openModal('serviceModal')">
                             <i class="fas fa-plus"></i>
-                            ??????
+                            新增服務
                         </button>
                     </div>
                 </div>
 
-                <!-- ?剜?蹓????-->
+                <!-- 篩選區域 -->
                 <div class="card">
                     <div class="card-body">
                         <div class="filter-section">
                             <div class="filter-row">
                                 <div class="filter-group">
-                                    <label class="filter-label">?謚殷?殉????/label>
+                                    <label class="filter-label">關鍵字搜尋</label>
                                     <div class="search-input">
                                         <i class="fas fa-search"></i>
-                                        <input type="text" class="form-control" placeholder="?謚???????...">
+                                        <input type="text" class="form-control" placeholder="搜尋服務名稱...">
                                     </div>
                                 </div>
                                 
                                 <div class="filter-group">
-                                    <label class="filter-label">????遴竣??/label>
+                                    <label class="filter-label">服務類別</label>
                                     <select class="form-select">
-                                        <option value="">??賂豢豯歹?</option>
-                                        <option value="1">????舫◢</option>
-                                        <option value="2">?????舀?</option>
-                                        <option value="3">?箸?蹍???</option>
-                                        <option value="4">?賹?????/option>
-                                        <option value="5">??????</option>
-                                        <option value="6">?對??Ｘ??</option>
-                                        <option value="7">?賹????</option>
+                                        <option value="">全部類別</option>
+                                        <option value="1">居家照護</option>
+                                        <option value="2">醫療陪伴</option>
+                                        <option value="3">復健服務</option>
+                                        <option value="4">營養餐飲</option>
+                                        <option value="5">輔具服務</option>
+                                        <option value="6">心理諮商</option>
+                                        <option value="7">生活協助</option>
                                     </select>
                                 </div>
                                 
                                 <div class="filter-group">
-                                    <label class="filter-label">??豱????/label>
+                                    <label class="filter-label">上架狀態</label>
                                     <select class="form-select">
-                                        <option value="">??賂????/option>
-                                        <option value="online">?????/option>
-                                        <option value="offline">?????/option>
+                                        <option value="">全部狀態</option>
+                                        <option value="online">已上架</option>
+                                        <option value="offline">已下架</option>
                                     </select>
                                 </div>
                                 
                                 <div class="filter-group">
-                                    <label class="filter-label">?撖僱????/label>
+                                    <label class="filter-label">價格區間</label>
                                     <div class="price-range">
-                                        <input type="number" class="form-control" placeholder="????>
+                                        <input type="number" class="form-control" placeholder="最低">
                                         <span>-</span>
-                                        <input type="number" class="form-control" placeholder="????>
+                                        <input type="number" class="form-control" placeholder="最高">
                                     </div>
                                 </div>
                                 
                                 <div class="filter-actions">
                                     <button class="btn btn-primary">
                                         <i class="fas fa-search"></i>
-                                        ?謚?
+                                        搜尋
                                     </button>
                                     <button class="btn btn-outline">
                                         <i class="fas fa-redo"></i>
-                                        ??
+                                        重置
                                     </button>
                                 </div>
                             </div>
@@ -242,10 +247,10 @@
                     </div>
                 </div>
 
-                <!-- ????謅?-->
+                <!-- 服務列表 -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">????謅?/h3>
+                        <h3 class="card-title">服務列表</h3>
                         <div class="card-actions">
                             <div class="view-toggle">
                                 <button class="view-btn active" data-view="table">
@@ -255,11 +260,11 @@
                                     <i class="fas fa-th-large"></i>
                                 </button>
                             </div>
-                            <span class="text-muted">??45 ?????/span>
+                            <span class="text-muted">共 45 筆資料</span>
                         </div>
                     </div>
                     <div class="card-body">
-                        <!-- ?萄赯萇嚗? -->
+                        <!-- 表格檢視 -->
                         <div class="table-view" id="tableView">
                             <div class="table-responsive">
                                 <table class="data-table">
@@ -268,14 +273,14 @@
                                             <th>
                                                 <input type="checkbox" class="form-check-input" id="selectAll">
                                             </th>
-                                            <th>?????</th>
-                                            <th>????遴竣??/th>
-                                            <th>?蝞賃秧?堊城??/th>
-                                            <th>?????</th>
-                                            <th>?殉????伍</th>
-                                            <th>??豱????/th>
-                                            <th>?皝??蹇?</th>
-                                            <th>???</th>
+                                            <th>服務資訊</th>
+                                            <th>服務類別</th>
+                                            <th>基本定價</th>
+                                            <th>平台分潤</th>
+                                            <th>訂購次數</th>
+                                            <th>上架狀態</th>
+                                            <th>更新時間</th>
+                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -289,20 +294,20 @@
                                                         <i class="fas fa-home"></i>
                                                     </div>
                                                     <div>
-                                                        <div class="service-name">?隞?????舫◢???</div>
+                                                        <div class="service-name">日間居家照護服務</div>
                                                         <div class="service-code text-muted small">SRV-001</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="category-tag">????舫◢</span>
+                                                <span class="category-tag">居家照護</span>
                                             </td>
-                                            <td>$800/??/td>
+                                            <td>$800/次</td>
                                             <td>
                                                 <span class="commission-amount">$80</span>
                                                 <span class="commission-rate">10%</span>
                                             </td>
-                                            <td>256 ??/td>
+                                            <td>256 次</td>
                                             <td>
                                                 <label class="switch small">
                                                     <input type="checkbox" checked>
@@ -312,16 +317,16 @@
                                             <td>2026/01/25</td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <button class="btn-icon" title="?潘撩??啣?" onclick="viewService(1)">
+                                                    <button class="btn-icon" title="檢視詳情" onclick="viewService(1)">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
-                                                    <button class="btn-icon" title="?箏?? onclick="editService(1)">
+                                                    <button class="btn-icon" title="編輯" onclick="editService(1)">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <!-- <button class="btn-icon" title="?堊城???" onclick="openPricing(1)">
+                                                    <!-- <button class="btn-icon" title="定價設定" onclick="openPricing(1)">
                                                         <i class="fas fa-dollar-sign"></i>
                                                     </button> -->
-                                                    <button class="btn-icon text-danger" title="??畸?">
+                                                    <button class="btn-icon text-danger" title="刪除">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </div>
@@ -337,20 +342,20 @@
                                                         <i class="fas fa-moon"></i>
                                                     </div>
                                                     <div>
-                                                        <div class="service-name">?叟乾???舀???舫◢???</div>
+                                                        <div class="service-name">夜間陪伴照護服務</div>
                                                         <div class="service-code text-muted small">SRV-002</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="category-tag">????舫◢</span>
+                                                <span class="category-tag">居家照護</span>
                                             </td>
-                                            <td>$1,200/??/td>
+                                            <td>$1,200/次</td>
                                             <td>
                                                 <span class="commission-amount">$120</span>
                                                 <span class="commission-rate">10%</span>
                                             </td>
-                                            <td>189 ??/td>
+                                            <td>189 次</td>
                                             <td>
                                                 <label class="switch small">
                                                     <input type="checkbox" checked>
@@ -360,16 +365,16 @@
                                             <td>2026/01/20</td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <button class="btn-icon" title="?潘撩??啣?">
+                                                    <button class="btn-icon" title="檢視詳情">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
-                                                    <button class="btn-icon" title="?箏??>
+                                                    <button class="btn-icon" title="編輯">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <!-- <button class="btn-icon" title="?堊城???">
+                                                    <!-- <button class="btn-icon" title="定價設定">
                                                         <i class="fas fa-dollar-sign"></i>
                                                     </button> -->
-                                                    <button class="btn-icon text-danger" title="??畸?">
+                                                    <button class="btn-icon text-danger" title="刪除">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </div>
@@ -385,20 +390,20 @@
                                                         <i class="fas fa-stethoscope"></i>
                                                     </div>
                                                     <div>
-                                                        <div class="service-name">????╰????????剜?</div>
+                                                        <div class="service-name">陪同就醫服務（半天）</div>
                                                         <div class="service-code text-muted small">SRV-003</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="category-tag">?????舀?</span>
+                                                <span class="category-tag">醫療陪伴</span>
                                             </td>
-                                            <td>$1,500/??/td>
+                                            <td>$1,500/次</td>
                                             <td>
                                                 <span class="commission-amount">$225</span>
                                                 <span class="commission-rate">15%</span>
                                             </td>
-                                            <td>432 ??/td>
+                                            <td>432 次</td>
                                             <td>
                                                 <label class="switch small">
                                                     <input type="checkbox" checked>
@@ -408,16 +413,16 @@
                                             <td>2026/01/18</td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <button class="btn-icon" title="?潘撩??啣?">
+                                                    <button class="btn-icon" title="檢視詳情">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
-                                                    <button class="btn-icon" title="?箏??>
+                                                    <button class="btn-icon" title="編輯">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <!-- <button class="btn-icon" title="?堊城???">
+                                                    <!-- <button class="btn-icon" title="定價設定">
                                                         <i class="fas fa-dollar-sign"></i>
                                                     </button> -->
-                                                    <button class="btn-icon text-danger" title="??畸?">
+                                                    <button class="btn-icon text-danger" title="刪除">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </div>
@@ -433,20 +438,20 @@
                                                         <i class="fas fa-dumbbell"></i>
                                                     </div>
                                                     <div>
-                                                        <div class="service-name">????????</div>
+                                                        <div class="service-name">居家物理治療</div>
                                                         <div class="service-code text-muted small">SRV-004</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="category-tag">?箸?蹍???</span>
+                                                <span class="category-tag">復健服務</span>
                                             </td>
-                                            <td>$1,800/??/td>
+                                            <td>$1,800/次</td>
                                             <td>
                                                 <span class="commission-amount">$180</span>
                                                 <span class="commission-rate">10%</span>
                                             </td>
-                                            <td>178 ??/td>
+                                            <td>178 次</td>
                                             <td>
                                                 <label class="switch small">
                                                     <input type="checkbox" checked>
@@ -456,16 +461,16 @@
                                             <td>2026/01/22</td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <button class="btn-icon" title="?潘撩??啣?">
+                                                    <button class="btn-icon" title="檢視詳情">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
-                                                    <button class="btn-icon" title="?箏??>
+                                                    <button class="btn-icon" title="編輯">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <!-- <button class="btn-icon" title="?堊城???">
+                                                    <!-- <button class="btn-icon" title="定價設定">
                                                         <i class="fas fa-dollar-sign"></i>
                                                     </button> -->
-                                                    <button class="btn-icon text-danger" title="??畸?">
+                                                    <button class="btn-icon text-danger" title="刪除">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </div>
@@ -481,20 +486,20 @@
                                                         <i class="fas fa-wheelchair"></i>
                                                     </div>
                                                     <div>
-                                                        <div class="service-name">?擗???????/div>
+                                                        <div class="service-name">電動輪椅租借</div>
                                                         <div class="service-code text-muted small">SRV-005</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="category-tag">??????</span>
+                                                <span class="category-tag">輔具服務</span>
                                             </td>
-                                            <td>$2,000/??/td>
+                                            <td>$2,000/月</td>
                                             <td>
                                                 <span class="commission-amount">$200</span>
                                                 <span class="commission-rate">10%</span>
                                             </td>
-                                            <td>89 ??/td>
+                                            <td>89 次</td>
                                             <td>
                                                 <label class="switch small">
                                                     <input type="checkbox">
@@ -504,16 +509,16 @@
                                             <td>2025/12/15</td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <button class="btn-icon" title="?潘撩??啣?">
+                                                    <button class="btn-icon" title="檢視詳情">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
-                                                    <button class="btn-icon" title="?箏??>
+                                                    <button class="btn-icon" title="編輯">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <!-- <button class="btn-icon" title="?堊城???">
+                                                    <!-- <button class="btn-icon" title="定價設定">
                                                         <i class="fas fa-dollar-sign"></i>
                                                     </button> -->
-                                                    <button class="btn-icon text-danger" title="??畸?">
+                                                    <button class="btn-icon text-danger" title="刪除">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </div>
@@ -524,101 +529,101 @@
                             </div>
                         </div>
                         
-                        <!-- ????潘撩? -->
+                        <!-- 卡片檢視 -->
                         <div class="grid-view" id="gridView" style="display: none;">
                             <div class="service-grid">
                                 <div class="service-card">
                                     <div class="service-card-image">
                                         <i class="fas fa-home"></i>
-                                        <span class="service-status online">?????/span>
-                                        <span class="service-promo">85??/span>
+                                        <span class="service-status online">已上架</span>
+                                        <span class="service-promo">85折</span>
                                     </div>
                                     <div class="service-card-body">
-                                        <div class="service-card-category">????舫◢</div>
-                                        <h4 class="service-card-title">?隞?????舫◢???</h4>
+                                        <div class="service-card-category">居家照護</div>
+                                        <h4 class="service-card-title">日間居家照護服務</h4>
                                         <div class="service-card-price">
-                                            <span class="original">$800/??/span>
-                                            <span class="promo">$680/??/span>
+                                            <span class="original">$800/次</span>
+                                            <span class="promo">$680/次</span>
                                         </div>
                                         <div class="service-card-stats">
-                                            <span><i class="fas fa-shopping-cart"></i> 256 ?????/span>
+                                            <span><i class="fas fa-shopping-cart"></i> 256 次訂購</span>
                                         </div>
                                     </div>
                                     <div class="service-card-actions">
-                                        <button class="btn btn-sm btn-outline">?箏??/button>
-                                        <button class="btn btn-sm btn-primary">?潘撩?</button>
+                                        <button class="btn btn-sm btn-outline">編輯</button>
+                                        <button class="btn btn-sm btn-primary">檢視</button>
                                     </div>
                                 </div>
                                 
                                 <div class="service-card">
                                     <div class="service-card-image">
                                         <i class="fas fa-moon"></i>
-                                        <span class="service-status online">?????/span>
+                                        <span class="service-status online">已上架</span>
                                     </div>
                                     <div class="service-card-body">
-                                        <div class="service-card-category">????舫◢</div>
-                                        <h4 class="service-card-title">?叟乾???舀???舫◢???</h4>
+                                        <div class="service-card-category">居家照護</div>
+                                        <h4 class="service-card-title">夜間陪伴照護服務</h4>
                                         <div class="service-card-price">
-                                            <span class="current">$1,200/??/span>
+                                            <span class="current">$1,200/次</span>
                                         </div>
                                         <div class="service-card-stats">
-                                            <span><i class="fas fa-shopping-cart"></i> 189 ?????/span>
+                                            <span><i class="fas fa-shopping-cart"></i> 189 次訂購</span>
                                         </div>
                                     </div>
                                     <div class="service-card-actions">
-                                        <button class="btn btn-sm btn-outline">?箏??/button>
-                                        <button class="btn btn-sm btn-primary">?潘撩?</button>
+                                        <button class="btn btn-sm btn-outline">編輯</button>
+                                        <button class="btn btn-sm btn-primary">檢視</button>
                                     </div>
                                 </div>
                                 
                                 <div class="service-card">
                                     <div class="service-card-image">
                                         <i class="fas fa-stethoscope"></i>
-                                        <span class="service-status online">?????/span>
+                                        <span class="service-status online">已上架</span>
                                     </div>
                                     <div class="service-card-body">
-                                        <div class="service-card-category">?????舀?</div>
-                                        <h4 class="service-card-title">????╰????????剜?</h4>
+                                        <div class="service-card-category">醫療陪伴</div>
+                                        <h4 class="service-card-title">陪同就醫服務（半天）</h4>
                                         <div class="service-card-price">
-                                            <span class="current">$1,500/??/span>
+                                            <span class="current">$1,500/次</span>
                                         </div>
                                         <div class="service-card-stats">
-                                            <span><i class="fas fa-shopping-cart"></i> 432 ?????/span>
+                                            <span><i class="fas fa-shopping-cart"></i> 432 次訂購</span>
                                         </div>
                                     </div>
                                     <div class="service-card-actions">
-                                        <button class="btn btn-sm btn-outline">?箏??/button>
-                                        <button class="btn btn-sm btn-primary">?潘撩?</button>
+                                        <button class="btn btn-sm btn-outline">編輯</button>
+                                        <button class="btn btn-sm btn-primary">檢視</button>
                                     </div>
                                 </div>
                                 
                                 <div class="service-card offline">
                                     <div class="service-card-image">
                                         <i class="fas fa-wheelchair"></i>
-                                        <span class="service-status offline">?????/span>
+                                        <span class="service-status offline">已下架</span>
                                     </div>
                                     <div class="service-card-body">
-                                        <div class="service-card-category">??????</div>
-                                        <h4 class="service-card-title">?擗???????/h4>
+                                        <div class="service-card-category">輔具服務</div>
+                                        <h4 class="service-card-title">電動輪椅租借</h4>
                                         <div class="service-card-price">
-                                            <span class="current">$2,000/??/span>
+                                            <span class="current">$2,000/月</span>
                                         </div>
                                         <div class="service-card-stats">
-                                            <span><i class="fas fa-shopping-cart"></i> 89 ?????/span>
+                                            <span><i class="fas fa-shopping-cart"></i> 89 次訂購</span>
                                         </div>
                                     </div>
                                     <div class="service-card-actions">
-                                        <button class="btn btn-sm btn-outline">?箏??/button>
-                                        <button class="btn btn-sm btn-success">??豱?/button>
+                                        <button class="btn btn-sm btn-outline">編輯</button>
+                                        <button class="btn btn-sm btn-success">上架</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- ??? -->
+                        <!-- 分頁 -->
                         <div class="pagination-wrapper">
                             <div class="pagination-info">
-                                ?輯??扯??1 - 5 ?????45 ?????
+                                顯示第 1 - 5 筆，共 45 筆資料
                             </div>
                             <div class="pagination">
                                 <button class="page-btn" disabled>
@@ -642,47 +647,47 @@
         </div>
     </div>
 
-    <!-- ???/?箏???? Modal -->
+    <!-- 新增/編輯服務 Modal -->
     <div class="modal" id="serviceModal">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">??????</h4>
+                    <h4 class="modal-title">新增服務</h4>
                     <button class="modal-close" onclick="closeModal('serviceModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form id="serviceForm">
-                        <!-- ?蝞賃秧?? -->
+                        <!-- 基本資訊 -->
                         <div class="form-section">
-                            <h5 class="form-section-title">?蝞賃秧??</h5>
+                            <h5 class="form-section-title">基本資訊</h5>
                             <div class="form-grid">
                                 <div class="form-group">
-                                    <label class="form-label required">??? PID</label>
-                                    <input type="text" class="form-control" placeholder="?ｇ???鈭??蹓??鈭色">
-                                    <p class="form-hint">???????朱?瞏??????恃?????蹓???/p>
+                                    <label class="form-label required">商品 PID</label>
+                                    <input type="text" class="form-control" placeholder="請輸入商品識別碼">
+                                    <p class="form-hint">商品唯一識別碼，不可與現有商品重複</p>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label required">????遴竣??/label>
+                                    <label class="form-label required">服務類別</label>
                                     <select class="form-select">
-                                        <option value="">?ｇ蹓?????/option>
-                                        <option value="1">????舫◢</option>
-                                        <option value="2">?????舀?</option>
-                                        <option value="3">?箸?蹍???</option>
-                                        <option value="4">?賹?????/option>
-                                        <option value="5">??????</option>
-                                        <option value="6">?對??Ｘ??</option>
-                                        <option value="7">?賹????</option>
+                                        <option value="">請選擇類別</option>
+                                        <option value="1">居家照護</option>
+                                        <option value="2">醫療陪伴</option>
+                                        <option value="3">復健服務</option>
+                                        <option value="4">營養餐飲</option>
+                                        <option value="5">輔具服務</option>
+                                        <option value="6">心理諮商</option>
+                                        <option value="7">生活協助</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-label required">??????</label>
-                                <input type="text" class="form-control" placeholder="?ｇ???鈭??謕???>
+                                <label class="form-label required">服務名稱</label>
+                                <input type="text" class="form-control" placeholder="請輸入服務名稱">
                             </div>
                             <div class="form-group">
-                                <label class="form-label required">?????渲</label>
+                                <label class="form-label required">服務描述</label>
                                 <div class="rich-editor" id="serviceDesc">
                                     <div class="editor-toolbar">
                                         <button type="button"><i class="fas fa-bold"></i></button>
@@ -694,233 +699,207 @@
                                         <button type="button"><i class="fas fa-link"></i></button>
                                     </div>
                                     <div class="editor-content" contenteditable="true">
-                                        <p>?ｇ???鈭??謕??????..</p>
+                                        <p>請輸入服務詳細說明...</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- ????謘? -->
+                        <!-- 服務圖片 -->
                         <div class="form-section">
-                            <h5 class="form-section-title">????謘?</h5>
+                            <h5 class="form-section-title">服務圖片</h5>
                             <div class="image-upload-grid">
                                 <div class="image-upload-item main">
                                     <div class="upload-placeholder">
                                         <i class="fas fa-plus"></i>
-                                        <span>?????/span>
+                                        <span>主圖片</span>
+                                    </div>
+                                    <input type="file" accept="image/*" hidden>
+                                </div>
+                                <div class="image-upload-item">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-plus"></i>
+                                        <span>附圖 1</span>
+                                    </div>
+                                    <input type="file" accept="image/*" hidden>
+                                </div>
+                                <div class="image-upload-item">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-plus"></i>
+                                        <span>附圖 2</span>
+                                    </div>
+                                    <input type="file" accept="image/*" hidden>
+                                </div>
+                                <div class="image-upload-item">
+                                    <div class="upload-placeholder">
+                                        <i class="fas fa-plus"></i>
+                                        <span>附圖 3</span>
                                     </div>
                                     <input type="file" accept="image/*" hidden>
                                 </div>
                             </div>
-                            <p class="form-hint">?梁???蝞???00x600px????JPG?蹍G ?瞉?</p>
-                        </div>
-
-                        <!-- ???????謘? -->
-                        <div class="form-section">
-                            <h5 class="form-section-title">
-                                <i class="fas fa-images" style="color:var(--primary-color);margin-right:6px;"></i>
-                                ???????謘?
-                                <span style="font-size:13px;font-weight:400;color:var(--text-secondary);margin-left:8px;">??嚗蝞賃??堆撓????蹓??砲??嚚?????4 ???</span>
-                            </h5>
-                            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
-                                <div class="image-upload-item" style="aspect-ratio:16/9;width:100%;" onclick="this.querySelector('input').click()" id="bannerUpload1">
-                                    <div class="upload-placeholder" style="flex-direction:column;gap:6px;">
-                                        <i class="fas fa-image" style="font-size:22px;"></i>
-                                        <span>?謘? 1</span>
-                                        <span style="font-size:11px;color:var(--text-light);">?梁???750?420px</span>
-                                    </div>
-                                    <input type="file" accept="image/*" hidden onchange="previewBannerImg(this, 'bannerUpload1')">
-                                </div>
-                                <div class="image-upload-item" style="aspect-ratio:16/9;width:100%;" onclick="this.querySelector('input').click()" id="bannerUpload2">
-                                    <div class="upload-placeholder" style="flex-direction:column;gap:6px;">
-                                        <i class="fas fa-image" style="font-size:22px;"></i>
-                                        <span>?謘? 2</span>
-                                        <span style="font-size:11px;color:var(--text-light);">?梁???750?420px</span>
-                                    </div>
-                                    <input type="file" accept="image/*" hidden onchange="previewBannerImg(this, 'bannerUpload2')">
-                                </div>
-                                <div class="image-upload-item" style="aspect-ratio:16/9;width:100%;" onclick="this.querySelector('input').click()" id="bannerUpload3">
-                                    <div class="upload-placeholder" style="flex-direction:column;gap:6px;">
-                                        <i class="fas fa-image" style="font-size:22px;"></i>
-                                        <span>?謘? 3</span>
-                                        <span style="font-size:11px;color:var(--text-light);">?梁???750?420px</span>
-                                    </div>
-                                    <input type="file" accept="image/*" hidden onchange="previewBannerImg(this, 'bannerUpload3')">
-                                </div>
-                                <div class="image-upload-item" style="aspect-ratio:16/9;width:100%;" onclick="this.querySelector('input').click()" id="bannerUpload4">
-                                    <div class="upload-placeholder" style="flex-direction:column;gap:6px;">
-                                        <i class="fas fa-image" style="font-size:22px;"></i>
-                                        <span>?謘? 4</span>
-                                        <span style="font-size:11px;color:var(--text-light);">?梁???750?420px</span>
-                                    </div>
-                                    <input type="file" accept="image/*" hidden onchange="previewBannerImg(this, 'bannerUpload4')">
-                                </div>
-                            </div>
-                            <p class="form-hint" style="margin-top:8px;">
-                                <i class="fas fa-info-circle" style="color:var(--primary-color);"></i>
-                                ??? JPG?蹍G???????澗?蟡?謢? 16:9
-                            </p>
+                            <p class="form-hint">建議尺寸：800x600px，支援 JPG、PNG 格式，最多上傳 4 張</p>
                         </div>
                         
-                        <!-- ????秋赯?-->
+                        <!-- 服務規格 -->
                         <div class="form-section">
-                            <h5 class="form-section-title">????秋赯?/h5>
+                            <h5 class="form-section-title">服務規格</h5>
                             <div class="form-group">
-                                <label class="form-label">?秋赯菟??</label>
-                                <input type="text" class="form-control" placeholder="???????/???蹓???????蹓魂????謕蹓???謘?>
-                                <p class="form-hint">?ｇ???鈭??謕??瞏貊??????望摮??皝??輯???瞉???/p>
+                                <label class="form-label">規格說明</label>
+                                <input type="text" class="form-control" placeholder="例如：2小時/次、每週三次、單次服務、月租方案">
+                                <p class="form-hint">請輸入服務規格說明，此內容將直接顯示於前台</p>
                             </div>
                         </div>
                         
-                        <!-- ?堊城??? -->
+                        <!-- 定價設定 -->
                         <div class="form-section">
-                            <h5 class="form-section-title">?堊城???</h5>
+                            <h5 class="form-section-title">定價設定</h5>
                             <div class="form-grid">
                                 <div class="form-group">
-                                    <label class="form-label required">??秧??/label>
+                                    <label class="form-label required">成本價</label>
                                     <div class="input-group">
                                         <span class="input-group-text">$</span>
                                         <input type="number" class="form-control" placeholder="0">
                                     </div>
-                                    <p class="form-hint">?????秧?????????</p>
+                                    <p class="form-hint">服務成本，僅平台內部可見</p>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label required">?獢??/label>
+                                    <label class="form-label required">售價</label>
                                     <div class="input-group">
                                         <span class="input-group-text">$</span>
                                         <input type="number" class="form-control" placeholder="0">
-                                        <input type="text" class="form-control" placeholder="/?? style="max-width: 100px;">
+                                        <input type="text" class="form-control" placeholder="/次" style="max-width: 100px;">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label required">?????</label>
+                                    <label class="form-label required">平台分潤</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" placeholder="10" value="10">
                                         <select class="form-select" style="max-width: 110px;">
                                             <option value="percent">%</option>
-                                            <option value="amount">???</option>
+                                            <option value="amount">金額</option>
                                         </select>
                                     </div>
-                                    <p class="form-hint">??芣??鈭??????%???蝞????</p>
+                                    <p class="form-hint">可輸入分潤比例（%）或固定金額</p>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">????????</label>
+                                    <label class="form-label">分潤金額預估</label>
                                     <div class="commission-preview">
-                                        <span class="preview-label">?伍??殉?謘?????/span>
+                                        <span class="preview-label">每筆訂單分潤：</span>
                                         <span class="preview-value">$0</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- ??豱菟?? -->
+                        <!-- 上架設定 -->
                         <div class="form-section">
-                            <h5 class="form-section-title">??豱菟??</h5>
+                            <h5 class="form-section-title">上架設定</h5>
                             <div class="form-group">
-                                <label class="form-label">??豱?蹇?</label>
+                                <label class="form-label">上架時間</label>
                                 <input type="datetime-local" class="form-control">
-                                <p class="form-hint">?桀???????豱?蹇???????∴??仿??斯</p>
+                                <p class="form-hint">設定服務上架時間，留空則立即上架</p>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeModal('serviceModal')">?謘?</button>
-                    <button class="btn btn-outline">?????仿</button>
-                    <button class="btn btn-primary">???????/button>
+                    <button class="btn btn-outline" onclick="closeModal('serviceModal')">取消</button>
+                    <button class="btn btn-outline">儲存草稿</button>
+                    <button class="btn btn-primary">儲存並上架</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ?堊城??? Modal -->
+    <!-- 定價設定 Modal -->
     <div class="modal" id="pricingModal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">?堊城??? - ?隞?????舫◢???</h4>
+                    <h4 class="modal-title">定價設定 - 日間居家照護服務</h4>
                     <button class="modal-close" onclick="closeModal('pricingModal')">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="pricing-tabs">
-                        <button class="pricing-tab active" data-tab="basic">?蝞賃秧?堊城??/button>
-                        <button class="pricing-tab" data-tab="promo">?踝??撖僱</button>
-                        <button class="pricing-tab" data-tab="tier">????堊城??/button>
-                        <button class="pricing-tab" data-tab="org">???????/button>
+                        <button class="pricing-tab active" data-tab="basic">基本定價</button>
+                        <button class="pricing-tab" data-tab="promo">促銷價格</button>
+                        <button class="pricing-tab" data-tab="tier">階梯定價</button>
+                        <button class="pricing-tab" data-tab="org">機構專屬</button>
                     </div>
                     
-                    <!-- ?蝞賃秧?堊城??-->
+                    <!-- 基本定價 -->
                     <div class="pricing-content" id="basicTab">
                         <div class="form-group">
-                            <label class="form-label">?蝞賃秧?撖僱</label>
+                            <label class="form-label">基本價格</label>
                             <div class="input-group">
                                 <span class="input-group-text">$</span>
                                 <input type="number" class="form-control" value="800">
-                                <span class="input-group-text">/??/span>
+                                <span class="input-group-text">/次</span>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- ?踝??撖僱 -->
+                    <!-- 促銷價格 -->
                     <div class="pricing-content" id="promoTab" style="display: none;">
                         <div class="form-grid">
                             <div class="form-group">
-                                <label class="form-label">?踝??撖僱</label>
+                                <label class="form-label">促銷價格</label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <input type="number" class="form-control" value="680">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">?謢瘀?伍??</label>
+                                <label class="form-label">折扣比例</label>
                                 <div class="input-group">
                                     <input type="number" class="form-control" value="85">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </div>
                             <div class="form-group full-width">
-                                <label class="form-label">?踝??賹?</label>
+                                <label class="form-label">促銷期間</label>
                                 <div class="date-range">
                                     <input type="date" class="form-control" value="2026-01-01">
-                                    <span class="date-separator">??/span>
+                                    <span class="date-separator">至</span>
                                     <input type="date" class="form-control" value="2026-03-31">
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- ????堊城??-->
+                    <!-- 階梯定價 -->
                     <div class="pricing-content" id="tierTab" style="display: none;">
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>?螂?箇??伍</th>
-                                    <th>?獢??/th>
-                                    <th>???</th>
+                                    <th>購買次數</th>
+                                    <th>單價</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1-5 ??/td>
-                                    <td>$800/??/td>
+                                    <td>1-5 次</td>
+                                    <td>$800/次</td>
                                     <td>
                                         <button class="btn-icon"><i class="fas fa-edit"></i></button>
                                         <button class="btn-icon text-danger"><i class="fas fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>6-10 ??/td>
-                                    <td>$750/??/td>
+                                    <td>6-10 次</td>
+                                    <td>$750/次</td>
                                     <td>
                                         <button class="btn-icon"><i class="fas fa-edit"></i></button>
                                         <button class="btn-icon text-danger"><i class="fas fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>11 ?隤??/td>
-                                    <td>$700/??/td>
+                                    <td>11 次以上</td>
+                                    <td>$700/次</td>
                                     <td>
                                         <button class="btn-icon"><i class="fas fa-edit"></i></button>
                                         <button class="btn-icon text-danger"><i class="fas fa-trash-alt"></i></button>
@@ -930,25 +909,25 @@
                         </table>
                         <button class="btn btn-sm btn-outline mt-3">
                             <i class="fas fa-plus"></i>
-                            ??????
+                            新增階梯
                         </button>
                     </div>
                     
-                    <!-- ???????-->
+                    <!-- 機構專屬 -->
                     <div class="pricing-content" id="orgTab" style="display: none;">
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>??????</th>
-                                    <th>????撖僱</th>
-                                    <th>????賹?</th>
-                                    <th>???</th>
+                                    <th>機構名稱</th>
+                                    <th>專屬價格</th>
+                                    <th>有效期限</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>?鞈???舫◢???</td>
-                                    <td>$720/??/td>
+                                    <td>陽光照護中心</td>
+                                    <td>$720/次</td>
                                     <td>2026/12/31</td>
                                     <td>
                                         <button class="btn-icon"><i class="fas fa-edit"></i></button>
@@ -956,8 +935,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>?謜??????</td>
-                                    <td>$750/??/td>
+                                    <td>愛心長照服務</td>
+                                    <td>$750/次</td>
                                     <td>2026/06/30</td>
                                     <td>
                                         <button class="btn-icon"><i class="fas fa-edit"></i></button>
@@ -968,13 +947,13 @@
                         </table>
                         <button class="btn btn-sm btn-outline mt-3">
                             <i class="fas fa-plus"></i>
-                            ???????????
+                            新增機構專屬價
                         </button>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeModal('pricingModal')">?謘?</button>
-                    <button class="btn btn-primary">???</button>
+                    <button class="btn btn-outline" onclick="closeModal('pricingModal')">取消</button>
+                    <button class="btn btn-primary">儲存</button>
                 </div>
             </div>
         </div>
@@ -982,21 +961,5 @@
 
     <!-- JavaScript -->
     <script src="js/platform.js"></script>
-    <script>
-        function previewBannerImg(input, containerId) {
-            if (!input.files || !input.files[0]) return;
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                container.style.backgroundImage = 'url(' + e.target.result + ')';
-                container.style.backgroundSize = 'cover';
-                container.style.backgroundPosition = 'center';
-                const placeholder = container.querySelector('.upload-placeholder');
-                if (placeholder) placeholder.style.opacity = '0';
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    </script>
 </body>
 </html>

@@ -1,348 +1,351 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>???????? - ??潸??????/title>
-    <!-- Font Awesome CDN -->
+    <title>推播通知管理 - 平台端管理系統</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- ?????? -->
     <link rel="stylesheet" href="css/platform.css">
     <style>
-        .announcement-summary {
-            color: var(--text-secondary);
-            font-size: 13px;
-        }
-        .announcement-title {
+        .audience-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
             font-weight: 600;
-            color: var(--text-primary);
         }
-        .announcement-actions {
-            display: flex;
-            gap: 8px;
-        }
-        .announcement-preview {
-            padding: 16px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin-top: 12px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        .form-grid-two {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-        @media (max-width: 768px) {
-            .form-grid-two {
-                grid-template-columns: 1fr;
-            }
-        }
+        .audience-tag.all { background: rgba(99,102,241,0.12); color: var(--primary-color); }
+        .audience-tag.client { background: rgba(16,185,129,0.12); color: var(--success-color); }
+        .audience-tag.org { background: rgba(245,158,11,0.12); color: var(--warning-color); }
+        .audience-tag.supplier { background: rgba(59,130,246,0.12); color: var(--info-color); }
+        .notif-preview { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); font-size: 13px; }
+        .modal-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width:900px) { .modal-form-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="admin-layout">
-        <!-- ?皝???-->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
+                <div class="sidebar-logo"><i class="fas fa-shield-alt"></i></div>
                 <div>
-                    <div class="sidebar-title">?蝞賂??舫◢???/div>
-                    <div class="sidebar-subtitle">??潸??????/div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">平台端管理系統</div>
                 </div>
             </div>
-
             <nav class="sidebar-menu">
-                <!-- ??蹓??-->
                 <div class="menu-section">
-                    <div class="menu-section-title">????賹?</div>
-
-                    <a href="index.html" class="menu-item">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>???萄豰?/span>
-                    </a>
-
-                    <a href="organizations.html" class="menu-item">
-                        <i class="fas fa-building"></i>
-                        <span>????謅?/span>
-                    </a>
-
-                    <a href="members.html" class="menu-item">
-                        <i class="fas fa-users"></i>
-                        <span>?????蛔?謅?/span>
-                    </a>
-
-                    <a href="orders.html" class="menu-item">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>?殉????荒????</span>
-                    </a>
-                </div>
-
-                <!-- ????桀?? -->
-                <div class="menu-section">
-                    <div class="menu-section-title">????桀??</div>
-
-                    <a href="categories.html" class="menu-item">
-                        <i class="fas fa-folder-tree"></i>
-                        <span>????遴竣????</span>
-                    </a>
-
-                    <a href="services.html" class="menu-item">
-                        <i class="fas fa-concierge-bell"></i>
-                        <span>??????</span>
-                    </a>
-
-                    <a href="suppliers.html" class="menu-item">
-                        <i class="fas fa-truck"></i>
-                        <span>???????/span>
-                    </a>
-                </div>
-
-                <!-- ???賹? -->
-                <div class="menu-section">
-                    <div class="menu-section-title">???賹?</div>
-
-                    <a href="announcements.html" class="menu-item">
-                        <i class="fas fa-bullhorn"></i>
-                        <span>??潮???????</span>
-                    </a>
-
-                    <a href="notifications.html" class="menu-item active">
-                        <i class="fas fa-bell"></i>
-                        <span>????????</span>
-                    </a>
-
-                    <a href="tickets.html" class="menu-item">
-                        <i class="fas fa-headset"></i>
-                        <span>??潭嚗??獢??/span>
-                    </a>
-
-                    <a href="faq.html" class="menu-item">
-                        <i class="fas fa-question-circle"></i>
-                        <span>??????????</span>
-                    </a>
-                </div>
-
-                <!-- ??蝯??? -->
-                <div class="menu-section">
-                    <div class="menu-section-title">??蝯???</div>
-                    <div class="menu-item" data-submenu="system-submenu">
-                        <i class="fas fa-cog"></i>
-                        <span>??蝯???</span>
-                        <i class="fas fa-chevron-right arrow"></i>
+                    <div class="menu-section-title">主要功能</div>
+                    <a href="index.html" class="menu-item"><i class="fas fa-tachometer-alt"></i><span>儀表板</span></a>
+                    <div class="menu-item" data-submenu="org-submenu"><i class="fas fa-building"></i><span>機構管理</span><i class="fas fa-chevron-right arrow"></i></div>
+                    <div class="submenu" id="org-submenu">
+                        <a href="organizations.html" class="menu-item"><span>機構列表</span></a>
                     </div>
+                    <div class="menu-item" data-submenu="member-submenu"><i class="fas fa-users"></i><span>個案會員管理</span><i class="fas fa-chevron-right arrow"></i></div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item"><span>會員列表</span></a>
+                    </div>
+                    <a href="orders.html" class="menu-item"><i class="fas fa-shopping-cart"></i><span>訂購清單管理</span></a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">服務設定</div>
+                    <a href="categories.html" class="menu-item"><i class="fas fa-folder-tree"></i><span>服務類別管理</span></a>
+                    <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>服務管理</span></a>
+                    <a href="suppliers.html" class="menu-item"><i class="fas fa-truck"></i><span>供應商管理</span></a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">平台功能</div>
+                    <a href="announcements.html" class="menu-item"><i class="fas fa-bullhorn"></i><span>平台公告管理</span></a>
+                    <a href="tickets.html" class="menu-item"><i class="fas fa-headset"></i><span>平台客服單管理</span></a>
+                    <a href="notifications.html" class="menu-item active"><i class="fas fa-bell"></i><span>推播通知管理</span></a>
+                    <a href="faq.html" class="menu-item"><i class="fas fa-question-circle"></i><span>常見問題管理</span></a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu"><i class="fas fa-cog"></i><span>系統管理</span><i class="fas fa-chevron-right arrow"></i></div>
                     <div class="submenu" id="system-submenu">
-                        <a href="admins.html" class="menu-item">
-                            <span>?輯撒???望??/span>
-                        </a>
-                        <a href="roles.html" class="menu-item">
-                            <span>?恃??啁??????</span>
-                        </a>
-                        <a href="logs.html" class="menu-item">
-                            <span>?????????/span>
-                        </a>
+                        <a href="admins.html" class="menu-item"><span>使用者管理</span></a>
+                        <a href="roles.html" class="menu-item"><span>角色權限管理</span></a>
+                        <a href="logs.html" class="menu-item"><span>操作紀錄查詢</span></a>
                     </div>
                 </div>
             </nav>
         </aside>
 
-        <!-- ?????寞??? -->
         <div class="main-content">
-            <!-- ?蹇豢?????-->
             <header class="top-navbar">
                 <div class="navbar-left">
                     <i class="fas fa-bars menu-toggle"></i>
                     <div class="breadcrumb">
-                        <a href="index.html">???</a>
+                        <a href="index.html">首頁</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>???賹?</span>
-                        <i class="fas fa-chevron-right"></i>
-                        <span>????????</span>
+                        <span>推播通知管理</span>
                     </div>
                 </div>
-
                 <div class="navbar-right">
                     <div class="dropdown">
                         <div class="user-dropdown dropdown-toggle">
-                            <div class="user-avatar admin">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
+                            <div class="user-avatar admin"><i class="fas fa-user-tie"></i></div>
                             <div class="user-info">
-                                <div class="user-name">??蝯?????/div>
-                                <div class="user-role">???????/div>
+                                <div class="user-name">系統管理員</div>
+                                <div class="user-role">超級管理員</div>
                             </div>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="profile.html" class="dropdown-item">
-                                <i class="fas fa-user"></i>
-                                <span>?????</span>
-                            </a>
-                            <a href="settings.html" class="dropdown-item">
-                                <i class="fas fa-cog"></i>
-                                <span>??蝯??</span>
-                            </a>
+                            <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i><span>個人資料</span></a>
+                            <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i><span>系統設定</span></a>
                             <div class="dropdown-divider"></div>
-                            <a href="logout.html" class="dropdown-item text-danger">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>?擗??蝯?/span>
-                            </a>
+                            <a href="logout.html" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i><span>登出系統</span></a>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- ?蹓遴???寞? -->
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">????????</h1>
-                        <p class="page-subtitle">???????瞉??蹓質?蹇??謍船??????/p>
+                        <h1 class="page-title">推播通知管理</h1>
+                        <p class="page-subtitle">管理平台推播通知內容，可指定發送對象與排程時間。</p>
                     </div>
-                    <div>
-                        <button class="btn btn-primary" onclick="openModal('announcementModal')">
-                            <i class="fas fa-plus"></i> ??????
-                        </button>
+                    <button class="btn btn-primary" onclick="openNotifModal()">
+                        <i class="fas fa-plus"></i> 新增通知
+                    </button>
+                </div>
+
+                <!-- 統計卡 -->
+                <div class="stats-grid" style="margin-bottom:24px;">
+                    <div class="stat-card">
+                        <div class="stat-icon primary"><i class="fas fa-paper-plane"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">已發送</div>
+                            <div class="stat-value">142</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon warning"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">待發送</div>
+                            <div class="stat-value">8</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success"><i class="fas fa-check-double"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">今日發送</div>
+                            <div class="stat-value">5</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon danger"><i class="fas fa-times-circle"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">發送失敗</div>
+                            <div class="stat-value">2</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- ????謅?-->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-bullhorn"></i> ????謅?/h3>
-                        <div style="display:flex;gap:10px;align-items:center;">
-                            <div class="search-input" style="width:220px;">
-                                <i class="fas fa-search"></i>
-                                <input type="text" class="form-control" placeholder="?謚???????">
-                            </div>
-                            <select class="form-select" style="width:140px;">
-                                <option>??賂????/option>
-                                <option>?瞉???/option>
-                                <option>??仿</option>
-                                <option>????/option>
-                            </select>
-                        </div>
+                        <h3 class="card-title">通知記錄列表</h3>
                     </div>
                     <div class="card-body">
+                        <div class="filter-section" style="margin-bottom:16px;">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label class="filter-label">關鍵字搜尋</label>
+                                    <div class="search-input">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" class="form-control" placeholder="請輸入通知標題">
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">發送對象</label>
+                                    <select class="form-select">
+                                        <option value="">全部</option>
+                                        <option>全體用戶</option>
+                                        <option>客戶端</option>
+                                        <option>機構端</option>
+                                        <option>供應商</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">狀態</label>
+                                    <select class="form-select">
+                                        <option value="">全部</option>
+                                        <option>已發送</option>
+                                        <option>待發送</option>
+                                        <option>發送失敗</option>
+                                    </select>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="btn btn-outline"><i class="fas fa-redo"></i> 重置</button>
+                                    <button class="btn btn-outline"><i class="fas fa-search"></i> 查詢</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>??????</th>
-                                        <th>?瞉??蹇?</th>
-                                        <th>????/th>
-                                        <th>?謅?</th>
-                                        <th>???</th>
+                                        <th style="width:50px;"><input type="checkbox"></th>
+                                        <th>通知標題</th>
+                                        <th style="width:100px;">發送對象</th>
+                                        <th style="width:100px;">狀態</th>
+                                        <th style="width:160px;">排程時間</th>
+                                        <th style="width:80px;">開信數</th>
+                                        <th style="width:120px;">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div class="announcement-title">????秋撕??秋扒?倦????堆??謍船?</div>
-                                            <div class="announcement-summary">2026 ?鈭??賹?????蹇??方葭?桀???????謕???/div>
+                                            <div>系統維護通知 - 2026/02/15</div>
+                                            <div class="notif-preview">平台將於 2026/02/15 凌晨 02:00-04:00 進行系統維護...</div>
                                         </td>
-                                        <td>2026/01/25 10:00</td>
-                                        <td><span class="status-badge status-active">?瞉???/span></td>
-                                        <td>??賂??蛔</td>
+                                        <td><span class="audience-tag all">全體用戶</span></td>
+                                        <td><span class="status-badge active">已發送</span></td>
+                                        <td>2026/02/12 10:00</td>
+                                        <td>1,284</td>
                                         <td>
-                                            <div class="announcement-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('announcementModal')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="詳情"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div class="announcement-title">?鈭???瞍??????</div>
-                                            <div class="announcement-summary">3/10 ?鈭???瞍??????鼓???????啣???????/div>
+                                            <div>新服務上線公告</div>
+                                            <div class="notif-preview">親愛的用戶，全新居家照護服務正式上線，歡迎體驗...</div>
                                         </td>
-                                        <td>2026/01/20 14:30</td>
-                                        <td><span class="status-badge status-processing">??仿</span></td>
-                                        <td>???堊城?舀??/td>
+                                        <td><span class="audience-tag client">客戶端</span></td>
+                                        <td><span class="status-badge active">已發送</span></td>
+                                        <td>2026/02/10 09:00</td>
+                                        <td>856</td>
                                         <td>
-                                            <div class="announcement-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('announcementModal')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="詳情"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div class="announcement-title">??蝯?◢???</div>
-                                            <div class="announcement-summary">2/5 ?謍???蝯?◢??????鞈?甽?謚阬?/div>
+                                            <div>機構端功能更新說明</div>
+                                            <div class="notif-preview">機構端新增批次審核功能，可一次處理多筆綁定申請...</div>
                                         </td>
-                                        <td>2026/01/12 09:00</td>
-                                        <td><span class="status-badge status-inactive">????/span></td>
-                                        <td>??賂??蛔</td>
+                                        <td><span class="audience-tag org">機構端</span></td>
+                                        <td><span class="status-badge warning">待發送</span></td>
+                                        <td>2026/02/15 14:00</td>
+                                        <td>-</td>
                                         <td>
-                                            <div class="announcement-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('announcementModal')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openNotifModal()"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <div>供應商出貨規範調整</div>
+                                            <div class="notif-preview">請各供應商注意，自 3 月起出貨規範調整如下...</div>
+                                        </td>
+                                        <td><span class="audience-tag supplier">供應商</span></td>
+                                        <td><span class="status-badge danger">發送失敗</span></td>
+                                        <td>2026/02/08 16:30</td>
+                                        <td>0</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-primary" title="重試"><i class="fas fa-redo"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="pagination-section" style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+                            <div class="pagination-info">顯示第 1-4 筆，共 150 筆</div>
+                            <div class="pagination">
+                                <button class="btn btn-outline" disabled><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-primary">1</button>
+                                <button class="btn btn-outline">2</button>
+                                <button class="btn btn-outline">3</button>
+                                <button class="btn btn-outline"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ????璆??穿??Modal -->
-    <div class="modal" id="announcementModal">
-        <div class="modal-dialog">
+    <!-- 新增/編輯推播通知 Modal -->
+    <div class="modal" id="notifModal">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">????桀??</div>
-                    <button class="modal-close" onclick="closeModal('announcementModal')"><i class="fas fa-times"></i></button>
+                    <div class="modal-title">新增推播通知</div>
+                    <button class="modal-close" onclick="closeNotifModal()"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label class="form-label">??????</label>
-                        <input type="text" class="form-control" placeholder="?ｇ???鈭?????>
-                    </div>
-                    <div class="form-grid-two">
-                        <div class="form-group">
-                            <label class="form-label">?瞉?????/label>
+                    <div class="modal-form-grid" style="margin-bottom:16px;">
+                        <div>
+                            <label class="form-label">發送對象</label>
                             <select class="form-select">
-                                <option>?瞉???/option>
-                                <option>??仿</option>
+                                <option>全體用戶</option>
+                                <option>客戶端</option>
+                                <option>機構端</option>
+                                <option>供應商</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">??????</label>
-                            <input type="text" class="form-control" placeholder="?閰???????" inputmode="numeric" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                        <div>
+                            <label class="form-label">發送方式</label>
+                            <select class="form-select">
+                                <option>立即發送</option>
+                                <option>排程發送</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">?瞏捍蹓???/label>
-                        <select class="form-select">
-                            <option>??賂??蛔</option>
-                        </select>
+                    <div class="modal-form-grid" style="margin-bottom:16px;">
+                        <div>
+                            <label class="form-label">排程日期</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div>
+                            <label class="form-label">排程時間</label>
+                            <input type="time" class="form-control">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">?????寞?</label>
-                        <textarea class="form-control" rows="5" placeholder="?ｇ???鈭???望?></textarea>
+                    <div style="margin-bottom:16px;">
+                        <label class="form-label">通知標題</label>
+                        <input type="text" class="form-control" placeholder="請輸入通知標題（最多50字）">
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">??????</label>
-                        <div class="announcement-preview">?ｇ???鈭?啣音????祈都??輯???瞏剛縐??/div>
+                    <div>
+                        <label class="form-label">通知內容</label>
+                        <textarea class="form-control" rows="5" placeholder="請輸入推播通知內容..."></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeModal('announcementModal')">?謘?</button>
-                    <button class="btn btn-primary" onclick="closeModal('announcementModal')">???</button>
+                    <button class="btn btn-outline" onclick="closeNotifModal()">取消</button>
+                    <button class="btn btn-primary" onclick="closeNotifModal()">確認發送</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="js/platform.js"></script>
+    <script>
+        function openNotifModal() { document.getElementById('notifModal').classList.add('show'); }
+        function closeNotifModal() { document.getElementById('notifModal').classList.remove('show'); }
+    </script>
 </body>
 </html>

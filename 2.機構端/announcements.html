@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
@@ -34,17 +34,6 @@
             line-height: 1.6;
         }
 
-        .form-grid-two {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .form-grid-two {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
@@ -79,7 +68,7 @@
                         <a href="members.html" class="menu-item">
                             <span>個案列表</span>
                         </a>
-                        <a href="member-binding.html" class="menu-item">
+                                                <a href="member-binding.html" class="menu-item">
                             <span>綁定設定</span>
                         </a>
                     </div>
@@ -108,7 +97,6 @@
                         <span>個案關懷通訊</span>
                     </a>
                 </div>
-
                 <div class="menu-section">
                     <div class="menu-section-title">系統管理</div>
                     <div class="menu-item" data-submenu="system-submenu">
@@ -118,13 +106,13 @@
                     </div>
                     <div class="submenu" id="system-submenu">
                         <a href="admins.html" class="menu-item">
-                            <span>使用者管理</span>
+                            <span>管理員帳號管理</span>
                         </a>
                         <a href="roles.html" class="menu-item">
                             <span>角色權限管理</span>
                         </a>
                         <a href="logs.html" class="menu-item">
-                            <span>操作紀錄查詢</span>
+                            <span>操作日誌記錄</span>
                         </a>
                     </div>
                 </div>
@@ -205,7 +193,7 @@
                                         </td>
                                         <td>2026/01/25 10:00</td>
                                         <td><span class="status-badge active">發布中</span></td>
-                                        <td>全部會員</td>
+                                        <td>全部個案</td>
                                         <td>
                                             <div class="announcement-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openAnnouncementModal('edit')"><i class="fas fa-pen"></i></button>
@@ -235,7 +223,7 @@
                                         </td>
                                         <td>2026/01/12 09:00</td>
                                         <td><span class="status-badge inactive">已結束</span></td>
-                                        <td>全部會員</td>
+                                        <td>全部個案</td>
                                         <td>
                                             <div class="announcement-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openAnnouncementModal('edit')"><i class="fas fa-pen"></i></button>
@@ -271,13 +259,13 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>公告排序</label>
-                    <input type="text" id="announcementSort" class="form-control" placeholder="請輸入排序數字（數字越小越前）" inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <label>排序</label>
+                    <input type="number" class="form-control" id="announcementSort" min="1" placeholder="請輸入排序（數字越小越前）">
                 </div>
                 <div class="form-group">
                     <label>發送對象</label>
                     <select class="form-control">
-                        <option>全部會員</option>
+                        <option>全部個案</option>
                         <option>已綁定家屬</option>
                         <option>指定名單</option>
                     </select>

@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="0; url=organizations.html">
-    <title>?????赯?- ??潸??????/title>
+    <title>機構審核 - 平台端管理系統</title>
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- ?????? -->
+    <!-- 自訂樣式 -->
     <link rel="stylesheet" href="css/platform.css">
     <script>
-        // ?璇??????赯梁????垓謆?鈭??豯??踝???萄???
+        // 隱藏機構審核模組：直接導回機構列表頁。
         window.location.replace('organizations.html');
     </script>
     <style>
@@ -93,184 +93,196 @@
 </head>
 <body>
     <div class="admin-layout">
-        <!-- ?皝???-->
+        <!-- 側邊欄 -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
                     <i class="fas fa-shield-alt"></i>
                 </div>
                 <div>
-                    <div class="sidebar-title">?蝞賂??舫◢???/div>
-                    <div class="sidebar-subtitle">??潸??????/div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">平台端管理系統</div>
                 </div>
             </div>
             
             <nav class="sidebar-menu">
-                <!-- ??蹓??-->
+                <!-- 主選單 -->
                 <div class="menu-section">
-                    <div class="menu-section-title">????賹?</div>
+                    <div class="menu-section-title">主要功能</div>
                     
                     <a href="index.html" class="menu-item">
                         <i class="fas fa-tachometer-alt"></i>
-                        <span>???萄豰?/span>
+                        <span>儀表板</span>
                     </a>
                     
-                    <a href="organizations.html" class="menu-item active">
+                    <div class="menu-item expanded" data-submenu="org-submenu">
                         <i class="fas fa-building"></i>
-                        <span>????謅?/span>
-                    </a>
+                        <span>機構管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu show" id="org-submenu">
+                        <a href="organizations.html" class="menu-item">
+                            <span>機構列表</span>
+                        </a>
+                        <a href="org-review.html" class="menu-item active">
+                            <span>機構審核</span>
+                        </a>
+                    </div>
                     
-                    <a href="members.html" class="menu-item">
+                    <div class="menu-item" data-submenu="member-submenu">
                         <i class="fas fa-users"></i>
-                        <span>?????蛔?謅?/span>
-                    </a>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>會員列表</span>
+                        </a>
+                    </div>
                     
                     <a href="orders.html" class="menu-item">
                         <i class="fas fa-shopping-cart"></i>
-                        <span>?殉????荒????</span>
+                        <span>訂購清單管理</span>
                     </a>
                 </div>
                 
-                <!-- ????桀?? -->
+                <!-- 服務設定 -->
                 <div class="menu-section">
-                    <div class="menu-section-title">????桀??</div>
+                    <div class="menu-section-title">服務設定</div>
                     
                     <a href="categories.html" class="menu-item">
                         <i class="fas fa-tags"></i>
-                        <span>????遴竣????</span>
+                        <span>服務類別管理</span>
                     </a>
                     
-                    <a href="services.html" class="menu-item">
+                                        <a href="services.html" class="menu-item">
                         <i class="fas fa-concierge-bell"></i>
-                        <span>??????</span>
+                        <span>服務管理</span>
                     </a>
-
                     <a href="suppliers.html" class="menu-item">
                         <i class="fas fa-truck"></i>
-                        <span>???????/span>
+                        <span>供應商管理</span>
                     </a>
                 </div>
                 
-                <!-- ???賹? -->
+                <!-- 平台功能 -->
                 <div class="menu-section">
-                    <div class="menu-section-title">???賹?</div>
+                    <div class="menu-section-title">平台功能</div>
                     
                     <a href="announcements.html" class="menu-item">
                         <i class="fas fa-bullhorn"></i>
-                        <span>??潮???????</span>
-                    </a>
-
-                    <a href="notifications.html" class="menu-item">
-                        <i class="fas fa-bell"></i>
-                        <span>????????</span>
+                        <span>平台公告管理</span>
                     </a>
                     
-                    <a href="tickets.html" class="menu-item">
+                                        <a href="tickets.html" class="menu-item">
                         <i class="fas fa-headset"></i>
-                        <span>??潭嚗??獢??/span>
+                        <span>平台客服單管理</span>
                     </a>
-
+                    <a href="notifications.html" class="menu-item">
+                        <i class="fas fa-bell"></i>
+                        <span>推播通知管理</span>
+                    </a>
                     <a href="faq.html" class="menu-item">
                         <i class="fas fa-question-circle"></i>
-                        <span>??????????</span>
+                        <span>常見問題管理</span>
                     </a>
                 </div>
                 
-                <!-- ??蝯??? -->
+                <!-- 系統管理 -->
                 <div class="menu-section">
-                    <div class="menu-section-title">??蝯???</div>
+                    <div class="menu-section-title">系統管理</div>
                     <div class="menu-item" data-submenu="system-submenu">
                         <i class="fas fa-cog"></i>
-                        <span>??蝯???</span>
+                        <span>系統管理</span>
                         <i class="fas fa-chevron-right arrow"></i>
                     </div>
                     <div class="submenu" id="system-submenu">
                         <a href="admins.html" class="menu-item">
-                            <span>?輯撒???望??/span>
+                            <span>使用者管理</span>
                         </a>
                         <a href="roles.html" class="menu-item">
-                            <span>?恃??啁??????</span>
+                            <span>角色權限管理</span>
                         </a>
                         <a href="logs.html" class="menu-item">
-                            <span>?????????/span>
+                            <span>操作紀錄查詢</span>
                         </a>
                     </div>
                 </div>
             </nav>
         </aside>
 
-        <!-- ?????寞??? -->
+        <!-- 主要內容區 -->
         <div class="main-content">
-            <!-- ?蹇豢?????-->
+            <!-- 頂部導覽列 -->
             <header class="top-navbar">
                 <div class="navbar-left">
                     <i class="fas fa-bars menu-toggle"></i>
                     <div class="breadcrumb">
-                        <a href="index.html">???</a>
+                        <a href="index.html">首頁</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>?????赯?/span>
+                        <span>機構審核</span>
                     </div>
                 </div>
                 
                 <div class="navbar-right">
                     <div class="user-dropdown">
-                        <div class="user-avatar">??/div>
+                        <div class="user-avatar">陳</div>
                         <div class="user-info">
-                            <div class="user-name">?????/div>
-                            <div class="user-role">??潸?????/div>
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">平台管理員</div>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- ?蹓遴???寞? -->
+            <!-- 頁面內容 -->
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">?????赯?/h1>
-                        <p class="page-subtitle">???????ｇ???踝????赯?蹓??????豱菟????/p>
+                        <h1 class="page-title">機構審核</h1>
+                        <p class="page-subtitle">處理新申請機構的審核、補件與上架設定。</p>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">??赯梁??荒?</h3>
+                        <h3 class="card-title">審核清單</h3>
                     </div>
                     <div class="card-body">
                         <div class="filter-section" style="margin-bottom: 16px;">
                             <div class="filter-row">
                                 <div class="filter-group">
-                                    <label class="filter-label">?謚殷?殉????/label>
+                                    <label class="filter-label">關鍵字搜尋</label>
                                     <div class="search-input">
                                         <i class="fas fa-search"></i>
-                                        <input type="text" class="form-control" placeholder="?謚????????謘曄???>
+                                        <input type="text" class="form-control" placeholder="搜尋機構名稱或統編">
                                     </div>
                                 </div>
                                 <div class="filter-group">
-                                    <label class="filter-label">???????/label>
+                                    <label class="filter-label">狀態篩選</label>
                                     <select class="form-select">
-                                        <option>??賂????/option>
-                                        <option>?綽蟡??/option>
-                                        <option>?骨颲???/option>
-                                        <option>??謍?</option>
-                                        <option>??溘謍?</option>
+                                        <option>全部狀態</option>
+                                        <option>待審核</option>
+                                        <option>補件中</option>
+                                        <option>已通過</option>
+                                        <option>未通過</option>
                                     </select>
                                 </div>
                                 <div class="filter-group">
-                                    <label class="filter-label">?遴竣??剜?蹓?/label>
+                                    <label class="filter-label">類型篩選</label>
                                     <select class="form-select">
-                                        <option>??賂豢豯?</option>
-                                        <option>?????</option>
-                                        <option>????嚗?</option>
-                                        <option>???獢?</option>
+                                        <option>全部類型</option>
+                                        <option>長照中心</option>
+                                        <option>醫療院所</option>
+                                        <option>居服單位</option>
                                     </select>
                                 </div>
                                 <div class="filter-actions">
                                     <button class="btn btn-outline">
-                                        <i class="fas fa-redo"></i> ??
+                                        <i class="fas fa-redo"></i> 重置
                                     </button>
                                     <button class="btn btn-outline">
-                                        <i class="fas fa-search"></i> ?鈭亙眺
+                                        <i class="fas fa-search"></i> 查詢
                                     </button>
                                 </div>
                             </div>
@@ -279,12 +291,12 @@
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>?????</th>
-                                        <th>?舀?璆?/th>
-                                        <th>????蹇?</th>
-                                        <th>????/th>
-                                        <th>???</th>
-                                        <th>???</th>
+                                        <th>機構資訊</th>
+                                        <th>統編</th>
+                                        <th>申請時間</th>
+                                        <th>狀態</th>
+                                        <th>標記</th>
+                                        <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -295,18 +307,18 @@
                                                     <i class="fas fa-hospital"></i>
                                                 </div>
                                                 <div>
-                                                    <div class="org-name">?鞈???舫◢???</div>
+                                                    <div class="org-name">陽光照護中心</div>
                                                     <div class="org-email">contact@suncare.com.tw</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>12345678</td>
                                         <td>2026/02/02 10:40</td>
-                                        <td><span class="status-badge status-pending">?綽蟡??/span></td>
-                                        <td><span class="review-tag urgent"><i class="fas fa-exclamation-circle"></i> ???</span></td>
+                                        <td><span class="status-badge status-pending">待審核</span></td>
+                                        <td><span class="review-tag urgent"><i class="fas fa-exclamation-circle"></i> 重要</span></td>
                                         <td>
                                             <div class="review-actions">
-                                                <button class="btn btn-sm btn-primary" onclick="openReviewModal()"><i class="fas fa-check"></i> ??赯?/button>
+                                                <button class="btn btn-sm btn-primary" onclick="openReviewModal()"><i class="fas fa-check"></i> 審核</button>
                                                 <button class="btn btn-sm btn-outline"><i class="fas fa-eye"></i></button>
                                             </div>
                                         </td>
@@ -318,15 +330,15 @@
                                                     <i class="fas fa-hand-holding-heart"></i>
                                                 </div>
                                                 <div>
-                                                    <div class="org-name">?堆??????</div>
+                                                    <div class="org-name">安心居服協會</div>
                                                     <div class="org-email">hello@carehome.org</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>87654321</td>
                                         <td>2026/02/01 16:15</td>
-                                        <td><span class="status-badge status-processing">?骨颲???/span></td>
-                                        <td><span class="review-tag"><i class="fas fa-paperclip"></i> ?骨颲?/span></td>
+                                        <td><span class="status-badge status-processing">補件中</span></td>
+                                        <td><span class="review-tag"><i class="fas fa-paperclip"></i> 補件</span></td>
                                         <td>
                                             <div class="review-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openReviewModal()"><i class="fas fa-file-signature"></i></button>
@@ -341,15 +353,15 @@
                                                     <i class="fas fa-clinic-medical"></i>
                                                 </div>
                                                 <div>
-                                                    <div class="org-name">???????嚗?</div>
+                                                    <div class="org-name">樂活醫療院所</div>
                                                     <div class="org-email">service@healthcare.org</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>24681357</td>
                                         <td>2026/01/28 09:30</td>
-                                        <td><span class="status-badge status-active">??謍?</span></td>
-                                        <td><span class="review-tag"><i class="fas fa-check-circle"></i> ?堆?</span></td>
+                                        <td><span class="status-badge status-active">已通過</span></td>
+                                        <td><span class="review-tag"><i class="fas fa-check-circle"></i> 完成</span></td>
                                         <td>
                                             <div class="review-actions">
                                                 <button class="btn btn-sm btn-outline" onclick="openReviewModal()"><i class="fas fa-eye"></i></button>
@@ -369,74 +381,74 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">?????赯梢??</div>
+                    <div class="modal-title">機構審核詳情</div>
                     <button class="modal-close" onclick="closeReviewModal()"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
                     <div class="detail-grid">
                         <div class="detail-item">
-                            <div class="detail-label">??????</div>
-                            <div class="detail-value">?鞈???舫◢???</div>
+                            <div class="detail-label">機構名稱</div>
+                            <div class="detail-value">陽光照護中心</div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-label">?舀??箏?</div>
+                            <div class="detail-label">統一編號</div>
                             <div class="detail-value">12345678</div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-label">?????/div>
-                            <div class="detail-value">?????/ 0912-345-678</div>
+                            <div class="detail-label">聯絡人</div>
+                            <div class="detail-value">王大明 / 0912-345-678</div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-label">????遴竣?</div>
-                            <div class="detail-value">?????</div>
+                            <div class="detail-label">申請類型</div>
+                            <div class="detail-value">長照中心</div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-label">???????/div>
-                            <div class="detail-value">???????蹓澗??謅?</div>
+                            <div class="detail-label">服務區域</div>
+                            <div class="detail-value">台北市、新北市</div>
                         </div>
                         <div class="detail-item">
-                            <div class="detail-label">????蹇?</div>
+                            <div class="detail-label">申請時間</div>
                             <div class="detail-value">2026/02/02 10:40</div>
                         </div>
                     </div>
 
                     <div style="margin-top: 16px;">
-                        <div class="detail-label">??蹌??刻麾</div>
+                        <div class="detail-label">上傳文件</div>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
-                            <span class="doc-chip"><i class="fas fa-file-alt"></i> ????∴????</span>
-                            <span class="doc-chip"><i class="fas fa-id-card"></i> ?滿?蝞????</span>
-                            <span class="doc-chip"><i class="fas fa-file-contract"></i> ??????</span>
+                            <span class="doc-chip"><i class="fas fa-file-alt"></i> 機構立案證明</span>
+                            <span class="doc-chip"><i class="fas fa-id-card"></i> 負責人身分證</span>
+                            <span class="doc-chip"><i class="fas fa-file-contract"></i> 合作合約</span>
                         </div>
                     </div>
 
                     <div style="margin-top: 16px;">
-                        <div class="detail-label">??赯?謕?</div>
-                        <div class="note-box">??刻麾????脣???????????伍???桀????/div>
+                        <div class="detail-label">審核備註</div>
+                        <div class="note-box">文件齊全，請確認分潤比例設定。</div>
                     </div>
 
                     <div class="form-row" style="margin-top: 18px;">
                         <div class="form-group">
-                            <label>????伍??</label>
+                            <label>分潤比例</label>
                             <input type="text" class="form-control" value="15%">
                         </div>
                         <div class="form-group">
-                            <label>?????</label>
+                            <label>合作等級</label>
                             <select class="form-select">
-                                <option>??????</option>
-                                <option>?▽????</option>
-                                <option>?啗﹝???/option>
+                                <option>標準合作</option>
+                                <option>策略合作</option>
+                                <option>試營運</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>??赯?豯?</label>
-                        <textarea class="form-control" rows="3" placeholder="?岳?舀??僚?豯??謘??????></textarea>
+                        <label>審核回覆</label>
+                        <textarea class="form-control" rows="3" placeholder="輸入審核回覆或補件需求"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeReviewModal()">?謘?</button>
-                    <button class="btn btn-danger" onclick="closeReviewModal()"><i class="fas fa-times"></i> ??溘謍?</button>
-                    <button class="btn btn-primary" onclick="closeReviewModal()"><i class="fas fa-check"></i> ?謍?</button>
+                    <button class="btn btn-outline" onclick="closeReviewModal()">取消</button>
+                    <button class="btn btn-danger" onclick="closeReviewModal()"><i class="fas fa-times"></i> 未通過</button>
+                    <button class="btn btn-primary" onclick="closeReviewModal()"><i class="fas fa-check"></i> 通過</button>
                 </div>
             </div>
         </div>

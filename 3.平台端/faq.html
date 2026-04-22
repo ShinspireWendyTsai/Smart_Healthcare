@@ -1,375 +1,363 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>?????????? - ??潸??????/title>
-    <!-- Font Awesome CDN -->
+    <title>常見問題管理 - 平台端管理系統</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- ?????? -->
     <link rel="stylesheet" href="css/platform.css">
     <style>
-        .faq-question {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
         .faq-answer-preview {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-            max-width: 400px;
-            white-space: nowrap;
+            max-width: 320px;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-        .faq-actions {
-            display: flex;
-            gap: 8px;
-        }
-        .faq-answer-block {
-            padding: 14px 16px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin-top: 8px;
+            white-space: nowrap;
             color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.7;
+            font-size: 13px;
         }
-        .form-grid-two {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+        .faq-category-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(99,102,241,0.12);
+            color: var(--primary-color);
         }
-        @media (max-width: 768px) {
-            .form-grid-two { grid-template-columns: 1fr; }
-        }
+        .sort-handle { cursor: grab; color: var(--text-secondary); padding: 0 4px; }
     </style>
 </head>
 <body>
     <div class="admin-layout">
-        <!-- ?皝???-->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
+                <div class="sidebar-logo"><i class="fas fa-shield-alt"></i></div>
                 <div>
-                    <div class="sidebar-title">?蝞賂??舫◢???/div>
-                    <div class="sidebar-subtitle">??潸??????/div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">平台端管理系統</div>
                 </div>
             </div>
-
             <nav class="sidebar-menu">
-                <!-- ??蹓??-->
                 <div class="menu-section">
-                    <div class="menu-section-title">????賹?</div>
-
-                    <a href="index.html" class="menu-item">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>???萄豰?/span>
-                    </a>
-
-                    <a href="organizations.html" class="menu-item">
-                        <i class="fas fa-building"></i>
-                        <span>????謅?/span>
-                    </a>
-
-                    <a href="members.html" class="menu-item">
-                        <i class="fas fa-users"></i>
-                        <span>?????蛔?謅?/span>
-                    </a>
-
-                    <a href="orders.html" class="menu-item">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>?殉????荒????</span>
-                    </a>
-                </div>
-
-                <!-- ????桀?? -->
-                <div class="menu-section">
-                    <div class="menu-section-title">????桀??</div>
-
-                    <a href="categories.html" class="menu-item">
-                        <i class="fas fa-folder-tree"></i>
-                        <span>????遴竣????</span>
-                    </a>
-
-                    <a href="services.html" class="menu-item">
-                        <i class="fas fa-concierge-bell"></i>
-                        <span>??????</span>
-                    </a>
-
-                    <a href="suppliers.html" class="menu-item">
-                        <i class="fas fa-truck"></i>
-                        <span>???????/span>
-                    </a>
-                </div>
-
-                <!-- ???賹? -->
-                <div class="menu-section">
-                    <div class="menu-section-title">???賹?</div>
-
-                    <a href="announcements.html" class="menu-item">
-                        <i class="fas fa-bullhorn"></i>
-                        <span>??潮???????</span>
-                    </a>
-
-                    <a href="notifications.html" class="menu-item">
-                        <i class="fas fa-bell"></i>
-                        <span>????????</span>
-                    </a>
-
-                    <a href="tickets.html" class="menu-item">
-                        <i class="fas fa-headset"></i>
-                        <span>??潭嚗??獢??/span>
-                    </a>
-
-                    <a href="faq.html" class="menu-item active">
-                        <i class="fas fa-question-circle"></i>
-                        <span>??????????</span>
-                    </a>
-                </div>
-
-                <!-- ??蝯??? -->
-                <div class="menu-section">
-                    <div class="menu-section-title">??蝯???</div>
-                    <div class="menu-item" data-submenu="system-submenu">
-                        <i class="fas fa-cog"></i>
-                        <span>??蝯???</span>
-                        <i class="fas fa-chevron-right arrow"></i>
+                    <div class="menu-section-title">主要功能</div>
+                    <a href="index.html" class="menu-item"><i class="fas fa-tachometer-alt"></i><span>儀表板</span></a>
+                    <div class="menu-item" data-submenu="org-submenu"><i class="fas fa-building"></i><span>機構管理</span><i class="fas fa-chevron-right arrow"></i></div>
+                    <div class="submenu" id="org-submenu">
+                        <a href="organizations.html" class="menu-item"><span>機構列表</span></a>
                     </div>
+                    <div class="menu-item" data-submenu="member-submenu"><i class="fas fa-users"></i><span>個案會員管理</span><i class="fas fa-chevron-right arrow"></i></div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item"><span>會員列表</span></a>
+                    </div>
+                    <a href="orders.html" class="menu-item"><i class="fas fa-shopping-cart"></i><span>訂購清單管理</span></a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">服務設定</div>
+                    <a href="categories.html" class="menu-item"><i class="fas fa-folder-tree"></i><span>服務類別管理</span></a>
+                    <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>服務管理</span></a>
+                    <a href="suppliers.html" class="menu-item"><i class="fas fa-truck"></i><span>供應商管理</span></a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">平台功能</div>
+                    <a href="announcements.html" class="menu-item"><i class="fas fa-bullhorn"></i><span>平台公告管理</span></a>
+                    <a href="tickets.html" class="menu-item"><i class="fas fa-headset"></i><span>平台客服單管理</span></a>
+                    <a href="notifications.html" class="menu-item"><i class="fas fa-bell"></i><span>推播通知管理</span></a>
+                    <a href="faq.html" class="menu-item active"><i class="fas fa-question-circle"></i><span>常見問題管理</span></a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu"><i class="fas fa-cog"></i><span>系統管理</span><i class="fas fa-chevron-right arrow"></i></div>
                     <div class="submenu" id="system-submenu">
-                        <a href="admins.html" class="menu-item">
-                            <span>?輯撒???望??/span>
-                        </a>
-                        <a href="roles.html" class="menu-item">
-                            <span>?恃??啁??????</span>
-                        </a>
-                        <a href="logs.html" class="menu-item">
-                            <span>?????????/span>
-                        </a>
+                        <a href="admins.html" class="menu-item"><span>使用者管理</span></a>
+                        <a href="roles.html" class="menu-item"><span>角色權限管理</span></a>
+                        <a href="logs.html" class="menu-item"><span>操作紀錄查詢</span></a>
                     </div>
                 </div>
             </nav>
         </aside>
 
-        <!-- ?????寞??? -->
         <div class="main-content">
-            <!-- ?蹇豢?????-->
             <header class="top-navbar">
                 <div class="navbar-left">
                     <i class="fas fa-bars menu-toggle"></i>
                     <div class="breadcrumb">
-                        <a href="index.html">???</a>
+                        <a href="index.html">首頁</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>???賹?</span>
-                        <i class="fas fa-chevron-right"></i>
-                        <span>??????????</span>
+                        <span>常見問題管理</span>
                     </div>
                 </div>
-
                 <div class="navbar-right">
                     <div class="dropdown">
                         <div class="user-dropdown dropdown-toggle">
-                            <div class="user-avatar admin">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
+                            <div class="user-avatar admin"><i class="fas fa-user-tie"></i></div>
                             <div class="user-info">
-                                <div class="user-name">??蝯?????/div>
-                                <div class="user-role">???????/div>
+                                <div class="user-name">系統管理員</div>
+                                <div class="user-role">超級管理員</div>
                             </div>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="profile.html" class="dropdown-item">
-                                <i class="fas fa-user"></i>
-                                <span>?????</span>
-                            </a>
-                            <a href="settings.html" class="dropdown-item">
-                                <i class="fas fa-cog"></i>
-                                <span>??蝯??</span>
-                            </a>
+                            <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i><span>個人資料</span></a>
+                            <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i><span>系統設定</span></a>
                             <div class="dropdown-divider"></div>
-                            <a href="logout.html" class="dropdown-item text-danger">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>?擗??蝯?/span>
-                            </a>
+                            <a href="logout.html" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i><span>登出系統</span></a>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- ?蹓遴???寞? -->
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">??????????</h1>
-                        <p class="page-subtitle">????輯???瞉??亙????穿???選??????/p>
+                        <h1 class="page-title">常見問題管理</h1>
+                        <p class="page-subtitle">管理平台 FAQ 分類與問答內容，提供使用者自助查詢。</p>
                     </div>
-                    <div>
-                        <button class="btn btn-primary" onclick="openModal('faqModal')">
-                            <i class="fas fa-plus"></i> ??????
-                        </button>
+                    <button class="btn btn-primary" onclick="openFaqModal()">
+                        <i class="fas fa-plus"></i> 新增問題
+                    </button>
+                </div>
+
+                <!-- 統計卡 -->
+                <div class="stats-grid" style="margin-bottom:24px;">
+                    <div class="stat-card">
+                        <div class="stat-icon primary"><i class="fas fa-list-ul"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">問題總數</div>
+                            <div class="stat-value">28</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">已發布</div>
+                            <div class="stat-value">22</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon warning"><i class="fas fa-folder"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">分類數</div>
+                            <div class="stat-value">5</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon info"><i class="fas fa-eye-slash"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">草稿</div>
+                            <div class="stat-value">6</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- ????????謅?-->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-question-circle"></i> ????謅?/h3>
-                        <div style="display:flex;gap:10px;align-items:center;">
-                            <div class="search-input" style="width:220px;">
-                                <i class="fas fa-search"></i>
-                                <input type="text" class="form-control" placeholder="?謚???????">
-                            </div>
-                            <select class="form-select" style="width:150px;">
-                                <option>??賂???</option>
-                                <option>????????/option>
-                                <option>????????/option>
-                                <option>?朵???倦???/option>
-                                <option>???</option>
-                            </select>
-                            <select class="form-select" style="width:130px;">
-                                <option>??賂????/option>
-                                <option>?瞉???/option>
-                                <option>??仿</option>
-                            </select>
-                        </div>
+                        <h3 class="card-title">常見問題列表</h3>
                     </div>
                     <div class="card-body">
+                        <div class="filter-section" style="margin-bottom:16px;">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label class="filter-label">關鍵字搜尋</label>
+                                    <div class="search-input">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" class="form-control" placeholder="請輸入問題關鍵字">
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">分類篩選</label>
+                                    <select class="form-select">
+                                        <option value="">全部分類</option>
+                                        <option>帳號與登入</option>
+                                        <option>服務訂購</option>
+                                        <option>付款問題</option>
+                                        <option>機構相關</option>
+                                        <option>其他</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">狀態</label>
+                                    <select class="form-select">
+                                        <option value="">全部</option>
+                                        <option>已發布</option>
+                                        <option>草稿</option>
+                                    </select>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="btn btn-outline"><i class="fas fa-redo"></i> 重置</button>
+                                    <button class="btn btn-outline"><i class="fas fa-search"></i> 查詢</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>??????</th>
-                                        <th>???</th>
-                                        <th>???</th>
-                                        <th>????/th>
-                                        <th>???</th>
+                                        <th style="width:40px;"></th>
+                                        <th style="width:60px;">排序</th>
+                                        <th>問題標題</th>
+                                        <th style="width:120px;">分類</th>
+                                        <th style="width:100px;">狀態</th>
+                                        <th style="width:160px;">更新時間</th>
+                                        <th style="width:140px;">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            <div class="faq-question">????秋撒???舫◢?啣??????/div>
-                                            <div class="faq-answer-preview">?ｇ????箄?賹澈?????啣??蹓?????岳?舐?賹????????ｇ???..</div>
-                                        </td>
-                                        <td>????????/td>
+                                        <td><span class="sort-handle"><i class="fas fa-grip-vertical"></i></span></td>
                                         <td>1</td>
-                                        <td><span class="status-badge status-active">?瞉???/span></td>
                                         <td>
-                                            <div class="faq-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('faqModal')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div>如何建立帳號並完成註冊？</div>
+                                            <div class="faq-answer-preview">請前往首頁點擊「立即加入」，填寫基本資料後即可完成註冊流程...</div>
+                                        </td>
+                                        <td><span class="faq-category-tag">帳號與登入</span></td>
+                                        <td><span class="status-badge active">已發布</span></td>
+                                        <td>2026/02/10 09:30</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openFaqModal()"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <div class="faq-question">????鈭亙眺?殉?謘?????</div>
-                                            <div class="faq-answer-preview">?擗?綽謘????????朝???嚗畸?鈭???????獢????????..</div>
-                                        </td>
-                                        <td>????????/td>
+                                        <td><span class="sort-handle"><i class="fas fa-grip-vertical"></i></span></td>
                                         <td>2</td>
-                                        <td><span class="status-badge status-active">?瞉???/span></td>
                                         <td>
-                                            <div class="faq-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('faqModal')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div>忘記密碼要怎麼辦？</div>
+                                            <div class="faq-answer-preview">請在登入頁面點擊「忘記密碼」，輸入您的電子信箱後即可收到重設連結...</div>
+                                        </td>
+                                        <td><span class="faq-category-tag">帳號與登入</span></td>
+                                        <td><span class="status-badge active">已發布</span></td>
+                                        <td>2026/02/08 14:20</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openFaqModal()"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <div class="faq-question">?朵??摮?????叟??</div>
-                                            <div class="faq-answer-preview">???獢?????賤???嚚蹎酪M ?改??????爸??????..</div>
-                                        </td>
-                                        <td>?朵???倦???/td>
+                                        <td><span class="sort-handle"><i class="fas fa-grip-vertical"></i></span></td>
                                         <td>3</td>
-                                        <td><span class="status-badge status-active">?瞉???/span></td>
                                         <td>
-                                            <div class="faq-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('faqModal')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div>如何取消已成立的訂單？</div>
+                                            <div class="faq-answer-preview">訂單成立後 24 小時內可在「我的訂單」中申請取消，超過時限請聯繫客服...</div>
+                                        </td>
+                                        <td><span class="faq-category-tag">服務訂購</span></td>
+                                        <td><span class="status-badge active">已發布</span></td>
+                                        <td>2026/02/07 11:00</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openFaqModal()"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <div class="faq-question">???????????</div>
-                                            <div class="faq-answer-preview">?ｇ?謘????堆???7 ?鈭???????芸???倦???鞎??ｇ????..</div>
-                                        </td>
-                                        <td>?朵???倦???/td>
+                                        <td><span class="sort-handle"><i class="fas fa-grip-vertical"></i></span></td>
                                         <td>4</td>
-                                        <td><span class="status-badge status-processing">??仿</span></td>
                                         <td>
-                                            <div class="faq-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('faqModal')"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                            <div>支援哪些付款方式？</div>
+                                            <div class="faq-answer-preview">目前平台支援信用卡、銀行轉帳及超商代碼繳款，詳細說明請見付款說明頁面...</div>
+                                        </td>
+                                        <td><span class="faq-category-tag">付款問題</span></td>
+                                        <td><span class="status-badge active">已發布</span></td>
+                                        <td>2026/02/05 16:45</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openFaqModal()"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="sort-handle"><i class="fas fa-grip-vertical"></i></span></td>
+                                        <td>5</td>
+                                        <td>
+                                            <div>機構如何申請加入平台？</div>
+                                            <div class="faq-answer-preview">請填寫機構申請表單並上傳相關證明文件，審核通過後即可使用機構端功能...</div>
+                                        </td>
+                                        <td><span class="faq-category-tag">機構相關</span></td>
+                                        <td><span class="status-badge warning">草稿</span></td>
+                                        <td>2026/02/03 10:15</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openFaqModal()"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="pagination-section" style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+                            <div class="pagination-info">顯示第 1-5 筆，共 28 筆</div>
+                            <div class="pagination">
+                                <button class="btn btn-outline" disabled><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-primary">1</button>
+                                <button class="btn btn-outline">2</button>
+                                <button class="btn btn-outline">3</button>
+                                <button class="btn btn-outline"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ????璆??祈??穿????Modal -->
+    <!-- 新增/編輯 FAQ Modal -->
     <div class="modal" id="faqModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">????????桀??</div>
-                    <button class="modal-close" onclick="closeModal('faqModal')"><i class="fas fa-times"></i></button>
+                    <div class="modal-title">新增常見問題</div>
+                    <button class="modal-close" onclick="closeFaqModal()"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label class="form-label">??????</label>
-                        <input type="text" class="form-control" placeholder="?ｇ???鈭??選???>
-                    </div>
-                    <div class="form-grid-two">
-                        <div class="form-group">
-                            <label class="form-label">??????</label>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                        <div>
+                            <label class="form-label">分類</label>
                             <select class="form-select">
-                                <option>????????/option>
-                                <option>????????/option>
-                                <option>?朵???倦???/option>
-                                <option>???</option>
+                                <option>帳號與登入</option>
+                                <option>服務訂購</option>
+                                <option>付款問題</option>
+                                <option>機構相關</option>
+                                <option>其他</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">?瞉?????/label>
+                        <div>
+                            <label class="form-label">狀態</label>
                             <select class="form-select">
-                                <option>?瞉???/option>
-                                <option>??仿</option>
+                                <option>已發布</option>
+                                <option>草稿</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">???</label>
-                        <input type="text" class="form-control" placeholder="?閰???????" inputmode="numeric" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                    <div style="margin-bottom:16px;">
+                        <label class="form-label">問題標題</label>
+                        <input type="text" class="form-control" placeholder="請輸入問題標題">
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">??????</label>
-                        <textarea class="form-control" rows="5" placeholder="?ｇ???鈭方縐?????????曇??></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">??????</label>
-                        <div class="faq-answer-block">?ｇ???鈭亙??????祈都??輯???瞏剛縐??/div>
+                    <div>
+                        <label class="form-label">回答內容</label>
+                        <textarea class="form-control" rows="6" placeholder="請輸入詳細回答內容..."></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeModal('faqModal')">?謘?</button>
-                    <button class="btn btn-primary" onclick="closeModal('faqModal')">???</button>
+                    <button class="btn btn-outline" onclick="closeFaqModal()">取消</button>
+                    <button class="btn btn-primary" onclick="closeFaqModal()">儲存</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="js/platform.js"></script>
+    <script>
+        function openFaqModal() { document.getElementById('faqModal').classList.add('show'); }
+        function closeFaqModal() { document.getElementById('faqModal').classList.remove('show'); }
+    </script>
 </body>
 </html>

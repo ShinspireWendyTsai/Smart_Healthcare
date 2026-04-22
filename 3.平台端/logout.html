@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登出 - 平台管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/platform.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--background-color, #f3f4f6);
+        }
+
+        .logout-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 48px 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .logout-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .logout-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary, #111827);
+            margin-bottom: 10px;
+        }
+
+        .logout-desc {
+            font-size: 14px;
+            color: var(--text-secondary, #6b7280);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .logout-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .logout-actions .btn {
+            flex: 1;
+        }
+
+        .countdown-hint {
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-secondary, #9ca3af);
+        }
+
+        #countdownNum {
+            font-weight: 700;
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-card">
+        <div class="logout-icon">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <div class="logout-title">確認登出</div>
+        <div class="logout-desc">
+            您即將登出平台管理系統。<br>
+            請確認所有未儲存的操作已完成後再登出。
+        </div>
+        <div class="logout-actions">
+            <button class="btn btn-outline" onclick="cancelLogout()">
+                <i class="fas fa-arrow-left"></i> 取消
+            </button>
+            <button class="btn btn-danger" onclick="confirmLogout()">
+                <i class="fas fa-sign-out-alt"></i> 確認登出
+            </button>
+        </div>
+        <div class="countdown-hint" id="countdownHint" style="display:none;">
+            將在 <span id="countdownNum">10</span> 秒後自動登出
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let autoLogoutTimer = null;
+        let countdown = 10;
+
+        window.addEventListener('DOMContentLoaded', function () {
+            startCountdown();
+        });
+
+        function startCountdown() {
+            const hint = document.getElementById('countdownHint');
+            const num = document.getElementById('countdownNum');
+            hint.style.display = 'block';
+
+            autoLogoutTimer = setInterval(function () {
+                countdown--;
+                num.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(autoLogoutTimer);
+                    doLogout();
+                }
+            }, 1000);
+        }
+
+        function cancelLogout() {
+            clearInterval(autoLogoutTimer);
+            window.history.back();
+        }
+
+        function confirmLogout() {
+            clearInterval(autoLogoutTimer);
+            doLogout();
+        }
+
+        function doLogout() {
+            // 實際部署時此處應清除 session/token 並跳轉至登入頁
+            alert('已成功登出系統');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

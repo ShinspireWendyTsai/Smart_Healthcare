@@ -1,473 +1,361 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>?謢?????遜??- ?賹??瞏賃???遜??????/title>
-    <!-- Font Awesome CDN -->
+    <title>供應商管理 - 平台端管理系統</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- ?????? -->
     <link rel="stylesheet" href="css/platform.css">
     <style>
-        .supplier-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
         .supplier-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-lg);
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 16px;
-            flex-shrink: 0;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 700; font-size: 16px; flex-shrink: 0;
         }
-        .supplier-name {
-            font-weight: 600;
-            color: var(--text-primary);
+        .supplier-name-cell { display: flex; align-items: center; gap: 12px; }
+        .category-tag {
+            display: inline-flex; align-items: center;
+            padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
+            background: rgba(99,102,241,0.12); color: var(--primary-color); margin: 2px;
         }
-        .supplier-code {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-        .service-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .service-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 8px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 600;
-            background: rgba(99, 102, 241, 0.10);
-            color: var(--primary-color);
-            border: 1px solid rgba(99, 102, 241, 0.20);
-        }
-        .contact-info {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-        .contact-info i {
-            width: 14px;
-            color: var(--primary-color);
-        }
-        .supplier-actions {
-            display: flex;
-            gap: 8px;
-        }
-        /* Modal ????雓???*/
-        .service-checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            max-height: 180px;
-            overflow-y: auto;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            background: var(--background-color);
-        }
-        .service-checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: var(--text-primary);
-            cursor: pointer;
-        }
-        .service-checkbox-item input[type="checkbox"] {
-            accent-color: var(--primary-color);
-            width: 15px;
-            height: 15px;
-        }
-        .form-grid-two {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-        @media (max-width: 768px) {
-            .form-grid-two { grid-template-columns: 1fr; }
-            .service-checkbox-group { grid-template-columns: 1fr; }
-        }
+        .category-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+        .modal-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .modal-form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+        @media (max-width:900px) { .modal-form-grid, .modal-form-grid-3 { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="admin-layout">
-        <!-- ?????-->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
+                <div class="sidebar-logo"><i class="fas fa-shield-alt"></i></div>
                 <div>
-                    <div class="sidebar-title">???????徉?賹???/div>
-                    <div class="sidebar-subtitle">?賹??瞏賃???遜??????/div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">平台端管理系統</div>
                 </div>
             </div>
-
             <nav class="sidebar-menu">
-                <!-- ?豲?頩??-->
                 <div class="menu-section">
-                    <div class="menu-section-title">?豲???鞈對??</div>
-
-                    <a href="index.html" class="menu-item">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>????鞊?/span>
-                    </a>
-
-                    <a href="organizations.html" class="menu-item">
-                        <i class="fas fa-building"></i>
-                        <span>?????雓飢??/span>
-                    </a>
-
-                    <a href="members.html" class="menu-item">
-                        <i class="fas fa-users"></i>
-                        <span>????????雓飢??/span>
-                    </a>
-
-                    <a href="orders.html" class="menu-item">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>?畾????????豯??</span>
-                    </a>
-                </div>
-
-                <!-- ????獢?? -->
-                <div class="menu-section">
-                    <div class="menu-section-title">????獢??</div>
-
-                    <a href="categories.html" class="menu-item">
-                        <i class="fas fa-folder-tree"></i>
-                        <span>?????渡咯?????</span>
-                    </a>
-
-                    <a href="services.html" class="menu-item">
-                        <i class="fas fa-concierge-bell"></i>
-                        <span>????豯??</span>
-                    </a>
-
-                    <a href="suppliers.html" class="menu-item active">
-                        <i class="fas fa-truck"></i>
-                        <span>?謢?????遜??/span>
-                    </a>
-                </div>
-
-                <!-- ?賹???鞈對?? -->
-                <div class="menu-section">
-                    <div class="menu-section-title">?賹???鞈對??</div>
-
-                    <a href="announcements.html" class="menu-item">
-                        <i class="fas fa-bullhorn"></i>
-                        <span>?賹??瞏?????豯??</span>
-                    </a>
-
-                    <a href="notifications.html" class="menu-item">
-                        <i class="fas fa-bell"></i>
-                        <span>?賹??????豯??</span>
-                    </a>
-
-                    <a href="tickets.html" class="menu-item">
-                        <i class="fas fa-headset"></i>
-                        <span>?賹??瞏叟????ｇ蹍??/span>
-                    </a>
-
-                    <a href="faq.html" class="menu-item">
-                        <i class="fas fa-question-circle"></i>
-                        <span>????????豯??</span>
-                    </a>
-                </div>
-
-                <!-- ?賹??荒筆??? -->
-                <div class="menu-section">
-                    <div class="menu-section-title">?賹??荒筆???</div>
-                    <div class="menu-item" data-submenu="system-submenu">
-                        <i class="fas fa-cog"></i>
-                        <span>?賹??荒筆???</span>
-                        <i class="fas fa-chevron-right arrow"></i>
+                    <div class="menu-section-title">主要功能</div>
+                    <a href="index.html" class="menu-item"><i class="fas fa-tachometer-alt"></i><span>儀表板</span></a>
+                    <div class="menu-item" data-submenu="org-submenu"><i class="fas fa-building"></i><span>機構管理</span><i class="fas fa-chevron-right arrow"></i></div>
+                    <div class="submenu" id="org-submenu">
+                        <a href="organizations.html" class="menu-item"><span>機構列表</span></a>
                     </div>
+                    <div class="menu-item" data-submenu="member-submenu"><i class="fas fa-users"></i><span>個案會員管理</span><i class="fas fa-chevron-right arrow"></i></div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item"><span>會員列表</span></a>
+                    </div>
+                    <a href="orders.html" class="menu-item"><i class="fas fa-shopping-cart"></i><span>訂購清單管理</span></a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">服務設定</div>
+                    <a href="categories.html" class="menu-item"><i class="fas fa-folder-tree"></i><span>服務類別管理</span></a>
+                    <a href="services.html" class="menu-item"><i class="fas fa-concierge-bell"></i><span>服務管理</span></a>
+                    <a href="suppliers.html" class="menu-item active"><i class="fas fa-truck"></i><span>供應商管理</span></a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">平台功能</div>
+                    <a href="announcements.html" class="menu-item"><i class="fas fa-bullhorn"></i><span>平台公告管理</span></a>
+                    <a href="tickets.html" class="menu-item"><i class="fas fa-headset"></i><span>平台客服單管理</span></a>
+                    <a href="notifications.html" class="menu-item"><i class="fas fa-bell"></i><span>推播通知管理</span></a>
+                    <a href="faq.html" class="menu-item"><i class="fas fa-question-circle"></i><span>常見問題管理</span></a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu"><i class="fas fa-cog"></i><span>系統管理</span><i class="fas fa-chevron-right arrow"></i></div>
                     <div class="submenu" id="system-submenu">
-                        <a href="admins.html" class="menu-item">
-                            <span>?頛舀?????遜??/span>
-                        </a>
-                        <a href="roles.html" class="menu-item">
-                            <span>?????????豯??</span>
-                        </a>
-                        <a href="logs.html" class="menu-item">
-                            <span>????豰刈??????/span>
-                        </a>
+                        <a href="admins.html" class="menu-item"><span>使用者管理</span></a>
+                        <a href="roles.html" class="menu-item"><span>角色權限管理</span></a>
+                        <a href="logs.html" class="menu-item"><span>操作紀錄查詢</span></a>
                     </div>
                 </div>
             </nav>
         </aside>
 
-        <!-- ?豲????撖??? -->
         <div class="main-content">
-            <!-- ?頩偌?鞊??謅???-->
             <header class="top-navbar">
                 <div class="navbar-left">
                     <i class="fas fa-bars menu-toggle"></i>
                     <div class="breadcrumb">
-                        <a href="index.html">????</a>
+                        <a href="index.html">首頁</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>????獢??</span>
-                        <i class="fas fa-chevron-right"></i>
-                        <span>?謢?????遜??/span>
+                        <span>供應商管理</span>
                     </div>
                 </div>
-
                 <div class="navbar-right">
                     <div class="dropdown">
                         <div class="user-dropdown dropdown-toggle">
-                            <div class="user-avatar admin">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
+                            <div class="user-avatar admin"><i class="fas fa-user-tie"></i></div>
                             <div class="user-info">
-                                <div class="user-name">?賹??荒筆?????/div>
-                                <div class="user-role">?豯殷???豯????/div>
+                                <div class="user-name">系統管理員</div>
+                                <div class="user-role">超級管理員</div>
                             </div>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="dropdown-menu">
-                            <a href="profile.html" class="dropdown-item">
-                                <i class="fas fa-user"></i>
-                                <span>??謚????</span>
-                            </a>
-                            <a href="settings.html" class="dropdown-item">
-                                <i class="fas fa-cog"></i>
-                                <span>?賹??荒筐謘??</span>
-                            </a>
+                            <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i><span>個人資料</span></a>
+                            <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i><span>系統設定</span></a>
                             <div class="dropdown-divider"></div>
-                            <a href="logout.html" class="dropdown-item text-danger">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>????賹???/span>
-                            </a>
+                            <a href="logout.html" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i><span>登出系統</span></a>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <!-- ?頩???撖? -->
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">?謢?????遜??/h1>
-                        <p class="page-subtitle">?豯???賹??????謢??????畾?????????雓?????/p>
+                        <h1 class="page-title">供應商管理</h1>
+                        <p class="page-subtitle">管理平台合作供應商資訊、審核狀態與服務類別。</p>
                     </div>
-                    <div class="page-actions">
-                        <button class="btn btn-outline">
-                            <i class="fas fa-download"></i>
-                            ??蝛選??謚湛?雓?
-                        </button>
-                        <button class="btn btn-primary" onclick="openModal('supplierModal')">
-                            <i class="fas fa-plus"></i>
-                            ????謢????
-                        </button>
-                    </div>
+                    <button class="btn btn-primary" onclick="openSupplierModal()">
+                        <i class="fas fa-plus"></i> 新增供應商
+                    </button>
                 </div>
 
-                <!-- ???頩?? -->
-                <div class="card">
-                    <div class="card-body">
-                        <div class="filter-section">
-                            <div class="filter-row">
-                                <div class="filter-group">
-                                    <label class="filter-label">?雓捕謒?畾????/label>
-                                    <div class="search-input">
-                                        <i class="fas fa-search"></i>
-                                        <input type="text" class="form-control" placeholder="?雓??謢???????????????>
-                                    </div>
-                                </div>
-                                <div class="filter-group">
-                                    <label class="filter-label">?蹎?????</label>
-                                    <select class="form-select">
-                                        <option value="">??鞈???</option>
-                                        <option>??對?????徉</option>
-                                        <option>???????</option>
-                                        <option>?蝞?頩???</option>
-                                        <option>?鞈??謅???/option>
-                                        <option>?謜?????</option>
-                                        <option>?撠???嚗??</option>
-                                        <option>?鞈察????蹇?</option>
-                                    </select>
-                                </div>
-                                <div class="filter-group">
-                                    <label class="filter-label">???????/label>
-                                    <select class="form-select">
-                                        <option value="">??鞈????/option>
-                                        <option>?????/option>
-                                        <option>??????</option>
-                                        <option>??踝????/option>
-                                    </select>
-                                </div>
-                                <div class="filter-actions">
-                                    <button class="btn btn-primary">
-                                        <i class="fas fa-search"></i>
-                                        ?雓?
-                                    </button>
-                                    <button class="btn btn-outline">
-                                        <i class="fas fa-redo"></i>
-                                        ??謕?
-                                    </button>
-                                </div>
-                            </div>
+                <!-- 統計卡 -->
+                <div class="stats-grid" style="margin-bottom:24px;">
+                    <div class="stat-card">
+                        <div class="stat-icon primary"><i class="fas fa-truck"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">供應商總數</div>
+                            <div class="stat-value">38</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">合作中</div>
+                            <div class="stat-value">30</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon warning"><i class="fas fa-hourglass-half"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">審核中</div>
+                            <div class="stat-value">5</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon danger"><i class="fas fa-ban"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-label">停止合作</div>
+                            <div class="stat-value">3</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- ?謢???????-->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">?謢???????/h3>
-                        <span class="text-muted" style="font-size:13px;">??3 ??????/span>
+                        <h3 class="card-title">供應商列表</h3>
                     </div>
                     <div class="card-body">
+                        <div class="filter-section" style="margin-bottom:16px;">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label class="filter-label">關鍵字搜尋</label>
+                                    <div class="search-input">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" class="form-control" placeholder="請輸入供應商名稱或聯絡人">
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">服務類別</label>
+                                    <select class="form-select">
+                                        <option value="">全部類別</option>
+                                        <option>居家照護</option>
+                                        <option>醫療輔具</option>
+                                        <option>營養餐飲</option>
+                                        <option>復健服務</option>
+                                        <option>日間照顧</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">狀態</label>
+                                    <select class="form-select">
+                                        <option value="">全部</option>
+                                        <option>合作中</option>
+                                        <option>審核中</option>
+                                        <option>停止合作</option>
+                                    </select>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="btn btn-outline"><i class="fas fa-redo"></i> 重置</button>
+                                    <button class="btn btn-outline"><i class="fas fa-search"></i> 查詢</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>?謢???????/th>
-                                        <th>?蹎?????</th>
-                                        <th>???????</th>
-                                        <th>???????</th>
-                                        <th>???????/th>
-                                        <th>?璇???頩?</th>
-                                        <th>???</th>
+                                        <th style="width:50px;"><input type="checkbox"></th>
+                                        <th>供應商名稱</th>
+                                        <th style="width:120px;">聯絡人</th>
+                                        <th style="width:140px;">聯絡電話</th>
+                                        <th>服務類別</th>
+                                        <th style="width:100px;">狀態</th>
+                                        <th style="width:140px;">加入日期</th>
+                                        <th style="width:140px;">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div class="supplier-info">
-                                                <div class="supplier-avatar">
-                                                    <i class="fas fa-building"></i>
-                                                </div>
+                                            <div class="supplier-name-cell">
+                                                <div class="supplier-avatar">安</div>
                                                 <div>
-                                                    <div class="supplier-name">??????對?????徉???????</div>
-                                                    <div class="supplier-code">SUP-001</div>
+                                                    <div style="font-weight:600;">安心居家照護有限公司</div>
+                                                    <div style="font-size:12px;color:var(--text-secondary);">service@ancare.com.tw</div>
                                                 </div>
                                             </div>
                                         </td>
+                                        <td>王大明</td>
+                                        <td>02-2345-6789</td>
                                         <td>
-                                            <div class="service-tags">
-                                                <span class="service-tag"><i class="fas fa-home"></i> ??對?????徉</span>
-                                                <span class="service-tag"><i class="fas fa-moon"></i> ??嗾?????</span>
+                                            <div class="category-tags">
+                                                <span class="category-tag">居家照護</span>
+                                                <span class="category-tag">復健服務</span>
                                             </div>
                                         </td>
+                                        <td><span class="status-badge active">合作中</span></td>
+                                        <td>2025/08/15</td>
                                         <td>
-                                            <div class="contact-info">
-                                                <div><i class="fas fa-user"></i> ??豲???/div>
-                                                <div><i class="fas fa-phone"></i> 0912-345-678</div>
-                                                <div><i class="fas fa-envelope"></i> wang@ancare.com.tw</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="contact-info">
-                                                <div><i class="fas fa-user-circle"></i> wang@ancare.com.tw</div>
-                                                <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">?豲???????026/04/20 09:12</div>
-                                            </div>
-                                        </td>
-                                        <td><span class="status-badge status-active">?????/span></td>
-                                        <td>2026/01/10</td>
-                                        <td>
-                                            <div class="supplier-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('supplierModal')" title="?蝞???><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-outline" title="????????雓??? style="color:var(--primary-color);"><i class="fas fa-paper-plane"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="????"><i class="fas fa-trash"></i></button>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="查看" onclick="openSupplierDetail()"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openSupplierModal()"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="停用"><i class="fas fa-ban"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div class="supplier-info">
-                                                <div class="supplier-avatar" style="background: linear-gradient(135deg,#10b981,#059669);">
-                                                    <i class="fas fa-heartbeat"></i>
-                                                </div>
+                                            <div class="supplier-name-cell">
+                                                <div class="supplier-avatar">優</div>
                                                 <div>
-                                                    <div class="supplier-name">??????????????</div>
-                                                    <div class="supplier-code">SUP-002</div>
+                                                    <div style="font-weight:600;">優照醫療輔具股份有限公司</div>
+                                                    <div style="font-size:12px;color:var(--text-secondary);">info@youcare-medical.com</div>
                                                 </div>
                                             </div>
                                         </td>
+                                        <td>林志玲</td>
+                                        <td>04-8765-4321</td>
                                         <td>
-                                            <div class="service-tags">
-                                                <span class="service-tag"><i class="fas fa-stethoscope"></i> ???????</span>
-                                                <span class="service-tag"><i class="fas fa-dumbbell"></i> ?蝞?頩???</span>
+                                            <div class="category-tags">
+                                                <span class="category-tag">醫療輔具</span>
                                             </div>
                                         </td>
+                                        <td><span class="status-badge active">合作中</span></td>
+                                        <td>2025/09/01</td>
                                         <td>
-                                            <div class="contact-info">
-                                                <div><i class="fas fa-user"></i> ?雓???/div>
-                                                <div><i class="fas fa-phone"></i> 0923-456-789</div>
-                                                <div><i class="fas fa-envelope"></i> lin@lohas.com.tw</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="contact-info">
-                                                <div><i class="fas fa-user-circle"></i> lin@lohas.com.tw</div>
-                                                <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">?豲???????026/04/19 14:35</div>
-                                            </div>
-                                        </td>
-                                        <td><span class="status-badge status-active">?????/span></td>
-                                        <td>2026/01/15</td>
-                                        <td>
-                                            <div class="supplier-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('supplierModal')" title="?蝞???><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-outline" title="????????雓??? style="color:var(--primary-color);"><i class="fas fa-paper-plane"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="????"><i class="fas fa-trash"></i></button>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="查看" onclick="openSupplierDetail()"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openSupplierModal()"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="停用"><i class="fas fa-ban"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div class="supplier-info">
-                                                <div class="supplier-avatar" style="background: linear-gradient(135deg,#f59e0b,#d97706);">
-                                                    <i class="fas fa-utensils"></i>
-                                                </div>
+                                            <div class="supplier-name-cell">
+                                                <div class="supplier-avatar">銀</div>
                                                 <div>
-                                                    <div class="supplier-name">?賹?????謅????/div>
-                                                    <div class="supplier-code">SUP-003</div>
+                                                    <div style="font-weight:600;">銀髮樂活營養餐飲</div>
+                                                    <div style="font-size:12px;color:var(--text-secondary);">contact@seniorlive.com.tw</div>
                                                 </div>
                                             </div>
                                         </td>
+                                        <td>陳美玲</td>
+                                        <td>07-1234-5678</td>
                                         <td>
-                                            <div class="service-tags">
-                                                <span class="service-tag"><i class="fas fa-apple-alt"></i> ?鞈??謅???/span>
+                                            <div class="category-tags">
+                                                <span class="category-tag">營養餐飲</span>
                                             </div>
                                         </td>
+                                        <td><span class="status-badge warning">審核中</span></td>
+                                        <td>2026/01/20</td>
                                         <td>
-                                            <div class="contact-info">
-                                                <div><i class="fas fa-user"></i> ??????/div>
-                                                <div><i class="fas fa-phone"></i> 0934-567-890</div>
-                                                <div><i class="fas fa-envelope"></i> chen@goodfood.com.tw</div>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-primary" title="審核通過"><i class="fas fa-check"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="駁回"><i class="fas fa-times"></i></button>
                                             </div>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div class="contact-info">
-                                                <div><i class="fas fa-user-circle"></i> chen@goodfood.com.tw</div>
-                                                <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">?蹎批雓????/div>
+                                            <div class="supplier-name-cell">
+                                                <div class="supplier-avatar">康</div>
+                                                <div>
+                                                    <div style="font-weight:600;">康復日間照顧中心</div>
+                                                    <div style="font-size:12px;color:var(--text-secondary);">admin@kangfu-daycare.com</div>
+                                                </div>
                                             </div>
                                         </td>
-                                        <td><span class="status-badge status-warning">??????</span></td>
-                                        <td>2026/02/01</td>
+                                        <td>黃建國</td>
+                                        <td>03-9988-7766</td>
                                         <td>
-                                            <div class="supplier-actions">
-                                                <button class="btn btn-sm btn-outline" onclick="openModal('supplierModal')" title="?蝞???><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-outline" title="????????雓??? style="color:var(--primary-color);"><i class="fas fa-paper-plane"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="????"><i class="fas fa-trash"></i></button>
+                                            <div class="category-tags">
+                                                <span class="category-tag">日間照顧</span>
+                                                <span class="category-tag">復健服務</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="status-badge active">合作中</span></td>
+                                        <td>2025/11/05</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="查看" onclick="openSupplierDetail()"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openSupplierModal()"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger" title="停用"><i class="fas fa-ban"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <div class="supplier-name-cell">
+                                                <div class="supplier-avatar">長</div>
+                                                <div>
+                                                    <div style="font-weight:600;">長青到宅服務股份有限公司</div>
+                                                    <div style="font-size:12px;color:var(--text-secondary);">support@changching.com.tw</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>張雅雯</td>
+                                        <td>02-5544-3322</td>
+                                        <td>
+                                            <div class="category-tags">
+                                                <span class="category-tag">居家照護</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="status-badge inactive">停止合作</span></td>
+                                        <td>2025/06/01</td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="btn btn-sm btn-outline" title="查看" onclick="openSupplierDetail()"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-sm btn-primary" title="重新啟用"><i class="fas fa-redo"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div class="pagination-section" style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+                            <div class="pagination-info">顯示第 1-5 筆，共 38 筆</div>
+                            <div class="pagination">
+                                <button class="btn btn-outline" disabled><i class="fas fa-chevron-left"></i></button>
+                                <button class="btn btn-primary">1</button>
+                                <button class="btn btn-outline">2</button>
+                                <button class="btn btn-outline">3</button>
+                                <button class="btn btn-outline"><i class="fas fa-chevron-right"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -475,110 +363,111 @@
         </div>
     </div>
 
-    <!-- ????謅ｆ????????? Modal -->
+    <!-- 新增/編輯供應商 Modal -->
     <div class="modal" id="supplierModal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">?謢?????湔???/div>
-                    <button class="modal-close" onclick="closeModal('supplierModal')"><i class="fas fa-times"></i></button>
+                    <div class="modal-title">新增供應商</div>
+                    <button class="modal-close" onclick="closeSupplierModal()"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
-                    <!-- ???蝘??? -->
-                    <div class="form-group">
-                        <label class="form-label">?謢???????<span class="required">*</span></label>
-                        <input type="text" class="form-control" placeholder="?嚚???????????">
+                    <div class="modal-form-grid" style="margin-bottom:16px;">
+                        <div>
+                            <label class="form-label">供應商名稱</label>
+                            <input type="text" class="form-control" placeholder="請輸入供應商全名">
+                        </div>
+                        <div>
+                            <label class="form-label">統一編號</label>
+                            <input type="text" class="form-control" placeholder="請輸入統一編號">
+                        </div>
                     </div>
-                    <div class="form-grid-two">
-                        <div class="form-group">
-                            <label class="form-label">??????/label>
-                            <input type="text" class="form-control" placeholder="??????????>
+                    <div class="modal-form-grid-3" style="margin-bottom:16px;">
+                        <div>
+                            <label class="form-label">聯絡人姓名</label>
+                            <input type="text" class="form-control" placeholder="請輸入聯絡人">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">???????</label>
-                            <input type="tel" class="form-control" placeholder="0912-345-678">
+                        <div>
+                            <label class="form-label">聯絡電話</label>
+                            <input type="tel" class="form-control" placeholder="請輸入電話號碼">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">????鞈???/label>
-                            <input type="email" class="form-control" placeholder="supplier@example.com">
+                        <div>
+                            <label class="form-label">電子信箱</label>
+                            <input type="email" class="form-control" placeholder="請輸入信箱">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">???????/label>
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <label class="form-label">公司地址</label>
+                        <input type="text" class="form-control" placeholder="請輸入公司地址">
+                    </div>
+                    <div class="modal-form-grid" style="margin-bottom:16px;">
+                        <div>
+                            <label class="form-label">服務類別（可複選）</label>
+                            <select class="form-select" multiple size="4">
+                                <option>居家照護</option>
+                                <option>醫療輔具</option>
+                                <option>營養餐飲</option>
+                                <option>復健服務</option>
+                                <option>日間照顧</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">合作狀態</label>
                             <select class="form-select">
-                                <option>?????/option>
-                                <option>??????</option>
-                                <option>??踝????/option>
+                                <option>審核中</option>
+                                <option>合作中</option>
+                                <option>停止合作</option>
                             </select>
                         </div>
                     </div>
-                    <!-- ?????獢?? -->
-                    <div class="form-group" style="margin-top:4px;">
-                        <label class="form-label" style="font-size:13px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.5px;">?????獢??</label>
-                        <div class="form-grid-two" style="margin-top:8px;">
-                            <div class="form-group">
-                                <label class="form-label">????????謅?mail??<span class="required">*</span></label>
-                                <input type="email" class="form-control" placeholder="?蹎剁???????????????" id="supplierEmail">
-                                <span class="form-hint" style="font-size:12px;color:var(--text-secondary);margin-top:4px;display:block;">??????賹?豲?雓????鞈?????蝬???ｇ??獢????/span>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">?鞊??謖???/label>
-                                <div style="display:flex;gap:8px;">
-                                    <input type="text" class="form-control" id="supplierPassword" placeholder="?賹??荒等??蝛選????蛔郁?? readonly style="background:var(--background-color);">
-                                    <button type="button" class="btn btn-outline" style="white-space:nowrap;flex-shrink:0;" onclick="generatePassword()"><i class="fas fa-sync-alt"></i> ???</button>
-                                </div>
-                                <span class="form-hint" style="font-size:12px;color:var(--text-secondary);margin-top:4px;display:block;">????蝬踐ㄝ?????????豰刈?頛???頩???謢????Email??/span>
-                            </div>
-                        </div>
-                        <div class="form-group" style="margin-top:4px;">
-                            <label class="form-label">Email ?畾?雓?雓?</label>
-                            <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider"></span>
-                                </label>
-                                <span style="font-size:13px;color:var(--text-secondary);">??甇??畾?雓?頩?????菔竣??Email ?雓???軋?????</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ?蹎????? -->
-                    <div class="form-group">
-                        <label class="form-label">?蹎????? <span class="required">*</span></label>
-                        <div class="service-checkbox-group">
-                            <label class="service-checkbox-item">
-                                <input type="checkbox" checked> ??對?????徉
-                            </label>
-                            <label class="service-checkbox-item">
-                                <input type="checkbox"> ??嗾?????
-                            </label>
-                            <label class="service-checkbox-item">
-                                <input type="checkbox"> ???????
-                            </label>
-                            <label class="service-checkbox-item">
-                                <input type="checkbox"> ?蝞?頩???
-                            </label>
-                            <label class="service-checkbox-item">
-                                <input type="checkbox"> ?鞈??謅???
-                            </label>
-                            <label class="service-checkbox-item">
-                                <input type="checkbox"> ?謜?????
-                            </label>
-                            <label class="service-checkbox-item">
-                                <input type="checkbox"> ?撠???嚗??
-                            </label>
-                            <label class="service-checkbox-item">
-                                <input type="checkbox"> ?鞈察????蹇?
-                            </label>
-                        </div>
-                    </div>
-                    <!-- ?雓?? -->
-                    <div class="form-group">
-                        <label class="form-label">?雓??</label>
-                        <textarea class="form-control" rows="3" placeholder="?謜眾????曄??謢?????????雓???謅?頩????"></textarea>
+                    <div>
+                        <label class="form-label">備註說明</label>
+                        <textarea class="form-control" rows="3" placeholder="請輸入備註（選填）"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeModal('supplierModal')">?雓?</button>
-                    <button class="btn btn-primary" onclick="closeModal('supplierModal')">???</button>
+                    <button class="btn btn-outline" onclick="closeSupplierModal()">取消</button>
+                    <button class="btn btn-primary" onclick="closeSupplierModal()">儲存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 供應商詳情 Modal -->
+    <div class="modal" id="supplierDetailModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">供應商詳情</div>
+                    <button class="modal-close" onclick="closeSupplierDetail()"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border-color);">
+                        <div class="supplier-avatar" style="width:64px;height:64px;font-size:24px;">安</div>
+                        <div>
+                            <h3 style="margin:0 0 4px;font-size:18px;">安心居家照護有限公司</h3>
+                            <div style="color:var(--text-secondary);font-size:14px;">service@ancare.com.tw</div>
+                            <div style="margin-top:8px;"><span class="status-badge active">合作中</span></div>
+                        </div>
+                    </div>
+                    <div class="modal-form-grid">
+                        <div><label class="form-label" style="color:var(--text-secondary);font-size:12px;">統一編號</label><div>88887777</div></div>
+                        <div><label class="form-label" style="color:var(--text-secondary);font-size:12px;">聯絡人</label><div>王大明</div></div>
+                        <div><label class="form-label" style="color:var(--text-secondary);font-size:12px;">聯絡電話</label><div>02-2345-6789</div></div>
+                        <div><label class="form-label" style="color:var(--text-secondary);font-size:12px;">加入日期</label><div>2025/08/15</div></div>
+                        <div style="grid-column:1/-1;"><label class="form-label" style="color:var(--text-secondary);font-size:12px;">公司地址</label><div>台北市中正區重慶南路一段 100 號</div></div>
+                        <div style="grid-column:1/-1;">
+                            <label class="form-label" style="color:var(--text-secondary);font-size:12px;">服務類別</label>
+                            <div class="category-tags" style="margin-top:4px;">
+                                <span class="category-tag">居家照護</span>
+                                <span class="category-tag">復健服務</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeSupplierDetail()">關閉</button>
+                    <button class="btn btn-primary" onclick="closeSupplierDetail(); openSupplierModal();">編輯</button>
                 </div>
             </div>
         </div>
@@ -586,25 +475,10 @@
 
     <script src="js/platform.js"></script>
     <script>
-        function generatePassword() {
-            const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789@#!';
-            let pwd = '';
-            for (let i = 0; i < 10; i++) {
-                pwd += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            document.getElementById('supplierPassword').value = pwd;
-        }
-        // ??? Modal ?頩?????蛔郁?鞈??餈????
-        document.addEventListener('DOMContentLoaded', function () {
-            const origOpen = window.openModal;
-            window.openModal = function (id) {
-                origOpen && origOpen(id);
-                if (id === 'supplierModal') {
-                    const pwd = document.getElementById('supplierPassword');
-                    if (pwd && !pwd.value) generatePassword();
-                }
-            };
-        });
+        function openSupplierModal() { document.getElementById('supplierModal').classList.add('show'); }
+        function closeSupplierModal() { document.getElementById('supplierModal').classList.remove('show'); }
+        function openSupplierDetail() { document.getElementById('supplierDetailModal').classList.add('show'); }
+        function closeSupplierDetail() { document.getElementById('supplierDetailModal').classList.remove('show'); }
     </script>
 </body>
 </html>
