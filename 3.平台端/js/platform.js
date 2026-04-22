@@ -638,8 +638,23 @@ function viewOrder(orderId) {
  * @param {string} orderId - 訂單編號
  */
 function editOrder(orderId) {
-    // TODO: 實作編輯訂單邏輯
-    console.log('編輯訂單:', orderId);
+    // 填入示範資料（實際應從後端取得）
+    const el = (id) => document.getElementById(id);
+    if (el('editOrderId'))      el('editOrderId').textContent      = orderId;
+    if (el('editOrderMember'))  el('editOrderMember').textContent  = '會員';
+    if (el('editOrderMemberId'))el('editOrderMemberId').textContent= 'PT2026000013';
+    if (el('editOrderOrg'))     el('editOrderOrg').textContent     = '陽光照護中心';
+    if (el('editOrderDate'))    el('editOrderDate').textContent    = '2026/04/16 16:51';
+    if (el('editOrderCreated')) el('editOrderCreated').textContent = '2026/04/16 16:51';
+    openModal('editOrderModal');
+}
+
+function saveOrderEdit() {
+    const status   = document.getElementById('editOrderStatus')?.value;
+    const payment  = document.getElementById('editPaymentStatus')?.value;
+    const delivery = document.getElementById('editDeliveryStatus')?.value;
+    console.log('儲存訂單：', { status, payment, delivery });
+    closeModal('editOrderModal');
 }
 
 /**

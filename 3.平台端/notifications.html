@@ -3,25 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>推播通知管理 - 平台端管理系統</title>
+    <title>平台公告管理 - 平台端管理系統</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/platform.css">
     <style>
-        .audience-tag {
-            display: inline-flex;
-            align-items: center;
-            padding: 3px 10px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 600;
+        .announcement-summary {
+            color: var(--text-secondary);
+            font-size: 13px;
         }
-        .audience-tag.all { background: rgba(99,102,241,0.12); color: var(--primary-color); }
-        .audience-tag.client { background: rgba(16,185,129,0.12); color: var(--success-color); }
-        .audience-tag.org { background: rgba(245,158,11,0.12); color: var(--warning-color); }
-        .audience-tag.supplier { background: rgba(59,130,246,0.12); color: var(--info-color); }
-        .notif-preview { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); font-size: 13px; }
-        .modal-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        @media (max-width:900px) { .modal-form-grid { grid-template-columns: 1fr; } }
+        .announcement-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .announcement-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .announcement-preview {
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -56,9 +62,9 @@
                 </div>
                 <div class="menu-section">
                     <div class="menu-section-title">平台功能</div>
-                    <a href="announcements.html" class="menu-item"><i class="fas fa-bullhorn"></i><span>平台公告管理</span></a>
+                    <a href="announcements.html" class="menu-item"><i class="fas fa-bullhorn"></i><span>平台輪播管理</span></a>
                     <a href="tickets.html" class="menu-item"><i class="fas fa-headset"></i><span>平台客服單管理</span></a>
-                    <a href="notifications.html" class="menu-item active"><i class="fas fa-bell"></i><span>推播通知管理</span></a>
+                    <a href="notifications.html" class="menu-item active"><i class="fas fa-bell"></i><span>平台公告管理</span></a>
                     <a href="faq.html" class="menu-item"><i class="fas fa-question-circle"></i><span>常見問題管理</span></a>
                 </div>
                 <div class="menu-section">
@@ -80,7 +86,7 @@
                     <div class="breadcrumb">
                         <a href="index.html">首頁</a>
                         <i class="fas fa-chevron-right"></i>
-                        <span>推播通知管理</span>
+                        <span>平台公告管理</span>
                     </div>
                 </div>
                 <div class="navbar-right">
@@ -106,181 +112,92 @@
             <div class="page-content">
                 <div class="page-header">
                     <div>
-                        <h1 class="page-title">推播通知管理</h1>
-                        <p class="page-subtitle">管理平台推播通知內容，可指定發送對象與排程時間。</p>
+                        <h1 class="page-title">平台公告管理</h1>
+                        <p class="page-subtitle">管理公告發布、置頂與通知對象。</p>
                     </div>
-                    <button class="btn btn-primary" onclick="openNotifModal()">
-                        <i class="fas fa-plus"></i> 新增通知
-                    </button>
-                </div>
-
-                <!-- 統計卡 -->
-                <div class="stats-grid" style="margin-bottom:24px;">
-                    <div class="stat-card">
-                        <div class="stat-icon primary"><i class="fas fa-paper-plane"></i></div>
-                        <div class="stat-info">
-                            <div class="stat-label">已發送</div>
-                            <div class="stat-value">142</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon warning"><i class="fas fa-clock"></i></div>
-                        <div class="stat-info">
-                            <div class="stat-label">待發送</div>
-                            <div class="stat-value">8</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon success"><i class="fas fa-check-double"></i></div>
-                        <div class="stat-info">
-                            <div class="stat-label">今日發送</div>
-                            <div class="stat-value">5</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon danger"><i class="fas fa-times-circle"></i></div>
-                        <div class="stat-info">
-                            <div class="stat-label">發送失敗</div>
-                            <div class="stat-value">2</div>
-                        </div>
+                    <div>
+                        <button class="btn btn-primary" onclick="openAnnouncementModal()">
+                            <i class="fas fa-plus"></i> 新增公告
+                        </button>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">通知記錄列表</h3>
+                        <h3 class="card-title"><i class="fas fa-bullhorn"></i> 公告列表</h3>
+                        <div class="card-actions">
+                            <div class="search-input">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="form-control" placeholder="搜尋公告標題">
+                            </div>
+                            <select class="form-select" style="width: 140px;">
+                                <option>全部狀態</option>
+                                <option>發布中</option>
+                                <option>草稿</option>
+                                <option>已結束</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <div class="filter-section" style="margin-bottom:16px;">
-                            <div class="filter-row">
-                                <div class="filter-group">
-                                    <label class="filter-label">關鍵字搜尋</label>
-                                    <div class="search-input">
-                                        <i class="fas fa-search"></i>
-                                        <input type="text" class="form-control" placeholder="請輸入通知標題">
-                                    </div>
-                                </div>
-                                <div class="filter-group">
-                                    <label class="filter-label">發送對象</label>
-                                    <select class="form-select">
-                                        <option value="">全部</option>
-                                        <option>全體用戶</option>
-                                        <option>客戶端</option>
-                                        <option>機構端</option>
-                                        <option>供應商</option>
-                                    </select>
-                                </div>
-                                <div class="filter-group">
-                                    <label class="filter-label">狀態</label>
-                                    <select class="form-select">
-                                        <option value="">全部</option>
-                                        <option>已發送</option>
-                                        <option>待發送</option>
-                                        <option>發送失敗</option>
-                                    </select>
-                                </div>
-                                <div class="filter-actions">
-                                    <button class="btn btn-outline"><i class="fas fa-redo"></i> 重置</button>
-                                    <button class="btn btn-outline"><i class="fas fa-search"></i> 查詢</button>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="table-responsive">
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th style="width:50px;"><input type="checkbox"></th>
-                                        <th>通知標題</th>
-                                        <th style="width:100px;">發送對象</th>
-                                        <th style="width:100px;">狀態</th>
-                                        <th style="width:160px;">排程時間</th>
-                                        <th style="width:80px;">開信數</th>
-                                        <th style="width:120px;">操作</th>
+                                        <th>公告標題</th>
+                                        <th>發布時間</th>
+                                        <th>狀態</th>
+                                        <th>受眾</th>
+                                        <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div>系統維護通知 - 2026/02/15</div>
-                                            <div class="notif-preview">平台將於 2026/02/15 凌晨 02:00-04:00 進行系統維護...</div>
+                                            <div class="announcement-title">「重要」平台系統維護公告</div>
+                                            <div class="announcement-summary">平台將於 2026/02/15 凌晨進行系統維護，部分功能暫停。</div>
                                         </td>
-                                        <td><span class="audience-tag all">全體用戶</span></td>
-                                        <td><span class="status-badge active">已發送</span></td>
                                         <td>2026/02/12 10:00</td>
-                                        <td>1,284</td>
+                                        <td><span class="status-badge active">發布中</span></td>
+                                        <td>全體用戶</td>
                                         <td>
-                                            <div class="table-actions">
-                                                <button class="btn btn-sm btn-outline" title="詳情"><i class="fas fa-eye"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
+                                            <div class="announcement-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openAnnouncementModal('edit')"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div>新服務上線公告</div>
-                                            <div class="notif-preview">親愛的用戶，全新居家照護服務正式上線，歡迎體驗...</div>
+                                            <div class="announcement-title">新服務上線公告</div>
+                                            <div class="announcement-summary">全新居家照護服務正式上線，歡迎體驗。</div>
                                         </td>
-                                        <td><span class="audience-tag client">客戶端</span></td>
-                                        <td><span class="status-badge active">已發送</span></td>
                                         <td>2026/02/10 09:00</td>
-                                        <td>856</td>
+                                        <td><span class="status-badge processing">草稿</span></td>
+                                        <td>客戶端</td>
                                         <td>
-                                            <div class="table-actions">
-                                                <button class="btn btn-sm btn-outline" title="詳情"><i class="fas fa-eye"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
+                                            <div class="announcement-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openAnnouncementModal('edit')"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox"></td>
                                         <td>
-                                            <div>機構端功能更新說明</div>
-                                            <div class="notif-preview">機構端新增批次審核功能，可一次處理多筆綁定申請...</div>
+                                            <div class="announcement-title">機構端功能更新說明</div>
+                                            <div class="announcement-summary">機構端新增批次審核功能，可一次處理多筆綁定申請。</div>
                                         </td>
-                                        <td><span class="audience-tag org">機構端</span></td>
-                                        <td><span class="status-badge warning">待發送</span></td>
-                                        <td>2026/02/15 14:00</td>
-                                        <td>-</td>
-                                        <td>
-                                            <div class="table-actions">
-                                                <button class="btn btn-sm btn-outline" title="編輯" onclick="openNotifModal()"><i class="fas fa-pen"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>
-                                            <div>供應商出貨規範調整</div>
-                                            <div class="notif-preview">請各供應商注意，自 3 月起出貨規範調整如下...</div>
-                                        </td>
-                                        <td><span class="audience-tag supplier">供應商</span></td>
-                                        <td><span class="status-badge danger">發送失敗</span></td>
                                         <td>2026/02/08 16:30</td>
-                                        <td>0</td>
+                                        <td><span class="status-badge inactive">已結束</span></td>
+                                        <td>機構端</td>
                                         <td>
-                                            <div class="table-actions">
-                                                <button class="btn btn-sm btn-primary" title="重試"><i class="fas fa-redo"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="刪除"><i class="fas fa-trash"></i></button>
+                                            <div class="announcement-actions">
+                                                <button class="btn btn-sm btn-outline" onclick="openAnnouncementModal('edit')"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-
-                        <div class="pagination-section" style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
-                            <div class="pagination-info">顯示第 1-4 筆，共 150 筆</div>
-                            <div class="pagination">
-                                <button class="btn btn-outline" disabled><i class="fas fa-chevron-left"></i></button>
-                                <button class="btn btn-primary">1</button>
-                                <button class="btn btn-outline">2</button>
-                                <button class="btn btn-outline">3</button>
-                                <button class="btn btn-outline"><i class="fas fa-chevron-right"></i></button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -288,55 +205,48 @@
         </div>
     </div>
 
-    <!-- 新增/編輯推播通知 Modal -->
-    <div class="modal" id="notifModal">
-        <div class="modal-dialog modal-lg">
+    <!-- 新增/編輯公告 Modal -->
+    <div class="modal" id="announcementModal">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">新增推播通知</div>
-                    <button class="modal-close" onclick="closeNotifModal()"><i class="fas fa-times"></i></button>
+                    <h4 class="modal-title">公告設定</h4>
+                    <button class="modal-close" onclick="closeModal('announcementModal')"><i class="fas fa-times"></i></button>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-form-grid" style="margin-bottom:16px;">
-                        <div>
-                            <label class="form-label">發送對象</label>
-                            <select class="form-select">
-                                <option>全體用戶</option>
-                                <option>客戶端</option>
-                                <option>機構端</option>
-                                <option>供應商</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="form-label">發送方式</label>
-                            <select class="form-select">
-                                <option>立即發送</option>
-                                <option>排程發送</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label">公告標題</label>
+                        <input type="text" class="form-control" placeholder="請輸入公告標題">
                     </div>
-                    <div class="modal-form-grid" style="margin-bottom:16px;">
-                        <div>
-                            <label class="form-label">排程日期</label>
-                            <input type="date" class="form-control">
-                        </div>
-                        <div>
-                            <label class="form-label">排程時間</label>
-                            <input type="time" class="form-control">
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label">發布狀態</label>
+                        <select class="form-select">
+                            <option>發布中</option>
+                            <option>草稿</option>
+                        </select>
                     </div>
-                    <div style="margin-bottom:16px;">
-                        <label class="form-label">通知標題</label>
-                        <input type="text" class="form-control" placeholder="請輸入通知標題（最多50字）">
+                    <div class="form-group">
+                        <label class="form-label">排序</label>
+                        <input type="number" class="form-control" min="1" placeholder="請輸入排序（數字越小越前）">
                     </div>
-                    <div>
-                        <label class="form-label">通知內容</label>
-                        <textarea class="form-control" rows="5" placeholder="請輸入推播通知內容..."></textarea>
+                    <div class="form-group">
+                        <label class="form-label">發送對象</label>
+                        <select class="form-select">
+                            <option>全部會員</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">公告內容</label>
+                        <textarea class="form-control" rows="5" placeholder="請輸入公告內容"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">公告預覽</label>
+                        <div class="announcement-preview">請輸入內容後，預覽會顯示於此。</div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="closeNotifModal()">取消</button>
-                    <button class="btn btn-primary" onclick="closeNotifModal()">確認發送</button>
+                    <button class="btn btn-outline" onclick="closeModal('announcementModal')">取消</button>
+                    <button class="btn btn-primary">儲存</button>
                 </div>
             </div>
         </div>
@@ -344,8 +254,9 @@
 
     <script src="js/platform.js"></script>
     <script>
-        function openNotifModal() { document.getElementById('notifModal').classList.add('show'); }
-        function closeNotifModal() { document.getElementById('notifModal').classList.remove('show'); }
+        function openAnnouncementModal() {
+            openModal('announcementModal');
+        }
     </script>
 </body>
 </html>

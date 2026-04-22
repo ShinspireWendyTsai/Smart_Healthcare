@@ -86,7 +86,7 @@
                     
                     <a href="announcements.html" class="menu-item">
                         <i class="fas fa-bullhorn"></i>
-                        <span>平台公告管理</span>
+                        <span>平台輪播管理</span>
                     </a>
                     
                                         <a href="tickets.html" class="menu-item">
@@ -95,7 +95,7 @@
                     </a>
                     <a href="notifications.html" class="menu-item">
                         <i class="fas fa-bell"></i>
-                        <span>推播通知管理</span>
+                        <span>平台公告管理</span>
                     </a>
                     <a href="faq.html" class="menu-item">
                         <i class="fas fa-question-circle"></i>
@@ -708,6 +708,196 @@
                 <div class="modal-footer">
                     <button class="btn btn-outline" onclick="closeModal('orderDetailModal')">關閉</button>
                     <button class="btn btn-primary">列印訂單</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯訂單 Modal -->
+    <div class="modal" id="editOrderModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">編輯訂單</h4>
+                    <button class="modal-close" onclick="closeModal('editOrderModal')"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="order-detail">
+
+                        <!-- 訂單資訊 -->
+                        <div class="detail-section">
+                            <h5 class="detail-section-title"><i class="fas fa-file-alt"></i> 訂單資訊</h5>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>訂單編號</label>
+                                    <span id="editOrderId">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>會員姓名</label>
+                                    <span id="editOrderMember">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>會員編號</label>
+                                    <span id="editOrderMemberId">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>服務機構</label>
+                                    <span id="editOrderOrg">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>訂購日期</label>
+                                    <span id="editOrderDate">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>建立時間</label>
+                                    <span id="editOrderCreated">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>訂單狀態</label>
+                                    <select class="form-select" id="editOrderStatus">
+                                        <option value="processing">處理中</option>
+                                        <option value="confirmed">已確認</option>
+                                        <option value="completed">已完成</option>
+                                        <option value="refunded">已退款</option>
+                                        <option value="cancelled">已取消</option>
+                                    </select>
+                                </div>
+                                <div class="detail-item">
+                                    <label>付款狀態</label>
+                                    <select class="form-select" id="editPaymentStatus">
+                                        <option value="unpaid">未付款</option>
+                                        <option value="paid">已付款</option>
+                                        <option value="refunding">退款申請中</option>
+                                        <option value="refunded">已退款</option>
+                                    </select>
+                                </div>
+                                <div class="detail-item">
+                                    <label>配送狀態</label>
+                                    <select class="form-select" id="editDeliveryStatus">
+                                        <option value="order_created">訂單成立</option>
+                                        <option value="paid">已付款</option>
+                                        <option value="shipped">已出貨</option>
+                                        <option value="delivered">已送達</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 收件與付款資訊 -->
+                        <div class="detail-section">
+                            <h5 class="detail-section-title"><i class="fas fa-user"></i> 收件與付款資訊</h5>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>收件姓名</label>
+                                    <span id="editReceiverName">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>收件電話</label>
+                                    <span id="editReceiverPhone">—</span>
+                                </div>
+                                <div class="detail-item" style="grid-column: span 2;">
+                                    <label>收件地址</label>
+                                    <span id="editReceiverAddr">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>付款方式</label>
+                                    <span id="editPayMethod">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>交易編號</label>
+                                    <span id="editTxnId">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>匯款帳號後五碼</label>
+                                    <span id="editBankCode">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>已付款金額</label>
+                                    <span id="editPaidAmt">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>付款時間</label>
+                                    <span id="editPayTime">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>發票手機條碼</label>
+                                    <span id="editInvoiceCarrier">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>統一編號</label>
+                                    <span id="editTaxId">—</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>公司名稱</label>
+                                    <span id="editCompanyName">—</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 備註資訊 -->
+                        <div class="detail-section">
+                            <h5 class="detail-section-title"><i class="fas fa-edit"></i> 備註資訊</h5>
+                            <div class="detail-item" style="margin-bottom:12px;">
+                                <label>訂單備註</label>
+                                <textarea class="form-control" id="editOrderNote" rows="3" placeholder="請輸入訂單備註"></textarea>
+                            </div>
+                            <div class="detail-item">
+                                <label>狀態說明</label>
+                                <textarea class="form-control" id="editStatusNote" rows="3" placeholder="請輸入狀態說明"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- 服務明細 -->
+                        <div class="detail-section">
+                            <h5 class="detail-section-title"><i class="fas fa-list"></i> 服務明細</h5>
+                            <div class="table-responsive">
+                                <table class="data-table" id="editServiceTable">
+                                    <thead>
+                                        <tr>
+                                            <th>服務名稱</th>
+                                            <th>數量</th>
+                                            <th>單價</th>
+                                            <th>小計</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>喜萊墾濃縮膠囊Plus</td>
+                                            <td>1</td>
+                                            <td>NT$ 19,999</td>
+                                            <td>NT$ 19,999</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 狀態歷程 -->
+                        <div class="detail-section">
+                            <h5 class="detail-section-title"><i class="fas fa-history"></i> 狀態歷程</h5>
+                            <div class="order-notes" id="editStatusHistory">
+                                <div class="note-item">
+                                    <div class="note-header">
+                                        <span class="note-author status-badge status-confirmed" style="font-size:12px;">已確認</span>
+                                        <span class="note-time">2026/04/16 16:52</span>
+                                    </div>
+                                    <div class="note-content">平台端確認訂單</div>
+                                </div>
+                                <div class="note-item">
+                                    <div class="note-header">
+                                        <span class="note-author status-badge status-processing" style="font-size:12px;">處理中</span>
+                                        <span class="note-time">2026/04/16 16:51</span>
+                                    </div>
+                                    <div class="note-content">訂單已建立，等待付款</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('editOrderModal')">取消</button>
+                    <button class="btn btn-primary" onclick="saveOrderEdit()">儲存</button>
                 </div>
             </div>
         </div>

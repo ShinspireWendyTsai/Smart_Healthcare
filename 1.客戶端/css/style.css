@@ -2396,6 +2396,87 @@ section + section {
     color: var(--text-light);
 }
 
+/* --- 配送狀態時間軸 --- */
+.delivery-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.timeline-item {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+    padding: 0 0 16px 0;
+    position: relative;
+}
+
+/* 連接線：從圓點底部到下個圓點頂部 */
+.timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 25px;
+    top: 52px;
+    bottom: 0;
+    width: 3px;
+    background: rgba(38, 166, 154, 0.25);
+    border-radius: 2px;
+}
+
+.timeline-item.completed:not(:last-child)::after {
+    background: var(--primary-color);
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    font-size: 22px;
+    color: white;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.timeline-item.completed .timeline-marker {
+    background: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(38, 166, 154, 0.3);
+}
+
+.timeline-item.pending .timeline-marker {
+    background: rgba(38, 166, 154, 0.2);
+    color: var(--text-light);
+}
+
+.timeline-content {
+    flex: 1;
+    padding-top: 6px;
+}
+
+.timeline-label {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.timeline-time {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.timeline-item.pending .timeline-label {
+    color: var(--text-secondary);
+}
+
 /* 確認綁定 */
 .confirm-institution-info {
     text-align: center;
