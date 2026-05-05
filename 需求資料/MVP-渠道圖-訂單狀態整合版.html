@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DORA｜渠道圖 × 訂單狀態整合版</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #f4f6f0;
+      --surface: #ffffff;
+      --border:  #dde5d8;
+      --text:    #1c2b1e;
+      --muted:   #5a6b5c;
+      --brand:   #2d6a4f;
+      --brand-lt:#e8f4ed;
+      --accent:  #b45309;
+      --accent-lt:#fef3e2;
+      --red:     #b91c1c;
+      --red-lt:  #fde8e8;
+      --blue:    #1d4ed8;
+      --blue-lt: #eff6ff;
+      --gray:    #374151;
+      --gray-lt: #f3f4f6;
+
+      /* role colours */
+      --c-client:   #0e7490;
+      --c-platform: #2d6a4f;
+      --c-supplier: #b45309;
+      --c-org:      #6d28d9;
+
+      --font:  "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      --mono:  "DM Mono", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── layout ── */
+    .page { width: min(1280px, 96vw); margin: 0 auto; padding: 28px 0 60px; display: grid; gap: 20px; }
+
+    /* ── hero ── */
+    .hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(45,106,79,.04) 0%, transparent 55%),
+                  radial-gradient(circle at 90% 10%, rgba(180,83,9,.06) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .hero-left { flex: 1 1 360px; }
+    .hero-title {
+      font-size: clamp(1.3rem, 2vw, 1.75rem);
+      font-weight: 700;
+      letter-spacing: -.2px;
+      color: var(--brand);
+    }
+    .hero-sub {
+      margin-top: 6px;
+      font-size: .9rem;
+      color: var(--muted);
+    }
+    .badge-row { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-size: .8rem; font-weight: 500;
+    }
+    .badge-green  { background: var(--brand-lt); color: var(--brand); }
+    .badge-orange { background: var(--accent-lt); color: var(--accent); }
+    .badge-blue   { background: var(--blue-lt);   color: var(--blue);  }
+    .badge-purple { background: #ede9fe;            color: var(--c-org); }
+
+    /* ── role legend ── */
+    .legend-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+    }
+    .legend-title { font-size: .82rem; color: var(--muted); font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+    .legend-items { display: flex; flex-wrap: wrap; gap: 16px; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: .88rem; font-weight: 500; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-icon { font-size: 1.1rem; }
+    .card-title { font-size: 1rem; font-weight: 700; }
+    .card-desc { margin-left: auto; font-size: .82rem; color: var(--muted); }
+
+    /* ── flow table ── */
+    .flow-table { width: 100%; border-collapse: collapse; }
+    .flow-table th {
+      padding: 10px 14px;
+      font-size: .78rem; font-weight: 700;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 2px solid var(--border);
+      text-align: left;
+      white-space: nowrap;
+    }
+    .flow-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: .88rem;
+    }
+    .flow-table tr:last-child td { border-bottom: none; }
+    .flow-table tr:hover td { background: #f9fbf7; }
+
+    /* step number */
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 50%;
+      font-size: .8rem; font-weight: 700; flex-shrink: 0;
+      font-family: var(--mono);
+    }
+    .step-num.main    { background: var(--brand);   color: #fff; }
+    .step-num.except  { background: var(--red);     color: #fff; }
+    .step-num.mvp     { background: var(--accent);  color: #fff; }
+
+    /* node name */
+    .node-name { font-weight: 700; font-size: .9rem; }
+    .node-sub  { font-size: .8rem; color: var(--muted); margin-top: 2px; }
+
+    /* action cell */
+    .action-cell { display: flex; flex-direction: column; gap: 4px; min-width: 130px; }
+    .action-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px; border-radius: 6px;
+      font-size: .8rem; font-weight: 500; width: fit-content;
+    }
+    .pill-client   { background: #e0f5f9; color: var(--c-client);   }
+    .pill-platform { background: var(--brand-lt); color: var(--brand); }
+    .pill-supplier { background: var(--accent-lt); color: var(--accent); }
+    .pill-org      { background: #ede9fe; color: var(--c-org); }
+    .pill-none     { color: var(--border); font-size: .78rem; }
+
+    /* status badges */
+    .status-group { display: flex; flex-direction: column; gap: 4px; }
+    .s-badge {
+      display: inline-block;
+      padding: 2px 8px; border-radius: 5px;
+      font-size: .77rem; font-weight: 600; white-space: nowrap;
+    }
+    .s-order-proc  { background: #fef9c3; color: #854d0e; }
+    .s-order-conf  { background: #dcfce7; color: #166534; }
+    .s-order-done  { background: #bbf7d0; color: #14532d; }
+    .s-order-cancel{ background: #fee2e2; color: #991b1b; }
+    .s-order-refund{ background: #fce7f3; color: #9d174d; }
+    .s-pay-wait    { background: #fef3c7; color: #92400e; }
+    .s-pay-paid    { background: #d1fae5; color: #065f46; }
+    .s-pay-refund  { background: #fce7f3; color: #9d174d; }
+    .s-pay-done    { background: #ede9fe; color: #5b21b6; }
+    .s-pay-none    { background: #f3f4f6; color: #6b7280; }
+    .s-ship-new    { background: #e0f2fe; color: #0369a1; }
+    .s-ship-paid   { background: #dbeafe; color: #1d4ed8; }
+    .s-ship-sent   { background: #e0f7fa; color: #0e7490; }
+    .s-ship-arrive { background: #d1fae5; color: #065f46; }
+    .s-ship-na     { background: #f3f4f6; color: #9ca3af; }
+
+    /* changed state highlight */
+    .changed { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 5px; }
+
+    /* mvp alt row */
+    .alt-row td { background: #fffbf5; }
+    .alt-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #fff3cd; color: #7c4a00;
+      border: 1px dashed #d97706;
+      padding: 2px 9px; border-radius: 6px;
+      font-size: .78rem;
+    }
+    .rec-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #fde8e8; color: var(--red);
+      padding: 2px 9px; border-radius: 6px;
+      font-size: .78rem;
+    }
+
+    /* ── status reference ── */
+    .status-ref {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0;
+    }
+    .status-ref-group {
+      padding: 16px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .status-ref-group:last-child { border-right: none; }
+    .status-ref-title { font-size: .82rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+    .status-ref-items { display: flex; flex-direction: column; gap: 6px; }
+    .status-ref-item { display: flex; align-items: center; gap: 10px; font-size: .85rem; }
+    .status-ref-arrow { color: var(--muted); font-size: .75rem; }
+
+    /* ── rules box ── */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+      padding: 18px 22px;
+    }
+    .rule-item {
+      background: var(--gray-lt);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .rule-role {
+      font-size: .78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .5px;
+      margin-bottom: 6px;
+    }
+    .rule-body { font-size: .85rem; color: var(--gray); line-height: 1.55; }
+
+    /* ── responsive ── */
+    @media (max-width: 900px) {
+      .flow-table th:nth-child(n+8),
+      .flow-table td:nth-child(n+8) { display: none; }
+      .flow-table { font-size: .82rem; }
+    }
+    @media (max-width: 640px) {
+      .flow-table th:nth-child(n+6),
+      .flow-table td:nth-child(n+6) { display: none; }
+    }
+
+    /* print */
+    @media print {
+      body { background: #fff; font-size: 12px; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── Hero ── -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-title">SMART HEALTH CARE_DORA｜MVP 渠道圖 × 訂單狀態整合版</div>
+      <div class="hero-sub">流程節點 ✕ 各角色動作 ✕ 三軸狀態（訂單 / 付款 / 配送）</div>
+      <div class="badge-row">
+        <span class="badge badge-green">✓ 正常流程 9 節點</span>
+        <span class="badge badge-orange">⚠ MVP 替代方案</span>
+        <span class="badge badge-blue">↩ 例外情境 3 種</span>
+        <span class="badge" style="background:#f5f0ff;color:#5b21b6;">2026-04-23 整合版</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Role Legend ── -->
+  <div class="legend-row">
+    <span class="legend-title">角色色碼</span>
+    <div class="legend-items">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--c-client)"></div>客戶端
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--c-platform)"></div>平台端
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--c-supplier)"></div>供應商端
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--c-org)"></div>機構端
+      </div>
+      <div class="legend-item" style="margin-left:auto">
+        <span style="font-size:.8rem;color:var(--muted)">🔶 橘框 = 狀態變更</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 1: Main Flow ── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">➡</span>
+      <span class="card-title">一、正常訂單流程（主線）</span>
+      <span class="card-desc">客戶下單 → 匯款 → 核款 → 出貨 → 完成</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="flow-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>流程節點</th>
+            <th style="color:var(--c-client)">客戶端</th>
+            <th style="color:var(--c-platform)">平台端</th>
+            <th style="color:var(--c-supplier)">供應商端</th>
+            <th style="color:var(--c-org)">機構端</th>
+            <th>訂單狀態</th>
+            <th>付款狀態</th>
+            <th>配送狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- Step 1 -->
+          <tr>
+            <td><span class="step-num main">1</span></td>
+            <td>
+              <div class="node-name">下單</div>
+              <div class="node-sub">流程起點</div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-client">選購商品</span>
+                <span class="action-pill pill-client">建立訂單</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-proc">處理中</span></td>
+            <td><span class="s-badge s-pay-wait">未付款</span></td>
+            <td><span class="s-badge s-ship-new">訂單成立</span></td>
+          </tr>
+
+          <!-- Step 2 -->
+          <tr>
+            <td><span class="step-num main">2</span></td>
+            <td>
+              <div class="node-name">回報匯款資訊</div>
+              <div class="node-sub">等平台確認</div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-client">填寫匯款末五碼</span>
+                <span class="action-pill pill-client">送出回報</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-proc">處理中</span></td>
+            <td><span class="s-badge s-pay-wait">未付款</span></td>
+            <td><span class="s-badge s-ship-new">訂單成立</span></td>
+          </tr>
+
+          <!-- Step 3 -->
+          <tr>
+            <td><span class="step-num main">3</span></td>
+            <td>
+              <div class="node-name">人工核款</div>
+              <div class="node-sub">平台確認收到款項</div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-platform">核對銀行入帳</span>
+                <span class="action-pill pill-platform">比對末五碼</span>
+                <span class="action-pill pill-platform">確認付款完成</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-conf changed">已確認 🔶</span></td>
+            <td><span class="s-badge s-pay-paid changed">已付款 🔶</span></td>
+            <td><span class="s-badge s-ship-paid changed">已付款 🔶</span></td>
+          </tr>
+
+          <!-- Step 4 -->
+          <tr>
+            <td><span class="step-num main">4</span></td>
+            <td>
+              <div class="node-name">改狀態→待出貨</div>
+              <div class="node-sub">核款後推進</div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-platform">將訂單改為待出貨</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-conf">已確認</span></td>
+            <td><span class="s-badge s-pay-paid">已付款</span></td>
+            <td><span class="s-badge s-ship-paid">已付款（等待出貨）</span></td>
+          </tr>
+
+          <!-- Step 5 -->
+          <tr>
+            <td><span class="step-num main">5</span></td>
+            <td>
+              <div class="node-name">通知供應商出貨</div>
+              <div class="node-sub">平台發出通知</div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-platform">系統寄信通知</span>
+              </div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-supplier">收到出貨通知</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-conf">已確認</span></td>
+            <td><span class="s-badge s-pay-paid">已付款</span></td>
+            <td><span class="s-badge s-ship-paid">已付款</span></td>
+          </tr>
+
+          <!-- Step 6 -->
+          <tr>
+            <td><span class="step-num main">6</span></td>
+            <td>
+              <div class="node-name">供應商回報出貨</div>
+              <div class="node-sub">物流資訊回傳</div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-platform">接收出貨資訊</span>
+              </div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-supplier">回報物流商</span>
+                <span class="action-pill pill-supplier">回報單號</span>
+                <span class="action-pill pill-supplier">回報出貨日</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-conf">已確認</span></td>
+            <td><span class="s-badge s-pay-paid">已付款</span></td>
+            <td><span class="s-badge s-ship-sent changed">已出貨 🔶</span></td>
+          </tr>
+
+          <!-- Step 7 -->
+          <tr>
+            <td><span class="step-num main">7</span></td>
+            <td>
+              <div class="node-name">平台確認送達</div>
+              <div class="node-sub">狀態推進至完成</div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-platform">更新→已出貨</span>
+                <span class="action-pill pill-platform">確認已送達</span>
+                <span class="action-pill pill-platform">結案→訂單完成</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-done changed">已完成 🔶</span></td>
+            <td><span class="s-badge s-pay-paid">已付款</span></td>
+            <td><span class="s-badge s-ship-arrive changed">已送達 🔶</span></td>
+          </tr>
+
+          <!-- Step 8 -->
+          <tr>
+            <td><span class="step-num main">8</span></td>
+            <td>
+              <div class="node-name">客戶查詢狀態</div>
+              <div class="node-sub">終態確認</div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-client">查看訂單狀態</span>
+                <span class="action-pill pill-client">確認收貨完成</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-done">已完成</span></td>
+            <td><span class="s-badge s-pay-paid">已付款</span></td>
+            <td><span class="s-badge s-ship-arrive">已送達</span></td>
+          </tr>
+
+          <!-- Step 9 -->
+          <tr>
+            <td><span class="step-num main">9</span></td>
+            <td>
+              <div class="node-name">機構查詢狀態</div>
+              <div class="node-sub">終態確認</div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="pill-none">—</span></td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-org">查看訂單最終狀態</span>
+              </div>
+            </td>
+            <td><span class="s-badge s-order-done">已完成</span></td>
+            <td><span class="s-badge s-pay-paid">已付款</span></td>
+            <td><span class="s-badge s-ship-arrive">已送達</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Section 2: Exception Flow ── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">↩</span>
+      <span class="card-title">二、例外情境</span>
+      <span class="card-desc">取消 / 退款流程</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="flow-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>情境名稱</th>
+            <th style="color:var(--c-client)">客戶端</th>
+            <th style="color:var(--c-platform)">平台端</th>
+            <th style="color:var(--c-supplier)">供應商端</th>
+            <th>訂單狀態</th>
+            <th>付款狀態</th>
+            <th>配送狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="step-num except">E1</span></td>
+            <td>
+              <div class="node-name">未付款即取消</div>
+              <div class="node-sub">付款前主動取消</div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-client">申請取消訂單</span>
+              </div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-platform">確認取消</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-cancel changed">已取消 🔶</span></td>
+            <td><span class="s-badge s-pay-none">未付款</span></td>
+            <td><span class="s-badge s-ship-new">訂單成立</span></td>
+          </tr>
+          <tr>
+            <td><span class="step-num except">E2</span></td>
+            <td>
+              <div class="node-name">已付款後申請退款</div>
+              <div class="node-sub">付款後發起退款</div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-client">提出退款申請</span>
+              </div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-platform">接收申請，審核中</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-conf">已確認</span><div style="font-size:.75rem;color:var(--muted);margin-top:3px">※不回退至處理中</div></td>
+            <td><span class="s-badge s-pay-refund changed">退款申請中 🔶</span></td>
+            <td><span class="s-badge s-ship-na">—</span></td>
+          </tr>
+          <tr>
+            <td><span class="step-num except">E3</span></td>
+            <td>
+              <div class="node-name">平台審核通過退款</div>
+              <div class="node-sub">退款核准執行</div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-client">收到退款通知</span>
+              </div>
+            </td>
+            <td>
+              <div class="action-cell">
+                <span class="action-pill pill-platform">核准退款申請</span>
+                <span class="action-pill pill-platform">執行退款</span>
+                <span class="action-pill pill-platform">更新狀態</span>
+              </div>
+            </td>
+            <td><span class="pill-none">—</span></td>
+            <td><span class="s-badge s-order-refund changed">已退款 🔶</span></td>
+            <td><span class="s-badge s-pay-done changed">已退款 🔶</span></td>
+            <td><span class="s-badge s-ship-na">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Section 3: MVP Workarounds ── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">⚠</span>
+      <span class="card-title">三、MVP 替代方案（功能未完成時）</span>
+      <span class="card-desc">人工補位流程與必填記錄欄位</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="flow-table">
+        <thead>
+          <tr>
+            <th>對應流程</th>
+            <th>未完成功能</th>
+            <th>替代做法</th>
+            <th>必填記錄欄位</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="alt-row">
+            <td><span class="step-num mvp">5</span> 通知供應商</td>
+            <td>系統自動寄信通知</td>
+            <td><span class="alt-pill">⚠ 人工寄 Email</span></td>
+            <td>
+              <div class="action-cell">
+                <span class="rec-pill">收件者</span>
+                <span class="rec-pill">寄送時間</span>
+                <span class="rec-pill">寄送人</span>
+              </div>
+            </td>
+          </tr>
+          <tr class="alt-row">
+            <td><span class="step-num mvp">6</span> 供應商回報</td>
+            <td>供應商端系統回報出貨</td>
+            <td><span class="alt-pill">⚠ Email / 電話回報</span></td>
+            <td>
+              <div class="action-cell">
+                <span class="rec-pill">物流商</span>
+                <span class="rec-pill">物流單號</span>
+                <span class="rec-pill">出貨日</span>
+              </div>
+            </td>
+          </tr>
+          <tr class="alt-row">
+            <td><span class="step-num mvp">7</span> 狀態更新</td>
+            <td>跨端自動同步狀態</td>
+            <td><span class="alt-pill">⚠ 平台批次 / 人工更新</span></td>
+            <td>
+              <div class="action-cell">
+                <span class="rec-pill">訂單編號</span>
+                <span class="rec-pill">操作人</span>
+                <span class="rec-pill">操作時間</span>
+                <span class="rec-pill">備註</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Section 4: Status Reference ── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">📋</span>
+      <span class="card-title">四、狀態值速查</span>
+    </div>
+    <div class="status-ref">
+      <div class="status-ref-group">
+        <div class="status-ref-title">訂單狀態（平台端控制）</div>
+        <div class="status-ref-items">
+          <div class="status-ref-item"><span class="s-badge s-order-proc">處理中</span><span class="status-ref-arrow">→</span> 初始狀態，等待付款確認</div>
+          <div class="status-ref-item"><span class="s-badge s-order-conf">已確認</span><span class="status-ref-arrow">→</span> 核款後，進行中</div>
+          <div class="status-ref-item"><span class="s-badge s-order-done">已完成</span><span class="status-ref-arrow">→</span> 配送狀態達「已送達」後</div>
+          <div class="status-ref-item"><span class="s-badge s-order-cancel">已取消</span><span class="status-ref-arrow">→</span> 付款前取消</div>
+          <div class="status-ref-item"><span class="s-badge s-order-refund">已退款</span><span class="status-ref-arrow">→</span> 退款核准後</div>
+        </div>
+      </div>
+      <div class="status-ref-group">
+        <div class="status-ref-title">付款狀態（平台端確認）</div>
+        <div class="status-ref-items">
+          <div class="status-ref-item"><span class="s-badge s-pay-wait">未付款</span><span class="status-ref-arrow">→</span> 訂單建立後 / 取消訂單時</div>
+          <div class="status-ref-item"><span class="s-badge s-pay-paid">已付款</span><span class="status-ref-arrow">→</span> 核款後設定</div>
+          <div class="status-ref-item"><span class="s-badge s-pay-refund">退款申請中</span><span class="status-ref-arrow">→</span> 客戶申請退款</div>
+          <div class="status-ref-item"><span class="s-badge s-pay-done">已退款</span><span class="status-ref-arrow">→</span> 退款核准後</div>
+        </div>
+      </div>
+      <div class="status-ref-group">
+        <div class="status-ref-title">配送狀態（供應商回報 + 平台確認）</div>
+        <div class="status-ref-items">
+          <div class="status-ref-item"><span class="s-badge s-ship-new">訂單成立</span><span class="status-ref-arrow">→</span> 初始值</div>
+          <div class="status-ref-item"><span class="s-badge s-ship-paid">已付款</span><span class="status-ref-arrow">→</span> 核款後，等待出貨</div>
+          <div class="status-ref-item"><span class="s-badge s-ship-sent">已出貨</span><span class="status-ref-arrow">→</span> 供應商回報後平台確認</div>
+          <div class="status-ref-item"><span class="s-badge s-ship-arrive">已送達</span><span class="status-ref-arrow">→</span> 平台確認送達</div>
+          <div class="status-ref-item"><span class="s-badge s-ship-na">—</span><span class="status-ref-arrow">→</span> 取消/退款情境無意義</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 5: Role Responsibility ── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">👤</span>
+      <span class="card-title">五、角色職責摘要</span>
+    </div>
+    <div class="rules-grid">
+      <div class="rule-item">
+        <div class="rule-role" style="color:var(--c-client)">客戶端</div>
+        <div class="rule-body">
+          發起下單、填寫匯款末五碼、申請退款或取消、最終查詢訂單狀態。<br>
+          <strong>觸發起點角色</strong>，流程起始與收貨確認。
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-role" style="color:var(--c-platform)">平台端</div>
+        <div class="rule-body">
+          MVP 唯一狀態控制點：核款、調整訂單 / 付款 / 配送狀態、通知供應商、審核退款、結案。<br>
+          <strong>訂單狀態</strong>、<strong>付款狀態</strong>皆由平台手動設定。
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-role" style="color:var(--c-supplier)">供應商端</div>
+        <div class="rule-body">
+          收到出貨通知後準備出貨，回報物流商、單號、出貨日給平台。<br>
+          <strong>配送狀態「已出貨」</strong>由供應商回報觸發、平台確認後更新。
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-role" style="color:var(--c-org)">機構端</div>
+        <div class="rule-body">
+          被動接收訂單狀態，查看最終狀態（待出貨、已出貨、已送達、已完成）。<br>
+          MVP 階段<strong>無下單功能</strong>，僅為查詢角色。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center; font-size:.8rem; color:var(--muted); padding-top:4px;">
+    SMART HEALTH CARE_DORA · 資料來源：訂單狀態對應規則.md × MVP-渠道圖-流程功能對應.md · 2026-04-23
+  </div>
+
+</div>
+</body>
+</html>
