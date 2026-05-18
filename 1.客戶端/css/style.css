@@ -608,6 +608,14 @@ a, button, [onclick], .clickable {
     background: #FFB74D; /* 深一點的橙色 */
 }
 
+.org-feature-card-preview {
+    background: #EDE7F6; /* 淡紫色 */
+}
+
+.org-feature-card-preview .org-feature-icon {
+    background: #7E57C2; /* 深紫色 */
+}
+
 .org-feature-title {
     font-size: var(--font-size-base);
     font-weight: 700;
