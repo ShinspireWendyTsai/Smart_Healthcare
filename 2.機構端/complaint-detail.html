@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申訴詳情 - 機構端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/admin.css">
+    <style>
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        /* 案件資訊欄位 */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .info-item .info-label { font-size: 12px; color: #999; margin-bottom: 4px; }
+        .info-item .info-value { font-size: 14px; font-weight: 600; color: #2c3e50; }
+
+        /* 狀態 / 優先級徽章 */
+        .status-badge.replied { background-color: #e0f7f4; color: #16a085; }
+        .status-badge.overdue { background-color: #ffeaea; color: #e74c3c; }
+        .prio { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .prio.urgent { background: #ffeaea; color: #e74c3c; }
+        .prio.high { background: #fff3e0; color: #f39c12; }
+        .prio.medium { background: #e3f2fd; color: #3498db; }
+        .prio.low { background: #f1f3f5; color: #868e96; }
+
+        .sla-banner {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 16px; border-radius: 8px; margin-top: 16px; font-size: 14px; font-weight: 600;
+        }
+        .sla-banner.overdue { background: #ffeaea; color: #e74c3c; }
+        .sla-banner.ok { background: #e8f5e9; color: #27ae60; }
+
+        .complaint-body {
+            background: #f8f9fa; border-radius: 8px; padding: 16px;
+            font-size: 14px; line-height: 1.7; color: #2c3e50;
+        }
+        .attachment-chip {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 14px; background: #f1f3f5; border-radius: 8px;
+            font-size: 13px; color: #495057; margin: 6px 6px 0 0;
+        }
+
+        /* 時間軸（移植自客戶端 ticket-detail.html，配色改為 admin 藍/橘） */
+        .timeline { display: flex; flex-direction: column; gap: 14px; }
+        .timeline-item { display: flex; gap: 12px; align-items: flex-start; }
+        .timeline-dot {
+            width: 12px; height: 12px; border-radius: 50%; margin-top: 8px; flex-shrink: 0;
+            background: #3498db; box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.12);
+        }
+        .timeline-item.staff .timeline-dot { background: #f39c12; box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.18); }
+        .timeline-item.system .timeline-dot { background: #95a5a6; box-shadow: 0 0 0 4px rgba(149, 165, 166, 0.18); }
+        .timeline-card {
+            flex: 1; background: #fff; border: 1px solid #e9ecef; border-radius: 10px;
+            padding: 12px 14px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+        .timeline-meta {
+            display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+            font-size: 13px; color: #6c757d; margin-bottom: 6px;
+        }
+        .timeline-author { font-weight: 700; color: #2c3e50; }
+        .timeline-content { font-size: 14px; color: #2c3e50; line-height: 1.6; }
+
+        @media (max-width: 992px) {
+            .detail-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>個案列表</span>
+                        </a>
+                        <a href="member-binding.html" class="menu-item">
+                            <span>綁定設定</span>
+                        </a>
+                    </div>
+
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單查詢</span>
+                    </a>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-section-title">機構功能</div>
+
+                    <a href="organization.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>機構資訊管理</span>
+                    </a>
+
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>機構公告管理</span>
+                    </a>
+
+                    <a href="chat.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>個案關懷通訊</span>
+                        <span class="badge">5</span>
+                    </a>
+
+                    <a href="complaints.html" class="menu-item active">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>申訴管理</span>
+                        <span class="badge">3</span>
+                    </a>
+
+                    <a href="leaves.html" class="menu-item">
+                        <i class="fas fa-calendar-xmark"></i>
+                        <span>請假管理</span>
+                        <span class="badge">2</span>
+                    </a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="system-submenu">
+                        <a href="admins.html" class="menu-item">
+                            <span>管理員帳號管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item">
+                            <span>操作日誌記錄</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <a href="complaints.html">申訴管理</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>申訴詳情</span>
+                    </div>
+                </div>
+
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title" id="pageSubject">申訴詳情</h1>
+                        <p class="page-subtitle">申訴編號 <span id="pageId" style="font-family: monospace;">-</span></p>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline" onclick="navigateTo('complaints.html')">
+                            <i class="fas fa-arrow-left"></i> 返回列表
+                        </button>
+                    </div>
+                </div>
+
+                <div class="detail-grid">
+                    <!-- 左欄 -->
+                    <div>
+                        <!-- 案件資訊 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-clipboard-list"></i> 案件資訊</h3>
+                                <span class="status-badge pending" id="caseStatus">待處理</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <div class="info-label">個案姓名</div>
+                                        <div class="info-value" id="caseName">-</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">申訴人 / 關係</div>
+                                        <div class="info-value" id="caseComplainant">-</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">聯絡電話</div>
+                                        <div class="info-value" id="casePhone">-</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">申訴類型</div>
+                                        <div class="info-value" id="caseType">-</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">優先級</div>
+                                        <div class="info-value"><span class="prio" id="casePriority">-</span></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">建立時間</div>
+                                        <div class="info-value" id="caseCreated">-</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">承辦人</div>
+                                        <div class="info-value" id="caseAssignee">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 申訴內容 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-file-alt"></i> 申訴內容</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="complaint-body" id="complaintBody">-</div>
+                                <div id="attachmentWrap" style="margin-top: 14px;">
+                                    <div class="info-label" style="margin-bottom: 6px;">附件</div>
+                                    <div id="attachmentList"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 處理時間軸 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-stream"></i> 處理進度（全程追蹤）</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="timeline" id="timeline"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右欄：處理表單 -->
+                    <div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-headset"></i> 處理與回覆</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>案件狀態</label>
+                                    <select class="form-control" id="statusSelect">
+                                        <option value="pending">待處理</option>
+                                        <option value="processing">處理中</option>
+                                        <option value="replied">已回覆</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>承辦人</label>
+                                    <select class="form-control" id="assigneeSelect">
+                                        <option value="陳小華">陳小華</option>
+                                        <option value="陳專員">陳專員</option>
+                                        <option value="林專員">林專員</option>
+                                        <option value="王主任">王主任</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>優先級</label>
+                                    <select class="form-control" id="prioSelect">
+                                        <option value="low">低</option>
+                                        <option value="medium">中</option>
+                                        <option value="high">高</option>
+                                        <option value="urgent">緊急</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>回覆內容（將通知申訴人）</label>
+                                    <textarea class="form-control" id="replyContent" rows="4" placeholder="請輸入給申訴人的回覆..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>內部備註（僅機構內部可見）</label>
+                                    <textarea class="form-control" id="internalNote" rows="3" placeholder="處理記錄、內部協調事項..."></textarea>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                    <button class="btn btn-primary" onclick="submitReply()">
+                                        <i class="fas fa-paper-plane"></i> 送出回覆
+                                    </button>
+                                    <button class="btn btn-outline" onclick="saveProgress()">
+                                        <i class="fas fa-save"></i> 儲存進度
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/admin.js"></script>
+    <script>
+        // 申訴狀態中文對照
+        const STATUS_LABEL = {
+            pending: '待處理', processing: '處理中', replied: '已回覆'
+        };
+        const PRIO_LABEL = { low: '低', medium: '中', high: '高', urgent: '緊急' };
+
+        // Mock 申訴資料
+        const complaintData = {
+            CP202406001: {
+                subject: '居家照護人員遲到且未事先告知',
+                statusClass: 'pending',
+                caseName: '王小明',
+                complainant: '王大同（子）',
+                relation: '家屬',
+                phone: '0912-345-678',
+                type: '服務品質',
+                priority: 'high',
+                orderId: 'ORD202406150012',
+                createdAt: '2026/06/16 09:20',
+                assignee: '陳小華',
+                slaOverdue: true,
+                slaText: '已逾期 2 小時未首次回覆，請儘速處理',
+                content: '6/15 預約的居家照護服務，照護人員遲到約 40 分鐘，且未事先以電話告知，導致家中長輩等候不安。希望機構能說明原因並改善準時度。',
+                attachments: ['預約截圖.png', '到府時間記錄.pdf'],
+                timeline: [
+                    { author: '王大同（家屬）', role: 'user', time: '2026/06/16 09:20', content: '提出申訴：照護人員遲到 40 分鐘且未告知。' }
+                ]
+            },
+            CP202406002: {
+                subject: '收費金額與報價單不符',
+                statusClass: 'processing',
+                caseName: '李小華',
+                complainant: '李小華（本人）',
+                relation: '本人',
+                phone: '0923-456-789',
+                type: '收費爭議',
+                priority: 'medium',
+                orderId: 'ORD202406100008',
+                createdAt: '2026/06/15 14:10',
+                assignee: '陳專員',
+                slaOverdue: false,
+                slaText: '距首次回覆時效尚剩 5 小時',
+                content: '本月帳單金額比當初報價單多出 NT$ 600，想了解差額項目為何。',
+                attachments: ['帳單.pdf'],
+                timeline: [
+                    { author: '李小華（本人）', role: 'user', time: '2026/06/15 14:10', content: '提出申訴：收費與報價單不符，差額 NT$ 600。' },
+                    { author: '系統', role: 'system', time: '2026/06/15 14:12', content: '案件已指派給 陳專員。' },
+                    { author: '陳專員', role: 'staff', time: '2026/06/15 16:30', content: '已收到您的申訴，正在調閱報價單與帳單明細核對，將於今日內回覆。' }
+                ]
+            },
+            CP202406003: {
+                subject: '照護人員態度不佳',
+                statusClass: 'pending',
+                caseName: '張大偉',
+                complainant: '張美麗（女）',
+                relation: '家屬',
+                phone: '0934-567-890',
+                type: '照護人員',
+                priority: 'urgent',
+                orderId: '',
+                createdAt: '2026/06/14 11:05',
+                assignee: '未指派',
+                slaOverdue: true,
+                slaText: '已逾期 1 天未首次回覆，請優先處理',
+                content: '反映照護人員對長輩說話語氣不耐煩，希望機構正視並加強人員服務態度教育訓練。',
+                attachments: [],
+                timeline: [
+                    { author: '張美麗（家屬）', role: 'user', time: '2026/06/14 11:05', content: '提出申訴：照護人員態度不佳。' }
+                ]
+            },
+            CP202406004: {
+                subject: '機構等候區座椅不足',
+                statusClass: 'replied',
+                caseName: '陳美玲',
+                complainant: '陳美玲（本人）',
+                relation: '本人',
+                phone: '0945-678-901',
+                type: '環境設施',
+                priority: 'low',
+                orderId: '',
+                createdAt: '2026/06/12 16:40',
+                assignee: '林專員',
+                slaOverdue: false,
+                slaText: '已於時效內完成首次回覆',
+                content: '每次到機構等候時座椅常不足，長輩需久站，建議增設座椅。',
+                attachments: [],
+                timeline: [
+                    { author: '陳美玲（本人）', role: 'user', time: '2026/06/12 16:40', content: '提出申訴：等候區座椅不足。' },
+                    { author: '系統', role: 'system', time: '2026/06/12 16:45', content: '案件已指派給 林專員。' },
+                    { author: '林專員', role: 'staff', time: '2026/06/13 10:20', content: '感謝您的建議，已採購增設 6 張座椅，預計本週到位。' }
+                ]
+            },
+            CP202406005: {
+                subject: '服務內容與說明不一致',
+                statusClass: 'replied',
+                caseName: '林志明',
+                complainant: '林小芳（女）',
+                relation: '家屬',
+                phone: '0956-789-012',
+                type: '服務品質',
+                priority: 'medium',
+                orderId: 'ORD202406010003',
+                createdAt: '2026/06/10 10:00',
+                assignee: '陳專員',
+                slaOverdue: false,
+                slaText: '已於時效內回覆',
+                content: '陪伴服務時數與說明的 4 小時不符，實際僅 3 小時。',
+                attachments: [],
+                timeline: [
+                    { author: '林小芳（家屬）', role: 'user', time: '2026/06/10 10:00', content: '提出申訴：陪伴服務時數不足。' },
+                    { author: '陳專員', role: 'staff', time: '2026/06/10 13:15', content: '已查核，確為人員提早離開，將補足時數並致歉。' },
+                    { author: '陳專員', role: 'staff', time: '2026/06/11 09:30', content: '已安排補足 1 小時服務，個案家屬確認滿意。' }
+                ]
+            },
+            CP202406006: {
+                subject: '希望提供英文版服務說明',
+                statusClass: 'replied',
+                caseName: '王小明',
+                complainant: '王小明（本人）',
+                relation: '本人',
+                phone: '0912-345-678',
+                type: '其他',
+                priority: 'low',
+                orderId: '',
+                createdAt: '2026/06/08 09:00',
+                assignee: '林專員',
+                slaOverdue: false,
+                slaText: '已於時效內回覆',
+                content: '建議提供英文版服務說明文件。',
+                attachments: [],
+                timeline: [
+                    { author: '王小明（本人）', role: 'user', time: '2026/06/08 09:00', content: '提出建議：希望提供英文版服務說明。' },
+                    { author: '林專員', role: 'staff', time: '2026/06/08 15:00', content: '感謝建議，已轉為產品優化建議並回覆說明。' }
+                ]
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const caseId = params.get('id') || 'CP202406001';
+        const data = complaintData[caseId] || complaintData.CP202406001;
+
+        // 渲染頁面
+        function renderCase() {
+            document.getElementById('pageSubject').textContent = data.subject;
+            document.getElementById('pageId').textContent = caseId;
+            document.getElementById('caseName').textContent = data.caseName;
+            document.getElementById('caseComplainant').textContent = data.complainant;
+            document.getElementById('casePhone').textContent = data.phone;
+            document.getElementById('caseType').textContent = data.type;
+            document.getElementById('caseCreated').textContent = data.createdAt;
+            document.getElementById('caseAssignee').textContent = data.assignee;
+            document.getElementById('complaintBody').textContent = data.content;
+
+            // 狀態徽章
+            const statusBadge = document.getElementById('caseStatus');
+            statusBadge.className = 'status-badge ' + data.statusClass;
+            statusBadge.textContent = STATUS_LABEL[data.statusClass];
+
+            // 優先級
+            const prioBadge = document.getElementById('casePriority');
+            prioBadge.className = 'prio ' + data.priority;
+            prioBadge.textContent = PRIO_LABEL[data.priority];
+
+            // 附件
+            const attachWrap = document.getElementById('attachmentWrap');
+            const attachList = document.getElementById('attachmentList');
+            if (data.attachments && data.attachments.length) {
+                attachList.innerHTML = data.attachments.map(function (name) {
+                    return '<span class="attachment-chip"><i class="fas fa-paperclip"></i>' + name + '</span>';
+                }).join('');
+            } else {
+                attachWrap.style.display = 'none';
+            }
+
+            // 表單初始值
+            document.getElementById('statusSelect').value = data.statusClass;
+            document.getElementById('assigneeSelect').value = data.assignee;
+            document.getElementById('prioSelect').value = data.priority;
+
+            renderTimeline();
+        }
+
+        function renderTimeline() {
+            document.getElementById('timeline').innerHTML = data.timeline.map(function (record) {
+                var roleClass = record.role === 'staff' ? 'staff' : (record.role === 'system' ? 'system' : 'user');
+                return '' +
+                    '<div class="timeline-item ' + roleClass + '">' +
+                        '<div class="timeline-dot"></div>' +
+                        '<div class="timeline-card">' +
+                            '<div class="timeline-meta">' +
+                                '<span class="timeline-author">' + record.author + '</span>' +
+                                '<span>' + record.time + '</span>' +
+                            '</div>' +
+                            '<div class="timeline-content">' + record.content + '</div>' +
+                        '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        // 目前時間字串 YYYY/MM/DD HH:MM
+        function nowStr() {
+            var d = new Date();
+            var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+            return d.getFullYear() + '/' + pad(d.getMonth() + 1) + '/' + pad(d.getDate()) +
+                ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+        }
+
+        // 套用狀態 / 承辦人 / 優先級到畫面
+        function applyMeta() {
+            var statusVal = document.getElementById('statusSelect').value;
+            var assigneeVal = document.getElementById('assigneeSelect').value;
+            var prioVal = document.getElementById('prioSelect').value;
+
+            var statusBadge = document.getElementById('caseStatus');
+            statusBadge.className = 'status-badge ' + statusVal;
+            statusBadge.textContent = STATUS_LABEL[statusVal];
+
+            document.getElementById('caseAssignee').textContent = assigneeVal;
+
+            var prioBadge = document.getElementById('casePriority');
+            prioBadge.className = 'prio ' + prioVal;
+            prioBadge.textContent = PRIO_LABEL[prioVal];
+        }
+
+        function submitReply() {
+            var reply = document.getElementById('replyContent').value.trim();
+            if (!reply) {
+                showToast('請先輸入回覆內容', 'warning');
+                return;
+            }
+            data.timeline.push({ author: '陳小華（機構）', role: 'staff', time: nowStr(), content: reply });
+            // 若仍為待處理，送出回覆後自動轉為已回覆
+            if (document.getElementById('statusSelect').value === 'pending') {
+                document.getElementById('statusSelect').value = 'replied';
+            }
+            applyMeta();
+            renderTimeline();
+            document.getElementById('replyContent').value = '';
+            showToast('回覆已送出，將通知申訴人', 'success');
+        }
+
+        function saveProgress() {
+            applyMeta();
+            var note = document.getElementById('internalNote').value.trim();
+            if (note) {
+                data.timeline.push({ author: '系統', role: 'system', time: nowStr(), content: '內部備註：' + note });
+                document.getElementById('internalNote').value = '';
+                renderTimeline();
+            }
+            showToast('案件進度已更新', 'success');
+        }
+
+        renderCase();
+    </script>
+</body>
+</html>

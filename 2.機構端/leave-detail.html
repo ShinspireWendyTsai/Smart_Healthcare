@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>請假詳情 - 機構端管理系統</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/admin.css">
+    <style>
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .info-item .info-label { font-size: 12px; color: #999; margin-bottom: 4px; }
+        .info-item .info-value { font-size: 14px; font-weight: 600; color: #2c3e50; }
+
+        /* 狀態徽章 */
+        .status-badge.received { background-color: #e8f5e9; color: #27ae60; }
+        .status-badge.completed { background-color: #fff8e1; color: #b8860b; }
+        .status-badge.cancelled { background-color: #f1f3f5; color: #868e96; }
+
+        .notify-banner {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 16px; border-radius: 8px; margin-top: 16px; font-size: 14px; font-weight: 600;
+        }
+        .notify-banner.ok { background: #e8f5e9; color: #27ae60; }
+        .notify-banner.warning { background: #fff3e0; color: #e67e22; }
+
+        .complaint-body {
+            background: #f8f9fa; border-radius: 8px; padding: 16px;
+            font-size: 14px; line-height: 1.7; color: #2c3e50;
+        }
+
+        .panel-hint { font-size: 13px; color: #6c757d; margin: 0 0 16px; line-height: 1.6; }
+
+        /* 時間軸 */
+        .timeline { display: flex; flex-direction: column; gap: 14px; }
+        .timeline-item { display: flex; gap: 12px; align-items: flex-start; }
+        .timeline-dot {
+            width: 12px; height: 12px; border-radius: 50%; margin-top: 8px; flex-shrink: 0;
+            background: #3498db; box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.12);
+        }
+        .timeline-item.staff .timeline-dot { background: #f39c12; box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.18); }
+        .timeline-item.system .timeline-dot { background: #95a5a6; box-shadow: 0 0 0 4px rgba(149, 165, 166, 0.18); }
+        .timeline-card {
+            flex: 1; background: #fff; border: 1px solid #e9ecef; border-radius: 10px;
+            padding: 12px 14px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+        .timeline-meta {
+            display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+            font-size: 13px; color: #6c757d; margin-bottom: 6px;
+        }
+        .timeline-author { font-weight: 700; color: #2c3e50; }
+        .timeline-content { font-size: 14px; color: #2c3e50; line-height: 1.6; }
+
+        @media (max-width: 992px) {
+            .detail-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 側邊欄 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div>
+                    <div class="sidebar-title">智慧照護平台</div>
+                    <div class="sidebar-subtitle">機構端管理系統</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-section-title">主要功能</div>
+
+                    <a href="index.html" class="menu-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>儀表板</span>
+                    </a>
+
+                    <div class="menu-item" data-submenu="member-submenu">
+                        <i class="fas fa-users"></i>
+                        <span>個案會員管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="member-submenu">
+                        <a href="members.html" class="menu-item">
+                            <span>個案列表</span>
+                        </a>
+                        <a href="member-binding.html" class="menu-item">
+                            <span>綁定設定</span>
+                        </a>
+                    </div>
+
+                    <a href="orders.html" class="menu-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>訂購清單查詢</span>
+                    </a>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-section-title">機構功能</div>
+
+                    <a href="organization.html" class="menu-item">
+                        <i class="fas fa-building"></i>
+                        <span>機構資訊管理</span>
+                    </a>
+
+                    <a href="announcements.html" class="menu-item">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>機構公告管理</span>
+                    </a>
+
+                    <a href="chat.html" class="menu-item">
+                        <i class="fas fa-comments"></i>
+                        <span>個案關懷通訊</span>
+                        <span class="badge">5</span>
+                    </a>
+
+                    <a href="complaints.html" class="menu-item">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>申訴管理</span>
+                        <span class="badge">3</span>
+                    </a>
+
+                    <a href="leaves.html" class="menu-item active">
+                        <i class="fas fa-calendar-xmark"></i>
+                        <span>請假管理</span>
+                        <span class="badge">2</span>
+                    </a>
+                </div>
+                <div class="menu-section">
+                    <div class="menu-section-title">系統管理</div>
+                    <div class="menu-item" data-submenu="system-submenu">
+                        <i class="fas fa-cog"></i>
+                        <span>系統管理</span>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                    <div class="submenu" id="system-submenu">
+                        <a href="admins.html" class="menu-item">
+                            <span>管理員帳號管理</span>
+                        </a>
+                        <a href="roles.html" class="menu-item">
+                            <span>角色權限管理</span>
+                        </a>
+                        <a href="logs.html" class="menu-item">
+                            <span>操作日誌記錄</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主要內容區 -->
+        <div class="main-content">
+            <!-- 頂部導覽列 -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <i class="fas fa-bars menu-toggle"></i>
+                    <div class="breadcrumb">
+                        <a href="index.html">首頁</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <a href="leaves.html">請假管理</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>請假詳情</span>
+                    </div>
+                </div>
+
+                <div class="navbar-right">
+                    <div class="user-dropdown">
+                        <div class="user-avatar">陳</div>
+                        <div class="user-info">
+                            <div class="user-name">陳小華</div>
+                            <div class="user-role">機構管理員</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 頁面內容 -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title" id="pageSubject">請假詳情</h1>
+                        <p class="page-subtitle">請假單號 <span id="pageId" style="font-family: monospace;">-</span></p>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline" onclick="navigateTo('leaves.html')">
+                            <i class="fas fa-arrow-left"></i> 返回列表
+                        </button>
+                    </div>
+                </div>
+
+                <div class="detail-grid">
+                    <!-- 左欄 -->
+                    <div>
+                        <!-- 請假資訊 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-calendar-xmark"></i> 請假資訊</h3>
+                                <span class="status-badge pending" id="caseStatus">待查看</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <div class="info-label">個案姓名</div>
+                                        <div class="info-value" id="caseName">-</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">請假期間</div>
+                                        <div class="info-value" id="casePeriod">-</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">聯絡電話</div>
+                                        <div class="info-value" id="casePhone">-</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">申請時間</div>
+                                        <div class="info-value" id="caseCreated">-</div>
+                                    </div>
+                                    <div class="info-item">
+                                        <div class="info-label">確認人員</div>
+                                        <div class="info-value" id="caseAssignee">-</div>
+                                    </div>
+                                </div>
+                                <div class="notify-banner warning" id="notifyBanner">
+                                    <i class="fas fa-bell"></i>
+                                    <span id="notifyText">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 請假事由 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-file-alt"></i> 請假事由</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="complaint-body" id="leaveReason">-</div>
+                            </div>
+                        </div>
+
+                        <!-- 處理時間軸 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-stream"></i> 處理進度（全程追蹤）</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="timeline" id="timeline"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右欄：收到與通知 -->
+                    <div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-bell"></i> 收到與通知</h3>
+                            </div>
+                            <div class="card-body">
+                                <p class="panel-hint">請假屬於通知性質，無需審核。確認收到後系統會即時通知照護人員，該時段不安排到府，避免白跑一趟。</p>
+                                <div class="form-group">
+                                    <label>確認收到人員</label>
+                                    <select class="form-control" id="assigneeSelect">
+                                        <option value="陳小華">陳小華</option>
+                                        <option value="陳專員">陳專員</option>
+                                        <option value="林專員">林專員</option>
+                                        <option value="王主任">王主任</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>回覆申請人（將通知申請人，可自訂）</label>
+                                    <textarea class="form-control" id="replyContent" rows="3" placeholder="輸入要回覆給申請人的內容..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>備註（選填，僅機構內部可見）</label>
+                                    <textarea class="form-control" id="internalNote" rows="3" placeholder="排班調整、內部協調事項..."></textarea>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 10px;">
+                                    <button class="btn btn-success" id="confirmBtn" onclick="confirmReceived()">
+                                        <i class="fas fa-check-circle"></i> 確認收到並通知照護人員
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/admin.js"></script>
+    <script>
+        const STATUS_LABEL = {
+            pending: '待查看', received: '已收到', completed: '已完成', cancelled: '已取消'
+        };
+
+        // Mock 請假資料（通知性質，無審核）
+        const leaveData = {
+            LV202406001: {
+                subject: '外出旅遊請假', statusClass: 'pending',
+                caseName: '王小明', phone: '0912-345-678',
+                period: '2026/06/20 09:00 ~ 06/22 18:00', createdAt: '2026/06/17 10:30',
+                assignee: '未指派', notified: false, notifyTarget: '陳小華（關懷者）',
+                reason: '全家安排國內旅遊三天，期間個案不在家，6/20 上午的居家照護請暫停一次，避免照護人員白跑一趟。',
+                timeline: [
+                    { author: '王大同（家屬）', role: 'user', time: '2026/06/17 10:30', content: '提出請假：6/20~6/22 外出旅遊，請暫停 6/20 上午居家照護。' }
+                ]
+            },
+            LV202406002: {
+                subject: '就醫請假', statusClass: 'received',
+                caseName: '李小華', phone: '0923-456-789',
+                period: '2026/06/17 08:00 ~ 06/17 14:00', createdAt: '2026/06/16 16:20',
+                assignee: '陳專員', notified: true, notifyTarget: '陳小華（關懷者）',
+                reason: '今日上午需至醫院回診，原訂 09:00 的健康檢測無法在家進行。',
+                timeline: [
+                    { author: '李小華（本人）', role: 'user', time: '2026/06/16 16:20', content: '提出請假：6/17 上午就醫，無法在家進行 09:00 健康檢測。' },
+                    { author: '陳專員', role: 'staff', time: '2026/06/16 17:05', content: '機構已確認收到請假資訊，並即時通知照護人員 陳小華，該時段不安排到府。' }
+                ]
+            },
+            LV202406003: {
+                subject: '家庭聚會請假', statusClass: 'received',
+                caseName: '張大偉', phone: '0934-567-890',
+                period: '2026/06/15 全天', createdAt: '2026/06/12 09:00',
+                assignee: '林專員', notified: true, notifyTarget: '林美惠（關懷者）',
+                reason: '6/15 家族聚餐，個案整日外出。',
+                timeline: [
+                    { author: '張美麗（家屬）', role: 'user', time: '2026/06/12 09:00', content: '提出請假：6/15 全天家庭聚會外出。' },
+                    { author: '林專員', role: 'staff', time: '2026/06/12 11:30', content: '機構已確認收到請假資訊，並通知照護人員 林美惠，當日不安排到府。' }
+                ]
+            },
+            LV202406004: {
+                subject: '身體不適請假', statusClass: 'completed',
+                caseName: '陳美玲', phone: '0945-678-901',
+                period: '2026/06/14 ~ 06/16', createdAt: '2026/06/13 18:40',
+                assignee: '林專員', notified: true, notifyTarget: '林美惠（關懷者）',
+                reason: '感冒需在家休養，暫停期間服務。',
+                timeline: [
+                    { author: '陳美玲（本人）', role: 'user', time: '2026/06/13 18:40', content: '提出請假：6/14~6/16 身體不適休養。' },
+                    { author: '林專員', role: 'staff', time: '2026/06/13 19:10', content: '機構已確認收到請假資訊，並通知照護人員，6/15 餐食配送暫停一次。' },
+                    { author: '系統', role: 'system', time: '2026/06/17 00:05', content: '請假期間已結束，本次請假已完成。' }
+                ]
+            },
+            LV202406005: {
+                subject: '外出旅遊請假', statusClass: 'pending',
+                caseName: '林志明', phone: '0956-789-012',
+                period: '2026/06/25 08:00 ~ 06/28 20:00', createdAt: '2026/06/17 09:10',
+                assignee: '未指派', notified: false, notifyTarget: '陳小華（關懷者）',
+                reason: '帶長輩出國旅遊四天，期間的陪伴服務請一併暫停。',
+                timeline: [
+                    { author: '林小芳（家屬）', role: 'user', time: '2026/06/17 09:10', content: '提出請假：6/25~6/28 出國旅遊，暫停期間陪伴服務。' }
+                ]
+            },
+            LV202406006: {
+                subject: '其他事由請假', statusClass: 'completed',
+                caseName: '王小明', phone: '0912-345-678',
+                period: '2026/06/10 09:00 ~ 06/10 12:00', createdAt: '2026/06/09 11:00',
+                assignee: '陳專員', notified: true, notifyTarget: '陳小華（關懷者）',
+                reason: '6/10 上午臨時有事，暫停當日服務。',
+                timeline: [
+                    { author: '王小明（本人）', role: 'user', time: '2026/06/09 11:00', content: '提出請假：6/10 上午暫停服務。' },
+                    { author: '陳專員', role: 'staff', time: '2026/06/09 14:20', content: '機構已確認收到請假資訊，並通知照護人員，當日不安排到府。' },
+                    { author: '系統', role: 'system', time: '2026/06/11 00:05', content: '請假期間已結束，本次請假已完成。' }
+                ]
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const caseId = params.get('id') || 'LV202406001';
+        const data = leaveData[caseId] || leaveData.LV202406001;
+
+        function renderCase() {
+            document.getElementById('pageSubject').textContent = data.subject;
+            document.getElementById('pageId').textContent = caseId;
+            document.getElementById('caseName').textContent = data.caseName;
+            document.getElementById('casePeriod').textContent = data.period;
+            document.getElementById('casePhone').textContent = data.phone;
+            document.getElementById('caseCreated').textContent = data.createdAt;
+            document.getElementById('caseAssignee').textContent = data.notified ? data.assignee : '尚未確認';
+            document.getElementById('leaveReason').textContent = data.reason;
+
+            var statusBadge = document.getElementById('caseStatus');
+            statusBadge.className = 'status-badge ' + data.statusClass;
+            statusBadge.textContent = STATUS_LABEL[data.statusClass];
+
+            if (data.assignee && data.assignee !== '未指派') {
+                document.getElementById('assigneeSelect').value = data.assignee;
+            }
+
+            // 預填可編輯的回覆內容（尚未確認時）
+            var replyEl = document.getElementById('replyContent');
+            if (replyEl && !data.notified) {
+                replyEl.value = '機構已確認收到請假資訊，並即時通知照護人員 ' + data.notifyTarget + '，該時段不安排到府。';
+            }
+
+            updateConfirmBtn();
+            renderNotify();
+            renderTimeline();
+        }
+
+        function updateConfirmBtn() {
+            var btn = document.getElementById('confirmBtn');
+            if (data.notified) {
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> 已確認收到（可再次通知）';
+                btn.className = 'btn btn-outline';
+            } else {
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> 確認收到並通知照護人員';
+                btn.className = 'btn btn-success';
+            }
+        }
+
+        function renderNotify() {
+            var banner = document.getElementById('notifyBanner');
+            var text = document.getElementById('notifyText');
+            if (data.notified) {
+                banner.className = 'notify-banner ok';
+                banner.querySelector('i').className = 'fas fa-check-circle';
+                text.textContent = '已通知照護人員 ' + data.notifyTarget + '，該時段不安排到府';
+            } else {
+                banner.className = 'notify-banner warning';
+                banner.querySelector('i').className = 'fas fa-bell';
+                text.textContent = '尚未確認收到，確認後將即時通知 ' + data.notifyTarget;
+            }
+        }
+
+        function renderTimeline() {
+            document.getElementById('timeline').innerHTML = data.timeline.map(function (record) {
+                var roleClass = record.role === 'staff' ? 'staff' : (record.role === 'system' ? 'system' : 'user');
+                return '' +
+                    '<div class="timeline-item ' + roleClass + '">' +
+                        '<div class="timeline-dot"></div>' +
+                        '<div class="timeline-card">' +
+                            '<div class="timeline-meta">' +
+                                '<span class="timeline-author">' + record.author + '</span>' +
+                                '<span>' + record.time + '</span>' +
+                            '</div>' +
+                            '<div class="timeline-content">' + record.content + '</div>' +
+                        '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        function nowStr() {
+            var d = new Date();
+            var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+            return d.getFullYear() + '/' + pad(d.getMonth() + 1) + '/' + pad(d.getDate()) +
+                ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+        }
+
+        function confirmReceived() {
+            var who = document.getElementById('assigneeSelect').value;
+            if (!who || who === '未指派') who = '陳小華';
+            data.assignee = who;
+            data.notified = true;
+            if (data.statusClass === 'pending') data.statusClass = 'received';
+
+            var statusBadge = document.getElementById('caseStatus');
+            statusBadge.className = 'status-badge ' + data.statusClass;
+            statusBadge.textContent = STATUS_LABEL[data.statusClass];
+            document.getElementById('caseAssignee').textContent = data.assignee;
+
+            var reply = document.getElementById('replyContent').value.trim();
+            if (!reply) {
+                reply = '機構已確認收到請假資訊，並即時通知照護人員 ' + data.notifyTarget + '，該時段不安排到府。';
+            }
+            data.timeline.push({
+                author: who + '（機構）', role: 'staff', time: nowStr(),
+                content: reply
+            });
+
+            var note = document.getElementById('internalNote').value.trim();
+            if (note) {
+                data.timeline.push({ author: '系統', role: 'system', time: nowStr(), content: '內部備註：' + note });
+                document.getElementById('internalNote').value = '';
+            }
+
+            updateConfirmBtn();
+            renderNotify();
+            renderTimeline();
+            showToast('已確認收到並通知照護人員', 'success');
+        }
+
+        renderCase();
+    </script>
+</body>
+</html>

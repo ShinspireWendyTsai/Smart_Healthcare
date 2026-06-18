@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>申訴進度</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .ticket-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .ticket-subject {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+        }
+
+        /* 申訴狀態藥丸 */
+        .complaint-status {
+            font-size: 15px; padding: 6px 14px; border-radius: 20px;
+            color: #fff; font-weight: bold; white-space: nowrap;
+        }
+        .complaint-status.pending { background: linear-gradient(135deg, #FFB74D, #F18100); }
+        .complaint-status.processing { background: linear-gradient(135deg, #4FC3F7, #2196C9); }
+        .complaint-status.replied { background: linear-gradient(135deg, #26A69A, #1E8A7E); }
+        .complaint-status.closed { background: linear-gradient(135deg, #D4A574, #B8956C); }
+
+        .timeline {
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-top: 8px;
+            background: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.12);
+            flex-shrink: 0;
+        }
+
+        .timeline-item.staff .timeline-dot {
+            background: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.18);
+        }
+
+        .timeline-card {
+            flex: 1;
+            background: var(--card-background);
+            border: 1px solid var(--divider-color);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .timeline-author {
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .timeline-content {
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">申訴進度</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="card">
+                <div class="card-header ticket-summary">
+                    <div class="ticket-subject" id="cSubject">申訴案件</div>
+                    <span class="complaint-status pending" id="cStatus">待處理</span>
+                </div>
+                <div class="detail-list" id="cMeta">
+                    <div class="detail-row">
+                        <span class="detail-label">申訴單號</span>
+                        <span class="detail-value" id="cNumber">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">申訴類型</span>
+                        <span class="detail-value" id="cType">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">申訴對象機構</span>
+                        <span class="detail-value" id="cOrg">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">建立時間</span>
+                        <span class="detail-value" id="cCreated">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">最新更新</span>
+                        <span class="detail-value" id="cUpdated">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">承辦人</span>
+                        <span class="detail-value" id="cAssignee">-</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <div>處理進度（全程追蹤）</div>
+                </div>
+                <div class="timeline" id="cTimeline"></div>
+            </section>
+        </main>
+
+        <!-- 底部導覽列 -->
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        const STATUS_LABEL = { pending: '待處理', processing: '處理中', replied: '已回覆' };
+
+        const complaintData = {
+            CP202406001: {
+                subject: '居家照護人員遲到且未事先告知',
+                statusClass: 'pending',
+                number: 'CP202406001',
+                type: '服務品質',
+                org: '松山長照協會',
+                createdAt: '2026/06/16 09:20',
+                updatedAt: '2026/06/16 09:20',
+                assignee: '尚未指派',
+                records: [
+                    { author: '您', role: 'user', time: '2026/06/16 09:20', content: '提出申訴：照護人員遲到約 40 分鐘且未事先告知，希望機構說明並改善。' }
+                ]
+            },
+            CP202406002: {
+                subject: '收費金額與報價單不符',
+                statusClass: 'processing',
+                number: 'CP202406002',
+                type: '收費爭議',
+                org: '松山長照協會',
+                createdAt: '2026/06/15 14:10',
+                updatedAt: '2026/06/15 16:30',
+                assignee: '陳專員',
+                records: [
+                    { author: '您', role: 'user', time: '2026/06/15 14:10', content: '本月帳單比報價單多出 NT$ 600，想了解差額項目。' },
+                    { author: '陳專員', role: 'staff', time: '2026/06/15 16:30', content: '已收到您的申訴，正在調閱報價單與帳單明細核對，將於今日內回覆。' }
+                ]
+            },
+            CP202406004: {
+                subject: '機構等候區座椅不足',
+                statusClass: 'replied',
+                number: 'CP202406004',
+                type: '環境設施',
+                org: '陽光長照中心',
+                createdAt: '2026/06/12 16:40',
+                updatedAt: '2026/06/13 10:20',
+                assignee: '林專員',
+                records: [
+                    { author: '您', role: 'user', time: '2026/06/12 16:40', content: '等候區座椅常不足，長輩需久站，建議增設座椅。' },
+                    { author: '林專員', role: 'staff', time: '2026/06/13 10:20', content: '感謝您的建議，已採購增設 6 張座椅，預計本週到位。' }
+                ]
+            },
+            CP202406005: {
+                subject: '服務內容與說明不一致',
+                statusClass: 'replied',
+                number: 'CP202406005',
+                type: '服務品質',
+                org: '幸福居家照護',
+                createdAt: '2026/06/10 10:00',
+                updatedAt: '2026/06/11 09:30',
+                assignee: '陳專員',
+                records: [
+                    { author: '您', role: 'user', time: '2026/06/10 10:00', content: '陪伴服務時數與說明的 4 小時不符，實際僅 3 小時。' },
+                    { author: '陳專員', role: 'staff', time: '2026/06/10 13:15', content: '已查核，確為人員提早離開，將補足時數並致歉。' },
+                    { author: '陳專員', role: 'staff', time: '2026/06/11 09:30', content: '已安排補足 1 小時服務，感謝您的回饋。' }
+                ]
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const cId = params.get('id') || 'CP202406001';
+        const c = complaintData[cId] || complaintData.CP202406001;
+
+        document.getElementById('cSubject').textContent = c.subject;
+        document.getElementById('cNumber').textContent = c.number;
+        document.getElementById('cType').textContent = c.type;
+        document.getElementById('cOrg').textContent = c.org;
+        document.getElementById('cCreated').textContent = c.createdAt;
+        document.getElementById('cUpdated').textContent = c.updatedAt;
+        document.getElementById('cAssignee').textContent = c.assignee;
+
+        const statusEl = document.getElementById('cStatus');
+        statusEl.className = 'complaint-status ' + c.statusClass;
+        statusEl.textContent = STATUS_LABEL[c.statusClass];
+
+        document.getElementById('cTimeline').innerHTML = c.records.map(function (record) {
+            var roleClass = record.role === 'staff' ? 'staff' : 'user';
+            return '' +
+                '<div class="timeline-item ' + roleClass + '">' +
+                    '<div class="timeline-dot"></div>' +
+                    '<div class="timeline-card">' +
+                        '<div class="timeline-meta">' +
+                            '<span class="timeline-author">' + record.author + '</span>' +
+                            '<span>' + record.time + '</span>' +
+                        '</div>' +
+                        '<div class="timeline-content">' + record.content + '</div>' +
+                    '</div>' +
+                '</div>';
+        }).join('');
+
+        document.title = c.subject;
+    </script>
+</body>
+</html>

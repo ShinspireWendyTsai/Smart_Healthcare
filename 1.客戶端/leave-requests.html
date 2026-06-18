@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>請假申請</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .channel-intro {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 4px 0;
+        }
+        .channel-intro .intro-icon {
+            width: 48px; height: 48px; border-radius: 14px;
+            background: linear-gradient(135deg, #FBC02D, #F0A500);
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            font-size: 22px; flex-shrink: 0;
+        }
+        .channel-intro .intro-text { font-size: 16px; color: #4a5568; line-height: 1.6; }
+        .channel-intro .intro-text strong { color: #C77800; }
+
+        /* 請假狀態藥丸 */
+        .leave-status {
+            font-size: 15px; padding: 6px 14px; border-radius: 20px;
+            color: #fff; font-weight: bold; white-space: nowrap;
+        }
+        .leave-status.pending { background: linear-gradient(135deg, #FFB74D, #F18100); }
+        .leave-status.received { background: linear-gradient(135deg, #26A69A, #1E8A7E); }
+        .leave-status.completed { background: linear-gradient(135deg, #D4A574, #B8956C); }
+        .leave-status.cancelled { background: linear-gradient(135deg, #9aa5b1, #6b7280); }
+    </style>
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">請假申請</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+           
+
+            <!-- 我要請假 -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-weight: bold;"><i class="fas fa-edit"></i> 我要請假</span>
+                </div>
+
+                <form id="leaveForm">
+                    <div class="form-group">
+                        <label>申請對象機構</label>
+                        <div class="form-control" style="display: flex; align-items: center; gap: 10px; background: #f5f7f8; color: #4a5568;">
+                            <i class="fas fa-building" style="color: #26A69A;"></i>
+                            <span id="orgName">松山長照協會</span>
+                        </div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 6px;">
+                            <i class="fas fa-info-circle"></i> 將通知您目前所在機構的照護人員，如需切換請至首頁切換機構
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>開始時間 *</label>
+                        <input type="datetime-local" class="form-control" id="startTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>結束時間 *</label>
+                        <input type="datetime-local" class="form-control" id="endTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>請假事由 *</label>
+                        <textarea class="form-control" id="reasonInput" rows="3" placeholder="例如：外出旅遊、就醫、家庭聚會" required style="resize: none;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px;">
+                        <i class="fas fa-paper-plane"></i> 送出請假
+                    </button>
+                </form>
+            </div>
+
+            <!-- 我的請假 -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-weight: bold;"><i class="fas fa-history"></i> 我的請假</span>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('leave-detail.html?id=LV202406001')">
+                    <div style="flex: 1;">
+                        <div style="font-size: 18px; font-weight: bold;">外出旅遊・06/20 ~ 06/22</div>
+                        <div style="font-size: 16px; color: #4a5568; margin-top: 4px;">松山長照協會</div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 2px;">申請：2026/06/17 10:30</div>
+                    </div>
+                    <span class="leave-status pending">待查看</span>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('leave-detail.html?id=LV202406002')">
+                    <div style="flex: 1;">
+                        <div style="font-size: 18px; font-weight: bold;">就醫・06/17 上午</div>
+                        <div style="font-size: 16px; color: #4a5568; margin-top: 4px;">松山長照協會</div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 2px;">更新：2026/06/16 17:05</div>
+                    </div>
+                    <span class="leave-status received">已收到</span>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('leave-detail.html?id=LV202406003')">
+                    <div style="flex: 1;">
+                        <div style="font-size: 18px; font-weight: bold;">家庭聚會・06/15 全天</div>
+                        <div style="font-size: 16px; color: #4a5568; margin-top: 4px;">陽光長照中心</div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 2px;">更新：2026/06/12 11:30</div>
+                    </div>
+                    <span class="leave-status received">已收到</span>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('leave-detail.html?id=LV202406004')">
+                    <div style="flex: 1;">
+                        <div style="font-size: 18px; font-weight: bold;">身體不適・06/14 ~ 06/16</div>
+                        <div style="font-size: 16px; color: #4a5568; margin-top: 4px;">陽光長照中心</div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 2px;">更新：2026/06/17 00:05</div>
+                    </div>
+                    <span class="leave-status completed">已完成</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部導覽列 -->
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+
+        // 顯示目前機構（由首頁機構切換器決定，無需再選擇）
+        const currentOrg = params.get('org') || localStorage.getItem('currentOrg') || '松山長照協會';
+        const orgNameEl = document.getElementById('orgName');
+        if (orgNameEl) orgNameEl.textContent = currentOrg;
+
+        // 請假表單送出
+        document.getElementById('leaveForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const start = document.getElementById('startTime').value;
+            const end = document.getElementById('endTime').value;
+            if (start && end && end < start) {
+                showToast('結束時間不可早於起始時間', 'error');
+                return;
+            }
+            showToast('請假申請已送出，將即時通知照護人員！', 'success');
+            this.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

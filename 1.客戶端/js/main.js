@@ -265,6 +265,23 @@ function initOrgSwitcher() {
 
     const options = Array.from(dropdown.querySelectorAll('.org-option'));
 
+    // 還原先前選擇的機構，讓「目前機構」在各頁面保持一致
+    const savedOrg = localStorage.getItem('currentOrg');
+    if (savedOrg) {
+        const savedOption = options.find((item) => (item.dataset.org || item.textContent.trim()) === savedOrg);
+        if (savedOption) {
+            options.forEach((item) => item.classList.remove('active'));
+            savedOption.classList.add('active');
+            savedOption.classList.remove('has-unread');
+            nameLabel.textContent = savedOrg;
+        }
+    } else {
+        const activeOption = options.find((item) => item.classList.contains('active'));
+        if (activeOption) {
+            localStorage.setItem('currentOrg', activeOption.dataset.org || activeOption.textContent.trim());
+        }
+    }
+
     const closeDropdown = () => {
         dropdown.classList.remove('show');
         switcher.setAttribute('aria-expanded', 'false');
@@ -298,6 +315,7 @@ function initOrgSwitcher() {
             option.classList.add('active');
             option.classList.remove('has-unread');
             nameLabel.textContent = option.dataset.org || option.textContent.trim();
+            localStorage.setItem('currentOrg', option.dataset.org || option.textContent.trim());
             closeDropdown();
             updateAlert();
         });

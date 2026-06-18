@@ -616,6 +616,22 @@ a, button, [onclick], .clickable {
     background: #7E57C2; /* 深紫色 */
 }
 
+.org-feature-card-complaint {
+    background: #E1F5FE; /* 淡藍色 */
+}
+
+.org-feature-card-complaint .org-feature-icon {
+    background: #29B6F6; /* 深一點的藍色 */
+}
+
+.org-feature-card-leave {
+    background: #FFF3CD; /* 淡金色 */
+}
+
+.org-feature-card-leave .org-feature-icon {
+    background: #F0A500; /* 深一點的金色 */
+}
+
 .org-feature-title {
     font-size: var(--font-size-base);
     font-weight: 700;

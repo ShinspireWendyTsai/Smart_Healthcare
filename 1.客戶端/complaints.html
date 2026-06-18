@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>意見申訴</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .channel-intro {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 4px 0;
+        }
+        .channel-intro .intro-icon {
+            width: 48px; height: 48px; border-radius: 14px;
+            background: linear-gradient(135deg, #26A69A, #1E8A7E);
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            font-size: 22px; flex-shrink: 0;
+        }
+        .channel-intro .intro-text { font-size: 16px; color: #4a5568; line-height: 1.6; }
+        .channel-intro .intro-text strong { color: #1E8A7E; }
+
+        /* 申訴狀態藥丸 */
+        .complaint-status {
+            font-size: 15px; padding: 6px 14px; border-radius: 20px;
+            color: #fff; font-weight: bold; white-space: nowrap;
+        }
+        .complaint-status.pending { background: linear-gradient(135deg, #FFB74D, #F18100); }
+        .complaint-status.processing { background: linear-gradient(135deg, #4FC3F7, #2196C9); }
+        .complaint-status.replied { background: linear-gradient(135deg, #26A69A, #1E8A7E); }
+        .complaint-status.closed { background: linear-gradient(135deg, #D4A574, #B8956C); }
+    </style>
+</head>
+<body>
+    <!-- 手機容器 -->
+    <div class="mobile-container">
+        <!-- 頂部導覽列 -->
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">意見申訴</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <!-- 主要內容區 -->
+        <main class="main-content">
+           
+
+            <!-- 我要申訴 -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-weight: bold;"><i class="fas fa-edit"></i> 我要申訴</span>
+                </div>
+
+                <form id="complaintForm">
+                    <div class="form-group">
+                        <label>申訴對象機構</label>
+                        <div class="form-control" style="display: flex; align-items: center; gap: 10px; background: #f5f7f8; color: #4a5568;">
+                            <i class="fas fa-building" style="color: #26A69A;"></i>
+                            <span id="orgName">松山長照協會</span>
+                        </div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 6px;">
+                            <i class="fas fa-info-circle"></i> 將申訴至您目前所在的機構，如需切換請至首頁切換機構
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>申訴類型 *</label>
+                        <select class="form-control" id="typeSelect" required>
+                            <option value="">請選擇申訴類型</option>
+                            <option value="quality">服務品質</option>
+                            <option value="staff">照護人員</option>
+                            <option value="fee">收費爭議</option>
+                            <option value="env">環境設施</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>申訴主旨 *</label>
+                        <input type="text" class="form-control" id="subjectInput" placeholder="一句話描述您的問題" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>詳細內容 *</label>
+                        <textarea class="form-control" id="contentInput" rows="4" placeholder="請描述發生的時間、經過與您的期望..." required style="resize: none;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>上傳附件</label>
+                        <div style="border: 2px dashed #ccc; border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; min-height: 100px;" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 40px; color: #999; margin-bottom: 12px;"></i>
+                            <div style="font-size: 16px; color: #666;">點擊上傳照片或檔案</div>
+                            <input type="file" id="fileInput" style="display: none;" accept="image/*,.pdf">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px;">
+                        <i class="fas fa-paper-plane"></i> 送出申訴
+                    </button>
+                </form>
+            </div>
+
+            <!-- 我的申訴 -->
+            <div class="card">
+                <div class="card-header">
+                    <span style="font-weight: bold;"><i class="fas fa-history"></i> 我的申訴</span>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('complaint-detail.html?id=CP202406001')">
+                    <div style="flex: 1;">
+                        <div style="font-size: 18px; font-weight: bold;">居家照護人員遲到且未事先告知</div>
+                        <div style="font-size: 16px; color: #4a5568; margin-top: 4px;">服務品質・松山長照協會</div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 2px;">建立：2026/06/16 09:20</div>
+                    </div>
+                    <span class="complaint-status pending">待處理</span>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('complaint-detail.html?id=CP202406002')">
+                    <div style="flex: 1;">
+                        <div style="font-size: 18px; font-weight: bold;">收費金額與報價單不符</div>
+                        <div style="font-size: 16px; color: #4a5568; margin-top: 4px;">收費爭議・松山長照協會</div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 2px;">更新：2026/06/15 16:30</div>
+                    </div>
+                    <span class="complaint-status processing">處理中</span>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('complaint-detail.html?id=CP202406004')">
+                    <div style="flex: 1;">
+                        <div style="font-size: 18px; font-weight: bold;">機構等候區座椅不足</div>
+                        <div style="font-size: 16px; color: #4a5568; margin-top: 4px;">環境設施・陽光長照中心</div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 2px;">更新：2026/06/13 10:20</div>
+                    </div>
+                    <span class="complaint-status replied">已回覆</span>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('complaint-detail.html?id=CP202406005')">
+                    <div style="flex: 1;">
+                        <div style="font-size: 18px; font-weight: bold;">服務內容與說明不一致</div>
+                        <div style="font-size: 16px; color: #4a5568; margin-top: 4px;">服務品質・幸福居家照護</div>
+                        <div style="font-size: 14px; color: #718096; margin-top: 2px;">更新：2026/06/11 09:30</div>
+                    </div>
+                    <span class="complaint-status replied">已回覆</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部導覽列 -->
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // 申訴表單送出
+        document.getElementById('complaintForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            showToast('申訴已送出，我們將盡快處理並通知您！', 'success');
+            this.reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        const params = new URLSearchParams(window.location.search);
+
+        // 顯示目前機構（由首頁機構切換器決定，無需再選擇）
+        const currentOrg = params.get('org') || localStorage.getItem('currentOrg') || '松山長照協會';
+        const orgNameEl = document.getElementById('orgName');
+        if (orgNameEl) orgNameEl.textContent = currentOrg;
+
+        // 由「聯絡我們」帶入投訴類型時自動預選
+        const presetType = params.get('type');
+        if (presetType) {
+            const typeSelect = document.getElementById('typeSelect');
+            if (typeSelect) typeSelect.value = presetType;
+        }
+    </script>
+</body>
+</html>

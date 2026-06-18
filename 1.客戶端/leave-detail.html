@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <title>請假進度</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .ticket-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .ticket-subject {
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+        }
+
+        /* 請假狀態藥丸 */
+        .leave-status {
+            font-size: 15px; padding: 6px 14px; border-radius: 20px;
+            color: #fff; font-weight: bold; white-space: nowrap;
+        }
+        .leave-status.pending { background: linear-gradient(135deg, #FFB74D, #F18100); }
+        .leave-status.received { background: linear-gradient(135deg, #26A69A, #1E8A7E); }
+        .leave-status.completed { background: linear-gradient(135deg, #D4A574, #B8956C); }
+        .leave-status.cancelled { background: linear-gradient(135deg, #9aa5b1, #6b7280); }
+
+        .timeline {
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-top: 8px;
+            background: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(45, 106, 79, 0.12);
+            flex-shrink: 0;
+        }
+
+        .timeline-item.staff .timeline-dot {
+            background: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.18);
+        }
+
+        .timeline-card {
+            flex: 1;
+            background: var(--card-background);
+            border: 1px solid var(--divider-color);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .timeline-author {
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .timeline-content {
+            font-size: var(--font-size-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header class="header">
+            <i class="fas fa-arrow-left" onclick="goBack()" style="cursor: pointer;"></i>
+            <div class="header-title">請假進度</div>
+            <div style="width: 20px;"></div>
+        </header>
+
+        <main class="main-content">
+            <section class="card">
+                <div class="card-header ticket-summary">
+                    <div class="ticket-subject" id="cSubject">請假申請</div>
+                    <span class="leave-status pending" id="cStatus">待查看</span>
+                </div>
+                <div class="detail-list" id="cMeta">
+                    <div class="detail-row">
+                        <span class="detail-label">請假單號</span>
+                        <span class="detail-value" id="cNumber">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">請假期間</span>
+                        <span class="detail-value" id="cPeriod">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">請假事由</span>
+                        <span class="detail-value" id="cReason">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">申請對象機構</span>
+                        <span class="detail-value" id="cOrg">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">建立時間</span>
+                        <span class="detail-value" id="cCreated">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">最新更新</span>
+                        <span class="detail-value" id="cUpdated">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">確認人員</span>
+                        <span class="detail-value" id="cAssignee">-</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <div>處理進度（全程追蹤）</div>
+                </div>
+                <div class="timeline" id="cTimeline"></div>
+            </section>
+        </main>
+
+        <!-- 底部導覽列 -->
+        <nav class="bottom-nav">
+            <a class="nav-item" onclick="navigateTo('index.html')">
+                <i class="fas fa-home"></i>
+                <span>首頁</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('categories.html')">
+                <i class="fas fa-th-large"></i>
+                <span>服務</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('orders.html')">
+                <i class="fas fa-clipboard-list"></i>
+                <span>訂單</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('messages.html')">
+                <i class="fas fa-bell"></i>
+                <span>訊息</span>
+            </a>
+            <a class="nav-item" onclick="navigateTo('profile.html')">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        const STATUS_LABEL = { pending: '待查看', received: '已收到', completed: '已完成', cancelled: '已取消' };
+
+        const leaveData = {
+            LV202406001: {
+                subject: '外出旅遊請假', statusClass: 'pending',
+                number: 'LV202406001', reason: '外出旅遊',
+                period: '2026/06/20 09:00 ~ 06/22 18:00', org: '松山長照協會',
+                createdAt: '2026/06/17 10:30', updatedAt: '2026/06/17 10:30', assignee: '尚未確認',
+                records: [
+                    { author: '您', role: 'user', time: '2026/06/17 10:30', content: '提出請假：6/20~6/22 外出旅遊，請暫停 6/20 上午居家照護。' }
+                ]
+            },
+            LV202406002: {
+                subject: '就醫請假', statusClass: 'received',
+                number: 'LV202406002', reason: '就醫',
+                period: '2026/06/17 08:00 ~ 06/17 14:00', org: '松山長照協會',
+                createdAt: '2026/06/16 16:20', updatedAt: '2026/06/16 17:05', assignee: '陳專員',
+                records: [
+                    { author: '您', role: 'user', time: '2026/06/16 16:20', content: '提出請假：6/17 上午就醫，無法在家進行 09:00 健康檢測。' },
+                    { author: '陳專員', role: 'staff', time: '2026/06/16 17:05', content: '機構已確認收到您的請假，並通知照護人員，該時段不安排到府。' }
+                ]
+            },
+            LV202406003: {
+                subject: '家庭聚會請假', statusClass: 'received',
+                number: 'LV202406003', reason: '家庭聚會',
+                period: '2026/06/15 全天', org: '陽光長照中心',
+                createdAt: '2026/06/12 09:00', updatedAt: '2026/06/12 11:30', assignee: '林專員',
+                records: [
+                    { author: '您', role: 'user', time: '2026/06/12 09:00', content: '提出請假：6/15 全天家庭聚會外出。' },
+                    { author: '林專員', role: 'staff', time: '2026/06/12 11:30', content: '機構已確認收到您的請假，並通知照護人員 林美惠，當日不安排到府。' }
+                ]
+            },
+            LV202406004: {
+                subject: '身體不適請假', statusClass: 'completed',
+                number: 'LV202406004', reason: '身體不適',
+                period: '2026/06/14 ~ 06/16', org: '陽光長照中心',
+                createdAt: '2026/06/13 18:40', updatedAt: '2026/06/17 00:05', assignee: '林專員',
+                records: [
+                    { author: '您', role: 'user', time: '2026/06/13 18:40', content: '提出請假：6/14~6/16 身體不適休養。' },
+                    { author: '林專員', role: 'staff', time: '2026/06/13 19:10', content: '機構已確認收到您的請假，並通知照護人員，6/15 餐食配送暫停一次。' },
+                    { author: '系統', role: 'staff', time: '2026/06/17 00:05', content: '請假期間已結束，本次請假已完成。' }
+                ]
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const cId = params.get('id') || 'LV202406001';
+        const c = leaveData[cId] || leaveData.LV202406001;
+
+        document.getElementById('cSubject').textContent = c.subject;
+        document.getElementById('cNumber').textContent = c.number;
+        document.getElementById('cReason').textContent = c.reason;
+        document.getElementById('cPeriod').textContent = c.period;
+        document.getElementById('cOrg').textContent = c.org;
+        document.getElementById('cCreated').textContent = c.createdAt;
+        document.getElementById('cUpdated').textContent = c.updatedAt;
+        document.getElementById('cAssignee').textContent = c.assignee;
+
+        const statusEl = document.getElementById('cStatus');
+        statusEl.className = 'leave-status ' + c.statusClass;
+        statusEl.textContent = STATUS_LABEL[c.statusClass];
+
+        document.getElementById('cTimeline').innerHTML = c.records.map(function (record) {
+            var roleClass = record.role === 'staff' ? 'staff' : 'user';
+            return '' +
+                '<div class="timeline-item ' + roleClass + '">' +
+                    '<div class="timeline-dot"></div>' +
+                    '<div class="timeline-card">' +
+                        '<div class="timeline-meta">' +
+                            '<span class="timeline-author">' + record.author + '</span>' +
+                            '<span>' + record.time + '</span>' +
+                        '</div>' +
+                        '<div class="timeline-content">' + record.content + '</div>' +
+                    '</div>' +
+                '</div>';
+        }).join('');
+
+        document.title = c.subject;
+    </script>
+</body>
+</html>

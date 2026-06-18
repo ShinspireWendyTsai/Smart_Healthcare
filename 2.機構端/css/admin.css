@@ -139,10 +139,14 @@ a {
 }
 
 .menu-item .badge {
+    flex: 0 0 auto;
+    min-width: 18px;
+    text-align: center;
     background-color: var(--danger-color);
     color: white;
-    font-size: 10px;
-    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
     border-radius: 10px;
 }
 
